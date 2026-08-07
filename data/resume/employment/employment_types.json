@@ -1,0 +1,34 @@
+[
+    {
+        "type_id": "EMP001",
+        "name": "Full-time"
+    },
+    {
+        "type_id": "EMP002",
+        "name": "Part-time"
+    },
+    {
+        "type_id": "EMP003",
+        "name": "Internship"
+    },
+    {
+        "type_id": "EMP004",
+        "name": "Contract"
+    },
+    {
+        "type_id": "EMP005",
+        "name": "Freelance"
+    },
+    {
+        "type_id": "EMP006",
+        "name": "Volunteer"
+    },
+    {
+        "type_id": "EMP007",
+        "name": "Training"
+    },
+    {
+        "type_id": "EMP008",
+        "name": "Research"
+    }
+]

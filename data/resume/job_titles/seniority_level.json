@@ -1,0 +1,10 @@
+{
+  "intern": "Intern",
+  "junior": "Junior",
+  "associate": "Associate",
+  "senior": "Senior",
+  "lead": "Lead",
+  "principal": "Principal",
+  "staff": "Staff",
+  "manager": "Manager"
+}

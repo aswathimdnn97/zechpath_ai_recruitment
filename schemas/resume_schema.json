@@ -1,0 +1,168 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "resume_schema",
+    "type":"object",
+    "properties": {
+        "candidate_id":{
+            "type":"string"
+        },
+        "first_name":{
+            "type":"string"
+        },
+        "last_name":{
+            "type":"string"
+        },
+        "email":{
+            "type":"string"
+        },
+        "phone":{
+            "type":"string"
+        },
+        "linkedin":{
+            "type":"string"
+        },
+        "github":{
+            "type":"string"
+        },
+        "summery":{
+            "type":"string"
+        },
+        "skill":{
+            "type":"array",
+            "items": {
+                "$ref": "#$defs/skill_object"
+            }
+        },
+        "experience":{
+            "type":"array",
+            "items": {
+                "$ref": "#$defs/experience_object"
+            }
+        },
+        "education":{
+            "type":"array",
+            "items": {
+                "$ref": "#$defs/education_object"
+            }
+        },
+        "cirtification":{
+            "type":"array",
+            "items": {
+                "$ref": "#$defs/cirtification_object"
+            }
+        },
+        "projects":{
+            "type":"array",
+            "items": {
+                "$ref": "#$defs/project_object"
+            }
+        },
+        "lagguage":{
+            "type":"array"
+        }
+
+    },
+    "$defs": {
+        "skill_object":{
+            "type":"object",
+            "properties": {
+                "skill_name":{
+                    "type":"string"
+                },
+                "experience":{
+                    "type":"number"
+                },
+                "profficiency":{
+                    "type":"string"                                                                                              
+                }
+            }
+        },
+        "experience_object":{
+            "type":"object",
+            "properties": {
+                "company_name":{
+                    "type":"string"
+                },
+                "employment_type":{
+                    "type" :"string"
+                },
+                "start_date":{
+                    "type":"string"                  
+                },
+                "end_date":{
+                    "type":"string"
+                },
+                "currently_working":{
+                    "type":"boolean"
+                },
+                "responsibility":{
+                    "type":"array",
+                    "items": {
+                        "type":"string"
+                    }
+                },
+                "technologies":{
+                    "type":"array",
+                    "items": {
+                        "type":"string"
+                    }
+                }
+
+            }
+        },
+        "education_object":{
+             "type": "object",
+            "properties": {
+                "degree": { 
+                    "type": "string" 
+                },
+                "specialization":{
+                    "type":"string"
+                },
+                "institution": { 
+                    "type": "string" 
+                },
+                "graduation_year": {
+                        "type": "integer" 
+                    },
+                "cgpa": { 
+                    "type": "integer" 
+                }
+            }
+        },
+        "cirtification_object":{
+            "type":"object",
+            "properties": {
+                "cirtification_name":{
+                    "type":"string"
+                },
+                "organization":{
+                    "type":"string"
+                },
+                "issue_date":{
+                    "type":"string"
+                }
+            }
+        },
+         "project_object": {
+            "type": "object",
+            "properties": {
+                "project_name": {
+                     "type": "string" 
+                    },
+                "description": {
+                     "type": "string"
+                     },
+                "technologies": {
+                    "type": "array",
+                    "items": { 
+                        "type": "string" 
+                    }
+                }
+            }
+        }
+
+    }
+
+
+}

@@ -1,0 +1,118 @@
+{
+  "MERN": [
+    "MongoDB",
+    "Express.js",
+    "React",
+    "Node.js"
+  ],
+
+  "MEAN": [
+    "MongoDB",
+    "Express.js",
+    "Angular",
+    "Node.js"
+  ],
+
+  "MEVN": [
+    "MongoDB",
+    "Express.js",
+    "Vue.js",
+    "Node.js"
+  ],
+
+  "LAMP": [
+    "Linux",
+    "Apache",
+    "MySQL",
+    "PHP"
+  ],
+
+  "LEMP": [
+    "Linux",
+    "Nginx",
+    "MySQL",
+    "PHP"
+  ],
+
+  "JAMstack": [
+    "JavaScript",
+    "API",
+    "Markup"
+  ],
+
+  ".NET Stack": [
+    "C#",
+    ".NET",
+    "ASP.NET",
+    "SQL Server"
+  ],
+
+  "Java Full Stack": [
+    "Java",
+    "Spring Boot",
+    "Hibernate",
+    "MySQL",
+    "HTML",
+    "CSS",
+    "JavaScript"
+  ],
+
+  "Python Full Stack": [
+    "Python",
+    "Django",
+    "FastAPI",
+    "Flask",
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "React",
+    "MySQL"
+  ],
+
+  "Data Science Stack": [
+    "Python",
+    "NumPy",
+    "Pandas",
+    "Matplotlib",
+    "Scikit-learn",
+    "TensorFlow"
+  ],
+
+  "AI Stack": [
+    "Python",
+    "Machine Learning",
+    "Deep Learning",
+    "Natural Language Processing",
+    "TensorFlow",
+    "PyTorch"
+  ],
+
+  "DevOps Stack": [
+    "Docker",
+    "Kubernetes",
+    "Jenkins",
+    "Git",
+    "Terraform",
+    "Ansible"
+  ],
+
+  "Cloud Stack": [
+    "AWS",
+    "Docker",
+    "Kubernetes",
+    "Terraform"
+  ],
+
+  "ELK Stack": [
+    "Elasticsearch",
+    "Logstash",
+    "Kibana"
+  ],
+
+  "T3 Stack": [
+    "TypeScript",
+    "Next.js",
+    "tRPC",
+    "Prisma"
+  ]
+}

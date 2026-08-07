@@ -1,0 +1,71 @@
+[
+    {
+        "department_id": "DEP001",
+        "name": "Software Development",
+        "keywords": [
+            "developer",
+            "engineer",
+            "software",
+            "backend",
+            "frontend",
+            "full stack",
+            "api",
+            "application"
+        ]
+    },
+    {
+        "department_id": "DEP002",
+        "name": "Data Science",
+        "keywords": [
+            "data scientist",
+            "machine learning",
+            "deep learning",
+            "ai",
+            "analytics",
+            "python",
+            "statistics"
+        ]
+    },
+    {
+        "department_id": "DEP003",
+        "name": "IT Support",
+        "keywords": [
+            "support",
+            "system administrator",
+            "network",
+            "troubleshoot",
+            "hardware"
+        ]
+    },
+    {
+        "department_id": "DEP004",
+        "name": "Human Resources",
+        "keywords": [
+            "hr",
+            "recruitment",
+            "talent",
+            "employee"
+        ]
+    },
+    {
+        "department_id": "DEP005",
+        "name": "Marketing",
+        "keywords": [
+            "marketing",
+            "seo",
+            "content",
+            "campaign",
+            "sales"
+        ]
+    },
+    {
+        "department_id": "DEP006",
+        "name": "Finance",
+        "keywords": [
+            "finance",
+            "account",
+            "audit",
+            "banking"
+        ]
+    }
+]

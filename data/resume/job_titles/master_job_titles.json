@@ -1,0 +1,17 @@
+[
+  {
+    "title_id": "JOB001",
+    "name": "Software Engineer",
+    "category": "Software Development"
+  },
+  {
+    "title_id": "JOB002",
+    "name": "Python Developer",
+    "category": "Software Development"
+  },
+  {
+    "title_id": "JOB003",
+    "name": "Data Scientist",
+    "category": "Data Science"
+  }
+]

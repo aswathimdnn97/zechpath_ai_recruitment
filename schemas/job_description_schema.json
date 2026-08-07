@@ -1,0 +1,69 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "job_description_schema",
+    "type":"object",
+    "properties": {
+        "job_id":{
+            "type":"string"
+        },
+        "job_title":{
+            "type":"string"
+        },
+          "company_name": {
+            "type": "string"
+        },
+          "location": {
+            "type": "string"
+        },
+          "opening": {
+            "type": "integer"
+        },
+          "employment_type": {
+             "type": "string"
+        },
+         "salary_range": {
+             "type": "string"
+        },
+         "experience_required": {
+             "type": "integer"
+        },
+         "education_required": {
+             "type": "array"
+        },
+        "roles_and_responsibility": {
+             "type": "array"
+        },
+        "mandatory_key_skill_required": {
+             "type": "array",
+             "items": {
+                "$ref": "#$defs/skill_object"
+             }
+        },
+        "preferred_skills": {
+             "type": "array",
+             "items": {
+                "$ref": "#$defs/skill_object"
+             }
+        }
+     
+    }
+    ,"$defs": {
+        "skill_object":{
+            "type":"object",
+            "properties": {
+                "skill_name":{
+                    "type":"string"
+                },
+                "experience":{
+                    "type":"number"
+                },
+                "profficiency":{
+                    "type":"string"                                                                                              
+                },
+                "mandatory":{
+                    "type":"boolean"
+                }
+            }
+        }
+    }
+}

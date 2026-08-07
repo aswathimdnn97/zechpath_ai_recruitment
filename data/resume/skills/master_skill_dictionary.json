@@ -1,0 +1,410 @@
+[
+  {
+    "skill_id": "TECH001",
+    "name": "Python",
+    "category": "Technical",
+    "subcategory": "Programming Language",
+    "type": "Language",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH002",
+    "name": "Java",
+    "category": "Technical",
+    "subcategory": "Programming Language",
+    "type": "Language",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH003",
+    "name": "JavaScript",
+    "category": "Technical",
+    "subcategory": "Programming Language",
+    "type": "Language",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH004",
+    "name": "TypeScript",
+    "category": "Technical",
+    "subcategory": "Programming Language",
+    "type": "Language",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH005",
+    "name": "HTML",
+    "category": "Technical",
+    "subcategory": "Frontend",
+    "type": "Markup Language",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH006",
+    "name": "CSS",
+    "category": "Technical",
+    "subcategory": "Frontend",
+    "type": "Style Sheet",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH007",
+    "name": "React",
+    "category": "Technical",
+    "subcategory": "Frontend Framework",
+    "type": "Framework",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH008",
+    "name": "Angular",
+    "category": "Technical",
+    "subcategory": "Frontend Framework",
+    "type": "Framework",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH009",
+    "name": "Vue.js",
+    "category": "Technical",
+    "subcategory": "Frontend Framework",
+    "type": "Framework",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH010",
+    "name": "Node.js",
+    "category": "Technical",
+    "subcategory": "Backend Framework",
+    "type": "Runtime",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH011",
+    "name": "Express.js",
+    "category": "Technical",
+    "subcategory": "Backend Framework",
+    "type": "Framework",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH012",
+    "name": "Django",
+    "category": "Technical",
+    "subcategory": "Backend Framework",
+    "type": "Framework",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH013",
+    "name": "Flask",
+    "category": "Technical",
+    "subcategory": "Backend Framework",
+    "type": "Framework",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH014",
+    "name": "FastAPI",
+    "category": "Technical",
+    "subcategory": "Backend Framework",
+    "type": "Framework",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH015",
+    "name": "Bootstrap",
+    "category": "Technical",
+    "subcategory": "CSS Framework",
+    "type": "Framework",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH016",
+    "name": "Tailwind CSS",
+    "category": "Technical",
+    "subcategory": "CSS Framework",
+    "type": "Framework",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH017",
+    "name": "MySQL",
+    "category": "Technical",
+    "subcategory": "Database",
+    "type": "RDBMS",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH018",
+    "name": "PostgreSQL",
+    "category": "Technical",
+    "subcategory": "Database",
+    "type": "RDBMS",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH019",
+    "name": "MongoDB",
+    "category": "Technical",
+    "subcategory": "NoSQL Database",
+    "type": "Database",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH020",
+    "name": "SQL Server",
+    "category": "Technical",
+    "subcategory": "Database",
+    "type": "RDBMS",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH021",
+    "name": "Docker",
+    "category": "Technical",
+    "subcategory": "DevOps",
+    "type": "Containerization",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH022",
+    "name": "Kubernetes",
+    "category": "Technical",
+    "subcategory": "DevOps",
+    "type": "Container Orchestration",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH023",
+    "name": "Git",
+    "category": "Technical",
+    "subcategory": "Version Control",
+    "type": "Tool",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH024",
+    "name": "GitHub",
+    "category": "Technical",
+    "subcategory": "Version Control",
+    "type": "Platform",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH025",
+    "name": "REST API",
+    "category": "Technical",
+    "subcategory": "Web Services",
+    "type": "API",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH026",
+    "name": "JWT",
+    "category": "Technical",
+    "subcategory": "Authentication",
+    "type": "Security",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH027",
+    "name": "AWS",
+    "category": "Technical",
+    "subcategory": "Cloud",
+    "type": "Cloud Platform",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH028",
+    "name": "Microsoft Azure",
+    "category": "Technical",
+    "subcategory": "Cloud",
+    "type": "Cloud Platform",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH029",
+    "name": "Google Cloud Platform",
+    "category": "Technical",
+    "subcategory": "Cloud",
+    "type": "Cloud Platform",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH030",
+    "name": "Machine Learning",
+    "category": "Technical",
+    "subcategory": "Artificial Intelligence",
+    "type": "AI",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH031",
+    "name": "Deep Learning",
+    "category": "Technical",
+    "subcategory": "Artificial Intelligence",
+    "type": "AI",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH032",
+    "name": "Artificial Intelligence",
+    "category": "Technical",
+    "subcategory": "Artificial Intelligence",
+    "type": "AI",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH033",
+    "name": "Natural Language Processing",
+    "category": "Technical",
+    "subcategory": "Artificial Intelligence",
+    "type": "AI",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH034",
+    "name": "Computer Vision",
+    "category": "Technical",
+    "subcategory": "Artificial Intelligence",
+    "type": "AI",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH035",
+    "name": "Large Language Models",
+    "category": "Technical",
+    "subcategory": "Artificial Intelligence",
+    "type": "AI",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH036",
+    "name": "Prompt Engineering",
+    "category": "Technical",
+    "subcategory": "Artificial Intelligence",
+    "type": "AI",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH037",
+    "name": "MERN",
+    "category": "Technical",
+    "subcategory": "Full Stack",
+    "type": "Technology Stack",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH038",
+    "name": "MEAN",
+    "category": "Technical",
+    "subcategory": "Full Stack",
+    "type": "Technology Stack",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH039",
+    "name": "Postman",
+    "category": "Technical",
+    "subcategory": "API Testing",
+    "type": "Tool",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH040",
+    "name": "Responsive Web Design",
+    "category": "Technical",
+    "subcategory": "Frontend",
+    "type": "Design Principle",
+    "status": "active"
+  },
+  {
+    "skill_id": "BUS001",
+    "name": "Project Management",
+    "category": "Business",
+    "subcategory": "Management",
+    "type": "Business Skill",
+    "status": "active"
+  },
+  {
+    "skill_id": "BUS002",
+    "name": "Business Analysis",
+    "category": "Business",
+    "subcategory": "Analysis",
+    "type": "Business Skill",
+    "status": "active"
+  },
+  {
+    "skill_id": "BUS003",
+    "name": "Search Engine Optimization",
+    "category": "Business",
+    "subcategory": "Digital Marketing",
+    "type": "Marketing",
+    "status": "active"
+  },
+  {
+    "skill_id": "BUS004",
+    "name": "Search Engine Marketing",
+    "category": "Business",
+    "subcategory": "Digital Marketing",
+    "type": "Marketing",
+    "status": "active"
+  },
+  {
+    "skill_id": "BUS005",
+    "name": "Customer Relationship Management",
+    "category": "Business",
+    "subcategory": "Sales",
+    "type": "Business Skill",
+    "status": "active"
+  },
+  {
+    "skill_id": "CRE001",
+    "name": "User Experience Design",
+    "category": "Creative",
+    "subcategory": "UI/UX",
+    "type": "Design",
+    "status": "active"
+  },
+  {
+    "skill_id": "CRE002",
+    "name": "User Interface Design",
+    "category": "Creative",
+    "subcategory": "UI/UX",
+    "type": "Design",
+    "status": "active"
+  },
+  {
+    "skill_id": "CRE003",
+    "name": "Adobe Photoshop",
+    "category": "Creative",
+    "subcategory": "Graphic Design",
+    "type": "Tool",
+    "status": "active"
+  },
+  {
+    "skill_id": "CRE004",
+    "name": "Adobe Illustrator",
+    "category": "Creative",
+    "subcategory": "Graphic Design",
+    "type": "Tool",
+    "status": "active"
+  },
+  {
+    "skill_id": "SOFT001",
+    "name": "Communication",
+    "category": "Soft Skill",
+    "subcategory": "Interpersonal",
+    "type": "Soft Skill",
+    "status": "active"
+  },
+  {
+    "skill_id": "SOFT002",
+    "name": "Leadership",
+    "category": "Soft Skill",
+    "subcategory": "Management",
+    "type": "Soft Skill",
+    "status": "active"
+  }
+]
