@@ -1,0 +1,247 @@
+{
+    "Computer Science": [
+        "CSE",
+        "CS",
+        "Computer Science",
+        "Computer Science and Engineering",
+        "Computer Science Engineering",
+        "Computer Science & Engineering",
+        "CS Engineering",
+        "Computing Science"
+    ],
+
+    "Information Technology": [
+        "IT",
+        "Information Technology",
+        "Information Technology Engineering",
+        "Information Science",
+        "Information Science and Engineering",
+        "ISE"
+    ],
+
+    "Electronics and Communication Engineering": [
+        "ECE",
+        "Electronics and Communication Engineering",
+        "Electronics Communication Engineering",
+        "Electronics & Communication Engineering",
+        "Electronics and Communications Engineering"
+    ],
+
+    "Electrical and Electronics Engineering": [
+        "EEE",
+        "Electrical and Electronics Engineering",
+        "Electrical & Electronics Engineering"
+    ],
+
+    "Electrical Engineering": [
+        "EE",
+        "Electrical Engineering"
+    ],
+
+    "Mechanical Engineering": [
+        "ME",
+        "Mechanical Engineering"
+    ],
+
+    "Civil Engineering": [
+        "Civil",
+        "Civil Engineering"
+    ],
+
+    "Chemical Engineering": [
+        "Chemical",
+        "Chemical Engineering"
+    ],
+
+    "Aerospace Engineering": [
+        "Aerospace",
+        "Aerospace Engineering"
+    ],
+
+    "Automobile Engineering": [
+        "Automobile",
+        "Automobile Engineering",
+        "Automotive Engineering"
+    ],
+
+    "Biotechnology": [
+        "Biotech",
+        "BT",
+        "Biotechnology"
+    ],
+
+    "Biomedical Engineering": [
+        "Biomedical",
+        "Biomedical Engineering"
+    ],
+
+    "Artificial Intelligence": [
+        "AI",
+        "Artificial Intelligence"
+    ],
+
+    "Artificial Intelligence and Machine Learning": [
+        "AI/ML",
+        "AI ML",
+        "AIML",
+        "Artificial Intelligence and Machine Learning",
+        "Artificial Intelligence & Machine Learning"
+    ],
+
+    "Data Science": [
+        "DS",
+        "Data Science",
+        "Data Sciences"
+    ],
+
+    "Data Analytics": [
+        "Data Analytics",
+        "Data Analysis",
+        "Business Data Analytics"
+    ],
+
+    "Cyber Security": [
+        "Cyber Security",
+        "Cybersecurity",
+        "Information Security",
+        "Network Security"
+    ],
+
+    "Cloud Computing": [
+        "Cloud Computing",
+        "Cloud Technology"
+    ],
+
+    "Software Engineering": [
+        "Software Engineering",
+        "Software Development"
+    ],
+
+    "Computer Engineering": [
+        "Computer Engineering",
+        "Computer Systems Engineering"
+    ],
+
+    "Business Administration": [
+        "BBA",
+        "Business Administration",
+        "Business Management"
+    ],
+
+    "Master of Business Administration": [
+        "MBA",
+        "Master of Business Administration"
+    ],
+
+    "Commerce": [
+        "B.Com",
+        "BCom",
+        "Bachelor of Commerce",
+        "Commerce"
+    ],
+
+    "Accounting": [
+        "Accounting",
+        "Accountancy"
+    ],
+
+    "Finance": [
+        "Finance",
+        "Financial Management"
+    ],
+
+    "Economics": [
+        "Economics",
+        "Economic Studies"
+    ],
+
+    "Mathematics": [
+        "Math",
+        "Mathematics",
+        "Applied Mathematics"
+    ],
+
+    "Physics": [
+        "Physics",
+        "Applied Physics"
+    ],
+
+    "Chemistry": [
+        "Chemistry",
+        "Applied Chemistry"
+    ],
+
+    "Biology": [
+        "Biology",
+        "Life Sciences",
+        "Life Science"
+    ],
+
+    "English": [
+        "English",
+        "English Literature",
+        "English Language and Literature"
+    ],
+
+    "Psychology": [
+        "Psychology",
+        "Applied Psychology"
+    ],
+
+    "Political Science": [
+        "Political Science",
+        "Politics"
+    ],
+
+    "History": [
+        "History",
+        "Historical Studies"
+    ],
+
+    "Geography": [
+        "Geography",
+        "Geographical Studies"
+    ],
+
+    "Law": [
+        "LLB",
+        "LL.B",
+        "Bachelor of Laws",
+        "Law"
+    ],
+
+    "Medicine": [
+        "MBBS",
+        "Bachelor of Medicine",
+        "Medicine"
+    ],
+
+    "Nursing": [
+        "BSc Nursing",
+        "B.Sc Nursing",
+        "Bachelor of Science in Nursing",
+        "Nursing"
+    ],
+
+    "Pharmacy": [
+        "B.Pharm",
+        "BPharm",
+        "Bachelor of Pharmacy",
+        "Pharmacy"
+    ],
+
+    "Architecture": [
+        "B.Arch",
+        "BArch",
+        "Bachelor of Architecture",
+        "Architecture"
+    ],
+
+    "Education": [
+        "B.Ed",
+        "BEd",
+        "Bachelor of Education",
+        "Education"
+    ]
+}
+

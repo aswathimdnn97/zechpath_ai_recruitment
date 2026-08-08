@@ -1,0 +1,27 @@
+{
+    "b.tech": "Bachelor of Technology",
+    "btech": "Bachelor of Technology",
+    "bachelor of technology": "Bachelor of Technology",
+
+    "b.e": "Bachelor of Engineering",
+    "be": "Bachelor of Engineering",
+    "bachelor of engineering": "Bachelor of Engineering",
+
+    "b.sc": "Bachelor of Science",
+    "bsc": "Bachelor of Science",
+    "bachelor of science": "Bachelor of Science",
+
+    "m.tech": "Master of Technology",
+    "mtech": "Master of Technology",
+    "master of technology": "Master of Technology",
+
+    "mca": "Master of Computer Applications",
+    "master of computer applications": "Master of Computer Applications",
+
+    "mba": "Master of Business Administration",
+    "master of business administration": "Master of Business Administration",
+
+    "phd": "Doctor of Philosophy",
+    "ph.d": "Doctor of Philosophy",
+    "doctor of philosophy": "Doctor of Philosophy"
+}
