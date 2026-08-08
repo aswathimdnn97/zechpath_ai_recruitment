@@ -6,21 +6,21 @@ from pipelines.recruiter_pipeline import recruitment_pipeline
 logger.info("Resume Uploaded")
 
 """Resume parsing"""
-resume_file="data/resume/pdf/syzfjbzwjncs.pdf"
+resume_file="data/resume/pdf/pypwpftvswpb.pdf"
 resume_text=resume_pipeline(resume_file)
-# print(resume_text)
+print(resume_text)
 
-"""JD Parsing"""
-job_description_file="data/job_descriptions/jd_python_developer.pdf"
-jd_text=job_description_pipeline(job_description_file)
-# print(jd_text)
+# """JD Parsing"""
+# job_description_file="data/job_descriptions/jd_python_developer.pdf"
+# jd_text=job_description_pipeline(job_description_file)
+# # print(jd_text)
+ 
 
+# result = recruitment_pipeline(
+#     resume_text,
+#     jd_text
+# )
 
-result = recruitment_pipeline(
-    resume_text,
-    jd_text
-)
-
-print(result)
+# print(result)
  
 
