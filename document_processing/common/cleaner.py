@@ -37,7 +37,11 @@ def clean_text(text):
         "(cid:41)" : " ",
         "(cid:37)" : " ",
         "(cid:45)" : " ",
-        "(cid:218)" : " " 
+        "(cid:218)" : " " ,
+        "(cid:123)" :" ",
+        "(cid:72)" :" ",
+        "(cid:66)" :" ",
+        "(cid:127)" :" ",
     }
 
     for old, new in replacements.items():

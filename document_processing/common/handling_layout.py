@@ -7,13 +7,14 @@ def fix_layout(text):
     - Remove extra spaces
     - Normalize tabs
     - Remove empty lines
-    - Preserve one logical line per input line
+    - Merge soft-wrapped continuation lines
     """
 
     if not text:
         return ""
 
     cleaned_lines = []
+    pending_line = None
 
     for line in text.splitlines():
 
@@ -25,8 +26,26 @@ def fix_layout(text):
 
         # Skip empty lines
         if not line:
+            if pending_line is not None:
+                cleaned_lines.append(pending_line)
+                pending_line = None
             continue
 
-        cleaned_lines.append(line)
+        if pending_line is None:
+            pending_line = line
+            continue
+
+        if (
+            line[0].islower()
+            and not pending_line.endswith((".", "!", "?", ":", ";"))
+        ):
+            pending_line = f"{pending_line} {line}"
+            continue
+
+        cleaned_lines.append(pending_line)
+        pending_line = line
+
+    if pending_line is not None:
+        cleaned_lines.append(pending_line)
 
     return "\n".join(cleaned_lines)
