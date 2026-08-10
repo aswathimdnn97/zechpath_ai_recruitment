@@ -28,6 +28,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[4]
 SKILL_FILE = (
     PROJECT_ROOT
     / "data"
+    /"resume"
     / "skills"
     / "master_skill_dictionary.json"
 )
@@ -36,6 +37,7 @@ SKILL_FILE = (
 ALIAS_FILE = (
     PROJECT_ROOT
     / "data"
+    /"resume"
     / "skills"
     / "skill_aliases.json"
 )
