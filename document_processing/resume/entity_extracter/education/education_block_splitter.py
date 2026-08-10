@@ -42,6 +42,8 @@ DEGREE_KEYWORDS = [
     "associate degree",
     "associate",
     "diploma",
+    "computer operator and programming assistant",
+    "copa",
 ]
 
 
@@ -58,6 +60,8 @@ SCHOOL_KEYWORDS = [
     "class xii",
     "class 12",
     "12th",
+    "intermediate",
+    "xii",
     "all india secondary school examination",
     "secondary school examination",
     "secondary school",
@@ -80,6 +84,21 @@ UNIVERSITY_KEYWORDS = [
     "institute of technology",
     "open university",
     "deemed university",
+]
+
+
+# =========================================================
+# INSTITUTION KEYWORDS
+# =========================================================
+
+INSTITUTION_KEYWORDS = [
+    "college",
+    "institute",
+    "institution",
+    "academy",
+    "vidyalaya",
+    "polytechnic",
+    "training institute",
 ]
 
 
@@ -181,6 +200,69 @@ def is_education_start(line):
     )
 
 
+def is_institution_line(line):
+    """
+    Detect a line that appears to be an institution/location
+    entry in an education section.
+    """
+
+    if not line:
+        return False
+
+    lower = _normalize_line(line).lower()
+
+    if is_university_continuation(line):
+        return True
+
+    if any(
+        keyword in lower
+        for keyword in INSTITUTION_KEYWORDS
+    ):
+        return True
+
+    if "," in lower and not is_degree_start(line) and not is_school_start(line):
+        return True
+
+    return False
+
+
+def current_block_is_institution_only(block):
+    """
+    Detect whether the current block is a pending institution
+    record without a degree or school qualification yet.
+    """
+
+    if not block:
+        return False
+
+    return not any(
+        is_degree_start(line)
+        or is_school_start(line)
+        for line in block
+    )
+
+
+def next_line_is_qualification(lines, index):
+    """
+    Look ahead to see whether a later non-empty line
+    represents a qualification.
+    """
+
+    for next_line in lines[index + 1 :]:
+
+        next_line = _normalize_line(next_line)
+
+        if not next_line:
+            continue
+
+        return (
+            is_degree_start(next_line)
+            or is_school_start(next_line)
+        )
+
+    return False
+
+
 def is_university_continuation_for_degree(line, current_block):
     """
     Determine whether a university continuation line should
@@ -188,9 +270,6 @@ def is_university_continuation_for_degree(line, current_block):
     """
 
     if not line:
-        return False
-
-    if not current_block:
         return False
 
     if not current_block:
@@ -254,7 +333,7 @@ def split_education_blocks(education_section):
     # Process lines
     # -----------------------------------------------------
 
-    for raw_line in education_section:
+    for index, raw_line in enumerate(education_section):
 
         line = _normalize_line(raw_line)
 
@@ -274,11 +353,26 @@ def split_education_blocks(education_section):
                 current_block.append(line)
                 continue
 
+            if current_block_is_institution_only(current_block) and (
+                is_degree_start(line)
+                or is_school_start(line)
+            ):
+                current_block.append(line)
+                continue
+
             if current_block:
                 blocks.append(
                     current_block
                 )
 
+            current_block = [line]
+
+        elif is_institution_line(line) and current_block_is_institution_only(current_block):
+            current_block.append(line)
+
+        elif is_institution_line(line) and next_line_is_qualification(education_section, index):
+            if current_block:
+                blocks.append(current_block)
             current_block = [line]
 
         else:

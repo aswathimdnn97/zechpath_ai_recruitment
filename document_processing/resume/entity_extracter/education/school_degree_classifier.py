@@ -113,4 +113,3 @@ def classify_school_degree(block):
         return "Secondary"
 
     return None
-

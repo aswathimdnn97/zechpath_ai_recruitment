@@ -717,4 +717,3 @@ def post_process_education(education):
         )
 
     return final
-
