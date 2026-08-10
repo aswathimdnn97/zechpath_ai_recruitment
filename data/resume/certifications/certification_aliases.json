@@ -1,0 +1,22 @@
+{
+    "Amazon Web Services": {
+        "aliases": [
+            "AWS",
+            "Amazon AWS",
+            "Amazon Web Services"
+        ]
+    },
+    "Microsoft": {
+        "aliases": [
+            "Microsoft",
+            "Microsoft Corporation"
+        ]
+    },
+    "Google Cloud": {
+        "aliases": [
+            "Google Cloud",
+            "Google Cloud Platform",
+            "GCP"
+        ]
+    }
+}
