@@ -107,3 +107,34 @@ def test_full_education_pipeline():
     assert secondary["graduation_year"] == \
         "2010"
 
+
+def test_sample_degree_institution_split():
+
+    education = [
+        "Master of Computer Applications (MCA) University of Kerala",
+        "Thiruvananthapuram, Kerala, India",
+        "2020 – 2022",
+        "Bachelor of Engineering (B.E.) Visvesvaraya Technological University",
+        "Computer Science and Engineering Karnataka, India",
+        "2014 – 2018",
+        "All India Senior School Certificate Examination Central Board of Secondary Education",
+        "2014",
+    ]
+
+    result = education_pipeline(education)
+
+    assert len(result) == 3
+
+    assert result[0]["degree_type"] == "Master of Computer Applications"
+    assert result[0]["institution"] == "University of Kerala"
+    assert result[0]["graduation_year"] == "2022"
+
+    assert result[1]["degree_type"] == "Bachelor of Engineering"
+    assert result[1]["institution"] == "Visvesvaraya Technological University"
+    assert result[1]["field_of_study"] == "Computer Science and Engineering Karnataka, India"
+    assert result[1]["graduation_year"] == "2018"
+
+    assert result[2]["degree_type"] == "Higher Secondary"
+    assert result[2]["board"] == "All India Senior School Certificate Examination Central Board of Secondary Education"
+    assert result[2]["graduation_year"] == "2014"
+

@@ -92,3 +92,29 @@ def test_nested_education_section():
         for line in result[0]
     )
 
+
+def test_merge_education_block_with_institution_followed_by_qualification():
+
+    education = [
+        "Shri Khushal Das University Hanumangarh, Rajasthan",
+        "Master of Computer Applications(MCA) (Semester 1st SGPA/ of 6.93) September 2022 - Present",
+        "SGN Khalsa PG College Sri Ganganagar, Rajasthan",
+        "Bachelors’s in Computer Application(BCA) (CGPA/ of 70.66 ) September 2021",
+        "Jain Pvt. Industrial Training Institute Gumjal, Punjab",
+        "Computer Operator and Programming Assistant(COPA) (CGPA/ of 85.75 ) July 2017",
+        "BHOPALWALA A SR SS Sri Ganganagar, Rajasthan",
+        "Agriculture (Intermediate(XII) (CGPA/ of 55.80 ) July 2014",
+    ]
+
+    result = split_education_blocks(education)
+
+    assert len(result) == 4
+    assert result[0][0] == "Shri Khushal Das University Hanumangarh, Rajasthan"
+    assert result[0][1].startswith("Master of Computer Applications")
+    assert result[1][0] == "SGN Khalsa PG College Sri Ganganagar, Rajasthan"
+    assert result[1][1].startswith("Bachelors’s in Computer Application")
+    assert result[2][0] == "Jain Pvt. Industrial Training Institute Gumjal, Punjab"
+    assert result[2][1].startswith("Computer Operator and Programming Assistant(COPA)")
+    assert result[3][0] == "BHOPALWALA A SR SS Sri Ganganagar, Rajasthan"
+    assert result[3][1].startswith("Agriculture (Intermediate(XII)")
+
