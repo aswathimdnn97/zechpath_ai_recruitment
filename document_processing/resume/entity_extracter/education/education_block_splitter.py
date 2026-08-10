@@ -267,6 +267,10 @@ def is_university_continuation_for_degree(line, current_block):
     """
     Determine whether a university continuation line should
     be treated as part of the current degree block.
+
+    A line that contains both degree information and a university
+    name should NOT be treated as a continuation of the previous
+    block; it starts a new degree record.
     """
 
     if not line:
@@ -278,6 +282,7 @@ def is_university_continuation_for_degree(line, current_block):
     return (
         is_university_continuation(line)
         and is_degree_start(current_block[0])
+        and not is_degree_start(line)
     )
 
 
