@@ -45,10 +45,10 @@
                 "$ref": "#$defs/education_object"
             }
         },
-        "cirtification":{
+        "certification":{
             "type":"array",
             "items": {
-                "$ref": "#$defs/cirtification_object"
+                "$ref": "#$defs/certification_object"
             }
         },
         "projects":{
@@ -130,10 +130,10 @@
                 }
             }
         },
-        "cirtification_object":{
+        "certification_object":{
             "type":"object",
             "properties": {
-                "cirtification_name":{
+                "certification_name":{
                     "type":"string"
                 },
                 "organization":{
