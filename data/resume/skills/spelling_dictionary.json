@@ -3,95 +3,96 @@
     "Pythn": "Python",
     "Phyton": "Python",
     "Pythoon": "Python",
-
     "Javasript": "JavaScript",
     "Javscript": "JavaScript",
     "Java Script": "JavaScript",
-
     "Typesript": "TypeScript",
     "Type Script": "TypeScript",
-
     "Recat": "React",
     "React Js": "React",
     "Reactjs": "React",
-
     "Anguler": "Angular",
     "Angular Js": "Angular",
-
     "Vue Js": "Vue.js",
     "Vuejs": "Vue.js",
-
     "Node Js": "Node.js",
     "Nodejs": "Node.js",
     "Node JS": "Node.js",
-
     "Express Js": "Express.js",
     "Expressjs": "Express.js",
-
     "Django": "Django",
-
     "Fast Api": "FastAPI",
-
     "Bootstarp": "Bootstrap",
-
     "Tailwindcss": "Tailwind CSS",
     "Tailwindcsss": "Tailwind CSS",
-
     "Html": "HTML",
     "Css": "CSS",
-
     "Mysql": "MySQL",
-
     "Postgress": "PostgreSQL",
     "Postgre Sql": "PostgreSQL",
-
     "Mongo Db": "MongoDB",
     "Mongodb": "MongoDB",
-
     "Dockerr": "Docker",
-
     "Kubernates": "Kubernetes",
     "Kubernets": "Kubernetes",
-
     "Git Hub": "GitHub",
     "Github": "GitHub",
-
     "Aws": "AWS",
-
     "Azure Cloud": "Microsoft Azure",
-
     "Gogle Cloud": "Google Cloud Platform",
     "Google Cloud Plateform": "Google Cloud Platform",
-
     "Tensor Flow": "TensorFlow",
-
     "Pytorch": "PyTorch",
-
     "Scikit Learn": "Scikit-learn",
-
-    "Numpy": "NumPy",
-
     "Pandas Dataframe": "Pandas",
-
     "Machine Learing": "Machine Learning",
     "Machine Learnng": "Machine Learning",
-
     "Deep Learing": "Deep Learning",
-
     "Artifical Intelligence": "Artificial Intelligence",
     "Artificial Intelligance": "Artificial Intelligence",
-
     "Natural Language Procesing": "Natural Language Processing",
-
     "Prompt Enginnering": "Prompt Engineering",
-
     "Project Managment": "Project Management",
-
     "Bussiness Analysis": "Business Analysis",
-
     "Communiation": "Communication",
-
     "Leader Ship": "Leadership",
+    "Problem Solving Skill": "Problem Solving",
+    "reduxjs": "Redux",
+    "redux.js": "Redux",
+    "react-redux": "Redux",
+    "react redux": "Redux",
+    "redisdb": "Redis",
+    "redis database": "Redis",
+    "linuxos": "Linux",
+    "gnu/linux": "Linux",
+    "gnu linux": "Linux",
+    "pandas python": "Pandas",
+    "python pandas": "Pandas",
+    "scikit learn": "scikit-learn",
+    "scikit-learn": "scikit-learn",
+    "scikitlearn": "scikit-learn",
+    "sklearn": "scikit-learn",
+    "tensor flow": "TensorFlow",
+    "tensorflow": "TensorFlow",
+    "django framework": "Django",
+    "django python": "Django",
+    "numpy": "NumPy",
+    "num py": "NumPy",
+    "numpy python": "NumPy",
+    "ci cd": "CI/CD",
+  "cicd": "CI/CD",
+  "ci-cd": "CI/CD",
+  "continuous integration": "CI/CD",
+  "continuous deployment": "CI/CD",
 
-    "Problem Solving Skill": "Problem Solving"
+  "jupyter": "Jupyter Notebook",
+  "jupyter notebooks": "Jupyter Notebook",
+  "jupyter-notebook": "Jupyter Notebook",
+
+  "vscode": "VS Code",
+  "vs code": "VS Code",
+  "visual studio code": "VS Code",
+
+  "jira software": "Jira",
+  "atlassian jira": "Jira"
 }

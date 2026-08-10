@@ -17,6 +17,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[4]
 STACK_FILE = (
     PROJECT_ROOT /
     "data" /
+    "resume"/
     "skills" /
     "skill_stacks.json"
 )
@@ -147,8 +148,8 @@ path = Path(__file__).resolve()
 
 print(path)
 
-print("STACK_RESOLVER FILE:", __file__)
-print("PROJECT_ROOT:", PROJECT_ROOT)
-print("STACK_FILE:", STACK_FILE)
-print("STACK_FILE:", STACK_FILE)
-print("Exists:", STACK_FILE.exists())
+# print("STACK_RESOLVER FILE:", __file__)
+# print("PROJECT_ROOT:", PROJECT_ROOT)
+# print("STACK_FILE:", STACK_FILE)
+# print("STACK_FILE:", STACK_FILE)
+# print("Exists:", STACK_FILE.exists())

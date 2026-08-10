@@ -15,10 +15,12 @@ from document_processing.resume.entity_extracter.personal_information.personal_i
 import sys
 import os
 from document_processing.resume.entity_extracter.experience.experinece_pipeline import experience_extractor
-from document_processing.resume.candidate_profile.candidate_profile_builder import (
-    build_candidate_profile
-)
+from document_processing.resume.candidate_profile.candidate_profile_builder import build_candidate_profile
+from document_processing.resume.entity_extracter.education.education_pipeline import education_pipeline
 
+from document_processing.resume.entity_extracter.certifications.certification_pipeline import certification_pipeline
+from document_processing.resume.text_reconstruction import text_reconstructor
+from document_processing.resume.entity_extracter.skill.skill_list_splitter import split_skill_line
 def resume_pipeline(file):
     
     # file="data/resume/docx/vvyndmqmqqgs.docx"
@@ -30,7 +32,9 @@ def resume_pipeline(file):
     
     handled_text=fix_layout(cleaned_text)
     
-    normalized_text=normalize_text(handled_text)
+    text_reconstructed=text_reconstructor(handled_text)
+    
+    normalized_text=normalize_text(text_reconstructed)
     
     section_detected_text=detect_sections(normalized_text,headings)
     print(section_detected_text.keys())
@@ -42,7 +46,12 @@ def resume_pipeline(file):
     
     skill_extracter=section_detected_text.get("skills","")
     
-    skill_from_skill_extractor=extract_skill(skill_extracter)
+    skill_splitter=split_skill_line(skill_extracter)
+    
+    if skill_splitter:
+        skill_from_skill_extractor = skill_splitter
+    else:
+        skill_from_skill_extractor = extract_skill(skill_extracter)
     
     synonym_resolved_skill=resolve_synonyms(skill_from_skill_extractor)
     
@@ -50,29 +59,34 @@ def resume_pipeline(file):
     
     stack_skills=expand_skill_stacks(validated_skill)
     
-    # save_resume(normalized_text,"resume1")
     
     # experience-----------------------------------------
     experience_section = section_detected_text.get("experience", [])
 
     experience_data = experience_extractor(experience_section)
    
-    # print(type(experience_section))
-    # print(experience_section)
-   
-    # return experience_data
-
- # return validated_skill
+    # education--------------------------------------------
+    education_section = section_detected_text.get("education", [])
+    education_data = education_pipeline(education_section)
  
+ 
+    #----------------------------------------------------------
+    # certification
+    #----------------------------------------------------------
+    certification_section=section_detected_text.get("certifications")
+    certificate_data=certification_pipeline(certification_section)
+    
+    
+    
     # -----------------build candidate profile-----------------
     candidate_profile = build_candidate_profile(
-        personal_information=personal_information,
-        education=section_detected_text.get("education", []),
-        experience=experience_data,
-        skills=stack_skills,
-        projects=section_detected_text.get("projects", []),
-        certifications=section_detected_text.get("certifications", [])
-    )
+    personal_information=personal_information,
+    education=education_data,
+    experience=experience_data,
+    skills=stack_skills,
+    projects=section_detected_text.get("projects", []),
+    certifications=certificate_data
+)
     
     return candidate_profile
  

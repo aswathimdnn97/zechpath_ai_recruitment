@@ -406,5 +406,106 @@
     "subcategory": "Management",
     "type": "Soft Skill",
     "status": "active"
-  }
+  },
+  
+  
+  {
+    "skill_id": "TECH041",
+    "name": "Django REST Framework",
+    "category": "Technical",
+    "subcategory": "Backend Framework",
+    "type": "Framework",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH042",
+    "name": "Redux",
+    "category": "Technical",
+    "subcategory": "State Management",
+    "type": "Library",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH043",
+    "name": "Redis",
+    "category": "Technical",
+    "subcategory": "In-Memory Database",
+    "type": "Database",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH044",
+    "name": "Linux",
+    "category": "Technical",
+    "subcategory": "Operating System",
+    "type": "Operating System",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH045",
+    "name": "Pandas",
+    "category": "Technical",
+    "subcategory": "Data Analysis",
+    "type": "Library",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH046",
+    "name": "scikit-learn",
+    "category": "Technical",
+    "subcategory": "Machine Learning",
+    "type": "Library",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH047",
+    "name": "TensorFlow",
+    "category": "Technical",
+    "subcategory": "Deep Learning",
+    "type": "Framework",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH048",
+    "name": "NumPy",
+    "category": "Technical",
+    "subcategory": "Scientific Computing",
+    "type": "Library",
+    "status": "active"
+  },
+  {
+  "skill_id": "TECH049",
+  "name": "CI/CD",
+  "category": "Technical",
+  "subcategory": "DevOps",
+  "type": "Development Practice",
+  "status": "active"
+},
+{
+  "skill_id": "TECH050",
+  "name": "Jupyter Notebook",
+  "category": "Technical",
+  "subcategory": "Data Science",
+  "type": "Development Tool",
+  "status": "active"
+},
+{
+  "skill_id": "TECH051",
+  "name": "VS Code",
+  "category": "Technical",
+  "subcategory": "Development Tool",
+  "type": "IDE",
+  "status": "active"
+},
+{
+  "skill_id": "TECH052",
+  "name": "Jira",
+  "category": "Business",
+  "subcategory": "Project Management",
+  "type": "Project Management Tool",
+  "status": "active"
+}
+
+  
 ]
+

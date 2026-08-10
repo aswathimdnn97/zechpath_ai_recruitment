@@ -21,6 +21,8 @@ def normalize_text(text):
         "key skills": "skills",
         "skills": "skills",
         "skills and interests":"skills",
+        "technical expertise":"skills",
+        "technologies":"skills",
 
         "education": "education",
         "academic qualification": "education",
@@ -41,16 +43,27 @@ def normalize_text(text):
 
         "certifications": "certifications",
         "certification": "certifications",
+        "certificates":"certification",
+        "professional certifications":"certifications",
+        "licenses & certifications":"certifications",
+        
 
         "achievements": "achievements",
         "awards": "achievements",
+        "accomplishments":"achievements",
+        "honors":"achievements",
 
         "languages": "languages",
+        "language":"languages",
 
         "interests": "interests",
 
         "references": "references",
         "other activities and projects":"projects",
+        "selected projects":"projects",
+        "academic projects":"projects",
+        "personal projects":"projects",
+        "key projects":"projects",
         "extra-cirrucular":"activities",
         "extra-cirrucular activities":"activities",
         "documentations":"activities",
@@ -60,6 +73,7 @@ def normalize_text(text):
         "research publication": "publications",
         "publications": "publications",
         "publication": "publications",
+        "paper":"publications",
         "articles": "publications",
     }
     

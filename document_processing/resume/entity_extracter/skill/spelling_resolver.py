@@ -15,7 +15,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[4]
 
-SPELLING_FILE = PROJECT_ROOT / "data"/"skills" / "spelling_dictionary.json"
+SPELLING_FILE = PROJECT_ROOT / "data"/"resume"/ "skills" / "spelling_dictionary.json"
 
 
 # -------------------------------------------------------

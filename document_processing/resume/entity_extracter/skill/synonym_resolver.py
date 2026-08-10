@@ -10,7 +10,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[4]
 
 ALIAS_FILE = (
     PROJECT_ROOT /
-   "data"/"skills"/"skill_aliases.json"
+   "data"/"resume"/"skills"/"skill_aliases.json"
 )
 
 
