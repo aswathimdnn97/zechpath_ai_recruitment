@@ -17,20 +17,9 @@ import re
 # ----------------------------------------------------
 
 def is_date(text):
+    pattern = r"\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)\b|\bpresent\b|\bcurrent\b|\b\d{4}\b"
 
-    pattern = (
-        r"(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)"
-        r"|present"
-        r"|current"
-        r"|\d{4}"
-    )
-
-    return bool(
-        re.search(
-            pattern,
-            text.lower()
-        )
-    )
+    return bool(re.search(pattern, text.lower()))
 
 
 # ----------------------------------------------------

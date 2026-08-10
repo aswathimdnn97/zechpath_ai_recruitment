@@ -1,27 +1,13 @@
 {
-    "Acciojob": [
-        "acciojob",
-        "acciojob gurgaon",
-        "acciojob gurgaon, haryana"
-    ],
-
-    "Infosys": [
-        "infosys",
-        "infosys ltd",
-        "infosys limited",
-        "infosys pvt ltd"
-    ],
-
-    "Google": [
-        "google",
-        "google india",
-        "google llc"
-    ],
-
-    "Emulation Software Technologies Pvt. Ltd.": [
-        "emulation software technologies",
-        "emulation software technologies pvt ltd",
-        "emulation software technologies pvt. ltd.",
-        "emulation software technologies pvt. ltd. sri ganganagar, rajasthan"
+  "tcs": "Tata Consultancy Services",
+  "tata consultancy services": "Tata Consultancy Services",
+  "cts": "Cognizant",
+  "cognizant technology solutions": "Cognizant",
+  "ibm india": "IBM",
+  "google india": "Google",
+  "Acciojob": [
+        "Acciojob",
+        "Acciojob Gurgaon",
+        "Acciojob Gurgaon, Haryana"
     ]
 }

@@ -75,13 +75,11 @@ def contains_date(text):
 
     lower = text.lower()
 
-    return any(
-        month in lower
-        for month in months
-    ) or any(
-        char.isdigit()
-        for char in lower
-    )
+    # Use word-boundary matching for month abbreviations and 4-digit years
+    import re
+    pattern = r"\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\b|\b\d{4}\b"
+
+    return bool(re.search(pattern, lower))
 
 
 
@@ -143,11 +141,16 @@ def extract_location(experience_block):
 
 
 
-        # Skip dates
+        # If the line contains a date, strip the date part (common pattern: 'Location | Jan 2020 - Present')
+        candidate_line = line
 
-        if contains_date(line):
-
-            continue
+        if "|" in line:
+            candidate_line = line.split("|")[0].strip()
+        else:
+            # remove date tokens if present
+            import re
+            date_pattern = r"\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\b.*|\b\d{4}\b"
+            candidate_line = re.sub(date_pattern, "", line, flags=re.IGNORECASE).strip(" -–—,\t\n")
 
 
 
