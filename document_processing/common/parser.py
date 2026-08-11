@@ -1,10 +1,27 @@
-
 def parse_document(text, headings):
+    """
+    Parse normalized JD text into sections.
 
-    sections = {"header": []}
+    Args:
+        text: Normalized JD text.
+        headings: List/set of normalized section headings.
+
+    Returns:
+        Dictionary containing section names and their content.
+    """
+
+    sections = {}
     current_section = "header"
 
-    lines = text.split("\n")
+    sections[current_section] = []
+
+    # Convert headings to a set for fast lookup
+    heading_set = {
+        str(heading).strip().lower()
+        for heading in headings
+    }
+
+    lines = text.splitlines()
 
     for line in lines:
 
@@ -13,11 +30,25 @@ def parse_document(text, headings):
         if not line:
             continue
 
-        if line in headings:
-            current_section = line
-            sections[current_section] = []
+        normalized_line = line.lower()
 
-        else:
-            sections[current_section].append(line)
+        # -----------------------------------------
+        # Section heading
+        # -----------------------------------------
+
+        if normalized_line in heading_set:
+
+            current_section = normalized_line
+
+            if current_section not in sections:
+                sections[current_section] = []
+
+            continue
+
+        # -----------------------------------------
+        # Section content
+        # -----------------------------------------
+
+        sections[current_section].append(line)
 
     return sections

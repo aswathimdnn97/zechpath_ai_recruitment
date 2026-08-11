@@ -1,16 +1,16 @@
-job_description_headings = [
+JD_HEADINGS = {
     "job_title",
     "company",
+    "location",
     "job_summary",
     "responsibilities",
     "required_skills",
     "preferred_skills",
-    "soft_skills",
-    "education",
     "experience",
-    "location",
-    "salary",
+    "education",
     "employment_type",
+    "soft_skills",
+    "salary",
     "availability",
-    "requirements"
-]
+    "requirements",
+}

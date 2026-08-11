@@ -1,49 +1,54 @@
 import re
 
 def normalize_jd(text):
-    headings={
-         "job title": "job_title",
-        "position": "job_title",
-        "role": "job_title",
-        "company":"company",
-        "location":"location",
+    headings = {
+    "job title": "job_title",
+    "position": "job_title",
+    "role": "job_title",
 
-        "job summary": "job_summary",
-        "job overview": "job_summary",
-        "job description": "job_summary",
-        "overview": "job_summary",
+    "company": "company",
 
-        "responsibilities": "responsibilities",
-        "key responsibilities": "responsibilities",
-        "roles and responsibilities": "responsibilities",
+    "location": "location",
 
-        "required skills": "required_skills",
-        "skills required": "required_skills",
-        "technical skills": "required_skills",
-        "mandatory skills": "required_skills",
-        "soft skills":"soft skills",
+    "job summary": "job_summary",
+    "job overview": "job_summary",
+    "job description": "job_summary",
+    "overview": "job_summary",
 
-        "preferred skills": "preferred_skills",
-        "good to have": "preferred_skills",
-        "nice to have": "preferred_skills",
+    "responsibilities": "responsibilities",
+    "key responsibilities": "responsibilities",
+    "roles and responsibilities": "responsibilities",
 
-        "experience": "experience",
-        "experience required": "experience",
+    "required skills": "required_skills",
+    "skills required": "required_skills",
+    "technical skills": "required_skills",
+    "mandatory skills": "required_skills",
 
-        "education": "education",
-        "qualifications": "education",
-        "education qualification": "education",
+    "preferred skills": "preferred_skills",
+    "good to have": "preferred_skills",
+    "nice to have": "preferred_skills",
 
-        "location": "location",
+    "experience": "experience",
+    "experience required": "experience",
+    "required experience": "experience",
+    "years of experience": "experience",
+    "experience requirements":"experience",
 
-        "employment type": "employment_type",
-        "job type": "employment_type",
-        "soft skills":"soft_skills",    
+    "education": "education",
+    "qualifications": "education",
+    "education qualification": "education",
 
-        "salary": "salary",
-        "notice period":"availability",
-        "experience requirements":"requirements"
-     }
+    "employment type": "employment_type",
+    "job type": "employment_type",
+
+    "soft skills": "soft_skills",
+
+    "salary": "salary",
+
+    "notice period": "availability",
+
+    "requirements": "requirements",
+}
         
 #  Process line-by-line
     # 3. Process line-by-line

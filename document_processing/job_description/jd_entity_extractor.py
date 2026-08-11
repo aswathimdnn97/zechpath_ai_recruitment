@@ -29,7 +29,7 @@ def extract_entities(sections):
 
     # Experience (keep as string if only one value)
     experience = sections.get("experience", [])
-    entities["experience"] = experience[0] if experience else ""
+    entities["experience"] = sections.get("experience", [])
     entities["requirements"]=sections.get("requirements",[])
 
     return entities
