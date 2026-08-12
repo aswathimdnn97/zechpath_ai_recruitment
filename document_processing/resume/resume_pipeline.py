@@ -21,7 +21,11 @@ from document_processing.resume.entity_extracter.education.education_pipeline im
 from document_processing.resume.entity_extracter.certifications.certification_pipeline import certification_pipeline
 from document_processing.resume.text_reconstruction import text_reconstructor
 from document_processing.resume.entity_extracter.skill.skill_list_splitter import split_skill_line
+from document_processing.resume.entity_extracter.projects.project_extraction_pipeline import extract_projects
+
+from document_processing.common.json_writer import save_resume
 def resume_pipeline(file):
+    
     
     # file="data/resume/docx/vvyndmqmqqgs.docx"
 
@@ -77,6 +81,20 @@ def resume_pipeline(file):
     certificate_data=certification_pipeline(certification_section)
     
     
+    # ----------------------------------------------------------
+    # projects
+    # -----------------------------------------------------------
+    project_section=section_detected_text.get("projects")
+    if (
+        isinstance(project_section, list)
+        and len(project_section) == 1
+        and isinstance(project_section[0], list)
+    ):
+        project_section = project_section[0]
+
+    
+    project_data=extract_projects(project_section)
+    
     
     # -----------------build candidate profile-----------------
     candidate_profile = build_candidate_profile(
@@ -84,9 +102,11 @@ def resume_pipeline(file):
     education=education_data,
     experience=experience_data,
     skills=stack_skills,
-    projects=section_detected_text.get("projects", []),
+    projects=project_data,
     certifications=certificate_data
 )
+    
+    save_resume(candidate_profile,file)
     
     return candidate_profile
  

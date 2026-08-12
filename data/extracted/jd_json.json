@@ -27,14 +27,18 @@
             "SQL"
         ],
         "preferred_skills": [
-            "Experience with CI/CD pipelines",
-            "Knowledge of Microservices",
+            "Docker",
+            "AWS",
+            "Redis",
+            "Celery",
+            "Kubernetes",
+            "CI/CD",
+            "Microservices",
             "Linux administration",
-            "Unit Testing using PyTest"
+            "PyTest"
         ],
         "education": [
-            "Bachelor's degree in Computer Science, Information Technology, Electronics, or",
-            "related field.",
+            "Bachelor's degree in Computer Science, Information Technology, Electronics, or related field.",
             "B.Tech / B.E / MCA / M.Sc (Computer Science)"
         ],
         "soft_skills": [
@@ -43,11 +47,12 @@
             "Team player",
             "Self-motivated"
         ],
-        "experience": "2 - 4 Years",
-        "requirements": [
+        "experience": [
+            "2 - 4 Years",
             "Minimum 2 years of Python development experience.",
             "Experience with Django framework is mandatory.",
             "Experience with REST API development is required."
-        ]
+        ],
+        "requirements": []
     }
 }

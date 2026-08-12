@@ -29,8 +29,8 @@ def job_description_pipeline(file):
     # extract entity from parsed jd
     extracted_entity=extract_entities(parsed_jd)
     
-    #save extracted entity
-    save_resume(extracted_entity,"jd_json")
+    # save extracted entity
+    save_resume(extracted_entity, file)
     
     
     

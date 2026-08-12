@@ -1,4 +1,7 @@
  
+from document_processing.common.skill_cleaner import clean_skills
+
+
 def extract_entities(sections):
 
     entities = {}
@@ -19,9 +22,9 @@ def extract_entities(sections):
     
     entities["responsibilities"] = sections.get("responsibilities", [])
     
-    entities["required_skills"] = sections.get("required_skills", [])
+    entities["required_skills"] = clean_skills(sections.get("required_skills", []))
     
-    entities["preferred_skills"] = sections.get("preferred_skills", [])
+    entities["preferred_skills"] = clean_skills(sections.get("preferred_skills", []))
     
     entities["education"] = sections.get("education", [])
     

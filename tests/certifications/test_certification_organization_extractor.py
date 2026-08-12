@@ -90,10 +90,46 @@ def test_organization_without_date():
     assert result == "Microsoft"
 
 
+def test_ignores_year_only_lines_as_organization():
+
+    block = [
+        "Oracle Certified Professional: Java SE 2022",
+        "2022",
+        "Issued: 2022",
+    ]
+
+    result = extract_issuing_organization(block)
+
+    assert result == "Oracle"
+    assert result != "2022"
+
+
+def test_infers_organization_from_title_when_missing():
+
+    block = [
+        "AWS Certified Developer",
+    ]
+
+    result = extract_issuing_organization(block)
+
+    assert result == "Amazon Web Services"
+
+
+def test_oracle_organization_from_title():
+
+    block = [
+        "Oracle Certified Professional: Java SE 2022",
+    ]
+
+    result = extract_issuing_organization(block)
+
+    assert result == "Oracle"
+
+
 def test_no_organization():
 
     block = [
-        "Google Cloud Professional Data Engineer",
+        "Data Engineering Certification",
     ]
 
     result = extract_issuing_organization(block)

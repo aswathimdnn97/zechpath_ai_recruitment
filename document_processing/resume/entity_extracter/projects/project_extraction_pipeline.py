@@ -8,12 +8,7 @@ from document_processing.resume.entity_extracter.projects.project_url_extractor 
 
 def extract_projects(section):
     blocks = split_project_blocks(section)
-    print("PROJECT SECTION:")
-    print(section)
-    print("TYPE:", type(section))
-
-    for i, item in enumerate(section):
-        print(i, type(item), item)
+    
         
     if not section:
         return []
