@@ -501,6 +501,13 @@ def clean_institution_name(institution):
 
     P.E.S Institute of Technology,
     Bangalore South Campus, India
+    
+    Also handles:
+    B.Tech in Computer Science and Engineering — Visvesvaraya Technological University | 2017
+    
+    becomes
+    
+    Visvesvaraya Technological University
     """
 
     if not institution:
@@ -513,6 +520,36 @@ def clean_institution_name(institution):
     institution = normalize_spaces(
         institution
     )
+    
+    # -----------------------------------------------
+    # Remove pipe and anything after it (dates)
+    # -----------------------------------------------
+    
+    if "|" in institution:
+        institution = institution.split("|")[0].strip()
+    
+    # -----------------------------------------------
+    # Handle "Degree in FieldOfStudy — Institution" pattern
+    # Split on em-dash and other dash separators
+    # to extract only the institution part
+    # -----------------------------------------------
+    
+    # Split on various dash-like characters (em-dash, en-dash, hyphen)
+    # This handles corrupted em-dashes like ΓÇö as well
+    if re.search(r"[\s—–\-ΓÇö~]+", institution):
+        # Try to find and extract institution after dash separator
+        parts = re.split(r"\s*[—–\-ΓÇö~]+\s*", institution)
+        
+        if len(parts) > 1:
+            # Get the part that contains a university keyword (likely the institution)
+            for part in parts:
+                if contains_institution_keyword(part):
+                    institution = part
+                    break
+            else:
+                # If no part has institution keyword, take the last part
+                # (usually after the dash is the institution)
+                institution = parts[-1]
 
     # -----------------------------------------------
     # Remove dates
@@ -536,6 +573,18 @@ def clean_institution_name(institution):
 
     institution = remove_degree(
         institution
+    )
+    
+    # -----------------------------------------------
+    # Remove "in" keyword that often follows degree
+    # e.g., "Bachelor of Engineering in Computer Science"
+    # -----------------------------------------------
+    
+    institution = re.sub(
+        r"\s+in\s+",
+        " ",
+        institution,
+        flags=re.IGNORECASE
     )
 
     # -----------------------------------------------

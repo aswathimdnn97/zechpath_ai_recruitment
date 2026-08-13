@@ -504,7 +504,15 @@
   "subcategory": "Project Management",
   "type": "Project Management Tool",
   "status": "active"
-}
+},
+  {
+  "skill_id":"TECH053",
+  "name": "Pytest",
+  "category": "Technology",
+  "subcategory": "Testing",
+  "type": "Testing Framework",
+  "status": "active"
+  }
 
   
 ]

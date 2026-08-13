@@ -169,19 +169,64 @@ def extract_field_of_study(block):
         if not line:
             continue
 
-        # ---------------------------------------------
-        # Never treat a degree line as a field
-        # ---------------------------------------------
+        lower_line = line.lower()
 
+        # =============================================
+        # Handle "Degree in FieldOfStudy" pattern
+        # e.g., "B.Tech in Computer Science and Engineering"
+        # =============================================
+        
+        if " in " in lower_line:
+            # Split on " in " to extract the field part
+            parts = re.split(r"\s+in\s+", line, flags=re.IGNORECASE)
+            
+            if len(parts) > 1:
+                # The part after "in" might contain field of study
+                # e.g., "Computer Science and Engineering ΓÇö Visvesvaraya Technological University | 2017 ΓÇô 2021"
+                field_candidate = parts[1]
+                
+                # Remove the pipe and anything after it (dates)
+                if "|" in field_candidate:
+                    field_candidate = field_candidate.split("|")[0].strip()
+                
+                # Now remove from first separator (dash, em-dash, etc.) onwards
+                # But be more careful to match the actual separator
+                # Match patterns like: " — ", " – ", " - " (with spaces)
+                match = re.search(r"\s[—–\-]\s", field_candidate)
+                if match:
+                    # Split at the separator
+                    field_candidate = field_candidate[:match.start()].strip()
+                else:
+                    # No standard dash separator found, check for institution keywords
+                    # Try to find where an institution keyword starts
+                    match = re.search(
+                        r"\b(?:university|college|institute|institution|technological|polytechnic)\b",
+                        field_candidate,
+                        re.IGNORECASE
+                    )
+                    
+                    if match:
+                        # Remove from the institution keyword onwards
+                        field_candidate = field_candidate[:match.start()].strip()
+                
+                # Final cleanup - remove any trailing separators
+                field_candidate = re.sub(r"[\s\-–—ΓÇö~]+$", "", field_candidate).strip()
+                
+                # Check if this looks like a field of study
+                if field_candidate:
+                    for keyword in FIELD_KEYWORDS:
+                        if keyword.lower() in field_candidate.lower():
+                            return clean_field(field_candidate)
+
+        # =============================================
+        # Original logic
+        # =============================================
+        
+        # Never treat a degree line as a field
         if is_degree_line(line):
             continue
 
-        lower_line = line.lower()
-
-        # ---------------------------------------------
         # Ignore academic metadata
-        # ---------------------------------------------
-
         ignored_patterns = [
 
             r"^\d{4}\s*[-–]\s*(?:\d{4}|present)$",
@@ -203,10 +248,7 @@ def extract_field_of_study(block):
         ):
             continue
 
-        # ---------------------------------------------
         # Exact field keyword matching
-        # ---------------------------------------------
-
         for keyword in FIELD_KEYWORDS:
 
             if keyword in lower_line:
