@@ -1,214 +1,203 @@
+from typing import Any, Dict
 from sentence_transformers import SentenceTransformer
 
 
 class EmbeddingGenerator:
 
-    def __init__(self):
-        print("Loading embedding model: all-MiniLM-L6-v2")
-
+    def __init__(
+        self,
+        model_name="all-MiniLM-L6-v2"
+    ):
         self.model = SentenceTransformer(
-            "all-MiniLM-L6-v2"
+            model_name
         )
 
-        print("Embedding model loaded successfully.")
+    def _profile_to_text(
+        self,
+        profile: Dict[str, Any]
+    ) -> str:
 
-    def generate_embedding(self, text):
-        """Generate embedding for text."""
+        if not isinstance(profile, dict):
+            return ""
 
-        return self.model.encode(
-            text,
-            normalize_embeddings=True
+        # Handle resume_text wrapper
+        data = profile.get(
+            "resume_text",
+            profile
         )
 
-    def candidate_to_text(self, candidate):
-        """Convert candidate profile JSON to text."""
+        if not isinstance(data, dict):
+            return ""
 
         parts = []
 
-        personal = candidate.get(
-            "personal_information",
-            {}
-        )
-
-        if personal.get("name"):
-            parts.append(
-                personal["name"]
-            )
-
         # Skills
-        skills = candidate.get(
-            "skills",
-            []
-        )
+        skills = data.get("skills", [])
 
-        for skill in skills:
+        if isinstance(skills, list):
 
-            if isinstance(skill, dict):
+            for skill in skills:
 
-                name = skill.get("name")
+                if isinstance(skill, str):
+                    parts.append(skill)
 
-                if name:
-                    parts.append(str(name))
+                elif isinstance(skill, dict):
 
-            elif isinstance(skill, str):
+                    name = (
+                        skill.get("skill")
+                        or skill.get("name")
+                        or skill.get("canonical_name")
+                    )
 
-                parts.append(skill)
+                    if name:
+                        parts.append(str(name))
 
         # Experience
-        experiences = candidate.get(
+        experience = data.get(
             "experience",
             []
         )
 
-        for experience in experiences:
+        if isinstance(experience, list):
 
-            if not isinstance(experience, dict):
-                continue
+            for item in experience:
 
-            company = experience.get("company")
+                if not isinstance(item, dict):
+                    continue
 
-            if company:
-                parts.append(str(company))
+                title = item.get("title")
 
-            job_title = (
-                experience.get("job_title")
-                or experience.get("role")
-                or experience.get("title")
-            )
+                if isinstance(title, dict):
+                    title = title.get("title")
 
-            if job_title:
-                parts.append(str(job_title))
+                if title:
+                    parts.append(str(title))
 
-            description = experience.get("description")
-
-            if isinstance(description, list):
-
-                parts.extend(
-                    str(item)
-                    for item in description
-                    if item
+                descriptions = item.get(
+                    "description",
+                    []
                 )
 
-            elif description:
+                if isinstance(descriptions, list):
+                    parts.extend(
+                        str(x)
+                        for x in descriptions
+                        if x
+                    )
 
-                parts.append(
-                    str(description)
-                )
-
-            summary = experience.get("summary")
-
-            if summary:
-                parts.append(str(summary))
+                elif descriptions:
+                    parts.append(
+                        str(descriptions)
+                    )
 
         # Education
-        education = candidate.get(
+        education = data.get(
             "education",
             []
         )
 
-        for edu in education:
+        if isinstance(education, list):
 
-            if isinstance(edu, dict):
+            for item in education:
 
-                for key in [
-                    "degree",
-                    "field_of_study",
-                    "institution"
-                ]:
+                if isinstance(item, dict):
 
-                    value = edu.get(key)
+                    for key in (
+                        "degree_type",
+                        "degree",
+                        "field_of_study",
+                        "field",
+                        "institution"
+                    ):
 
-                    if value:
-                        parts.append(
-                            str(value)
-                        )
+                        value = item.get(key)
 
-        # Certifications
-        certifications = candidate.get(
-            "certifications",
+                        if value:
+                            parts.append(
+                                str(value)
+                            )
+
+                elif isinstance(item, str):
+                    parts.append(item)
+
+        # Projects
+        projects = data.get(
+            "projects",
             []
         )
 
-        for certification in certifications:
+        if isinstance(projects, list):
 
-            if isinstance(certification, dict):
+            for project in projects:
 
-                name = certification.get("name")
+                if isinstance(project, dict):
 
-                if name:
-                    parts.append(
-                        str(name)
-                    )
+                    for key in (
+                        "name",
+                        "title",
+                        "description"
+                    ):
 
-            elif isinstance(certification, str):
+                        value = project.get(key)
 
-                parts.append(certification)
+                        if value:
+                            parts.append(
+                                str(value)
+                            )
 
-        return " ".join(parts)
-
-    def job_to_text(self, job):
-        """Convert JD JSON to text."""
-
-        parts = []
-
-        for key in [
-            "job_title",
-            "summary",
-            "description",
-            "responsibilities",
-            "required_skills",
-            "preferred_skills",
-            "qualifications",
-            "experience_required"
-        ]:
-
-            value = job.get(key)
-
-            if isinstance(value, list):
-
-                parts.extend(
-                    str(item)
-                    for item in value
-                )
-
-            elif value:
-
-                parts.append(
-                    str(value)
-                )
+                elif isinstance(project, str):
+                    parts.append(project)
 
         return " ".join(parts)
+
+    # ========================================================
+    # Generic embedding
+    # ========================================================
+
+    def generate_embedding(self, profile):
+
+        if isinstance(profile, dict):
+
+            text = self._profile_to_text(
+                profile
+            )
+
+        else:
+
+            text = str(profile)
+
+        if not text.strip():
+            raise ValueError(
+                "Cannot generate embedding from empty text"
+            )
+
+        return self.model.encode(
+            text,
+            convert_to_numpy=True
+        )
+
+    # ========================================================
+    # Candidate embedding
+    # ========================================================
 
     def generate_candidate_embedding(
         self,
-        candidate
+        candidate_profile
     ):
-        """Generate embedding for candidate."""
 
-        text = self.candidate_to_text(
-            candidate
+        return self.generate_embedding(
+            candidate_profile
         )
 
-        print(
-            "Candidate text:",
-            text
-        )
-
-        return self.generate_embedding(text)
+    # ========================================================
+    # JD embedding
+    # ========================================================
 
     def generate_jd_embedding(
         self,
-        job
+        jd_profile
     ):
-        """Generate embedding for JD."""
 
-        text = self.job_to_text(
-            job
+        return self.generate_embedding(
+            jd_profile
         )
-
-        print(
-            "JD text:",
-            text
-        )
-
-        return self.generate_embedding(text)
