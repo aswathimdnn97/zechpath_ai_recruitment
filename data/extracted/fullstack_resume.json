@@ -1,0 +1,649 @@
+{
+    "resume_text": {
+        "candidate_id": "CAN_20260815112600",
+        "personal_information": {
+            "name": "ARJUN MENON",
+            "email": "arjun.menon.dev@example.com",
+            "phone": "91 98765 43210",
+            "location": "Bengaluru, Karnataka, India",
+            "linkedin": "linkedin.com/in/arjunmenon",
+            "github": "github.com/arjunmenon",
+            "portfolio": null
+        },
+        "skills": [
+            {
+                "skill_id": "TECH001",
+                "skill": "Python",
+                "category": "Technical",
+                "subcategory": "Programming Language",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH003",
+                "skill": "JavaScript",
+                "category": "Technical",
+                "subcategory": "Programming Language",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH017",
+                "skill": "MySQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "fuzzy",
+                "confidence": 90
+            },
+            {
+                "skill_id": "TECH005",
+                "skill": "HTML",
+                "category": "Technical",
+                "subcategory": "Frontend",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH006",
+                "skill": "CSS",
+                "category": "Technical",
+                "subcategory": "Frontend",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH012",
+                "skill": "Django",
+                "category": "Technical",
+                "subcategory": "Backend Framework",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH041",
+                "skill": "Django REST Framework",
+                "category": "Technical",
+                "subcategory": "Backend Framework",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH014",
+                "skill": "FastAPI",
+                "category": "Technical",
+                "subcategory": "Backend Framework",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH013",
+                "skill": "Flask",
+                "category": "Technical",
+                "subcategory": "Backend Framework",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH025",
+                "skill": "REST API",
+                "category": "Technical",
+                "subcategory": "Web Services",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH007",
+                "skill": "React",
+                "category": "Technical",
+                "subcategory": "Frontend Framework",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH042",
+                "skill": "Redux",
+                "category": "Technical",
+                "subcategory": "State Management",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH015",
+                "skill": "Bootstrap",
+                "category": "Technical",
+                "subcategory": "CSS Framework",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH040",
+                "skill": "Responsive Web Design",
+                "category": "Technical",
+                "subcategory": "Frontend",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH018",
+                "skill": "PostgreSQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH019",
+                "skill": "MongoDB",
+                "category": "Technical",
+                "subcategory": "NoSQL Database",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH043",
+                "skill": "Redis",
+                "category": "Technical",
+                "subcategory": "In-Memory Database",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH028",
+                "skill": "Microsoft Azure",
+                "category": "Technical",
+                "subcategory": "Cloud",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH021",
+                "skill": "Docker",
+                "category": "Technical",
+                "subcategory": "DevOps",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH023",
+                "skill": "Git",
+                "category": "Technical",
+                "subcategory": "Version Control",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH024",
+                "skill": "GitHub",
+                "category": "Technical",
+                "subcategory": "Version Control",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH049",
+                "skill": "CI/CD",
+                "category": "Technical",
+                "subcategory": "DevOps",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH044",
+                "skill": "Linux",
+                "category": "Technical",
+                "subcategory": "Operating System",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH045",
+                "skill": "Pandas",
+                "category": "Technical",
+                "subcategory": "Data Analysis",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH048",
+                "skill": "NumPy",
+                "category": "Technical",
+                "subcategory": "Scientific Computing",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH046",
+                "skill": "scikit-learn",
+                "category": "Technical",
+                "subcategory": "Machine Learning",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH047",
+                "skill": "TensorFlow",
+                "category": "Technical",
+                "subcategory": "Deep Learning",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH030",
+                "skill": "Machine Learning",
+                "category": "Technical",
+                "subcategory": "Artificial Intelligence",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH039",
+                "skill": "Postman",
+                "category": "Technical",
+                "subcategory": "API Testing",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH050",
+                "skill": "Jupyter Notebook",
+                "category": "Technical",
+                "subcategory": "Data Science",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH051",
+                "skill": "VS Code",
+                "category": "Technical",
+                "subcategory": "Development Tool",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH052",
+                "skill": "Jira",
+                "category": "Business",
+                "subcategory": "Project Management",
+                "matched_by": "exact",
+                "confidence": 100
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Master of Computer Applications",
+                "field_of_study": null,
+                "institution": "University of Kerala",
+                "university": null,
+                "board": null,
+                "graduation_year": "2022"
+            },
+            {
+                "degree_type": "Bachelor of Engineering",
+                "field_of_study": "Computer Science and Engineering Karnataka, India",
+                "institution": "Visvesvaraya Technological University",
+                "university": null,
+                "board": null,
+                "graduation_year": "2018"
+            },
+            {
+                "degree_type": "Higher Secondary",
+                "field_of_study": null,
+                "institution": null,
+                "university": null,
+                "board": "All India Senior School Certificate Examination Central Board of Secondary Education",
+                "graduation_year": "2014"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": "JOB002",
+                    "title": "Python Developer",
+                    "category": "Software Development",
+                    "matched_by": "fuzzy",
+                    "confidence": 90
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Tech Nova Solutions Pvt. Ltd.",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jan 2023",
+                    "end_date": "Present"
+                },
+                "total_experience": {
+                    "total_months": 44,
+                    "total_years": 3.7
+                },
+                "location": "Bengaluru",
+                "employment_type": {
+                    "type_id": "EMP003",
+                    "employment_type": "Internship",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "skills": [
+                    {
+                        "skill_id": "TECH001",
+                        "skill": "Python",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH007",
+                        "skill": "React",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH012",
+                        "skill": "Django",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH014",
+                        "skill": "FastAPI",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH018",
+                        "skill": "PostgreSQL",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH028",
+                        "skill": "Microsoft Azure",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH021",
+                        "skill": "Docker",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH049",
+                        "skill": "CI/CD",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    }
+                ],
+                "description": [
+                    "Built React-based dashboards for operational reporting, reducing manual reporting effort by approximately 35 .",
+                    "Optimized PostgreSQL queries and backend APIs, improving average response time for key endpoints by about 30 .",
+                    "Implemented Docker-based development and deployment workflows and integrated automated testing into CI/CD pipelines.",
+                    "Worked with Azure services for application hosting, storage, monitoring, and secure configuration management."
+                ]
+            },
+            {
+                "title": {
+                    "title_id": "JOB002",
+                    "title": "Python Developer",
+                    "category": "Software Development",
+                    "matched_by": "fuzzy",
+                    "confidence": 90
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Data Bridge Analytics",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jul 2020",
+                    "end_date": "Dec 2022"
+                },
+                "total_experience": {
+                    "total_months": 30,
+                    "total_years": 2.5
+                },
+                "location": null,
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "skills": [
+                    {
+                        "skill_id": "TECH001",
+                        "skill": "Python",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH012",
+                        "skill": "Django",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH041",
+                        "skill": "Django REST Framework",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH048",
+                        "skill": "NumPy",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH045",
+                        "skill": "Pandas",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH018",
+                        "skill": "PostgreSQL",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH019",
+                        "skill": "MongoDB",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH025",
+                        "skill": "REST API",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH030",
+                        "skill": "Machine Learning",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    }
+                ],
+                "description": [
+                    "Developed Python applications for data ingestion, validation, transformation, and automated reporting.",
+                    "Created REST APIs using Django REST Framework and integrated PostgreSQL and MongoDB data sources.",
+                    "Built data processing pipelines using Pandas and Num Py and supported machine learning model preparation.",
+                    "Developed reusable modules, unit tests, logging, and error-handling utilities for production applications."
+                ]
+            },
+            {
+                "title": null,
+                "company": {
+                    "company_id": null,
+                    "company": "Code Craft Technologies",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jun 2018",
+                    "end_date": "Jun 2020"
+                },
+                "total_experience": {
+                    "total_months": 25,
+                    "total_years": 2.1
+                },
+                "location": null,
+                "employment_type": {
+                    "type_id": "EMP003",
+                    "employment_type": "Internship",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "skills": [
+                    {
+                        "skill_id": "TECH001",
+                        "skill": "Python",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH003",
+                        "skill": "JavaScript",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH005",
+                        "skill": "HTML",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH006",
+                        "skill": "CSS",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH015",
+                        "skill": "Bootstrap",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH023",
+                        "skill": "Git",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    }
+                ],
+                "description": [
+                    "Implemented frontend components using HTML, CSS, Bootstrap, and JavaScript.",
+                    "Worked with SQL databases, Git-based source control, debugging, and application support."
+                ]
+            }
+        ],
+        "projects": [
+            {
+                "project_name": "AI Resume Screening Platform",
+                "description": "Built a Python/Fast API service that extracts resume entities, normalizes skills, matches candidates against job descriptions, and produces structured ATS-ready profiles.",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "Sales Forecasting Dashboard",
+                "description": "Developed a React and Python dashboard for sales forecasting and KPI reporting using Pandas, scikit-learn, PostgreSQL, and Azure.",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "Document Processing Pipeline",
+                "description": "Implemented PDF/DOCX extraction, layout handling, text reconstruction, section detection, and structured entity extraction for resumes.",
+                "technologies": [],
+                "url": null
+            }
+        ],
+        "certifications": [
+            {
+                "certification_name": "Microsoft Certified: Azure Developer Associate",
+                "issuing_organization": "Microsoft",
+                "issue_date": "2024",
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "Microsoft Certified: Azure AI Fundamentals",
+                "issuing_organization": "Microsoft",
+                "issue_date": "2023",
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "Google Cloud Professional Data Engineer",
+                "issuing_organization": "Google Cloud",
+                "issue_date": "2023",
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "Machine Learning Specialization",
+                "issuing_organization": "Coursera",
+                "issue_date": "2022",
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "TensorFlow Developer Certificate TensorFlow Python for Data Science",
+                "issuing_organization": "Python for Data Science - IBM",
+                "issue_date": "2022",
+                "expiration_date": null,
+                "credential_id": null
+            }
+        ],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-08-15T05:56:00.316899+00:00"
+        }
+    }
+}

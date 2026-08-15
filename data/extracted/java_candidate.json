@@ -1,0 +1,331 @@
+{
+    "resume_text": {
+        "candidate_id": "CAN_20260815112603",
+        "personal_information": {
+            "name": "VIKRAM SHARMA",
+            "email": "vikram.sharma.dev@example.com",
+            "phone": null,
+            "location": "Pune, Maharashtra",
+            "linkedin": "linkedin.com/in/vikramsharma",
+            "github": null,
+            "portfolio": null
+        },
+        "skills": [
+            {
+                "skill_id": "TECH002",
+                "skill": "Java",
+                "category": "Technical",
+                "subcategory": "Programming Language",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH017",
+                "skill": "MySQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "fuzzy",
+                "confidence": 90
+            },
+            {
+                "skill_id": "TECH003",
+                "skill": "JavaScript",
+                "category": "Technical",
+                "subcategory": "Programming Language",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": null,
+                "skill": "Spring Boot",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "Spring MVC",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "Hibernate",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": "TECH025",
+                "skill": "REST API",
+                "category": "Technical",
+                "subcategory": "Web Services",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH018",
+                "skill": "PostgreSQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH043",
+                "skill": "Redis",
+                "category": "Technical",
+                "subcategory": "In-Memory Database",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH027",
+                "skill": "AWS",
+                "category": "Technical",
+                "subcategory": "Cloud",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH023",
+                "skill": "Git",
+                "category": "Technical",
+                "subcategory": "Version Control",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": null,
+                "skill": "Maven",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": "TECH021",
+                "skill": "Docker",
+                "category": "Technical",
+                "subcategory": "DevOps",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": null,
+                "skill": "Jenkins",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "Kafka",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "JUnit",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Bachelor of Engineering",
+                "field_of_study": null,
+                "institution": "Savitribai Phule Pune University",
+                "university": null,
+                "board": null,
+                "graduation_year": "2020"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": "JOB001",
+                    "title": "Software Engineer",
+                    "category": "Software Development",
+                    "matched_by": "fuzzy",
+                    "confidence": 86
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Enterprise Works Technologies",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jan 2023",
+                    "end_date": "Present"
+                },
+                "total_experience": {
+                    "total_months": 44,
+                    "total_years": 3.7
+                },
+                "location": null,
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 75
+                },
+                "skills": [
+                    {
+                        "skill_id": "TECH043",
+                        "skill": "Redis",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH018",
+                        "skill": "PostgreSQL",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH025",
+                        "skill": "REST API",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    }
+                ],
+                "description": [
+                    "Developed Spring Boot micro services for customer account and transaction processing.",
+                    "Designed REST APIs and integrated PostgreSQL and Redis for high-volume workloads.",
+                    "Implemented Kafka-based asynchronous processing and automated deployments using Jenkins.",
+                    "Improved service response times through query optimization and caching."
+                ]
+            },
+            {
+                "title": {
+                    "title_id": "JOB001",
+                    "title": "Software Engineer",
+                    "category": "Software Development",
+                    "matched_by": "fuzzy",
+                    "confidence": 86
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Nex Gen Software Systems",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jul 2020",
+                    "end_date": "Dec 2022"
+                },
+                "total_experience": {
+                    "total_months": 30,
+                    "total_years": 2.5
+                },
+                "location": null,
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 75
+                },
+                "skills": [
+                    {
+                        "skill_id": "TECH002",
+                        "skill": "Java",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH018",
+                        "skill": "PostgreSQL",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    }
+                ],
+                "description": [
+                    "Built Java and Spring MVC applications for enterprise clients.",
+                    "Developed database integrations using Hibernate and PostgreSQL.",
+                    "Created JUnit tests, participated in code reviews and supported production releases."
+                ]
+            }
+        ],
+        "projects": [
+            {
+                "project_name": "Payment Processing Platform",
+                "description": "Developed Spring Boot micro services for payment validation, transaction processing and audit logging.",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "Customer Service Portal",
+                "description": "Customer Service Portal Built backend services supporting customer registration, account management and reporting.",
+                "technologies": [
+                    "Java",
+                    "Spring Boot",
+                    "Kafka",
+                    "PostgreSQL",
+                    "Docker"
+                ],
+                "url": null
+            },
+            {
+                "project_name": null,
+                "description": null,
+                "technologies": [
+                    "Java",
+                    "Spring MVC",
+                    "Hibernate",
+                    "MySQL"
+                ],
+                "url": null
+            }
+        ],
+        "certifications": [
+            {
+                "certification_name": "Oracle Certified Professional: Java SE",
+                "issuing_organization": "Oracle",
+                "issue_date": "2022",
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "AWS Certified Developer Associate",
+                "issuing_organization": "Amazon Web Services",
+                "issue_date": "2023",
+                "expiration_date": null,
+                "credential_id": null
+            }
+        ],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-08-15T05:56:03.739195+00:00"
+        }
+    }
+}

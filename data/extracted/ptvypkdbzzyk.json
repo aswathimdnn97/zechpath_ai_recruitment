@@ -1,0 +1,81 @@
+{
+    "resume_text": {
+        "candidate_id": "CAN_20260815112606",
+        "personal_information": {
+            "name": "Boltach Anton",
+            "email": "boltach.anton@gmail.com",
+            "phone": null,
+            "location": "Birth July 01, 1999",
+            "linkedin": null,
+            "github": null,
+            "portfolio": null
+        },
+        "skills": [
+            {
+                "skill_id": null,
+                "skill": "Common",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "features",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "Preparation in mathematics (linear algebra",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "discrete mathematics",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "mathematical analysis",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "probability theory and mathematical statistics).",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            }
+        ],
+        "education": [
+            {
+                "degree_type": null,
+                "field_of_study": "Faculty of Applied Mathematics and Computer Science, Department of Mathematical",
+                "institution": "Belarusian State University 2016",
+                "university": null,
+                "board": null,
+                "graduation_year": "2020"
+            }
+        ],
+        "experience": [],
+        "projects": [],
+        "certifications": [],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-08-15T05:56:06.137315+00:00"
+        }
+    }
+}

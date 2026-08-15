@@ -1,0 +1,280 @@
+{
+    "resume_text": {
+        "candidate_id": "CAN_20260815112615",
+        "personal_information": {
+            "name": "Patrick O’Hara",
+            "email": "ohara.ptf@gmail.com",
+            "phone": null,
+            "location": "ORK EXPERIENCE 312 Poplar Drive, Oakville, ON",
+            "linkedin": null,
+            "github": null,
+            "portfolio": "https://www.facebook.com/patrick."
+        },
+        "skills": [
+            {
+                "skill_id": null,
+                "skill": "Modification of the visible features of an area of land in many forms namely gardening and ENGLISH Native speaker planting",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "construction of patios and decks",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": "TECH045",
+                "skill": "Pandas",
+                "category": "Technical",
+                "subcategory": "Data Analysis",
+                "matched_by": "fuzzy",
+                "confidence": 90
+            },
+            {
+                "skill_id": null,
+                "skill": "intermediate; written: poor installation of drainage systems.",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": "TECH008",
+                "skill": "Angular",
+                "category": "Technical",
+                "subcategory": "Frontend Framework",
+                "matched_by": "fuzzy",
+                "confidence": 90
+            },
+            {
+                "skill_id": null,
+                "skill": "CHIEVEMENTS",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": "TECH025",
+                "skill": "REST API",
+                "category": "Technical",
+                "subcategory": "Web Services",
+                "matched_by": "fuzzy",
+                "confidence": 90
+            },
+            {
+                "skill_id": null,
+                "skill": "DUCATION",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "2015 Bachelors Degree",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "2011 - 2015 Biology",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "BACHELOR OF SCIENCE 2011 Honor Roll",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "Dalhousie University",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "Hali- fax NS",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "2010 Eastern Mediterranean Volleyball",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "2010 - 2011 Secondary School Champions",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "White Oaks Secondary",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "2010 Honor Roll",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "School",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "Oakville ON",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "2008 - 2010 Secondary School",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "2010 District Coastal Conference Vol- American School of Dubai",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "leyball Champions",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "Dubai UAE",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "2007 - 2008 Secondary School",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "American School of Paris",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": "TECH006",
+                "skill": "CSS",
+                "category": "Technical",
+                "subcategory": "Frontend",
+                "matched_by": "fuzzy",
+                "confidence": 90
+            },
+            {
+                "skill_id": null,
+                "skill": "Saint-Cloud FR",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "GOOD LEVEL Microsoft Office",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "email",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "social networking",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": "TECH023",
+                "skill": "Git",
+                "category": "Technical",
+                "subcategory": "Version Control",
+                "matched_by": "fuzzy",
+                "confidence": 90
+            },
+            {
+                "skill_id": "TECH005",
+                "skill": "HTML",
+                "category": "Technical",
+                "subcategory": "Frontend",
+                "matched_by": "exact",
+                "confidence": 100
+            }
+        ],
+        "education": [],
+        "experience": [],
+        "projects": [],
+        "certifications": [],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-08-15T05:56:15.794114+00:00"
+        }
+    }
+}

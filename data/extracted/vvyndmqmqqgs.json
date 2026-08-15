@@ -1,0 +1,116 @@
+{
+    "resume_text": {
+        "candidate_id": "CAN_20260814201517",
+        "personal_information": {
+            "name": "SUKUMAR DODDA",
+            "email": "sukumardodda@gmail.com",
+            "phone": "918008770009",
+            "location": "D.NO- 7-121,R.C.M Church Road,Vanukuru,krishna dt-521151.",
+            "linkedin": null,
+            "github": null,
+            "portfolio": null
+        },
+        "skills": [
+            {
+                "skill_id": null,
+                "skill": "Autocad Beginner",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "C Intermediate",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "Ms office Intermediate",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Bachelor of Engineering",
+                "field_of_study": "Chemical Engineering August 2016",
+                "institution": "National Insititute of Technology, Warangal",
+                "university": null,
+                "board": null,
+                "graduation_year": "2016"
+            },
+            {
+                "degree_type": null,
+                "field_of_study": null,
+                "institution": "Narayana Junior College",
+                "university": null,
+                "board": null,
+                "graduation_year": null
+            },
+            {
+                "degree_type": "Secondary",
+                "field_of_study": null,
+                "institution": "St.Mary’s High school, Kankipadu, CGPA:9.5",
+                "university": null,
+                "board": null,
+                "graduation_year": "2012"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": null,
+                    "title": "25,2018",
+                    "category": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "June",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "September 2017",
+                    "end_date": "May 2018"
+                },
+                "total_experience": {
+                    "total_months": 9,
+                    "total_years": 0.8
+                },
+                "location": null,
+                "employment_type": {
+                    "type_id": "EMP007",
+                    "employment_type": "Training",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "department": {
+                    "department_id": "DEP002",
+                    "department": "Data Science",
+                    "matched_by": "keyword",
+                    "confidence": 25
+                },
+                "skills": [],
+                "description": [
+                    "Joint Secretary at Film Committee",
+                    "Representing as Mess Representative at 2nd Mess."
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-08-14T14:45:17.135416+00:00"
+        }
+    }
+}

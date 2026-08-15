@@ -1,0 +1,160 @@
+{
+    "resume_text": {
+        "candidate_id": "CAN_20260815112608",
+        "personal_information": {
+            "name": "Sandeep O H",
+            "email": "sandeepoh@gmail.com",
+            "phone": "91 7760750844",
+            "location": "2012-2016 Bachelor of Engineering (B.E), P.E.S Institute of Technology, Bangalore South Campus, India.",
+            "linkedin": null,
+            "github": null,
+            "portfolio": null
+        },
+        "skills": [
+            {
+                "skill_id": null,
+                "skill": "Programming C",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": "TECH006",
+                "skill": "CSS",
+                "category": "Technical",
+                "subcategory": "Frontend",
+                "matched_by": "fuzzy",
+                "confidence": 90
+            },
+            {
+                "skill_id": null,
+                "skill": "Android API",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": "TECH017",
+                "skill": "MySQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "exact",
+                "confidence": 100
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Bachelor of Engineering",
+                "field_of_study": "Computer Science and Engineering",
+                "institution": "P.E.S Institute of Technology, Bangalore South Campus, India",
+                "university": "Visvesvaraya Technological University, Belgaum, Karnataka, India",
+                "board": null,
+                "graduation_year": "2016"
+            },
+            {
+                "degree_type": "Higher Secondary",
+                "field_of_study": null,
+                "institution": "Kendriya Vidyalaya Kalpetta, kerala, India",
+                "university": null,
+                "board": "Central Board of Secondary Education",
+                "graduation_year": "2012"
+            },
+            {
+                "degree_type": "Secondary",
+                "field_of_study": null,
+                "institution": "Kendriya Vidyalaya Kalpetta, kerala, India",
+                "university": null,
+                "board": "Central Board of Secondary Education",
+                "graduation_year": "2010"
+            }
+        ],
+        "experience": [],
+        "projects": [
+            {
+                "project_name": "2015 Heart Rate Monitor.",
+                "description": "An external low power system was used to monitor the heart rate.This was used in combination with Arduino uno board to read the heart rate of any subject.The idea of the project was to provide raw data to a doctor so that he can monitor the state of the patient over a period of time and come up with an optimal prescription. 2015 Motor Sport. A simple window based game developed using open GL library and C. It is a game which is used to simulate car racing, helps improving hand eye coordination. This game is a single player game.It has three levels in which a player has to move the car in the left and right directions to avoid the obstacles in the way.When the car hits the obstacles it crashes.",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "Additional Technical Exposure",
+                "description": "2015 Attended Hack India held at PES Institute Of Technology",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "2015 Attended Hack Housing held at Vivanta by Taj",
+                "description": "2015 Attended the Tech World Android Workshop",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "2015 Attended kludge 2015 held at pesit-bsc",
+                "description": "91 7760750844 - sandeepoh@gmail.com",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "Achievements and extra curricular activities",
+                "description": "Obtained 2nd position in a coding competition held at BNMIT",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "Member of college Football team",
+                "description": "Have represented the college in numerous Football, Volleyball and Badminton tournaments",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "Participated in marathon running",
+                "description": "An active member of the NGO \"Sankalp\" Active member of the Organizing committee of the college fest MAAYA",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "Member of the Core team member in Annual activity day",
+                "description": "Member of the creative department Organised number of events during the college fest and inter department competitions",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "Personal Details",
+                "description": "Full Name Sandeep O H",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "Father’s Haridasan P K",
+                "description": "name",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "Date of Birth 12th September, 1993",
+                "description": "Nationality Indian",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "Gender Male",
+                "description": "Current T-10, Swaparnika Apartments, Basapura main road",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "Residential Hosa road junction, Address Bangalore - 560100",
+                "description": "91 7760750844 - sandeepoh@gmail.com",
+                "technologies": [],
+                "url": null
+            }
+        ],
+        "certifications": [],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-08-15T05:56:08.007238+00:00"
+        }
+    }
+}

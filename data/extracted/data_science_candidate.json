@@ -1,0 +1,316 @@
+{
+    "resume_text": {
+        "candidate_id": "CAN_20260815112554",
+        "personal_information": {
+            "name": "MEERA KRISHNAN",
+            "email": "meera.krishnan.ds@example.com",
+            "phone": null,
+            "location": "Chennai, Tamil Nadu",
+            "linkedin": "linkedin.com/in/meerakrishnan",
+            "github": null,
+            "portfolio": null
+        },
+        "skills": [
+            {
+                "skill_id": "TECH001",
+                "skill": "Python",
+                "category": "Technical",
+                "subcategory": "Programming Language",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH017",
+                "skill": "MySQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "fuzzy",
+                "confidence": 90
+            },
+            {
+                "skill_id": "TECH046",
+                "skill": "scikit-learn",
+                "category": "Technical",
+                "subcategory": "Machine Learning",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH047",
+                "skill": "TensorFlow",
+                "category": "Technical",
+                "subcategory": "Deep Learning",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH050",
+                "skill": "Jupyter Notebook",
+                "category": "Technical",
+                "subcategory": "Data Science",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": null,
+                "skill": "Streamlit",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": "TECH045",
+                "skill": "Pandas",
+                "category": "Technical",
+                "subcategory": "Data Analysis",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH048",
+                "skill": "NumPy",
+                "category": "Technical",
+                "subcategory": "Scientific Computing",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH018",
+                "skill": "PostgreSQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": null,
+                "skill": "Big Query",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": "TECH023",
+                "skill": "Git",
+                "category": "Technical",
+                "subcategory": "Version Control",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH021",
+                "skill": "Docker",
+                "category": "Technical",
+                "subcategory": "DevOps",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": null,
+                "skill": "MLflow",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "Power BI",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "M.Sc",
+                "field_of_study": "Data Science",
+                "institution": "University of Madras",
+                "university": null,
+                "board": null,
+                "graduation_year": "2021"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": "JOB003",
+                    "title": "Data Scientist",
+                    "category": "Data Science",
+                    "matched_by": "fuzzy",
+                    "confidence": 90
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Insight Arc Analytics",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Sep 2023",
+                    "end_date": "Present"
+                },
+                "total_experience": {
+                    "total_months": 36,
+                    "total_years": 3.0
+                },
+                "location": null,
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP002",
+                    "department": "Data Science",
+                    "matched_by": "keyword",
+                    "confidence": 75
+                },
+                "skills": [
+                    {
+                        "skill_id": "TECH001",
+                        "skill": "Python",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH048",
+                        "skill": "NumPy",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH045",
+                        "skill": "Pandas",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH046",
+                        "skill": "scikit-learn",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    }
+                ],
+                "description": [
+                    "Developed predictive models for customer churn, demand forecasting and risk classification.",
+                    "Built Python data processing pipelines using Pandas and Num Py for large operational datasets.",
+                    "Created analytical dashboards and communicated model findings to business stakeholders."
+                ]
+            },
+            {
+                "title": null,
+                "company": {
+                    "company_id": null,
+                    "company": "Market Pulse Research",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jul 2021",
+                    "end_date": "Aug 2023"
+                },
+                "total_experience": {
+                    "total_months": 26,
+                    "total_years": 2.2
+                },
+                "location": null,
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP002",
+                    "department": "Data Science",
+                    "matched_by": "keyword",
+                    "confidence": 75
+                },
+                "skills": [
+                    {
+                        "skill_id": "TECH001",
+                        "skill": "Python",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH030",
+                        "skill": "Machine Learning",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    }
+                ],
+                "description": [
+                    "Prepared and validated datasets using Python and SQL for recurring business reports.",
+                    "Developed exploratory data analysis notebooks and automated data-quality checks.",
+                    "Supported machine learning experiments and maintained reusable data preparation modules."
+                ]
+            }
+        ],
+        "projects": [
+            {
+                "project_name": "Customer Churn Prediction",
+                "description": "Built a machine-learning pipeline to predict customer churn and identify high-risk customer segments.",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "Sales Forecasting",
+                "description": "Sales Forecasting Developed a forecasting workflow using historical sales data and created dashboards for business users.",
+                "technologies": [
+                    "Python",
+                    "Pandas",
+                    "scikit-learn",
+                    "PostgreSQL",
+                    "MLflow"
+                ],
+                "url": null
+            },
+            {
+                "project_name": null,
+                "description": null,
+                "technologies": [
+                    "Python",
+                    "NumPy",
+                    "Pandas",
+                    "TensorFlow",
+                    "Power BI"
+                ],
+                "url": null
+            }
+        ],
+        "certifications": [
+            {
+                "certification_name": "IBM Data Science Professional Certificate",
+                "issuing_organization": "IBM",
+                "issue_date": "2022",
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "Microsoft Certified: Azure Data Scientist Associate",
+                "issuing_organization": "Microsoft",
+                "issue_date": "2024",
+                "expiration_date": null,
+                "credential_id": null
+            }
+        ],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-08-15T05:55:54.677032+00:00"
+        }
+    }
+}

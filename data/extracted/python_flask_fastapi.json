@@ -1,0 +1,379 @@
+{
+    "resume_text": {
+        "candidate_id": "CAN_20260815112613",
+        "personal_information": {
+            "name": "ANJALI MENON",
+            "email": "anjali.menon.dev@example.com",
+            "phone": null,
+            "location": "Kochi, Kerala",
+            "linkedin": "linkedin.com/in/anjalimenon",
+            "github": null,
+            "portfolio": null
+        },
+        "skills": [
+            {
+                "skill_id": "TECH001",
+                "skill": "Python",
+                "category": "Technical",
+                "subcategory": "Programming Language",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH017",
+                "skill": "MySQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "fuzzy",
+                "confidence": 90
+            },
+            {
+                "skill_id": "TECH003",
+                "skill": "JavaScript",
+                "category": "Technical",
+                "subcategory": "Programming Language",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH014",
+                "skill": "FastAPI",
+                "category": "Technical",
+                "subcategory": "Backend Framework",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH013",
+                "skill": "Flask",
+                "category": "Technical",
+                "subcategory": "Backend Framework",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH025",
+                "skill": "REST API",
+                "category": "Technical",
+                "subcategory": "Web Services",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": null,
+                "skill": "Pydantic",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": "TECH018",
+                "skill": "PostgreSQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH019",
+                "skill": "MongoDB",
+                "category": "Technical",
+                "subcategory": "NoSQL Database",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH043",
+                "skill": "Redis",
+                "category": "Technical",
+                "subcategory": "In-Memory Database",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH027",
+                "skill": "AWS",
+                "category": "Technical",
+                "subcategory": "Cloud",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH023",
+                "skill": "Git",
+                "category": "Technical",
+                "subcategory": "Version Control",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH021",
+                "skill": "Docker",
+                "category": "Technical",
+                "subcategory": "DevOps",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH053",
+                "skill": "Pytest",
+                "category": "Technology",
+                "subcategory": "Testing",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH039",
+                "skill": "Postman",
+                "category": "Technical",
+                "subcategory": "API Testing",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH044",
+                "skill": "Linux",
+                "category": "Technical",
+                "subcategory": "Operating System",
+                "matched_by": "exact",
+                "confidence": 100
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Bachelor of Technology",
+                "field_of_study": "Information Technology",
+                "institution": "APJ Abdul Kalam Technological University",
+                "university": null,
+                "board": null,
+                "graduation_year": "2021"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": "JOB002",
+                    "title": "Python Developer",
+                    "category": "Software Development",
+                    "matched_by": "fuzzy",
+                    "confidence": 86
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Cloud Nest Analytics",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Aug 2023",
+                    "end_date": "Present"
+                },
+                "total_experience": {
+                    "total_months": 37,
+                    "total_years": 3.1
+                },
+                "location": null,
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "skills": [
+                    {
+                        "skill_id": "TECH001",
+                        "skill": "Python",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH014",
+                        "skill": "FastAPI",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH018",
+                        "skill": "PostgreSQL",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH019",
+                        "skill": "MongoDB",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH021",
+                        "skill": "Docker",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH024",
+                        "skill": "GitHub",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH025",
+                        "skill": "REST API",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    }
+                ],
+                "description": [
+                    "Developed asynchronous REST APIs using Fast API for analytics and document-processing services.",
+                    "Created Pydantic models, validation layers and reusable service modules for production APIs.",
+                    "Integrated PostgreSQL and MongoDB data sources and optimized database access for reporting workloads.",
+                    "Containerized applications with Docker and automated tests and deployment using GitHub Actions.",
+                    "Implemented structured logging, exception handling and API monitoring."
+                ]
+            },
+            {
+                "title": {
+                    "title_id": "JOB001",
+                    "title": "Software Engineer",
+                    "category": "Software Development",
+                    "matched_by": "fuzzy",
+                    "confidence": 86
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Web Stack Labs",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jul 2021",
+                    "end_date": "Jul 2023"
+                },
+                "total_experience": {
+                    "total_months": 25,
+                    "total_years": 2.1
+                },
+                "location": null,
+                "employment_type": {
+                    "type_id": "EMP003",
+                    "employment_type": "Internship",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 75
+                },
+                "skills": [
+                    {
+                        "skill_id": "TECH001",
+                        "skill": "Python",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH044",
+                        "skill": "Linux",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH013",
+                        "skill": "Flask",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH023",
+                        "skill": "Git",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH039",
+                        "skill": "Postman",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    }
+                ],
+                "description": [
+                    "Developed Python scripts for data transformation, validation and scheduled reporting.",
+                    "Worked with SQL databases, Git, Linux and Postman while supporting production issues."
+                ]
+            }
+        ],
+        "projects": [
+            {
+                "project_name": "Document Processing API",
+                "description": "Created a Fast API service that accepts documents, validates metadata and exposes extracted information through REST endpoints.",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "Reporting Automation Service",
+                "description": "Reporting Automation Service Built a Flask application for scheduled report generation and data validation.",
+                "technologies": [
+                    "Python",
+                    "FastAPI",
+                    "PostgreSQL",
+                    "Docker"
+                ],
+                "url": null
+            },
+            {
+                "project_name": null,
+                "description": null,
+                "technologies": [
+                    "Python",
+                    "Flask",
+                    "MongoDB",
+                    "Redis"
+                ],
+                "url": null
+            }
+        ],
+        "certifications": [
+            {
+                "certification_name": "Python for Everybody",
+                "issuing_organization": null,
+                "issue_date": "2023",
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "AWS Certified Cloud Practitioner",
+                "issuing_organization": "Amazon Web Services",
+                "issue_date": "2024",
+                "expiration_date": null,
+                "credential_id": null
+            }
+        ],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-08-15T05:56:13.067581+00:00"
+        }
+    }
+}

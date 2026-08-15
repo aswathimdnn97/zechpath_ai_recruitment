@@ -1,0 +1,419 @@
+{
+    "resume_text": {
+        "candidate_id": "CAN_20260815112609",
+        "personal_information": {
+            "name": "RAHUL NAIR",
+            "email": "rahul.nair.dev@example.com",
+            "phone": null,
+            "location": "Bengaluru, Karnataka",
+            "linkedin": "linkedin.com/in/rahulnair",
+            "github": null,
+            "portfolio": null
+        },
+        "skills": [
+            {
+                "skill_id": "TECH001",
+                "skill": "Python",
+                "category": "Technical",
+                "subcategory": "Programming Language",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH017",
+                "skill": "MySQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "fuzzy",
+                "confidence": 90
+            },
+            {
+                "skill_id": "TECH003",
+                "skill": "JavaScript",
+                "category": "Technical",
+                "subcategory": "Programming Language",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH012",
+                "skill": "Django",
+                "category": "Technical",
+                "subcategory": "Backend Framework",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH041",
+                "skill": "Django REST Framework",
+                "category": "Technical",
+                "subcategory": "Backend Framework",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH014",
+                "skill": "FastAPI",
+                "category": "Technical",
+                "subcategory": "Backend Framework",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH025",
+                "skill": "REST API",
+                "category": "Technical",
+                "subcategory": "Web Services",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH018",
+                "skill": "PostgreSQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH043",
+                "skill": "Redis",
+                "category": "Technical",
+                "subcategory": "In-Memory Database",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH027",
+                "skill": "AWS",
+                "category": "Technical",
+                "subcategory": "Cloud",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH021",
+                "skill": "Docker",
+                "category": "Technical",
+                "subcategory": "DevOps",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH044",
+                "skill": "Linux",
+                "category": "Technical",
+                "subcategory": "Operating System",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH023",
+                "skill": "Git",
+                "category": "Technical",
+                "subcategory": "Version Control",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH024",
+                "skill": "GitHub",
+                "category": "Technical",
+                "subcategory": "Version Control",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH053",
+                "skill": "Pytest",
+                "category": "Technology",
+                "subcategory": "Testing",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH039",
+                "skill": "Postman",
+                "category": "Technical",
+                "subcategory": "API Testing",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH052",
+                "skill": "Jira",
+                "category": "Business",
+                "subcategory": "Project Management",
+                "matched_by": "exact",
+                "confidence": 100
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Bachelor of Technology",
+                "field_of_study": "Computer Science and Engineering",
+                "institution": "Visvesvaraya Technological University",
+                "university": null,
+                "board": null,
+                "graduation_year": "2021"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": "JOB002",
+                    "title": "Python Developer",
+                    "category": "Software Development",
+                    "matched_by": "fuzzy",
+                    "confidence": 90
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Blue Peak Technologies Pvt. Ltd.",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jun 2023",
+                    "end_date": "Present"
+                },
+                "total_experience": {
+                    "total_months": 39,
+                    "total_years": 3.2
+                },
+                "location": null,
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "skills": [
+                    {
+                        "skill_id": "TECH001",
+                        "skill": "Python",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH053",
+                        "skill": "Pytest",
+                        "category": "Technology",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH012",
+                        "skill": "Django",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH041",
+                        "skill": "Django REST Framework",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH043",
+                        "skill": "Redis",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH018",
+                        "skill": "PostgreSQL",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH021",
+                        "skill": "Docker",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH025",
+                        "skill": "REST API",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH049",
+                        "skill": "CI/CD",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    }
+                ],
+                "description": [
+                    "Developed and maintained Django-based backend services supporting customer and order workflows for a Saa S platform.",
+                    "Designed REST APIs with Django REST Framework and implemented authentication, validation, pagination and error handling.",
+                    "Optimized PostgreSQL queries and application code, reducing average API response time by approximately 32 .",
+                    "Implemented Redis caching and background processing for high-volume operations.",
+                    "Built Docker-based development and deployment workflows and maintained GitLab CI/CD pipelines."
+                ]
+            },
+            {
+                "title": {
+                    "title_id": "JOB002",
+                    "title": "Python Developer",
+                    "category": "Software Development",
+                    "matched_by": "fuzzy",
+                    "confidence": 90
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Fin Serve Digital Solutions",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jul 2021",
+                    "end_date": "May 2023"
+                },
+                "total_experience": {
+                    "total_months": 23,
+                    "total_years": 1.9
+                },
+                "location": null,
+                "employment_type": {
+                    "type_id": "EMP003",
+                    "employment_type": "Internship",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "skills": [
+                    {
+                        "skill_id": "TECH001",
+                        "skill": "Python",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH012",
+                        "skill": "Django",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH041",
+                        "skill": "Django REST Framework",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH044",
+                        "skill": "Linux",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH018",
+                        "skill": "PostgreSQL",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH023",
+                        "skill": "Git",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH039",
+                        "skill": "Postman",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    }
+                ],
+                "description": [
+                    "Developed REST endpoints using Django REST Framework and integrated PostgreSQL and third-party services.",
+                    "Worked with Linux servers, Git workflows, Postman and production troubleshooting."
+                ]
+            }
+        ],
+        "projects": [
+            {
+                "project_name": "Customer Operations API Platform",
+                "description": "Built a Django REST service for customer onboarding, document validation and workflow management. Implemented role-based access, PostgreSQL persistence, Redis caching and automated tests.",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "Inventory Order Management",
+                "description": "Inventory Order Management Developed backend APIs for inventory, order processing and reporting with scheduled jobs and performance monitoring.",
+                "technologies": [
+                    "Python",
+                    "Django",
+                    "Django REST Framework",
+                    "PostgreSQL",
+                    "Redis",
+                    "Docker",
+                    "Pytest"
+                ],
+                "url": null
+            },
+            {
+                "project_name": null,
+                "description": null,
+                "technologies": [
+                    "Python",
+                    "Django",
+                    "PostgreSQL",
+                    "Celery",
+                    "Docker"
+                ],
+                "url": null
+            }
+        ],
+        "certifications": [
+            {
+                "certification_name": "Django REST Framework API Development",
+                "issuing_organization": null,
+                "issue_date": "2024",
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "AWS Certified Cloud Practitioner",
+                "issuing_organization": "Amazon Web Services",
+                "issue_date": "2023",
+                "expiration_date": null,
+                "credential_id": null
+            }
+        ],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-08-15T05:56:09.914028+00:00"
+        }
+    }
+}

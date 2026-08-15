@@ -1,0 +1,58 @@
+{
+    "resume_text": {
+        "job_title": "Python Developer",
+        "company": "Logicoy Software Technologies Pvt. Ltd.",
+        "job_summary": "We are looking for a passionate Python Developer to join our engineering team. The ideal candidate should have experience developing scalable web applications and REST APIs using Python frameworks.",
+        "location": "Bangalore, Karnataka",
+        "employment_type": "Full-time",
+        "salary": "₹6 LPA - ₹10 LPA",
+        "availability": "Immediate to 30 days preferred.",
+        "responsibilities": [
+            "Develop backend services using Python and Django.",
+            "Design and implement RESTful APIs.",
+            "Write clean, maintainable, and reusable code.",
+            "Optimize application performance and scalability.",
+            "Collaborate with frontend developers and QA engineers.",
+            "Participate in code reviews and Agile ceremonies.",
+            "Troubleshoot production issues."
+        ],
+        "required_skills": [
+            "Python",
+            "Django",
+            "Django REST Framework",
+            "REST API",
+            "PostgreSQL",
+            "Git",
+            "Object-Oriented Programming",
+            "SQL"
+        ],
+        "preferred_skills": [
+            "Docker",
+            "AWS",
+            "Redis",
+            "Celery",
+            "Kubernetes",
+            "CI/CD pipelines",
+            "Microservices",
+            "Linux administration",
+            "PyTest"
+        ],
+        "education": [
+            "Bachelor's degree in Computer Science, Information Technology, Electronics, or related field.",
+            "B.Tech / B.E / MCA / M.Sc (Computer Science)"
+        ],
+        "soft_skills": [
+            "Good communication skills",
+            "Problem-solving ability",
+            "Team player",
+            "Self-motivated"
+        ],
+        "experience": [
+            "2 - 4 Years",
+            "Minimum 2 years of Python development experience.",
+            "Experience with Django framework is mandatory.",
+            "Experience with REST API development is required."
+        ],
+        "requirements": []
+    }
+}

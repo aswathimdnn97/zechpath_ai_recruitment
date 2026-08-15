@@ -1,0 +1,360 @@
+{
+    "resume_text": {
+        "candidate_id": "CAN_20260815112557",
+        "personal_information": {
+            "name": "ARJUN IYER",
+            "email": "arjun.iyer.frontend@example.com",
+            "phone": null,
+            "location": "Bengaluru, Karnataka",
+            "linkedin": "linkedin.com/in/arjuniyer",
+            "github": null,
+            "portfolio": null
+        },
+        "skills": [
+            {
+                "skill_id": "TECH003",
+                "skill": "JavaScript",
+                "category": "Technical",
+                "subcategory": "Programming Language",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH004",
+                "skill": "TypeScript",
+                "category": "Technical",
+                "subcategory": "Programming Language",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH005",
+                "skill": "HTML",
+                "category": "Technical",
+                "subcategory": "Frontend",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH006",
+                "skill": "CSS",
+                "category": "Technical",
+                "subcategory": "Frontend",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH007",
+                "skill": "React",
+                "category": "Technical",
+                "subcategory": "Frontend Framework",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH042",
+                "skill": "Redux",
+                "category": "Technical",
+                "subcategory": "State Management",
+                "matched_by": "fuzzy",
+                "confidence": 90
+            },
+            {
+                "skill_id": null,
+                "skill": "Next.js",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": "TECH015",
+                "skill": "Bootstrap",
+                "category": "Technical",
+                "subcategory": "CSS Framework",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH016",
+                "skill": "Tailwind CSS",
+                "category": "Technical",
+                "subcategory": "CSS Framework",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH025",
+                "skill": "REST API",
+                "category": "Technical",
+                "subcategory": "Web Services",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": null,
+                "skill": "Firebase",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": "TECH018",
+                "skill": "PostgreSQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "fuzzy",
+                "confidence": 90
+            },
+            {
+                "skill_id": "TECH023",
+                "skill": "Git",
+                "category": "Technical",
+                "subcategory": "Version Control",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": "TECH024",
+                "skill": "GitHub",
+                "category": "Technical",
+                "subcategory": "Version Control",
+                "matched_by": "exact",
+                "confidence": 100
+            },
+            {
+                "skill_id": null,
+                "skill": "Jest",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "Cypress",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": null,
+                "skill": "Figma",
+                "category": "Unknown",
+                "subcategory": "Unknown",
+                "matched_by": "none",
+                "confidence": 0
+            },
+            {
+                "skill_id": "TECH052",
+                "skill": "Jira",
+                "category": "Business",
+                "subcategory": "Project Management",
+                "matched_by": "exact",
+                "confidence": 100
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Bachelor of Engineering",
+                "field_of_study": "Computer Science and Engineering",
+                "institution": "Visvesvaraya Technological University",
+                "university": null,
+                "board": null,
+                "graduation_year": "2021"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": "JOB002",
+                    "title": "Python Developer",
+                    "category": "Software Development",
+                    "matched_by": "fuzzy",
+                    "confidence": 86
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Pixel Craft Digital",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Mar 2023",
+                    "end_date": "Present"
+                },
+                "total_experience": {
+                    "total_months": 42,
+                    "total_years": 3.5
+                },
+                "location": null,
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 75
+                },
+                "skills": [
+                    {
+                        "skill_id": "TECH007",
+                        "skill": "React",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH042",
+                        "skill": "Redux",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH025",
+                        "skill": "REST API",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    }
+                ],
+                "description": [
+                    "Developed reusable React components and responsive dashboards for enterprise customers.",
+                    "Implemented Redux Toolkit state management and integrated REST APIs for real-time business workflows.",
+                    "Improved frontend load performance by approximately 28 through code splitting and asset optimization.",
+                    "Created automated unit and end to end tests using Jest and Cypress."
+                ]
+            },
+            {
+                "title": {
+                    "title_id": "JOB002",
+                    "title": "Python Developer",
+                    "category": "Software Development",
+                    "matched_by": "fuzzy",
+                    "confidence": 86
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Web Sphere Studio",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jun 2021",
+                    "end_date": "Feb 2023"
+                },
+                "total_experience": {
+                    "total_months": 21,
+                    "total_years": 1.8
+                },
+                "location": null,
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "skills": [
+                    {
+                        "skill_id": "TECH003",
+                        "skill": "JavaScript",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH007",
+                        "skill": "React",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH005",
+                        "skill": "HTML",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH006",
+                        "skill": "CSS",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    },
+                    {
+                        "skill_id": "TECH025",
+                        "skill": "REST API",
+                        "category": "Technical",
+                        "matched_by": "alias",
+                        "confidence": 95
+                    }
+                ],
+                "description": [
+                    "Built responsive web pages using React, JavaScript, HTML and CSS.",
+                    "Integrated backend REST APIs and implemented authentication and form validation."
+                ]
+            }
+        ],
+        "projects": [
+            {
+                "project_name": "Operations Dashboard",
+                "description": "Built a React dashboard for operational KPIs with reusable charts, filters, authentication and API integration.",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "E-commerce Web Application",
+                "description": "E-commerce Web Application Developed responsive product listing, cart and checkout interfaces with reusable components.",
+                "technologies": [
+                    "React",
+                    "Redux",
+                    "JavaScript",
+                    "REST API",
+                    "CSS"
+                ],
+                "url": null
+            },
+            {
+                "project_name": null,
+                "description": null,
+                "technologies": [
+                    "React",
+                    "Next.js",
+                    "TypeScript",
+                    "Tailwind CSS"
+                ],
+                "url": null
+            }
+        ],
+        "certifications": [
+            {
+                "certification_name": "Meta Front End Developer Professional Certificate 2023 JavaScript Algorithms and Data Structures",
+                "issuing_organization": null,
+                "issue_date": "2023",
+                "expiration_date": null,
+                "credential_id": null
+            }
+        ],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-08-15T05:55:57.197786+00:00"
+        }
+    }
+}
