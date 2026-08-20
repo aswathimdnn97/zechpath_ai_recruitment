@@ -5,7 +5,10 @@ from scoring.experince_score import calculate_experience_score
 from scoring.education_score import calculate_education_score
 from scoring.semantic_scorer import calculate_semantic_score
 from scoring.score_generator import generate_candidate_score
+from embeddings.embedding_generator import EmbeddingGenerator
+from scoring.bias_mitigation.personal_attribute_masker import mask_personal_attributes
 
+#    embedding_generator=EmbeddingGenerator()
 
 def _get_resume_text(
     candidate_profile: Dict[str, Any]
@@ -154,51 +157,28 @@ def _extract_candidate_roles(
 
 def _extract_candidate_education(
     candidate_data: Dict[str, Any]
-) -> str:
+) -> List[Any]:
+    """
+    Extract candidate education records.
+
+    Returns the education records as a list so that
+    metadata can correctly count education entries.
+    """
 
     education = candidate_data.get(
         "education",
         []
     )
 
-    if isinstance(education, str):
+    if isinstance(education, list):
         return education
 
-    if not isinstance(education, list):
-        return ""
+    if isinstance(education, str) and education.strip():
+        return [
+            education.strip()
+        ]
 
-    education_parts = []
-
-    for item in education:
-
-        if isinstance(item, str):
-
-            education_parts.append(item)
-
-        elif isinstance(item, dict):
-
-            for key in (
-                "degree",
-                "course",
-                "field",
-                "institution",
-                "name",
-            ):
-
-                value = item.get(key)
-
-                if (
-                    isinstance(value, str)
-                    and value.strip()
-                ):
-                    education_parts.append(
-                        value.strip()
-                    )
-
-    return " ".join(
-        education_parts
-    )
-
+    return []
 
 def calculate_ats_score(
     candidate_profile: Dict[str, Any],
@@ -208,13 +188,25 @@ def calculate_ats_score(
     custom_weights: Optional[
         Dict[str, float]
     ] = None,
+    embedding_generator: Any = None,
 ) -> Dict[str, Any]:
+    
+    
+    if embedding_generator is None:
+        embedding_generator = EmbeddingGenerator()
     """
     Calculate the complete ATS score.
 
     Pipeline:
 
-        Candidate + JD
+        Candidate Profile
+              |
+              +-- Preserve candidate_id
+              |
+              +-- Mask non-essential personal attributes
+              |
+              v
+        Masked Candidate Profile
               |
               +-- Skill scorer
               |
@@ -225,14 +217,42 @@ def calculate_ats_score(
               +-- Semantic scorer
               |
               v
-        Score generator
+        Score Generator
               |
               v
-        Final ATS result
+        Final ATS Result
+
+    Important:
+
+        candidate_id is preserved for identifying the
+        candidate after scoring/ranking.
+
+        Personal attributes such as name, email, phone,
+        LinkedIn, and GitHub are excluded from the
+        scoring profile.
     """
+    
+     # ========================================================
+    # 1. Preserve candidate identity
+    # ========================================================
+
+    candidate_id = candidate_profile.get(
+        "candidate_id"
+    )
+
+    # ========================================================
+    # 2. Mask non-essential personal attributes
+    # ========================================================
+
+    masked_candidate_profile = (
+        mask_personal_attributes(
+            candidate_profile
+        )
+    )
+
 
     candidate_data = _get_resume_text(
-        candidate_profile
+        masked_candidate_profile
     )
 
     jd_data = _get_jd_data(
@@ -315,10 +335,10 @@ def calculate_ats_score(
     # 1. Skill score
     # ========================================================
 
-    skill_result = calculate_skill_score(
-        candidate_profile,
-        jd_profile,
-    )
+    skill_result = calculate_skill_score( masked_candidate_profile, 
+                        jd_profile, 
+                        embedding_generator=embedding_generator, 
+                        )
 
 
     # ========================================================
@@ -326,8 +346,22 @@ def calculate_ats_score(
     # ========================================================
 
     experience_result = calculate_experience_score(
-        candidate_profile,
+        masked_candidate_profile,
         jd_profile,
+    )
+
+    if not isinstance(
+        experience_result,
+        dict
+    ):
+        raise ValueError(
+            "Experience scorer returned "
+            "an invalid result."
+        )
+        
+    candidate_years = experience_result.get(
+        "candidate_years",
+        0.0
     )
 
 
@@ -336,7 +370,7 @@ def calculate_ats_score(
     # ========================================================
 
     education_result = calculate_education_score(
-    candidate_profile,
+    masked_candidate_profile,
     jd_profile,
 )
 
@@ -363,11 +397,13 @@ def calculate_ats_score(
         job_title=job_title,
         custom_weights=custom_weights,
     )
+    
     # ========================================================
     # Final output
     # ========================================================
 
     return {
+        "candidate_id": candidate_id,
         "candidate_score": final_result,
 
         "component_scores": {
@@ -394,5 +430,27 @@ def calculate_ats_score(
 
             "candidate_roles":
                 candidate_roles,
+                
+            "candidate_education_count":
+                len(candidate_education),
+
+            "jd_experience_count":
+                len(jd_experience),
+
+            "jd_education_count":
+                len(jd_education),
+        },
+
+        # ----------------------------------------------------
+        # Bias mitigation metadata
+        # ----------------------------------------------------
+
+        "bias_mitigation": {
+
+            "personal_attributes_masked":
+                True,
+
+            "candidate_id_preserved":
+                True,
         },
     }

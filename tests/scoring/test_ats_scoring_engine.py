@@ -1,5 +1,60 @@
 import pytest
 
+import numpy as np
+
+
+class FakeEmbeddingModel:
+
+    def encode(
+        self,
+        text,
+        convert_to_numpy=True,
+    ):
+
+        text = str(text).strip().lower()
+
+        vectors = {
+            "python": [
+                1.0,
+                0.0,
+                0.0,
+            ],
+
+            "django rest framework": [
+                0.0,
+                1.0,
+                0.0,
+            ],
+
+            "rest api development": [
+                0.0,
+                0.95,
+                0.05,
+            ],
+
+            "postgresql": [
+                0.0,
+                0.0,
+                1.0,
+            ],
+        }
+
+        if text not in vectors:
+            raise ValueError(
+                f"Fake embedding not defined for: {text}"
+            )
+
+        return np.asarray(
+            vectors[text],
+            dtype=float,
+        )
+
+
+class FakeEmbeddingGenerator:
+
+    def __init__(self):
+        self.model = FakeEmbeddingModel()
+        
 from scoring.ats_scoring_engine import calculate_ats_score
 
 
@@ -142,8 +197,13 @@ def test_skill_score():
         "component_scores"
     ]["skill"]
 
-    assert skill_result["required_total"] == 8
+    skill_result = result["component_scores"]["skill"]
 
+    print("Matched:", skill_result["matched_required_skills"])
+    print("Missing:", skill_result["missing_required_skills"])
+    print("Fuzzy:", skill_result["fuzzy_required_matches"])
+
+    assert skill_result["required_total"] == 8
     assert skill_result["required_matched"] == 5
 
     # Skills are normalized to lowercase by skill_score.py
@@ -494,3 +554,378 @@ def test_explainable_output():
     assert len(
         candidate_score["explanation"]
     ) > 0
+    
+    
+def test_semantic_skill_matcher_directly():
+
+    embedding_generator = FakeEmbeddingGenerator()
+
+    from scoring.skill_semantic_matcher import (
+        find_semantic_skill_matches,
+    )
+
+    matches = find_semantic_skill_matches(
+        candidate_skills=[
+            "django rest framework",
+            "python",
+            "postgresql",
+        ],
+        jd_skills=[
+            "rest api development",
+        ],
+        embedding_generator=embedding_generator,
+        threshold=0.70,
+    )
+
+    print(
+        "DIRECT SEMANTIC MATCHES:",
+        matches,
+    )
+
+    assert len(matches) == 1
+
+    assert (
+        matches[0]["jd_skill"]
+        == "rest api development"
+    )
+
+    assert (
+        matches[0]["candidate_skill"]
+        == "django rest framework"
+    )
+
+    assert (
+        matches[0]["match_type"]
+        == "semantic"
+    )
+
+    assert (
+        matches[0]["similarity"]
+        >= 0.70
+    )
+    
+def test_semantic_skill_match():
+
+    embedding_generator = FakeEmbeddingGenerator()
+
+    candidate = {
+        "resume_text": {
+            "skills": [
+                "Python",
+                "Django REST Framework",
+                "PostgreSQL",
+            ]
+        }
+    }
+
+    jd = {
+        "job_title": "Python Developer",
+        "required_skills": [
+            "Python",
+            "REST API development",
+            "PostgreSQL",
+        ],
+        "preferred_skills": [],
+    }
+
+    result = calculate_ats_score(
+        candidate,
+        jd,
+        resume_embedding=[
+            1.0,
+            0.0,
+            0.0,
+        ],
+        jd_embedding=[
+            1.0,
+            0.0,
+            0.0,
+        ],
+        embedding_generator=embedding_generator,
+    )
+
+    skill_result = result[
+        "component_scores"
+    ]["skill"]
+
+    print(
+        "Matched:",
+        skill_result[
+            "matched_required_skills"
+        ],
+    )
+
+    print(
+        "Missing:",
+        skill_result[
+            "missing_required_skills"
+        ],
+    )
+
+    print(
+        "Semantic:",
+        skill_result[
+            "semantic_required_matches"
+        ],
+    )
+
+    assert (
+        skill_result["required_total"]
+        == 3
+    )
+
+    assert (
+        skill_result["required_matched"]
+        == 3
+    )
+
+    assert (
+        skill_result[
+            "missing_required_skills"
+        ]
+        == []
+    )
+
+    semantic_matches = skill_result[
+        "semantic_required_matches"
+    ]
+
+    assert len(
+        semantic_matches
+    ) == 1
+
+    assert (
+        semantic_matches[0]["jd_skill"]
+        == "rest api development"
+    )
+
+    assert (
+        semantic_matches[0]["candidate_skill"]
+        == "django rest framework"
+    )
+
+    assert (
+        semantic_matches[0]["match_type"]
+        == "semantic"
+    )
+
+    assert (
+        semantic_matches[0]["similarity"]
+        >= 0.70
+    )
+    
+    
+def test_ats_score_is_independent_of_personal_attributes():
+    """
+    Personal attributes such as name, email, phone, LinkedIn,
+    and GitHub must not affect the ATS score.
+
+    candidate_id is allowed to differ because it is an
+    identifier, not a scoring feature.
+    """
+
+    candidate_1 = {
+        "candidate_id": "CAN_001",
+
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "john@example.com",
+        "phone": "9876543210",
+        "linkedin": "linkedin.com/in/john",
+        "github": "github.com/john",
+
+        "skill": [
+            {
+                "skill_name": "Python",
+                "experience": 3,
+                "profficiency": "Advanced",
+            },
+            {
+                "skill_name": "Django",
+                "experience": 2,
+                "profficiency": "Advanced",
+            },
+        ],
+
+        "experience": [
+            {
+                "company_name": "ABC Technologies",
+                "employment_type": "Full-time",
+                "start_date": "2021",
+                "end_date": "2024",
+                "currently_working": False,
+                "responsibility": [
+                    "Developed Python applications"
+                ],
+                "technologies": [
+                    "Python",
+                    "Django",
+                ],
+            }
+        ],
+
+        "education": [
+            {
+                "degree": "BTech",
+                "specialization": "Computer Science",
+                "institution": "ABC University",
+                "graduation_year": 2021,
+                "cgpa": 8,
+            }
+        ],
+    }
+
+    candidate_2 = {
+        "candidate_id": "CAN_002",
+
+        # Completely different personal information
+        "first_name": "Alice",
+        "last_name": "Smith",
+        "email": "alice@example.com",
+        "phone": "1234567890",
+        "linkedin": "linkedin.com/in/alice",
+        "github": "github.com/alice",
+
+        # SAME professional information
+        "skill": [
+            {
+                "skill_name": "Python",
+                "experience": 3,
+                "profficiency": "Advanced",
+            },
+            {
+                "skill_name": "Django",
+                "experience": 2,
+                "profficiency": "Advanced",
+            },
+        ],
+
+        "experience": [
+            {
+                "company_name": "ABC Technologies",
+                "employment_type": "Full-time",
+                "start_date": "2021",
+                "end_date": "2024",
+                "currently_working": False,
+                "responsibility": [
+                    "Developed Python applications"
+                ],
+                "technologies": [
+                    "Python",
+                    "Django",
+                ],
+            }
+        ],
+
+        "education": [
+            {
+                "degree": "BTech",
+                "specialization": "Computer Science",
+                "institution": "ABC University",
+                "graduation_year": 2021,
+                "cgpa": 8,
+            }
+        ],
+    }
+
+    jd = {
+        "job_title": "Python Developer",
+
+        "required_skills": [
+            "Python",
+            "Django",
+        ],
+
+        "preferred_skills": [],
+
+        "experience": [
+            {
+                "min_years": 2,
+            }
+        ],
+
+        "education": [
+            {
+                "degree": "BTech",
+            }
+        ],
+    }
+
+    # Same embeddings because professional content is identical.
+    resume_embedding = [
+        1.0,
+        0.0,
+        0.0,
+    ]
+
+    jd_embedding = [
+        1.0,
+        0.0,
+        0.0,
+    ]
+
+    # ========================================================
+    # Score candidate 1
+    # ========================================================
+
+    result_1 = calculate_ats_score(
+        candidate_1,
+        jd,
+        resume_embedding=resume_embedding,
+        jd_embedding=jd_embedding,
+    )
+
+    # ========================================================
+    # Score candidate 2
+    # ========================================================
+
+    result_2 = calculate_ats_score(
+        candidate_2,
+        jd,
+        resume_embedding=resume_embedding,
+        jd_embedding=jd_embedding,
+    )
+
+    # ========================================================
+    # Extract final scores
+    # ========================================================
+
+    score_1 = result_1[
+        "candidate_score"
+    ]["final_score"]
+
+    score_2 = result_2[
+        "candidate_score"
+    ]["final_score"]
+
+    print("Candidate 1 score:", score_1)
+    print("Candidate 2 score:", score_2)
+
+    # ========================================================
+    # Main bias-mitigation assertion
+    # ========================================================
+
+    assert score_1 == score_2
+
+    # ========================================================
+    # Candidate identity must still be preserved
+    # ========================================================
+
+    assert result_1["candidate_id"] == "CAN_001"
+    assert result_2["candidate_id"] == "CAN_002"
+
+    # ========================================================
+    # Bias mitigation metadata
+    # ========================================================
+
+    assert (
+        result_1["bias_mitigation"]
+        ["personal_attributes_masked"]
+        is True
+    )
+
+    assert (
+        result_2["bias_mitigation"]
+        ["personal_attributes_masked"]
+        is True
+    )

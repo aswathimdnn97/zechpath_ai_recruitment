@@ -1,5 +1,6 @@
 from typing import Any, Dict, List
 import numpy as np
+from scoring.scoring_normalizer import normalize_similarity
 
 
 # ============================================================
@@ -145,10 +146,7 @@ def calculate_semantic_score(
     # Convert similarity to 0-100 score
     # ========================================================
 
-    score = (
-        (similarity + 1)
-        / 2
-    ) * 100
+    score = normalize_similarity(similarity)
 
     # ========================================================
     # Return explainable result

@@ -1,6 +1,7 @@
 from typing import Any, Dict
 
 from scoring.weight_config import get_weights
+from scoring.scoring_normalizer import normalize_percentage
 
 
 # ============================================================
@@ -71,7 +72,7 @@ def generate_candidate_score(
 
             continue
 
-        score = float(score)
+        score = normalize_percentage(score)
 
         weight = weights[component]
 

@@ -10,6 +10,7 @@ Responsibilities:
 from datetime import datetime, timezone
 
 from .profile_schema import create_empty_profile
+import uuid
 
 
 def build_candidate_profile(
@@ -18,7 +19,8 @@ def build_candidate_profile(
     experience=None,
     skills=None,
     projects=None,
-    certifications=None
+    certifications=None,
+    candidate_id=None,
 ):
 
     profile = create_empty_profile()
@@ -27,7 +29,10 @@ def build_candidate_profile(
     # Candidate ID
     # --------------------------------
 
-    profile["candidate_id"] = generate_candidate_id()
+    if candidate_id:
+        profile["candidate_id"] = candidate_id
+    else:
+        profile["candidate_id"] = generate_candidate_id()
 
     # --------------------------------
     # Personal Information
@@ -83,7 +88,4 @@ def build_candidate_profile(
 
 
 def generate_candidate_id():
-
-    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-
-    return f"CAN_{timestamp}"
+    return f"CAN_{uuid.uuid4().hex[:12].upper()}"

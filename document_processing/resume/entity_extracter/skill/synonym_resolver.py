@@ -37,7 +37,7 @@ def load_skill_aliases():
 
 def resolve_synonyms(candidate_skills):
     """
-    Convert skill aliases into canonical names.
+    Convert skill aliases into canonical skill names.
 
     Parameters
     ----------
@@ -48,19 +48,31 @@ def resolve_synonyms(candidate_skills):
     list[str]
     """
 
+    if not isinstance(candidate_skills, list):
+        raise TypeError(
+            "candidate_skills must be a list."
+        )
+
     aliases = load_skill_aliases()
 
     resolved = []
 
     for skill in candidate_skills:
 
-        # Keep original text if no alias exists
-        original = skill
+        if not isinstance(skill, str):
+            continue
 
-        # Normalize for lookup
-        lookup = skill.strip().lower()
+        original = skill.strip()
 
-        canonical = aliases.get(lookup, original)
+        if not original:
+            continue
+
+        lookup = original.lower()
+
+        canonical = aliases.get(
+            lookup,
+            original
+        )
 
         resolved.append(canonical)
 

@@ -309,25 +309,53 @@ def _experience_records(profile: Any) -> List[Dict[str, Any]]:
 
 
 def _candidate_years(records: List[Dict[str, Any]]) -> float:
-    values = []
+    """
+    Calculate total candidate experience from all experience records.
+
+    Uses total_months when available to avoid losing precision.
+    Falls back to total_years when total_months is unavailable.
+    """
+
+    total_months = 0.0
 
     for item in records:
-        total = item.get("total_experience", {})
-        if isinstance(total, dict):
-            value = total.get("total_years")
+
+        total_experience = item.get(
+            "total_experience",
+            {},
+        )
+
+        if isinstance(total_experience, dict):
+
+            months = total_experience.get("total_months")
+
             try:
-                if value is not None:
-                    values.append(float(value))
+                if months is not None:
+                    total_months += float(months)
+                    continue
             except (TypeError, ValueError):
                 pass
 
+            years = total_experience.get("total_years")
+
+            try:
+                if years is not None:
+                    total_months += float(years) * 12
+                    continue
+            except (TypeError, ValueError):
+                pass
+
+        # Backward compatibility
         try:
-            if item.get("total_years") is not None:
-                values.append(float(item["total_years"]))
+            years = item.get("total_years")
+
+            if years is not None:
+                total_months += float(years) * 12
+
         except (TypeError, ValueError):
             pass
 
-    return max(values, default=0.0)
+    return round(total_months / 12, 2)
 
 
 def _candidate_roles(

@@ -1,57 +1,132 @@
-from utils.logger import logger
-from document_processing.resume.resume_pipeline import resume_pipeline
-from document_processing.job_description.job_description_pipeline import job_description_pipeline
-from pipelines.recruiter_pipeline import recruitment_pipeline
-from matching.matcher import Matcher
-from scoring.ats_scoring_engine import calculate_ats_score
-from embeddings.embedding_generator import EmbeddingGenerator
-from scoring.ranking.ranking_pipeline import rank_and_shortlist
-from scoring.ranking.top_candidates import get_top_candidates
-from scoring.ranking.recruiters_output import generate_recruiter_output
 from pathlib import Path
 
-logger.info("Resume Uploaded")
+from utils.logger import logger
 
-RESUME_FOLDER = Path("data/resume/pdf")
+from document_processing.resume.resume_pipeline import (
+    resume_pipeline,
+)
+
+from document_processing.job_description.job_description_pipeline import (
+    job_description_pipeline,
+)
+
+from scoring.ats_scoring_engine import (
+    calculate_ats_score,
+)
+
+from embeddings.embedding_generator import (
+    EmbeddingGenerator,
+)
+
+from embeddings.embedding_text_builder import (
+    profile_to_embedding_text,
+    build_jd_embedding_text,
+)
+
+from scoring.ranking.candidate_ranker import (
+    get_candidate_score,
+)
+
+from scoring.ranking.ranking_pipeline import (
+    rank_and_shortlist,
+)
+
+from scoring.ranking.top_candidates import (
+    get_top_candidates,
+)
+
+from scoring.ranking.recruiters_output import (
+    generate_recruiter_output,
+)
+
+
+# ============================================================
+# CONFIGURATION
+# ============================================================
+
+RESUME_FOLDER = Path(
+    "data/resume/pdf"
+)
 
 JOB_DESCRIPTION_FILE = (
-    "data/job_descriptions/jd_python_developer.pdf"
+    "data/job_descriptions/"
+    "jd_python_developer.pdf"
 )
 
 TOP_N = 5
 
 SHORTLIST_THRESHOLD = 80.0
+
 REVIEW_THRESHOLD = 60.0
 
 
-logger.info("Recruitment pipeline started")
+# ============================================================
+# APPLICATION START
+# ============================================================
+
+logger.info(
+    "Recruitment pipeline started"
+)
 
 
 # ============================================================
-# 1. Job Description Parsing
+# 1. PARSE JOB DESCRIPTION
 # ============================================================
 
-print("\n================ JOB DESCRIPTION PARSING ================")
+print(
+    "\n================ JOB DESCRIPTION PARSING ================"
+)
 
 jd_json = job_description_pipeline(
     JOB_DESCRIPTION_FILE
 )
 
-print("\n================ JD JSON ================")
+print(
+    "\n================ JD JSON ================"
+)
+
 print(jd_json)
 
 
 # ============================================================
-# 2. Initialize Matching / Embedding
+# 2. INITIALIZE EMBEDDING GENERATOR
 # ============================================================
-
-matcher = Matcher()
 
 embedding_generator = EmbeddingGenerator()
 
 
 # ============================================================
-# 3. Process Multiple Resumes
+# 3. GENERATE JD EMBEDDING
+# ============================================================
+
+jd_embedding_text = build_jd_embedding_text(
+    jd_json
+)
+
+print(
+    "\n================ JD EMBEDDING TEXT ================"
+)
+
+print(jd_embedding_text)
+
+
+if not jd_embedding_text:
+    raise ValueError(
+        "Cannot generate JD embedding: "
+        "JD produced empty embedding text. "
+        "Check job_description_pipeline() output."
+    )
+
+
+jd_embedding = (
+    embedding_generator.generate_embedding(
+        jd_embedding_text
+    )
+)
+
+
+# ============================================================
+# 4. FIND RESUMES
 # ============================================================
 
 resume_files = sorted(
@@ -66,38 +141,45 @@ print(
 if not resume_files:
 
     print(
-        f"No PDF resumes found in {RESUME_FOLDER}"
+        f"No PDF resumes found in "
+        f"{RESUME_FOLDER}"
     )
 
     raise SystemExit(1)
 
 
-# This list will contain the ATS result
-# of EVERY candidate.
+# ============================================================
+# 5. ATS RESULTS
+# ============================================================
+
 ats_results = []
 
 
 # ============================================================
-# 4. Process Each Candidate
+# 6. PROCESS EACH RESUME
 # ============================================================
 
 for resume_file in resume_files:
 
     print("\n")
     print("=" * 70)
+
     print(
-        f"PROCESSING RESUME: {resume_file.name}"
+        f"PROCESSING RESUME: "
+        f"{resume_file.name}"
     )
+
     print("=" * 70)
 
     try:
 
-        # ----------------------------------------------------
-        # Resume Parsing
-        # ----------------------------------------------------
+        # ====================================================
+        # 6.1 PARSE RESUME
+        # ====================================================
 
         logger.info(
-            f"Resume uploaded: {resume_file.name}"
+            f"Resume uploaded: "
+            f"{resume_file.name}"
         )
 
         resume_json = resume_pipeline(
@@ -105,166 +187,317 @@ for resume_file in resume_files:
         )
 
         print(
-            "\n================ RESUME JSON ================"
+            "\n================ PERSONAL INFORMATION DEBUG ================"
         )
 
         print(resume_json)
 
-
-        # ----------------------------------------------------
-        # Existing Matching
-        # ----------------------------------------------------
-
-        matching_result = matcher.match(
+        if not isinstance(
             resume_json,
-            jd_json
+            dict
+        ):
+            raise ValueError(
+                "resume_pipeline() "
+                "did not return a dictionary."
+            )
+
+
+       # ====================================================
+        # 6.2 EXTRACT PROFILE DATA
+        # ====================================================
+
+        original_profile = resume_json.get(
+            "original_profile",
+            {}
+        )
+
+        masked_profile = resume_json.get(
+            "masked_profile",
+            {}
+        )
+
+        if not isinstance(original_profile, dict):
+            original_profile = {}
+
+        if not isinstance(masked_profile, dict):
+            masked_profile = {}
+
+
+        # ====================================================
+        # 6.3 GET CANDIDATE ID
+        # ====================================================
+
+        candidate_id = resume_json.get("candidate_id")
+
+        if not candidate_id:
+            raise ValueError(
+                "resume_pipeline() did not return candidate_id."
+            )
+
+        candidate_id = str(candidate_id).strip()
+
+
+        # ====================================================
+        # 6.4 GET CANDIDATE NAME
+        # ====================================================
+
+        personal_information = original_profile.get(
+            "personal_information",
+            {}
+        )
+
+        if not isinstance(personal_information, dict):
+            personal_information = {}
+
+        candidate_name = personal_information.get(
+            "name"
+        )
+
+        if isinstance(candidate_name, str):
+            candidate_name = candidate_name.strip()
+
+        if not candidate_name:
+            candidate_name = candidate_id
+
+
+        # ====================================================
+        # 6.5 IDENTITY DEBUG
+        # ====================================================
+
+        print(
+            "\n================ CANDIDATE IDENTITY ================"
         )
 
         print(
-            "\n================ MATCHING RESULT ================"
+            "Candidate Name:",
+            candidate_name
         )
 
-        print(matching_result)
+        print(
+            "Candidate ID:",
+            candidate_id
+        )
 
 
-        # ----------------------------------------------------
-        # Generate Embeddings
-        # ----------------------------------------------------
+        # ====================================================
+        # 6.6 BIAS REPORT
+        # ====================================================
+
+        bias_report = resume_json.get(
+            "bias_report",
+            {}
+        )
+
+        print(
+            "\n================ BIAS REPORT ================"
+        )
+
+        print(bias_report)
+
+
+        # ====================================================
+        # 6.7 VALIDATE MASKED PROFILE
+        # ====================================================
+
+        if not masked_profile:
+            raise ValueError(
+                "resume_pipeline() did not return "
+                "a valid masked_profile."
+            )
+
+        if "personal_information" in masked_profile:
+            raise ValueError(
+                "Masked profile contains personal_information. "
+                "Personal attributes must not be passed to ATS scoring."
+            )
+
+        print(
+            "\n================ MASKING VALIDATION ================"
+        )
+
+        print(
+            "Candidate ID:",
+            candidate_id
+        )
+
+        print(
+            "Candidate Name:",
+            candidate_name
+        )
+
+        print(
+            "Personal information in masked profile:",
+            "personal_information" in masked_profile
+        )
+
+
+        # ====================================================
+        # 6.8 RESUME EMBEDDING TEXT
+        # ====================================================
+
+        resume_embedding_text = (
+            profile_to_embedding_text(
+                masked_profile
+            )
+        )
+
+        if not resume_embedding_text:
+
+            raise ValueError(
+                "Cannot generate resume embedding: "
+                "masked profile produced empty text."
+            )
+
+
+        # ====================================================
+        # 6.9 RESUME EMBEDDING
+        # ====================================================
 
         resume_embedding = (
             embedding_generator.generate_embedding(
-                resume_json
-            )
-        )
-
-        jd_embedding = (
-            embedding_generator.generate_embedding(
-                jd_json
+                resume_embedding_text
             )
         )
 
 
-        # ----------------------------------------------------
-        # ATS Scoring
-        # ----------------------------------------------------
+        # ====================================================
+        # 6.10 ATS SCORING
+        # ====================================================
 
         ats_result = calculate_ats_score(
-            candidate_profile=resume_json,
+            candidate_profile=masked_profile,
             jd_profile=jd_json,
             resume_embedding=resume_embedding,
-            jd_embedding=jd_embedding
+            jd_embedding=jd_embedding,
+            embedding_generator=embedding_generator,
         )
 
-
-        # ----------------------------------------------------
-        # Add Candidate Information
-        # ----------------------------------------------------
-
-        ats_result["candidate_id"] = resume_file.stem
-
-        ats_result["candidate_name"] = (
-            resume_json
-            .get("personal_information", {})
-            .get("name")
-            or resume_file.stem
-        )
+        if not isinstance(
+            ats_result,
+            dict
+        ):
+            raise ValueError(
+                "calculate_ats_score() "
+                "did not return a dictionary."
+            )
 
 
-        # ----------------------------------------------------
-        # Display ATS Result
-        # ----------------------------------------------------
+        # ====================================================
+        # 6.11 ATTACH IDENTITY AFTER SCORING
+        # ====================================================
+
+        ats_result["candidate_id"] = candidate_id
+
+        ats_result["candidate_name"] = candidate_name
+
+        ats_result["bias_report"] = bias_report
+
+
+        # ====================================================
+        # 6.12 DISPLAY ATS RESULT
+        # ====================================================
 
         print(
             "\n================ ATS SCORE ================"
         )
 
-        final_score = (
-            ats_result
-            ["candidate_score"]
-            ["final_score"]
+        print(
+            "Candidate:",
+            candidate_name
         )
 
         print(
-            "Candidate:",
-            ats_result["candidate_name"]
+            "Candidate ID:",
+            candidate_id
         )
 
         print(
             "Final ATS Score:",
-            final_score
+            get_candidate_score(
+                ats_result
+            )
+        )
+
+        component_scores = ats_result.get(
+            "component_scores",
+            {}
         )
 
         print("\nComponent Scores:")
 
         print(
             "Skill:",
-            ats_result
-            ["component_scores"]
-            ["skill"]
-            ["score"]
+            component_scores
+            .get("skill", {})
+            .get("score", 0.0)
         )
 
         print(
             "Experience:",
-            ats_result
-            ["component_scores"]
-            ["experience"]
-            ["score"]
+            component_scores
+            .get("experience", {})
+            .get("score", 0.0)
         )
 
         print(
             "Education:",
-            ats_result
-            ["component_scores"]
-            ["education"]
-            ["score"]
+            component_scores
+            .get("education", {})
+            .get("score", 0.0)
         )
 
         print(
             "Semantic:",
-            ats_result
-            ["component_scores"]
-            ["semantic"]
-            ["score"]
+            component_scores
+            .get("semantic", {})
+            .get("score", 0.0)
         )
 
 
-        # ----------------------------------------------------
-        # Store Result
-        # ----------------------------------------------------
-        #
-        # IMPORTANT:
-        # We DON'T rank here.
-        #
-        # First we score ALL candidates.
-        #
+        # ====================================================
+        # 6.13 STORE RESULT
+        # ====================================================
+
+        print(
+            "\nDEBUG - ATS RESULT IDENTITY"
+        )
+
+        print(
+            "candidate_id:",
+            ats_result.get("candidate_id")
+        )
+
+        print(
+            "candidate_name:",
+            ats_result.get("candidate_name")
+        )
 
         ats_results.append(
             ats_result
         )
 
-
         print(
             "\nCandidate scoring completed."
         )
 
-
     except Exception as error:
 
         logger.exception(
-            f"Error processing {resume_file.name}"
+            f"Error processing "
+            f"{resume_file.name}"
         )
 
         print(
             f"\nERROR processing "
-            f"{resume_file.name}: {error}"
+            f"{resume_file.name}: "
+            f"{error}"
         )
 
         continue
 
 
 # ============================================================
-# 5. Check ATS Results
+# 7. CHECK ATS RESULTS
 # ============================================================
 
 print(
@@ -272,10 +505,9 @@ print(
 )
 
 print(
-    f"Successfully scored candidates: "
-    f"{len(ats_results)}"
+    "Successfully scored candidates:",
+    len(ats_results)
 )
-
 
 if not ats_results:
 
@@ -287,13 +519,7 @@ if not ats_results:
 
 
 # ============================================================
-# 6. Ranking + Shortlisting
-# ============================================================
-#
-# IMPORTANT:
-#
-# This is where ALL candidates are passed together.
-#
+# 8. RANKING + SHORTLISTING
 # ============================================================
 
 print(
@@ -303,12 +529,12 @@ print(
 ranked_results = rank_and_shortlist(
     ats_results,
     shortlist_threshold=SHORTLIST_THRESHOLD,
-    review_threshold=REVIEW_THRESHOLD
+    review_threshold=REVIEW_THRESHOLD,
 )
 
 
 # ============================================================
-# 7. Display Complete Ranking
+# 9. FINAL RANKING
 # ============================================================
 
 print(
@@ -322,28 +548,21 @@ print(
     f"{'Decision'}"
 )
 
-print("-" * 75)
-
+print("-" * 80)
 
 for candidate in ranked_results:
 
-    rank = candidate.get(
-        "rank",
-        "-"
+
+    rank = candidate.get("rank", "-")
+
+    candidate_name = (
+        candidate.get("candidate_name")
+        or candidate.get("candidate_id")
+        or "Unknown"
     )
 
-    candidate_name = candidate.get(
-        "candidate_name",
-        candidate.get(
-            "candidate_id",
-            "Unknown"
-        )
-    )
-
-    score = (
+    score = get_candidate_score(
         candidate
-        .get("candidate_score", {})
-        .get("final_score", 0.0)
     )
 
     decision = candidate.get(
@@ -360,7 +579,7 @@ for candidate in ranked_results:
 
 
 # ============================================================
-# 8. Generate Top Candidates
+# 10. TOP N CANDIDATES
 # ============================================================
 
 top_candidates = get_top_candidates(
@@ -368,35 +587,27 @@ top_candidates = get_top_candidates(
     top_n=TOP_N
 )
 
-
-# ============================================================
-# 9. Display Top Candidates
-# ============================================================
-
 print(
     f"\n================ TOP {TOP_N} CANDIDATES ================"
 )
 
-
 for candidate in top_candidates:
 
-    rank = candidate.get(
-        "rank",
-        "-"
+    rank = candidate.get("rank", "-")
+
+    candidate_name = (
+        candidate.get("candidate_name")
+        or candidate.get("candidate_id")
+        or "Unknown"
     )
 
-    candidate_name = candidate.get(
-        "candidate_name",
-        candidate.get(
-            "candidate_id",
-            "Unknown"
-        )
+    candidate_id = (
+        candidate.get("candidate_id")
+        or "UNKNOWN"
     )
 
-    score = (
+    score = get_candidate_score(
         candidate
-        .get("candidate_score", {})
-        .get("final_score", 0.0)
     )
 
     decision = candidate.get(
@@ -407,13 +618,14 @@ for candidate in top_candidates:
     print(
         f"Rank {rank} | "
         f"{candidate_name} | "
+        f"ID: {candidate_id} | "
         f"Score: {score:.2f} | "
         f"{decision}"
     )
 
 
 # ============================================================
-# 10. Separate Candidate Zones
+# 11. CANDIDATE ZONES
 # ============================================================
 
 shortlisted_candidates = [
@@ -422,13 +634,11 @@ shortlisted_candidates = [
     if candidate.get("decision") == "SHORTLIST"
 ]
 
-
 review_candidates = [
     candidate
     for candidate in ranked_results
     if candidate.get("decision") == "REVIEW"
 ]
-
 
 rejected_candidates = [
     candidate
@@ -438,7 +648,7 @@ rejected_candidates = [
 
 
 # ============================================================
-# 11. Recruitment Summary
+# 12. RECRUITMENT SUMMARY
 # ============================================================
 
 print(
@@ -467,7 +677,7 @@ print(
 
 
 # ============================================================
-# 12. Shortlisted Candidates
+# 13. SHORTLISTED CANDIDATES
 # ============================================================
 
 print(
@@ -476,21 +686,27 @@ print(
 
 for candidate in shortlisted_candidates:
 
-    score = (
-        candidate
-        .get("candidate_score", {})
-        .get("final_score", 0.0)
+    candidate_name = (
+        candidate.get("candidate_name")
+        or candidate.get("candidate_id")
+        or "Unknown"
+    )
+
+    candidate_id = (
+        candidate.get("candidate_id")
+        or "UNKNOWN"
     )
 
     print(
-        f"Rank {candidate['rank']} | "
-        f"{candidate.get('candidate_name')} | "
-        f"{score:.2f}"
+        f"Rank {candidate.get('rank', '-')}"
+        f" | {candidate_name}"
+        f" | ID: {candidate_id}"
+        f" | {get_candidate_score(candidate):.2f}"
     )
 
 
 # ============================================================
-# 13. Review Candidates
+# 14. REVIEW CANDIDATES
 # ============================================================
 
 print(
@@ -499,142 +715,197 @@ print(
 
 for candidate in review_candidates:
 
-    score = (
-        candidate
-        .get("candidate_score", {})
-        .get("final_score", 0.0)
+    candidate_name = (
+        candidate.get("candidate_name")
+        or candidate.get("candidate_id")
+        or "Unknown"
+    )
+
+    candidate_id = (
+        candidate.get("candidate_id")
+        or "UNKNOWN"
     )
 
     print(
-        f"Rank {candidate['rank']} | "
-        f"{candidate.get('candidate_name')} | "
-        f"{score:.2f}"
+        f"Rank {candidate.get('rank', '-')}"
+        f" | {candidate_name}"
+        f" | ID: {candidate_id}"
+        f" | {get_candidate_score(candidate):.2f}"
     )
 
 
 # ============================================================
-# 14. Final Output
+# 15. RECRUITER-FRIENDLY OUTPUT
 # ============================================================
-recruiter_results = generate_recruiter_output(
-    top_candidates
+
+recruiter_results = (
+    generate_recruiter_output(
+        top_candidates
+    )
 )
+
 print(
     "\n================ RECRUITER-FRIENDLY OUTPUT ================"
 )
 
 for candidate in recruiter_results:
 
+    candidate_name = (
+        candidate.get("candidate_name")
+        or candidate.get("candidate_id")
+        or "Unknown"
+    )
+
+    candidate_id = (
+        candidate.get("candidate_id")
+        or "UNKNOWN"
+    )
+
     print("\n" + "=" * 60)
 
     print(
-        f"Rank: {candidate['rank']}"
+        f"Rank: "
+        f"{candidate.get('rank', '-')}"
     )
 
     print(
-        f"Candidate: {candidate['candidate_name']}"
+        f"Candidate: "
+        f"{candidate_name}"
     )
 
     print(
-        f"ATS Score: {candidate['overall_score']}"
+        f"Candidate ID: "
+        f"{candidate_id}"
     )
 
     print(
-        f"Decision: {candidate['decision']}"
+        f"ATS Score: "
+        f"{candidate.get('overall_score', 0.0)}"
     )
 
+    print(
+        f"Decision: "
+        f"{candidate.get('decision', 'UNKNOWN')}"
+    )
+
+    # Score Breakdown
     print("\nScore Breakdown:")
 
-    breakdown = candidate[
-        "score_breakdown"
-    ]
-
-    print(
-        f"  Skill:       {breakdown['skill']}"
+    breakdown = candidate.get(
+        "score_breakdown",
+        {}
     )
 
     print(
-        f"  Experience:  {breakdown['experience']}"
+        f"  Skill:       "
+        f"{breakdown.get('skill', 0.0)}"
     )
 
     print(
-        f"  Education:   {breakdown['education']}"
+        f"  Experience:  "
+        f"{breakdown.get('experience', 0.0)}"
     )
 
     print(
-        f"  Semantic:    {breakdown['semantic']}"
+        f"  Education:   "
+        f"{breakdown.get('education', 0.0)}"
     )
 
-    skill_match = candidate[
-        "required_skill_match"
-    ]
+    print(
+        f"  Semantic:    "
+        f"{breakdown.get('semantic', 0.0)}"
+    )
+
+    # Required Skills
+    skill_match = candidate.get(
+        "required_skill_match",
+        {}
+    )
 
     print("\nRequired Skills:")
 
     print(
         f"  Matched: "
-        f"{skill_match['matched']}/"
-        f"{skill_match['total']}"
+        f"{skill_match.get('matched', 0)}/"
+        f"{skill_match.get('total', 0)}"
     )
 
     print(
         f"  Match: "
-        f"{skill_match['percentage']}%"
+        f"{skill_match.get('percentage', 0)}%"
     )
 
-    if skill_match["matched_skills"]:
+    matched_skills = skill_match.get(
+        "matched_skills",
+        []
+    )
 
+    if matched_skills:
         print(
             "  Matched Skills: "
-            + ", ".join(
-                skill_match["matched_skills"]
-            )
+            + ", ".join(matched_skills)
         )
 
-    if skill_match["missing_skills"]:
+    missing_skills = skill_match.get(
+        "missing_skills",
+        []
+    )
 
+    if missing_skills:
         print(
             "  Missing Skills: "
-            + ", ".join(
-                skill_match["missing_skills"]
-            )
+            + ", ".join(missing_skills)
         )
 
-    experience = candidate[
-        "experience"
-    ]
+    # Experience
+    experience = candidate.get(
+        "experience",
+        {}
+    )
 
     print("\nExperience:")
 
     print(
         f"  Years: "
-        f"{experience['years']}"
+        f"{experience.get('years', 0)}"
     )
 
     print(
         f"  Role Relevance: "
-        f"{experience['role_relevance']}%"
+        f"{experience.get('role_relevance', 0)}%"
     )
 
     print(
         f"  Technology Relevance: "
-        f"{experience['technology_relevance']}%"
+        f"{experience.get('technology_relevance', 0)}%"
     )
 
+    # Strengths
     print("\nStrengths:")
 
-    for strength in candidate["strengths"]:
-
+    for strength in candidate.get(
+        "strengths",
+        []
+    ):
         print(
             f"  + {strength}"
         )
 
+    # Gaps
     print("\nGaps:")
 
-    for gap in candidate["gaps"]:
-
+    for gap in candidate.get(
+        "gaps",
+        []
+    ):
         print(
             f"  - {gap}"
         )
+
+
+# ============================================================
+# 16. PIPELINE COMPLETED
+# ============================================================
 
 print(
     "\n============================================================"
