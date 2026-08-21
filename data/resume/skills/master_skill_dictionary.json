@@ -407,8 +407,6 @@
     "type": "Soft Skill",
     "status": "active"
   },
-  
-  
   {
     "skill_id": "TECH041",
     "name": "Django REST Framework",
@@ -474,46 +472,107 @@
     "status": "active"
   },
   {
-  "skill_id": "TECH049",
-  "name": "CI/CD",
-  "category": "Technical",
-  "subcategory": "DevOps",
-  "type": "Development Practice",
-  "status": "active"
-},
-{
-  "skill_id": "TECH050",
-  "name": "Jupyter Notebook",
-  "category": "Technical",
-  "subcategory": "Data Science",
-  "type": "Development Tool",
-  "status": "active"
-},
-{
-  "skill_id": "TECH051",
-  "name": "VS Code",
-  "category": "Technical",
-  "subcategory": "Development Tool",
-  "type": "IDE",
-  "status": "active"
-},
-{
-  "skill_id": "TECH052",
-  "name": "Jira",
-  "category": "Business",
-  "subcategory": "Project Management",
-  "type": "Project Management Tool",
-  "status": "active"
-},
+    "skill_id": "TECH049",
+    "name": "CI/CD",
+    "category": "Technical",
+    "subcategory": "DevOps",
+    "type": "Development Practice",
+    "status": "active"
+  },
   {
-  "skill_id":"TECH053",
-  "name": "Pytest",
-  "category": "Technology",
-  "subcategory": "Testing",
-  "type": "Testing Framework",
-  "status": "active"
+    "skill_id": "TECH050",
+    "name": "Jupyter Notebook",
+    "category": "Technical",
+    "subcategory": "Data Science",
+    "type": "Development Tool",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH051",
+    "name": "VS Code",
+    "category": "Technical",
+    "subcategory": "Development Tool",
+    "type": "IDE",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH052",
+    "name": "Jira",
+    "category": "Business",
+    "subcategory": "Project Management",
+    "type": "Project Management Tool",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH053",
+    "name": "Pytest",
+    "category": "Technology",
+    "subcategory": "Testing",
+    "type": "Testing Framework",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH053",
+    "name": "Next.js",
+    "category": "Technology",
+    "subcategory": "Frontend Framework",
+    "type": "Web Framework",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH054",
+    "name": "Material UI",
+    "category": "Technology",
+    "subcategory": "UI Framework",
+    "type": "Frontend UI Library",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH055",
+    "name": "Fluent UI",
+    "category": "Technology",
+    "subcategory": "UI Framework",
+    "type": "Frontend UI Library",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH056",
+    "name": "Firebase",
+    "category": "Technology",
+    "subcategory": "Backend as a Service",
+    "type": "Cloud Platform",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH057",
+    "name": "Azure DevOps",
+    "category": "Technology",
+    "subcategory": "DevOps",
+    "type": "DevOps Platform",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH058",
+    "name": "Vercel",
+    "category": "Technology",
+    "subcategory": "Cloud / Deployment",
+    "type": "Deployment Platform",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH059",
+    "name": "Netlify",
+    "category": "Technology",
+    "subcategory": "Cloud / Deployment",
+    "type": "Deployment Platform",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH060",
+    "name": "Heroku",
+    "category": "Technology",
+    "subcategory": "Cloud / Deployment",
+    "type": "Deployment Platform",
+    "status": "active"
   }
-
-  
 ]
-

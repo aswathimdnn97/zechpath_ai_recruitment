@@ -1,0 +1,235 @@
+{
+  "candidate_id": "CAN_8A2FBA24864C",
+  "candidate_score": {
+    "final_score": 68.72,
+    "status": "calculated",
+    "job_title": "Python Developer",
+    "role_category": "backend",
+    "weight_source": "role_category",
+    "weights": {
+      "skill": 0.45,
+      "experience": 0.3,
+      "education": 0.1,
+      "semantic": 0.15
+    },
+    "component_scores": {
+      "skill": {
+        "score": 51.11,
+        "status": "calculated"
+      },
+      "experience": {
+        "score": 80.0,
+        "status": "calculated"
+      },
+      "education": {
+        "score": 100.0,
+        "status": "calculated"
+      },
+      "semantic": {
+        "score": 78.11,
+        "status": "calculated"
+      }
+    },
+    "contributions": {
+      "skill": {
+        "score": 51.11,
+        "weight": 0.45,
+        "weight_percentage": 45.0,
+        "contribution": 23.0
+      },
+      "experience": {
+        "score": 80.0,
+        "weight": 0.3,
+        "weight_percentage": 30.0,
+        "contribution": 24.0
+      },
+      "education": {
+        "score": 100.0,
+        "weight": 0.1,
+        "weight_percentage": 10.0,
+        "contribution": 10.0
+      },
+      "semantic": {
+        "score": 78.11,
+        "weight": 0.15,
+        "weight_percentage": 15.0,
+        "contribution": 11.72
+      }
+    },
+    "missing_components": [],
+    "available_weight": 1.0,
+    "explanation": [
+      "Skill score 51.11 with 45% weight contributed 23.00 points.",
+      "Experience score 80.00 with 30% weight contributed 24.00 points.",
+      "Education score 100.00 with 10% weight contributed 10.00 points.",
+      "Semantic score 78.11 with 15% weight contributed 11.72 points."
+    ]
+  },
+  "component_scores": {
+    "skill": {
+      "score": 51.11,
+      "required_score": 50.0,
+      "preferred_score": 55.56,
+      "required_total": 8,
+      "required_matched": 4,
+      "required_match_percentage": 50.0,
+      "matched_required_skills": [
+        "git",
+        "postgresql",
+        "python",
+        "rest api"
+      ],
+      "missing_required_skills": [
+        "django",
+        "django rest framework",
+        "object-oriented programming",
+        "sql"
+      ],
+      "fuzzy_required_matches": [],
+      "semantic_required_matches": [],
+      "exact_required_matches": [
+        "git",
+        "postgresql",
+        "python",
+        "rest api"
+      ],
+      "preferred_total": 9,
+      "preferred_matched": 5,
+      "preferred_match_percentage": 55.56,
+      "matched_preferred_skills": [
+        "aws",
+        "docker",
+        "linux administration",
+        "pytest",
+        "redis"
+      ],
+      "missing_preferred_skills": [
+        "celery",
+        "ci/cd pipelines",
+        "kubernetes",
+        "microservices"
+      ],
+      "fuzzy_preferred_matches": [],
+      "semantic_preferred_matches": [
+        {
+          "jd_skill": "linux administration",
+          "candidate_skill": "linux",
+          "similarity": 0.775,
+          "match_type": "semantic"
+        }
+      ],
+      "exact_preferred_matches": [
+        "aws",
+        "docker",
+        "pytest",
+        "redis"
+      ],
+      "candidate_skill_count": 15,
+      "status": "calculated"
+    },
+    "experience": {
+      "score": 80.0,
+      "years_score": 100.0,
+      "role_relevance_score": 100.0,
+      "technology_relevance_score": 50.0,
+      "candidate_years": 5.17,
+      "required_minimum_years": 2.0,
+      "preferred_maximum_years": 4.0,
+      "candidate_roles": [
+        "Python Developer",
+        "Software Engineer"
+      ],
+      "target_job_title": "Python Developer",
+      "experience_skills": [
+        "Python",
+        "FastAPI",
+        "PostgreSQL",
+        "MongoDB",
+        "Docker",
+        "GitHub",
+        "REST API",
+        "Linux",
+        "Flask",
+        "Git",
+        "Postman"
+      ],
+      "candidate_skills": [
+        "Python",
+        "FastAPI",
+        "PostgreSQL",
+        "MongoDB",
+        "Docker",
+        "GitHub",
+        "REST API",
+        "Linux",
+        "Flask",
+        "Git",
+        "Postman"
+      ],
+      "required_skills": [
+        "Python",
+        "Django",
+        "Django REST Framework",
+        "REST API",
+        "PostgreSQL",
+        "Git",
+        "Object-Oriented Programming",
+        "SQL"
+      ],
+      "status": "calculated"
+    },
+    "education": {
+      "score": 100.0,
+      "degree_score": 100.0,
+      "field_score": 100.0,
+      "candidate_education": [
+        {
+          "degree_type": "Bachelor of Technology",
+          "field_of_study": "Information Technology",
+          "institution": "APJ Abdul Kalam Technological University",
+          "university": null,
+          "board": null,
+          "graduation_year": "2021"
+        }
+      ],
+      "best_matching_education": {
+        "degree_score": 100.0,
+        "field_score": 100.0,
+        "score": 100.0,
+        "degree_type": "Bachelor of Technology",
+        "field_of_study": "Information Technology",
+        "institution": "APJ Abdul Kalam Technological University",
+        "graduation_year": "2021"
+      },
+      "required_education": [
+        "Bachelor's degree in Computer Science, Information Technology, Electronics, or related field.",
+        "B.Tech / B.E / MCA / M.Sc (Computer Science)"
+      ],
+      "status": "calculated"
+    },
+    "semantic": {
+      "score": 78.11,
+      "similarity": 0.5623,
+      "status": "calculated"
+    }
+  },
+  "metadata": {
+    "job_title": "Python Developer",
+    "required_skills_count": 8,
+    "preferred_skills_count": 9,
+    "candidate_skills_count": 15,
+    "candidate_years": 5.17,
+    "candidate_roles": [
+      "Python Developer",
+      "Software Engineer"
+    ],
+    "candidate_education_count": 1,
+    "jd_experience_count": 4,
+    "jd_education_count": 2
+  },
+  "bias_mitigation": {
+    "personal_attributes_masked": true,
+    "candidate_id_preserved": true
+  },
+  "candidate_name": "ANJALI MENON"
+}
