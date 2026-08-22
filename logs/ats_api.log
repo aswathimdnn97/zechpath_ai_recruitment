@@ -1,0 +1,327 @@
+2026-08-22 15:04:17,615 | INFO | api.service.ranking_service | Candidate ranking lookup started: candidate_id=aswa
+2026-08-22 15:04:17,615 | INFO | api.service.ranking_service | Ranking started: shortlist_threshold=80.0 review_threshold=60.0
+2026-08-22 15:04:17,615 | INFO | api.service.ranking_service | Loading scoring results from: C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\data\candidates\scoring_results
+2026-08-22 15:04:17,863 | INFO | api.service.ranking_service | Scoring results loaded: count=3
+2026-08-22 15:04:17,863 | INFO | api.service.ranking_service | Ranking candidates: count=3
+2026-08-22 15:04:17,863 | INFO | api.service.ranking_service | Candidate ranking completed: count=3
+2026-08-22 15:04:17,863 | INFO | api.service.ranking_service | Applying shortlisting rules: shortlist_threshold=80.0 review_threshold=60.0
+2026-08-22 15:04:17,863 | INFO | api.service.ranking_service | Ranking and shortlisting completed: total=3 shortlisted=1 review=2 rejected=0
+2026-08-22 15:04:17,863 | WARNING | api.service.ranking_service | Candidate ranking not found: candidate_id=aswa
+2026-08-22 15:04:17,886 | ERROR | api.utils.error_handler | Unhandled exception | method=GET path=/ranking/aswa error=RankingError.__init__() got an unexpected keyword argument 'status_code'
+2026-08-22 15:04:19,115 | ERROR | api.utils.error_handler | Traceback (most recent call last):
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\routing.py", line 670, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\anyio\to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\anyio\_backends\_asyncio.py", line 2641, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\anyio\_backends\_asyncio.py", line 1033, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\api\routes\ranking_routes.py", line 48, in get_candidate_rank
+    return get_candidate_ranking(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\api\service\ranking_service.py", line 577, in get_candidate_ranking
+    raise RankingError(
+          ^^^^^^^^^^^^^
+TypeError: RankingError.__init__() got an unexpected keyword argument 'status_code'
+
+2026-08-22 15:15:33,758 | INFO | api.service.ranking_service | Candidate ranking lookup started: candidate_id=asew
+2026-08-22 15:15:33,758 | INFO | api.service.ranking_service | Ranking started: shortlist_threshold=80.0 review_threshold=60.0
+2026-08-22 15:15:33,758 | INFO | api.service.ranking_service | Loading scoring results from: C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\data\candidates\scoring_results
+2026-08-22 15:15:34,030 | INFO | api.service.ranking_service | Scoring results loaded: count=3
+2026-08-22 15:15:34,062 | INFO | api.service.ranking_service | Ranking candidates: count=3
+2026-08-22 15:15:34,109 | INFO | api.service.ranking_service | Candidate ranking completed: count=3
+2026-08-22 15:15:34,118 | INFO | api.service.ranking_service | Applying shortlisting rules: shortlist_threshold=80.0 review_threshold=60.0
+2026-08-22 15:15:34,130 | INFO | api.service.ranking_service | Ranking and shortlisting completed: total=3 shortlisted=1 review=2 rejected=0
+2026-08-22 15:15:34,137 | WARNING | api.service.ranking_service | Candidate ranking not found: candidate_id=asew
+2026-08-22 15:15:34,159 | ERROR | api.utils.error_handler | Unhandled exception | method=GET path=/ranking/asew error=RankingError.__init__() got an unexpected keyword argument 'status_code'
+2026-08-22 15:15:34,343 | ERROR | api.utils.error_handler | Traceback (most recent call last):
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\routing.py", line 670, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\anyio\to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\anyio\_backends\_asyncio.py", line 2641, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\anyio\_backends\_asyncio.py", line 1033, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\api\routes\ranking_routes.py", line 48, in get_candidate_rank
+    return get_candidate_ranking(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\api\service\ranking_service.py", line 577, in get_candidate_ranking
+    raise RankingError(
+          ^^^^^^^^^^^^^
+TypeError: RankingError.__init__() got an unexpected keyword argument 'status_code'
+
+2026-08-22 15:16:34,563 | INFO | api.service.ranking_service | Candidate ranking lookup started: candidate_id=CAN_8A2FBA24864C
+2026-08-22 15:16:34,563 | INFO | api.service.ranking_service | Ranking started: shortlist_threshold=80.0 review_threshold=60.0
+2026-08-22 15:16:34,563 | INFO | api.service.ranking_service | Loading scoring results from: C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\data\candidates\scoring_results
+2026-08-22 15:16:34,601 | INFO | api.service.ranking_service | Scoring results loaded: count=3
+2026-08-22 15:16:34,601 | INFO | api.service.ranking_service | Ranking candidates: count=3
+2026-08-22 15:16:34,601 | INFO | api.service.ranking_service | Candidate ranking completed: count=3
+2026-08-22 15:16:34,601 | INFO | api.service.ranking_service | Applying shortlisting rules: shortlist_threshold=80.0 review_threshold=60.0
+2026-08-22 15:16:34,601 | INFO | api.service.ranking_service | Ranking and shortlisting completed: total=3 shortlisted=1 review=2 rejected=0
+2026-08-22 15:16:34,612 | INFO | api.service.ranking_service | Candidate ranking found: candidate_id=CAN_8A2FBA24864C rank=3
+2026-08-22 15:16:49,308 | INFO | api.service.ranking_service | Candidate ranking lookup started: candidate_id=CAN_8A2FBA24864Cd
+2026-08-22 15:16:49,309 | INFO | api.service.ranking_service | Ranking started: shortlist_threshold=80.0 review_threshold=60.0
+2026-08-22 15:16:49,309 | INFO | api.service.ranking_service | Loading scoring results from: C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\data\candidates\scoring_results
+2026-08-22 15:16:49,312 | INFO | api.service.ranking_service | Scoring results loaded: count=3
+2026-08-22 15:16:49,312 | INFO | api.service.ranking_service | Ranking candidates: count=3
+2026-08-22 15:16:49,312 | INFO | api.service.ranking_service | Candidate ranking completed: count=3
+2026-08-22 15:16:49,312 | INFO | api.service.ranking_service | Applying shortlisting rules: shortlist_threshold=80.0 review_threshold=60.0
+2026-08-22 15:16:49,312 | INFO | api.service.ranking_service | Ranking and shortlisting completed: total=3 shortlisted=1 review=2 rejected=0
+2026-08-22 15:16:49,312 | WARNING | api.service.ranking_service | Candidate ranking not found: candidate_id=CAN_8A2FBA24864Cd
+2026-08-22 15:16:49,318 | ERROR | api.utils.error_handler | Unhandled exception | method=GET path=/ranking/CAN_8A2FBA24864Cd error=RankingError.__init__() got an unexpected keyword argument 'status_code'
+2026-08-22 15:16:49,331 | ERROR | api.utils.error_handler | Traceback (most recent call last):
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\routing.py", line 670, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\anyio\to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\anyio\_backends\_asyncio.py", line 2641, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\anyio\_backends\_asyncio.py", line 1033, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\api\routes\ranking_routes.py", line 48, in get_candidate_rank
+    return get_candidate_ranking(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\api\service\ranking_service.py", line 577, in get_candidate_ranking
+    raise RankingError(
+          ^^^^^^^^^^^^^
+TypeError: RankingError.__init__() got an unexpected keyword argument 'status_code'
+
+2026-08-22 19:38:31,482 | INFO | api.service.scoring_service | Candidate scoring started: candidate_id=aswa
+2026-08-22 19:38:31,499 | INFO | api.service.scoring_service | Loading candidate profile: candidate_id=aswa
+2026-08-22 19:38:31,499 | WARNING | api.service.scoring_service | Candidate profile not found: candidate_id=aswa
+2026-08-22 19:38:31,499 | ERROR | api.utils.error_handler | Unhandled exception | method=POST path=/scoring/aswa error=ScoringError.__init__() got an unexpected keyword argument 'status_code'
+2026-08-22 19:38:31,599 | ERROR | api.utils.error_handler | Traceback (most recent call last):
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\routing.py", line 670, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\anyio\to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\anyio\_backends\_asyncio.py", line 2641, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\anyio\_backends\_asyncio.py", line 1033, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\api\routes\scoring_routes.py", line 16, in score_candidate_api
+    return score_candidate(candidate_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\api\service\scoring_service.py", line 440, in score_candidate
+    candidate_data = load_candidate(
+                     ^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\api\service\scoring_service.py", line 108, in load_candidate
+    raise ScoringError(
+          ^^^^^^^^^^^^^
+TypeError: ScoringError.__init__() got an unexpected keyword argument 'status_code'
+
+2026-08-22 19:44:37,969 | INFO | api.service.parsing_service | Resume parsing started: resume_id=aswa
+2026-08-22 19:44:37,975 | WARNING | api.service.parsing_service | Resume not found: resume_id=aswa
+2026-08-22 19:44:37,976 | ERROR | api.utils.error_handler | Unhandled exception | method=POST path=/api/v1/resumes/aswa/parse error=ResumeParsingError.__init__() got an unexpected keyword argument 'status_code'
+2026-08-22 19:44:38,012 | ERROR | api.utils.error_handler | Traceback (most recent call last):
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\routing.py", line 670, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\.venv312\Lib\site-packages\fastapi\routing.py", line 352, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\api\routes\parsing_routes.py", line 15, in parse_resume
+    return parse_resume_by_id(resume_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\zechpath_ai_recruitment\zechpath_ai_recruitment\api\service\parsing_service.py", line 81, in parse_resume_by_id
+    raise ResumeParsingError(
+          ^^^^^^^^^^^^^^^^^^^
+TypeError: ResumeParsingError.__init__() got an unexpected keyword argument 'status_code'
+

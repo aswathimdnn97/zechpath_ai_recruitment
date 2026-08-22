@@ -1,70 +1,223 @@
 from pathlib import Path
-from uuid import uuid4
 import json
+import logging
 
-from fastapi import HTTPException
+from document_processing.resume.resume_pipeline import (
+    resume_pipeline,
+)
 
-from document_processing.resume.resume_pipeline import resume_pipeline
+from api.utils.exception import (
+    ResumeParsingError,
+)
 
+
+# ============================================================
+# LOGGER
+# ============================================================
+
+logger = logging.getLogger(
+    __name__
+)
+
+
+# ============================================================
+# PATH CONFIGURATION
+# ============================================================
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 
-RESUME_STORAGE_DIR = BASE_DIR / "data" / "resumes"
-CANDIDATE_STORAGE_DIR = BASE_DIR / "data" / "candidates"/"candidate_profile"
+RESUME_STORAGE_DIR = (
+    BASE_DIR
+    / "data"
+    / "resumes"
+)
+
+CANDIDATE_STORAGE_DIR = (
+    BASE_DIR
+    / "data"
+    / "candidates"
+    / "candidate_profile"
+)
 
 
-def parse_resume_by_id(resume_id: str) -> dict:
+# ============================================================
+# PARSE RESUME BY ID
+# ============================================================
+
+def parse_resume_by_id(
+    resume_id: str,
+) -> dict:
     """
     Find a saved resume, parse it using the existing
     resume pipeline, save the parsed candidate data,
     and return the candidate ID.
+
+    Expected resume parsing failures are raised as
+    ResumeParsingError and handled centrally by FastAPI.
     """
 
-    # 1. Find the saved resume
+    logger.info(
+        "Resume parsing started: resume_id=%s",
+        resume_id,
+    )
+
+    # ========================================================
+    # 1. FIND THE SAVED RESUME
+    # ========================================================
+
     matching_files = list(
-        RESUME_STORAGE_DIR.glob(f"{resume_id}.*")
+        RESUME_STORAGE_DIR.glob(
+            f"{resume_id}.*"
+        )
     )
 
     if not matching_files:
-        raise HTTPException(
+
+        logger.warning(
+            "Resume not found: resume_id=%s",
+            resume_id,
+        )
+
+        raise ResumeParsingError(
+            message=(
+                f"Resume '{resume_id}' not found."
+            ),
             status_code=404,
-            detail=f"Resume '{resume_id}' not found."
         )
 
     resume_path = matching_files[0]
 
-    # 2. Parse the resume
+    logger.info(
+        "Resume found: resume_id=%s path=%s",
+        resume_id,
+        resume_path,
+    )
+
+    # ========================================================
+    # 2. PARSE THE RESUME
+    # ========================================================
+
+    logger.info(
+        "Resume pipeline started: resume_id=%s",
+        resume_id,
+    )
+
     try:
+
         parsed_data = resume_pipeline(
             str(resume_path)
         )
 
-    except Exception as exc:
-        raise HTTPException(
-            status_code=500,
-            detail="Failed to parse resume."
-        ) from exc
+    except ResumeParsingError:
+        # Preserve an already classified parsing error.
+        raise
 
-    # 3. Generate candidate ID
-    candidate_id = parsed_data["candidate_id"]
+    except Exception:
 
-    # 4. Create candidate storage directory
-    CANDIDATE_STORAGE_DIR.mkdir(
-        parents=True,
-        exist_ok=True
+        logger.exception(
+            "Resume parsing pipeline failed: "
+            "resume_id=%s",
+            resume_id,
+        )
+
+        raise ResumeParsingError(
+            message="Failed to parse resume.",
+        )
+
+    logger.info(
+        "Resume pipeline completed: resume_id=%s",
+        resume_id,
     )
 
-    # 5. Create candidate file path
-    candidate_file = (
-        CANDIDATE_STORAGE_DIR /
-        f"{candidate_id}.json"
+    # ========================================================
+    # 3. VALIDATE PARSED DATA
+    # ========================================================
+
+    if not isinstance(
+        parsed_data,
+        dict,
+    ):
+        logger.error(
+            "Resume pipeline returned invalid data: "
+            "resume_id=%s",
+            resume_id,
+        )
+
+        raise ResumeParsingError(
+            message=(
+                "Resume parser returned invalid data."
+            ),
+        )
+
+    candidate_id = parsed_data.get(
+        "candidate_id"
     )
 
-    # 6. Save parsed candidate data
+    if not candidate_id:
+
+        logger.error(
+            "Candidate ID missing from parsed data: "
+            "resume_id=%s",
+            resume_id,
+        )
+
+        raise ResumeParsingError(
+            message=(
+                "Failed to generate candidate ID "
+                "from resume."
+            ),
+        )
+
+    logger.info(
+        "Candidate profile generated: "
+        "resume_id=%s candidate_id=%s",
+        resume_id,
+        candidate_id,
+    )
+
+    # ========================================================
+    # 4. CREATE CANDIDATE STORAGE DIRECTORY
+    # ========================================================
+
     try:
+
+        CANDIDATE_STORAGE_DIR.mkdir(
+            parents=True,
+            exist_ok=True,
+        )
+
+    except Exception:
+
+        logger.exception(
+            "Failed to create candidate storage "
+            "directory: candidate_id=%s",
+            candidate_id,
+        )
+
+        raise ResumeParsingError(
+            message=(
+                "Failed to prepare candidate storage."
+            ),
+        )
+
+    # ========================================================
+    # 5. CREATE CANDIDATE FILE PATH
+    # ========================================================
+
+    candidate_file = (
+        CANDIDATE_STORAGE_DIR
+        / f"{candidate_id}.json"
+    )
+
+    # ========================================================
+    # 6. SAVE PARSED CANDIDATE DATA
+    # ========================================================
+
+    try:
+
         with candidate_file.open(
             "w",
-            encoding="utf-8"
+            encoding="utf-8",
         ) as file:
 
             json.dump(
@@ -72,20 +225,45 @@ def parse_resume_by_id(resume_id: str) -> dict:
                 file,
                 indent=4,
                 ensure_ascii=False,
-                default=str
+                default=str,
             )
 
-    except Exception as exc:
-        raise HTTPException(
-            status_code=500,
-            detail="Failed to save parsed candidate data."
-        ) from exc
+    except Exception:
 
-    
-    # 7. Return result
+        logger.exception(
+            "Failed to save parsed candidate data: "
+            "resume_id=%s candidate_id=%s",
+            resume_id,
+            candidate_id,
+        )
+
+        raise ResumeParsingError(
+            message=(
+                "Failed to save parsed "
+                "candidate data."
+            ),
+        )
+
+    logger.info(
+        "Parsed candidate data saved: "
+        "candidate_id=%s",
+        candidate_id,
+    )
+
+    # ========================================================
+    # 7. RETURN RESULT
+    # ========================================================
+
+    logger.info(
+        "Resume parsing completed successfully: "
+        "resume_id=%s candidate_id=%s",
+        resume_id,
+        candidate_id,
+    )
+
     return {
         "resume_id": resume_id,
         "candidate_id": candidate_id,
         "status": "PARSED",
-        "candidate": parsed_data
+        "candidate": parsed_data,
     }

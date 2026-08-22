@@ -1,8 +1,7 @@
 from pathlib import Path
 import json
+import logging
 from typing import Any, Dict
-
-from fastapi import HTTPException
 
 from scoring.ats_scoring_engine import calculate_ats_score
 
@@ -13,6 +12,19 @@ from embeddings.embedding_generator import (
 from embeddings.embedding_text_builder import (
     profile_to_embedding_text,
     build_jd_embedding_text,
+)
+
+from api.utils.exception import (
+    ScoringError,
+)
+
+
+# ============================================================
+# LOGGER
+# ============================================================
+
+logger = logging.getLogger(
+    __name__
 )
 
 
@@ -71,20 +83,14 @@ def load_candidate(
     """
     Load candidate profile from candidate_profile storage.
 
-    Expected file:
-
-        data/candidates/candidate_profile/
-            CAN_123.json
-
-    The candidate file may contain:
-
-        {
-            "candidate_id": "...",
-            "masked_profile": {...},
-            "bias_report": {...},
-            "original_profile": {...}
-        }
+    Scoring-related errors are raised as ScoringError and
+    handled centrally by FastAPI.
     """
+
+    logger.info(
+        "Loading candidate profile: candidate_id=%s",
+        candidate_id,
+    )
 
     candidate_file = (
         CANDIDATE_STORAGE_DIR
@@ -93,12 +99,17 @@ def load_candidate(
 
     if not candidate_file.exists():
 
-        raise HTTPException(
-            status_code=404,
-            detail=(
-                f"Candidate "
-                f"'{candidate_id}' not found."
+        logger.warning(
+            "Candidate profile not found: "
+            "candidate_id=%s",
+            candidate_id,
+        )
+
+        raise ScoringError(
+            message=(
+                f"Candidate '{candidate_id}' not found."
             ),
+            status_code=404,
         )
 
     try:
@@ -110,28 +121,59 @@ def load_candidate(
 
             candidate_data = json.load(file)
 
-    except json.JSONDecodeError as exc:
+    except json.JSONDecodeError:
 
-        raise HTTPException(
-            status_code=500,
-            detail=(
-                "Candidate JSON file "
-                "is invalid."
+        logger.exception(
+            "Invalid candidate JSON: "
+            "candidate_id=%s",
+            candidate_id,
+        )
+
+        raise ScoringError(
+            message=(
+                "Candidate JSON file is invalid."
             ),
-        ) from exc
+            status_code=500,
+        )
+
+    except OSError:
+
+        logger.exception(
+            "Failed to read candidate profile: "
+            "candidate_id=%s",
+            candidate_id,
+        )
+
+        raise ScoringError(
+            message=(
+                "Failed to load candidate profile."
+            ),
+            status_code=500,
+        )
 
     if not isinstance(
         candidate_data,
         dict,
     ):
 
-        raise HTTPException(
-            status_code=500,
-            detail=(
-                "Invalid candidate "
-                "profile structure."
-            ),
+        logger.error(
+            "Invalid candidate profile structure: "
+            "candidate_id=%s",
+            candidate_id,
         )
+
+        raise ScoringError(
+            message=(
+                "Invalid candidate profile structure."
+            ),
+            status_code=500,
+        )
+
+    logger.info(
+        "Candidate profile loaded successfully: "
+        "candidate_id=%s",
+        candidate_id,
+    )
 
     return candidate_data
 
@@ -145,18 +187,6 @@ def get_masked_profile(
 ) -> dict:
     """
     Extract the masked candidate profile.
-
-    Expected structure:
-
-        {
-            "candidate_id": "...",
-            "masked_profile": {
-                ...
-            }
-        }
-
-    Backward compatibility is supported for files
-    where the profile itself is stored directly.
     """
 
     if not isinstance(
@@ -192,21 +222,8 @@ def get_candidate_name(
     """
     Extract candidate name from the original profile.
 
-    Expected structure:
-
-        {
-            "original_profile": {
-                "personal_information": {
-                    "name": "ANJALI MENON"
-                }
-            }
-        }
-
-    The candidate name is used only for API/output purposes.
-
-    IMPORTANT:
-    The candidate name is NEVER passed to the ATS
-    scoring engine.
+    Candidate name is used only for API/output purposes
+    and is never passed to the ATS scoring engine.
     """
 
     if not isinstance(
@@ -259,26 +276,24 @@ def get_candidate_name(
 def load_job_description() -> dict:
     """
     Load the extracted job description.
-
-    Supports:
-
-        {
-            "resume_text": {
-                ...
-            }
-        }
-
-    and direct JD structures.
     """
+
+    logger.info(
+        "Loading job description"
+    )
 
     if not JD_FILE.exists():
 
-        raise HTTPException(
-            status_code=404,
-            detail=(
-                "Job description file "
-                "not found."
+        logger.warning(
+            "Job description file not found: %s",
+            JD_FILE,
+        )
+
+        raise ScoringError(
+            message=(
+                "Job description file not found."
             ),
+            status_code=404,
         )
 
     try:
@@ -290,27 +305,46 @@ def load_job_description() -> dict:
 
             jd_data = json.load(file)
 
-    except json.JSONDecodeError as exc:
+    except json.JSONDecodeError:
 
-        raise HTTPException(
-            status_code=500,
-            detail=(
-                "Job description JSON "
-                "file is invalid."
+        logger.exception(
+            "Invalid job description JSON"
+        )
+
+        raise ScoringError(
+            message=(
+                "Job description JSON file is invalid."
             ),
-        ) from exc
+            status_code=500,
+        )
+
+    except OSError:
+
+        logger.exception(
+            "Failed to read job description"
+        )
+
+        raise ScoringError(
+            message=(
+                "Failed to load job description."
+            ),
+            status_code=500,
+        )
 
     if not isinstance(
         jd_data,
         dict,
     ):
 
-        raise HTTPException(
-            status_code=500,
-            detail=(
-                "Invalid job description "
-                "structure."
+        logger.error(
+            "Invalid job description structure"
+        )
+
+        raise ScoringError(
+            message=(
+                "Invalid job description structure."
             ),
+            status_code=500,
         )
 
     resume_text = jd_data.get(
@@ -336,9 +370,6 @@ def save_scoring_result(
 ) -> None:
     """
     Persist the ATS scoring result.
-
-    Ranking can read these files instead of
-    recalculating ATS scores.
     """
 
     scoring_file = (
@@ -358,17 +389,28 @@ def save_scoring_result(
                 file,
                 indent=2,
                 ensure_ascii=False,
+                default=str,
             )
 
-    except OSError as exc:
+    except OSError:
 
-        raise HTTPException(
-            status_code=500,
-            detail=(
-                "Failed to save "
-                "scoring result."
+        logger.exception(
+            "Failed to save scoring result: "
+            "candidate_id=%s",
+            candidate_id,
+        )
+
+        raise ScoringError(
+            message=(
+                "Failed to save scoring result."
             ),
-        ) from exc
+            status_code=500,
+        )
+
+    logger.info(
+        "Scoring result saved: candidate_id=%s",
+        candidate_id,
+    )
 
 
 # ============================================================
@@ -381,47 +423,15 @@ def score_candidate(
     """
     Complete candidate scoring pipeline.
 
-    Flow:
-
-        candidate_id
-              |
-              v
-        candidate_profile
-              |
-              +-------------------------+
-              |                         |
-              v                         v
-        masked_profile            original_profile
-              |                         |
-              v                         v
-        Resume embedding          candidate name
-              |                         |
-              +------------+------------+
-                           |
-                           v
-                    Job description
-                           |
-                           v
-                    JD embedding
-                           |
-                           v
-                    ATS scoring
-                           |
-                           v
-                    Attach identity
-                           |
-                           v
-                  Save scoring result
-                           |
-                           v
-                    API response
-
-    IMPORTANT:
-
-    - Only masked_profile is passed to ATS scoring.
-    - Candidate name is extracted from original_profile.
-    - Candidate name is NEVER passed to calculate_ats_score().
+    Only the masked candidate profile is passed
+    to the ATS scoring engine.
     """
+
+    logger.info(
+        "Candidate scoring started: "
+        "candidate_id=%s",
+        candidate_id,
+    )
 
     # ========================================================
     # 1. LOAD CANDIDATE PROFILE
@@ -441,12 +451,18 @@ def score_candidate(
 
     if not candidate:
 
-        raise HTTPException(
-            status_code=500,
-            detail=(
+        logger.error(
+            "Masked candidate profile not found: "
+            "candidate_id=%s",
+            candidate_id,
+        )
+
+        raise ScoringError(
+            message=(
                 "Candidate masked profile "
                 "data not found."
             ),
+            status_code=422,
         )
 
     # ========================================================
@@ -469,6 +485,12 @@ def score_candidate(
     # 5. GENERATE EMBEDDINGS + SCORE
     # ========================================================
 
+    logger.info(
+        "Generating embeddings and calculating ATS score: "
+        "candidate_id=%s",
+        candidate_id,
+    )
+
     try:
 
         # ----------------------------------------------------
@@ -483,9 +505,18 @@ def score_candidate(
 
         if not resume_embedding_text:
 
-            raise ValueError(
-                "Candidate profile produced "
-                "empty embedding text."
+            logger.error(
+                "Empty resume embedding text: "
+                "candidate_id=%s",
+                candidate_id,
+            )
+
+            raise ScoringError(
+                message=(
+                    "Candidate profile produced "
+                    "empty embedding text."
+                ),
+                status_code=422,
             )
 
         # ----------------------------------------------------
@@ -510,9 +541,18 @@ def score_candidate(
 
         if not jd_embedding_text:
 
-            raise ValueError(
-                "Job description produced "
-                "empty embedding text."
+            logger.error(
+                "Empty JD embedding text: "
+                "candidate_id=%s",
+                candidate_id,
+            )
+
+            raise ScoringError(
+                message=(
+                    "Job description produced "
+                    "empty embedding text."
+                ),
+                status_code=422,
             )
 
         # ----------------------------------------------------
@@ -537,36 +577,62 @@ def score_candidate(
             embedding_generator=embedding_generator,
         )
 
-    except HTTPException:
+    except ScoringError:
+        # Preserve expected scoring errors.
         raise
 
-    except Exception as exc:
+    except Exception:
 
-        raise HTTPException(
-            status_code=500,
-            detail=(
-                "Failed to calculate "
-                "candidate score."
+        logger.exception(
+            "Candidate scoring engine failed: "
+            "candidate_id=%s",
+            candidate_id,
+        )
+
+        raise ScoringError(
+            message=(
+                "Failed to calculate candidate score."
             ),
-        ) from exc
+            status_code=500,
+        )
 
     # ========================================================
-    # 6. ATTACH NON-SCORING IDENTITY
+    # 6. VALIDATE SCORE RESULT
     # ========================================================
 
-    # Candidate ID is safe to preserve.
+    if not isinstance(
+        score_result,
+        dict,
+    ):
+
+        logger.error(
+            "Invalid scoring result returned: "
+            "candidate_id=%s",
+            candidate_id,
+        )
+
+        raise ScoringError(
+            message=(
+                "Scoring engine returned an invalid result."
+            ),
+            status_code=500,
+        )
+
+    # ========================================================
+    # 7. ATTACH NON-SCORING IDENTITY
+    # ========================================================
+
     score_result["candidate_id"] = (
         candidate_id
     )
 
     # Candidate name is attached only AFTER scoring.
-    # It was NOT used by ATS scoring.
     score_result["candidate_name"] = (
         candidate_name
     )
 
     # ========================================================
-    # 7. SAVE SCORING RESULT
+    # 8. SAVE SCORING RESULT
     # ========================================================
 
     save_scoring_result(
@@ -575,7 +641,24 @@ def score_candidate(
     )
 
     # ========================================================
-    # 8. RETURN API RESPONSE
+    # 9. LOG SCORE COMPLETION
+    # ========================================================
+
+    final_score = (
+        score_result
+        .get("candidate_score", {})
+        .get("final_score")
+    )
+
+    logger.info(
+        "Candidate scoring completed successfully: "
+        "candidate_id=%s final_score=%s",
+        candidate_id,
+        final_score,
+    )
+
+    # ========================================================
+    # 10. RETURN API RESPONSE
     # ========================================================
 
     return {

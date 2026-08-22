@@ -1,8 +1,7 @@
 from pathlib import Path
 import json
+import logging
 from typing import Any, Dict, List
-
-from fastapi import HTTPException
 
 from scoring.ranking.candidate_ranker import (
     rank_candidates,
@@ -10,6 +9,20 @@ from scoring.ranking.candidate_ranker import (
 
 from scoring.ranking.shortlisting_engine import (
     shortlist_candidates,
+)
+
+from api.utils.exception import (
+    RankingError,
+    ShortlistingError,
+)
+
+
+# ============================================================
+# LOGGER
+# ============================================================
+
+logger = logging.getLogger(
+    __name__
 )
 
 
@@ -42,7 +55,18 @@ def load_scoring_results() -> List[Dict[str, Any]]:
         data/candidates/scoring_results/
     """
 
+    logger.info(
+        "Loading scoring results from: %s",
+        SCORING_RESULTS_DIR,
+    )
+
     if not SCORING_RESULTS_DIR.exists():
+
+        logger.warning(
+            "Scoring results directory not found: %s",
+            SCORING_RESULTS_DIR,
+        )
+
         return []
 
     results: List[Dict[str, Any]] = []
@@ -60,15 +84,28 @@ def load_scoring_results() -> List[Dict[str, Any]]:
 
                 data = json.load(file)
 
-            if isinstance(data, dict):
+            if isinstance(
+                data,
+                dict,
+            ):
                 results.append(data)
 
         except (
             json.JSONDecodeError,
             OSError,
         ):
-            # Ignore invalid scoring files.
+
+            logger.warning(
+                "Invalid scoring result file ignored: %s",
+                scoring_file.name,
+            )
+
             continue
+
+    logger.info(
+        "Scoring results loaded: count=%s",
+        len(results),
+    )
 
     return results
 
@@ -88,7 +125,10 @@ def get_candidate_id(
         "candidate_id"
     )
 
-    if isinstance(candidate_id, str):
+    if isinstance(
+        candidate_id,
+        str,
+    ):
         return candidate_id.strip()
 
     return ""
@@ -104,12 +144,6 @@ def get_candidate_name(
     """
     Extract candidate name from the persisted
     scoring result.
-
-    The scoring service attaches candidate_name
-    AFTER ATS scoring.
-
-    Therefore ranking does not need to access
-    candidate_identity/.
     """
 
     candidate_name = candidate.get(
@@ -117,14 +151,17 @@ def get_candidate_name(
     )
 
     if (
-        isinstance(candidate_name, str)
+        isinstance(
+            candidate_name,
+            str,
+        )
         and candidate_name.strip()
     ):
         return candidate_name.strip()
 
-    # Fallback to candidate ID if name is unavailable.
-
-    return get_candidate_id(candidate)
+    return get_candidate_id(
+        candidate
+    )
 
 
 # ============================================================
@@ -162,11 +199,17 @@ def get_candidate_score(
         TypeError,
         ValueError,
     ):
+
+        logger.warning(
+            "Invalid candidate score found: candidate_id=%s",
+            get_candidate_id(candidate),
+        )
+
         return 0.0
 
 
 # ============================================================
-# RANK + SHORTLIST ALL CANDIDATES
+# RANK CANDIDATES
 # ============================================================
 
 def rank_all_candidates(
@@ -174,64 +217,159 @@ def rank_all_candidates(
     review_threshold: float = 60.0,
 ) -> Dict[str, Any]:
     """
-    Rank all scored candidates.
+    Rank all scored candidates and apply
+    shortlisting rules.
 
-    Flow:
-
-        scoring_results/
-              |
-              v
-        Load scores
-              |
-              v
-        Rank by final ATS score
-              |
-              v
-        SHORTLIST / REVIEW / REJECT
-              |
-              v
-        Recruiter-friendly response
+    Ranking and shortlisting errors are handled
+    separately so that the API can return the
+    correct error category.
     """
+
+    logger.info(
+        "Ranking started: shortlist_threshold=%s "
+        "review_threshold=%s",
+        shortlist_threshold,
+        review_threshold,
+    )
 
     # ========================================================
     # 1. LOAD SCORING RESULTS
     # ========================================================
 
-    scoring_results = (
-        load_scoring_results()
-    )
+    scoring_results = load_scoring_results()
 
     if not scoring_results:
 
-        raise HTTPException(
-            status_code=404,
-            detail="No scored candidates found.",
+        logger.warning(
+            "Ranking failed: no scored candidates found"
+        )
+
+        raise RankingError(
+            message="No scored candidates found.",
+           
         )
 
     # ========================================================
     # 2. RANK CANDIDATES
     # ========================================================
 
-    ranked_candidates = rank_candidates(
-        scoring_results
+    logger.info(
+        "Ranking candidates: count=%s",
+        len(scoring_results),
+    )
+
+    try:
+
+        ranked_candidates = rank_candidates(
+            scoring_results
+        )
+
+    except RankingError:
+        # Preserve an already classified ranking error.
+        raise
+
+    except Exception:
+
+        logger.exception(
+            "Candidate ranking engine failed"
+        )
+
+        raise RankingError(
+            message="Failed to rank candidates.",
+            status_code=500,
+        )
+
+    logger.info(
+        "Candidate ranking completed: count=%s",
+        len(ranked_candidates),
     )
 
     # ========================================================
-    # 3. APPLY SHORTLISTING RULES
+    # 3. VALIDATE RANKING RESULT
     # ========================================================
 
-    ranked_candidates = shortlist_candidates(
+    if not isinstance(
         ranked_candidates,
-        shortlist_threshold=(
-            shortlist_threshold
-        ),
-        review_threshold=(
-            review_threshold
-        ),
-    )
+        list,
+    ):
+
+        logger.error(
+            "Ranking engine returned invalid result"
+        )
+
+        raise RankingError(
+            message=(
+                "Ranking engine returned "
+                "an invalid result."
+            ),
+            status_code=500,
+        )
 
     # ========================================================
-    # 4. BUILD RECRUITER-FACING RESULT
+    # 4. APPLY SHORTLISTING RULES
+    # ========================================================
+
+    logger.info(
+        "Applying shortlisting rules: "
+        "shortlist_threshold=%s "
+        "review_threshold=%s",
+        shortlist_threshold,
+        review_threshold,
+    )
+
+    try:
+
+        ranked_candidates = shortlist_candidates(
+            ranked_candidates,
+            shortlist_threshold=(
+                shortlist_threshold
+            ),
+            review_threshold=(
+                review_threshold
+            ),
+        )
+
+    except ShortlistingError:
+        # Preserve an already classified shortlisting error.
+        raise
+
+    except Exception:
+
+        logger.exception(
+            "Candidate shortlisting engine failed"
+        )
+
+        raise ShortlistingError(
+            message=(
+                "Failed to apply "
+                "shortlisting rules."
+            ),
+            status_code=500,
+        )
+
+    # ========================================================
+    # 5. VALIDATE SHORTLISTING RESULT
+    # ========================================================
+
+    if not isinstance(
+        ranked_candidates,
+        list,
+    ):
+
+        logger.error(
+            "Shortlisting engine returned invalid result"
+        )
+
+        raise ShortlistingError(
+            message=(
+                "Shortlisting engine returned "
+                "an invalid result."
+            ),
+            status_code=500,
+        )
+
+    # ========================================================
+    # 6. BUILD RECRUITER-FACING RESULT
     # ========================================================
 
     final_candidates: List[
@@ -239,6 +377,17 @@ def rank_all_candidates(
     ] = []
 
     for candidate in ranked_candidates:
+
+        if not isinstance(
+            candidate,
+            dict,
+        ):
+
+            logger.warning(
+                "Invalid candidate ranking entry ignored"
+            )
+
+            continue
 
         candidate_id = get_candidate_id(
             candidate
@@ -270,7 +419,25 @@ def rank_all_candidates(
         )
 
     # ========================================================
-    # 5. SUMMARY COUNTS
+    # 7. VALIDATE FINAL CANDIDATE LIST
+    # ========================================================
+
+    if not final_candidates:
+
+        logger.warning(
+            "Ranking completed but produced "
+            "no valid candidate results"
+        )
+
+        raise RankingError(
+            message=(
+                "No valid ranked candidates found."
+            ),
+            status_code=422,
+        )
+
+    # ========================================================
+    # 8. SUMMARY COUNTS
     # ========================================================
 
     shortlisted_count = sum(
@@ -295,7 +462,20 @@ def rank_all_candidates(
     )
 
     # ========================================================
-    # 6. FINAL RESPONSE
+    # 9. LOG SUMMARY
+    # ========================================================
+
+    logger.info(
+        "Ranking and shortlisting completed: "
+        "total=%s shortlisted=%s review=%s rejected=%s",
+        len(final_candidates),
+        shortlisted_count,
+        review_count,
+        rejected_count,
+    )
+
+    # ========================================================
+    # 10. FINAL RESPONSE
     # ========================================================
 
     return {
@@ -332,23 +512,15 @@ def get_candidate_ranking(
     """
     Return ranking information for one candidate.
 
-    IMPORTANT:
-
     The candidate's rank is calculated against
     ALL scored candidates.
-
-    Example:
-
-        Candidate A = 90
-        Candidate B = 81
-        Candidate C = 75
-
-        GET /ranking/CandidateB
-
-        returns:
-
-            rank = 2
     """
+
+    logger.info(
+        "Candidate ranking lookup started: "
+        "candidate_id=%s",
+        candidate_id,
+    )
 
     # ========================================================
     # 1. RANK ALL CANDIDATES
@@ -374,13 +546,21 @@ def get_candidate_ranking(
     for candidate in candidates:
 
         if (
-            candidate.get("candidate_id")
+            candidate.get(
+                "candidate_id"
+            )
             == candidate_id
         ):
 
+            logger.info(
+                "Candidate ranking found: "
+                "candidate_id=%s rank=%s",
+                candidate_id,
+                candidate.get("rank"),
+            )
+
             return {
                 "status": "RANKED",
-
                 "candidate": candidate,
             }
 
@@ -388,11 +568,16 @@ def get_candidate_ranking(
     # 3. CANDIDATE NOT FOUND
     # ========================================================
 
-    raise HTTPException(
-        status_code=404,
-        detail=(
-            f"Candidate "
-            f"'{candidate_id}' "
+    logger.warning(
+        "Candidate ranking not found: "
+        "candidate_id=%s",
+        candidate_id,
+    )
+
+    raise RankingError(
+        message=(
+            f"Candidate '{candidate_id}' "
             f"has no ranking result."
         ),
+        status_code=404,
     )
