@@ -1,0 +1,13 @@
+{
+  "job_id": "JOB_FF2AB461C898",
+  "job_type": "CANDIDATE_SCORING",
+  "candidate_id": "CAN_566DAB23741D",
+  "jd_id": "JD_001_Python_Developer",
+  "status": "COMPLETED",
+  "progress": 100,
+  "created_at": "2026-09-11T05:34:31.511335+00:00",
+  "started_at": "2026-09-11T05:34:31.590288+00:00",
+  "completed_at": "2026-09-11T05:34:41.367064+00:00",
+  "result_reference": "data/candidates/scoring_results/CAN_566DAB23741D/JD_001_Python_Developer.json",
+  "error": null
+}

@@ -1,26 +1,247 @@
+"""
+skill_list_splitter.py
+
+Responsibilities
+----------------
+1. Split a dedicated Skills section into individual skill candidates.
+2. Handle common separators.
+3. Remove category labels such as:
+       Backend:
+       Frontend:
+       Database:
+       Programming Languages:
+4. Preserve multi-word skill names.
+5. Preserve technology names such as:
+       C++
+       C#
+       .NET
+       Node.js
+       React.js
+
+This module does NOT:
+    - resolve spelling
+    - resolve synonyms
+    - validate skills
+    - perform fuzzy matching
+    - expand technology stacks
+
+Those responsibilities belong to:
+
+    spelling_resolver.py
+    synonym_resolver.py
+    master_skill_validator.py
+    stack_resolver.py
+"""
+
+
 import re
 
-from document_processing.resume.entity_extracter.skill.synonym_resolver import (
-    resolve_synonyms,
+
+# ============================================================
+# CATEGORY PREFIXES
+# ============================================================
+
+CATEGORY_PREFIX_PATTERN = re.compile(
+    r"""
+    ^\s*
+    (?:
+        backend
+        |frontend
+        |full[-\s]?stack
+        |database
+        |databases
+        |programming\s+languages?
+        |technical\s+skills?
+        |technologies
+        |technology
+        |frameworks?
+        |libraries
+        |tools
+        |devops
+        |cloud
+        |testing
+        |testing\s+tools
+        |web\s+technologies
+        |soft\s+skills
+        |skills
+    )
+    \s*:\s*
+    """,
+    flags=re.IGNORECASE | re.VERBOSE,
 )
 
 
+# ============================================================
+# BULLET PREFIX
+# ============================================================
+
+BULLET_PATTERN = re.compile(
+    r"^[\s•●▪◦‣*-]+"
+)
+
+
+# ============================================================
+# EXPLICIT SKILL SEPARATORS
+# ============================================================
+
+SEPARATOR_PATTERN = re.compile(
+    r"""
+    \s*
+    (?:
+        \|
+        |,
+        |;
+        |\u2022
+        |\u00b7
+    )
+    \s*
+    """,
+    flags=re.VERBOSE,
+)
+
+
+# ============================================================
+# CLEAN ONE SKILL ITEM
+# ============================================================
+
+def _clean_skill_item(skill):
+    """
+    Clean one extracted skill candidate.
+
+    This function intentionally does not normalize
+    spelling or synonyms.
+    """
+
+    if not isinstance(skill, str):
+        return ""
+
+    skill = skill.strip()
+
+    if not skill:
+        return ""
+
+    # Remove bullet characters.
+    skill = BULLET_PATTERN.sub("", skill).strip()
+
+    # Remove category prefix if still present.
+    skill = CATEGORY_PREFIX_PATTERN.sub(
+        "",
+        skill,
+    ).strip()
+
+    # Normalize repeated whitespace.
+    skill = re.sub(
+        r"\s+",
+        " ",
+        skill,
+    )
+
+    return skill.strip()
+
+
+# ============================================================
+# SPLIT ONE LINE
+# ============================================================
+
+def _split_line(line):
+    """
+    Split one Skills-section line.
+
+    Examples
+    --------
+    "Backend: Django, FastAPI, Flask"
+
+        ->
+        ["Django", "FastAPI", "Flask"]
+
+    "Frontend: React | JavaScript | HTML | CSS"
+
+        ->
+        ["React", "JavaScript", "HTML", "CSS"]
+
+    "Database: PostgreSQL; MongoDB"
+
+        ->
+        ["PostgreSQL", "MongoDB"]
+    """
+
+    if not isinstance(line, str):
+        return []
+
+    line = line.strip()
+
+    if not line:
+        return []
+
+    # Remove bullet.
+    line = BULLET_PATTERN.sub(
+        "",
+        line,
+    ).strip()
+
+    # Remove category prefix.
+    line = CATEGORY_PREFIX_PATTERN.sub(
+        "",
+        line,
+    ).strip()
+
+    if not line:
+        return []
+
+    # --------------------------------------------------------
+    # Split only on explicit separators.
+    #
+    # IMPORTANT:
+    # Do NOT split on whitespace.
+    #
+    # This preserves:
+    #     Machine Learning
+    #     Object Oriented Programming
+    #     Microsoft SQL Server
+    # --------------------------------------------------------
+
+    parts = SEPARATOR_PATTERN.split(line)
+
+    cleaned = []
+
+    for part in parts:
+
+        skill = _clean_skill_item(part)
+
+        if skill:
+            cleaned.append(skill)
+
+    return cleaned
+
+
+# ============================================================
+# MAIN FUNCTION
+# ============================================================
+
 def split_skill_line(lines):
     """
-    Split skill lines into individual skill items.
+    Split a dedicated Skills section into raw skill candidates.
 
-    Input can be:
-        - list of strings
-        - single string
+    Input
+    -----
+    Can be:
 
-    Example:
+        - string
+        - list[str]
+        - nested list
+
+    Examples
+    --------
+    Input:
+
         [
             "Backend: Django, FastAPI, Flask",
             "Frontend: React, JavaScript, HTML, CSS",
             "Database: PostgreSQL, MongoDB"
         ]
 
-    Returns:
+    Output:
+
         [
             "Django",
             "FastAPI",
@@ -32,96 +253,86 @@ def split_skill_line(lines):
             "PostgreSQL",
             "MongoDB"
         ]
+
+    IMPORTANT
+    ---------
+    This function returns RAW candidates.
+
+    It does not perform:
+
+        spelling correction
+        synonym resolution
+        validation
+        fuzzy matching
+        stack expansion
     """
 
     if not lines:
         return []
 
-    # -------------------------------------------------------
+    # --------------------------------------------------------
     # Accept a single string.
-    # -------------------------------------------------------
+    # --------------------------------------------------------
 
     if isinstance(lines, str):
-        lines = [lines]
+        lines = lines.splitlines()
 
-    # -------------------------------------------------------
-    # Make sure we have a list.
-    # -------------------------------------------------------
+    # --------------------------------------------------------
+    # Make sure input is a list.
+    # --------------------------------------------------------
 
     if not isinstance(lines, list):
         return []
 
     skills = []
 
-    for line in lines:
+    # --------------------------------------------------------
+    # Flatten nested lists.
+    # --------------------------------------------------------
 
-        if isinstance(line, list):
-            skills.extend(
-                split_skill_line(line)
-            )
+    def flatten(items):
+
+        for item in items:
+
+            if isinstance(item, list):
+
+                yield from flatten(item)
+
+            elif isinstance(item, str):
+
+                if item.strip():
+                    yield item
+
+    # --------------------------------------------------------
+    # Process every line.
+    # --------------------------------------------------------
+
+    for line in flatten(lines):
+
+        extracted = _split_line(line)
+
+        skills.extend(extracted)
+
+    # --------------------------------------------------------
+    # Remove duplicates while preserving order.
+    # --------------------------------------------------------
+
+    unique_skills = []
+
+    seen = set()
+
+    for skill in skills:
+
+        key = skill.lower().strip()
+
+        if not key:
             continue
 
-        if not isinstance(line, str):
+        if key in seen:
             continue
 
-        line = line.strip()
+        seen.add(key)
 
-        if not line:
-            continue
+        unique_skills.append(skill)
 
-        # ---------------------------------------------------
-        # Remove category prefix.
-        #
-        # Backend: Django, FastAPI
-        # Frontend: React, JavaScript
-        # Database: PostgreSQL
-        # ---------------------------------------------------
-
-        line = re.sub(
-            r"^[^:]+:\s*",
-            "",
-            line,
-        )
-
-        # ---------------------------------------------------
-        # Split comma-separated skills.
-        # ---------------------------------------------------
-
-        parts = re.split(
-            r",",
-            line,
-        )
-
-        for part in parts:
-
-            skill = part.strip()
-
-            if not skill:
-                continue
-
-            skills.append(skill)
-
-    # Resolve aliases to canonical names (e.g., "Fast API" -> "FastAPI").
-    skills_raw = list(skills)
-
-    try:
-        resolved = resolve_synonyms(skills_raw)
-    except Exception:
-        return skills_raw
-
-    # Preserve plural originals when alias canonical form is singular
-    final = []
-
-    for original, canonical in zip(skills_raw, resolved):
-
-        o = original.strip()
-
-        # check if original appears plural (simple heuristic)
-        is_plural = o.endswith("s") or o.lower().endswith("apis")
-
-        if is_plural and not canonical.lower().endswith("s"):
-            final.append(o)
-        else:
-            final.append(canonical)
-
-    return final
+    return unique_skills

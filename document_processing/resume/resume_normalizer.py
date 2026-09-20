@@ -1,137 +1,158 @@
-
 import re
-from  document_processing.resume.nlp_resolver import resolve_heading,build_section_docs
-from document_processing.resume.headings import headings
 
-# Build the SpaCy documents
-section_docs = build_section_docs(headings)
+from document_processing.resume.headings import heading_aliases
+
+
+# ============================================================
+# HEADING MAP
+# ============================================================
+
+HEADING_MAP = {
+    str(alias).strip().lower(): canonical
+    for alias, canonical in heading_aliases.items()
+}
+
+
+# ============================================================
+# NORMALIZE HEADING VALUE
+# ============================================================
+
+def _normalize_heading_value(value):
+    """
+    Normalize a possible section heading for exact comparison.
+
+    Examples:
+        "CERTIFICATIONS"       -> "certifications"
+        "Certificate:"         -> "certificate"
+        "Technical-Skills"     -> "technical skills"
+        "Professional_Certifications"
+                                -> "professional certifications"
+    """
+
+    if value is None:
+        return ""
+
+    value = str(value).strip()
+
+    if not value:
+        return ""
+
+    # Replace non-breaking spaces
+    value = value.replace(
+        "\u00a0",
+        " "
+    )
+
+    # Normalize separators
+    value = re.sub(
+        r"[-_/]+",
+        " ",
+        value
+    )
+
+    # Remove trailing colon
+    value = re.sub(
+        r"\s*:\s*$",
+        "",
+        value
+    )
+
+    # Collapse multiple spaces
+    value = re.sub(
+        r"\s+",
+        " ",
+        value
+    )
+
+    return value.strip().lower()
+
+
+# ============================================================
+# NORMALIZE RESUME TEXT
+# ============================================================
 
 def normalize_text(text):
-   
-    heading = {
-        "professional summary": "summary",
-        "summary": "summary",
-        "career summary": "summary",
-        "profile summary": "summary",
-        "objective": "summary",
-        "career objective": "summary",
+    """
+    Normalize resume text.
 
-        "technical skills": "skills",
-        "core skills": "skills",
-        "key skills": "skills",
-        "skills": "skills",
-        "skills and interests":"skills",
-        "technical expertise":"skills",
-        "technologies":"skills",
+    Responsibilities:
+        1. Remove unnecessary whitespace
+        2. Normalize bullet characters
+        3. Normalize known section headings
+        4. Preserve normal resume content
 
-        "education": "education",
-        "academic qualification": "education",
-        "academic qualifications": "education",
-        "qualification": "education",
-        "qualifications": "education",
+    IMPORTANT:
+        This function does NOT use fuzzy/NLP heading
+        detection.
 
-        "experience": "experience",
-        "work experience": "experience",
-        "professional experience": "experience",
-        "employment history": "experience",
-        "employment history": "experience",
-        "position of responsibility":"experience",
+        Section detection is handled by section_detector.py.
+    """
 
-        "projects": "projects",
-        "academic projects": "projects",
-        "personal projects": "projects",
+    if not isinstance(text, str):
+        return ""
 
-        "certifications": "certifications",
-        "certification": "certifications",
-        "certificates":"certification",
-        "professional certifications":"certifications",
-        "licenses & certifications":"certifications",
-        
+    if not text.strip():
+        return ""
 
-        "achievements": "achievements",
-        "awards": "achievements",
-        "accomplishments":"achievements",
-        "honors":"achievements",
-
-        "languages": "languages",
-        "language":"languages",
-
-        "interests": "interests",
-
-        "references": "references",
-        "other activities and projects":"projects",
-        "selected projects":"projects",
-        "academic projects":"projects",
-        "personal projects":"projects",
-        "key projects":"projects",
-        "extra-cirrucular":"activities",
-        "extra-cirrucular activities":"activities",
-        "documentations":"activities",
-        "declaration":"declaration",
-        "internship/trainings":"experience",
-        "experience / internship / training":"experience",
-        "research publication": "publications",
-        "publications": "publications",
-        "publication": "publications",
-        "paper":"publications",
-        "articles": "publications",
-    }
-    
-    # 3. Process line-by-line
-    lines = text.split("\n")
     normalized_lines = []
-    for line in lines:
-        line = line.strip()
+
+    # ========================================================
+    # PROCESS EACH LINE
+    # ========================================================
+
+    for raw_line in text.splitlines():
+
+        line = raw_line.strip()
+
         if not line:
             continue
 
+        # ----------------------------------------------------
         # Normalize bullet points
-        line = re.sub(r"^[•●◦▪■*-]\s*", "", line)
-        
-        # Normalize headings
-        lower_line = line.lower().rstrip(":")
+        # ----------------------------------------------------
 
-        if lower_line in heading:
-            line = heading[lower_line]
+        line = re.sub(
+            r"^[•●◦▪■‣⁃*-]\s*",
+            "",
+            line
+        )
 
-        # NLP----------------------------------
-        else:
-            resolved_heading = resolve_heading(lower_line,section_docs)
+        line = line.strip()
 
-        if resolved_heading:
-            line = resolved_heading
-            
-        #------------------------------------------ 
-            
-        normalized_lines.append(line)
+        if not line:
+            continue
 
-    return "\n".join(normalized_lines)
+        # ----------------------------------------------------
+        # Check complete line against known headings
+        # ----------------------------------------------------
 
-# text="""EDUCATION
-# Bachelor of Engineering in Chemical Engineering August 2016 - Present
-# National Insititute of Technology,Warangal.
-# CGPA upto 6th semister :6.70/10
-# Intermediate Education August 2012 - May2014
-# Narayana Junior College.
-# Board Of Intermediate Education,A.P, Percentage: 96.8
-# SSC, Class X March 2011 - March 2012
-# St.Mary’s High school,Kankipadu,CGPA:9.5
-# SKILLS
-# Autocad Beginner
-# C++ Intermediate
-# Ms office Intermediate
-# POSITION OF RESPONSIBILITY
-# .Executive Member at Film Committee September 2017 -May 2018
-# .Joint Secretary at Film Committee
-# .Representing as Mess Representative at 2nd Mess.
-# .Worked as SUBCORE in Publicity and Media relations,Technozion 20"""
-# print(normalize_text(text))
-# line = "· Joint Secretary at Film Committee"
+        normalized_heading = _normalize_heading_value(
+            line
+        )
 
-# print(ord("·"))
-# print(ord(line[0]))
-# print(repr(line))
+        canonical_heading = HEADING_MAP.get(
+            normalized_heading
+        )
 
+        if canonical_heading:
+            line = canonical_heading
 
+        # ----------------------------------------------------
+        # IMPORTANT:
+        #
+        # Do NOT run resolve_heading() here.
+        #
+        # Normal resume content such as:
+        #
+        # "Professional Development Program Completed"
+        #
+        # must remain unchanged.
+        # ----------------------------------------------------
 
-    
+        normalized_lines.append(
+            line
+        )
+
+    return "\n".join(
+        normalized_lines
+    )

@@ -3,13 +3,41 @@ experience_pipeline.py
 
 Combines all experience extraction modules
 and creates structured experience data.
+
+Responsibilities
+----------------
+This pipeline extracts experience-specific information:
+
+    - Job title
+    - Company
+    - Duration
+    - Total experience
+    - Description
+    - Location
+    - Employment type
+    - Department
+
+Technical skill extraction is handled centrally by:
+
+    document_processing.resume.entity_extracter.skill.skill_extractor
+
+This prevents duplicate skill extraction logic between
+Experience and the main Resume pipeline.
 """
 
+
+# ============================================================
+# EXPERIENCE BLOCK SPLITTER
+# ============================================================
 
 from document_processing.resume.entity_extracter.experience.experince_block_splitter import (
     split_experience_blocks
 )
 
+
+# ============================================================
+# TITLE
+# ============================================================
 
 from document_processing.resume.entity_extracter.experience.title_extractor import (
     extract_titles
@@ -24,6 +52,9 @@ from document_processing.resume.entity_extracter.experience.title_validator impo
 )
 
 
+# ============================================================
+# COMPANY
+# ============================================================
 
 from document_processing.resume.entity_extracter.experience.company_extractor import (
     extract_companies
@@ -38,34 +69,12 @@ from document_processing.resume.entity_extracter.experience.company_validator im
 )
 
 
+# ============================================================
+# DURATION
+# ============================================================
 
 from document_processing.resume.entity_extracter.experience.duration_calculator import (
     extract_duration
-)
-
-
-from document_processing.resume.entity_extracter.experience.description_extraction import (
-    extract_description
-)
-
-
-from document_processing.resume.entity_extracter.experience.location_extractor import (
-    extract_location
-)
-
-
-from document_processing.resume.entity_extracter.experience.employement_type import (
-    extract_employment_type
-)
-
-
-from document_processing.resume.entity_extracter.experience.department_extractor import (
-    extract_department
-)
-
-
-from document_processing.resume.entity_extracter.experience.skill_extractor_from_experience import (
-    extract_skills_from_experience
 )
 
 from document_processing.resume.entity_extracter.experience.experience_calculator import (
@@ -73,50 +82,100 @@ from document_processing.resume.entity_extracter.experience.experience_calculato
 )
 
 
+# ============================================================
+# DESCRIPTION
+# ============================================================
 
-# ----------------------------------------------------
-# Experience Extractor
-# ----------------------------------------------------
+from document_processing.resume.entity_extracter.experience.description_extraction import (
+    extract_description
+)
+
+
+# ============================================================
+# LOCATION
+# ============================================================
+
+from document_processing.resume.entity_extracter.experience.location_extractor import (
+    extract_location
+)
+
+
+# ============================================================
+# EMPLOYMENT TYPE
+# ============================================================
+
+from document_processing.resume.entity_extracter.experience.employement_type import (
+    extract_employment_type
+)
+
+
+# ============================================================
+# DEPARTMENT
+# ============================================================
+
+from document_processing.resume.entity_extracter.experience.department_extractor import (
+    extract_department
+)
+
+
+# ============================================================
+# EXPERIENCE EXTRACTOR
+# ============================================================
 
 def experience_extractor(experience_section):
+    """
+    Extract structured experience information.
 
+    Args:
+        experience_section:
+            Experience section detected from the resume.
+
+    Returns:
+        List of structured experience objects.
+    """
+
+    # --------------------------------------------------------
+    # Validate input
+    # --------------------------------------------------------
 
     if not experience_section:
-
         return []
 
-
-
-    # Split experience into blocks
+    # --------------------------------------------------------
+    # Split experience section into individual blocks
+    # --------------------------------------------------------
 
     experience_blocks = split_experience_blocks(
         experience_section
     )
 
+    if not experience_blocks:
+        return []
 
     experiences = []
 
-
+    # ========================================================
+    # PROCESS EACH EXPERIENCE BLOCK
+    # ========================================================
 
     for block in experience_blocks:
 
+        if not block:
+            continue
 
-
-        # ----------------------------
-        # Title
-        # ----------------------------
+        # ====================================================
+        # TITLE
+        # ====================================================
 
         titles = extract_titles(
             block
         )
-
 
         raw_title = (
             titles[0]
             if titles
             else None
         )
-
 
         resolved_title = (
             resolve_title_alias(
@@ -126,21 +185,21 @@ def experience_extractor(experience_section):
             else None
         )
 
-
-        title = validate_title(
-            resolved_title
+        title = (
+            validate_title(
+                resolved_title
+            )
+            if resolved_title
+            else None
         )
 
-
-
-        # ----------------------------
-        # Company
-        # ----------------------------
+        # ====================================================
+        # COMPANY
+        # ====================================================
 
         companies = extract_companies(
             block
         )
-
 
         resolved_companies = (
             resolve_company_aliases(
@@ -148,30 +207,26 @@ def experience_extractor(experience_section):
             )
         )
 
-
-        company = validate_companies(
-            resolved_companies
+        validated_companies = (
+            validate_companies(
+                resolved_companies
+            )
         )
 
-
-        # take first company
-
+        # Take the first validated company
         company = (
-            company[0]
-            if company
+            validated_companies[0]
+            if validated_companies
             else None
         )
 
-
-
-        # ----------------------------
-        # Duration
-        # ----------------------------
+        # ====================================================
+        # DURATION
+        # ====================================================
 
         duration = extract_duration(
             block
         )
-
 
         total_experience = (
             calculate_experience(
@@ -179,31 +234,25 @@ def experience_extractor(experience_section):
             )
         )
 
-
-
-        # ----------------------------
-        # Description
-        # ----------------------------
+        # ====================================================
+        # DESCRIPTION
+        # ====================================================
 
         description = extract_description(
             block
         )
 
-
-
-        # ----------------------------
-        # Location
-        # ----------------------------
+        # ====================================================
+        # LOCATION
+        # ====================================================
 
         location = extract_location(
             block
         )
 
-
-
-        # ----------------------------
-        # Employment Type
-        # ----------------------------
+        # ====================================================
+        # EMPLOYMENT TYPE
+        # ====================================================
 
         employment_type = (
             extract_employment_type(
@@ -211,11 +260,9 @@ def experience_extractor(experience_section):
             )
         )
 
-
-
-        # ----------------------------
-        # Department
-        # ----------------------------
+        # ====================================================
+        # DEPARTMENT
+        # ====================================================
 
         department = (
             extract_department(
@@ -223,23 +270,9 @@ def experience_extractor(experience_section):
             )
         )
 
-
-
-        # ----------------------------
-        # Skills
-        # ----------------------------
-
-        skills = (
-            extract_skills_from_experience(
-                block
-            )
-        )
-
-
-
-        # ----------------------------
-        # Final Object
-        # ----------------------------
+        # ====================================================
+        # FINAL EXPERIENCE OBJECT
+        # ====================================================
 
         experiences.append({
 
@@ -257,11 +290,8 @@ def experience_extractor(experience_section):
 
             "department": department,
 
-            "skills": skills,
-
             "description": description
 
         })
-
 
     return experiences

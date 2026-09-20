@@ -1,96 +1,320 @@
-import re
+"""
+certification_pipeline.py
+
+Certification extraction pipeline.
+
+Flow:
+
+    certification section
+            ↓
+    split_certification_blocks()
+            ↓
+    certification_name_extractor
+    organization_extractor
+    certification_date_extraction
+    credential_id_extractor
+            ↓
+    normalized certification objects
+"""
 
 from document_processing.resume.entity_extracter.certifications.certification_block_splitter import (
     split_certification_blocks,
-    split_flat_certification_lines,
-    is_certification_start,
 )
+
 from document_processing.resume.entity_extracter.certifications.certification_name_extractor import (
     extract_certification_name,
 )
+
 from document_processing.resume.entity_extracter.certifications.organization_extractor import (
     extract_issuing_organization,
 )
 
-from document_processing.resume.entity_extracter.certifications.certification_date_extraction import extract_certification_date
-from document_processing.resume.entity_extracter.certifications.creditiel_id_extractor import extract_credential_id
+from document_processing.resume.entity_extracter.certifications.certification_date_extraction import (
+    extract_certification_date,
+)
+
+from document_processing.resume.entity_extracter.certifications.creditiel_id_extractor import (
+    extract_credential_id,
+)
+
+COMPLETION_WORDS = {
+    "completed",
+    "complete",
+    "certified",
+    "passed",
+    "earned",
+    "obtained",
+}
+# ============================================================
+# HELPERS
+# ============================================================
+
+def _has_meaningful_text(value):
+    """
+    Check whether an extracted value contains meaningful text.
+    """
+
+    if value is None:
+        return False
+
+    if isinstance(value, str):
+        return bool(value.strip())
+
+    return bool(str(value).strip())
+
+
+def _safe_date_extraction(block):
+    """
+    Safely extract certification dates.
+
+    Keeps the pipeline from crashing when a certification
+    does not contain a date.
+    """
+
+    try:
+        result = extract_certification_date(block)
+    except Exception:
+        return {
+            "issue_date": None,
+            "expiration_date": None,
+        }
+
+    if not isinstance(result, dict):
+        return {
+            "issue_date": None,
+            "expiration_date": None,
+        }
+
+    return {
+        "issue_date": result.get("issue_date"),
+        "expiration_date": result.get("expiration_date"),
+    }
+
+
+def _safe_credential_extraction(block):
+    """
+    Safely extract credential ID.
+    """
+
+    try:
+        return extract_credential_id(block)
+    except Exception:
+        return None
+
+
+# ============================================================
+# MAIN PIPELINE
+# ============================================================
 
 def certification_pipeline(lines):
+    """
+    Extract certifications from a detected certification section.
+
+    Input examples:
+
+        [
+            [
+                "AWS Certified Solutions Architect - Associate",
+                "Amazon Web Services",
+                "Issued: March 2024",
+                "Credential ID: AWS123"
+            ]
+        ]
+
+    or:
+
+        [
+            "AWS Certified Solutions Architect - Associate",
+            "Amazon Web Services",
+            "Issued: March 2024"
+        ]
+
+    Returns:
+
+        [
+            {
+                "certification_name": "...",
+                "issuing_organization": "...",
+                "issue_date": "...",
+                "expiration_date": "...",
+                "credential_id": "..."
+            }
+        ]
+    """
+    print("\n================ CERTIFICATION DEBUG ================")
+    print("INPUT TYPE:", type(lines))
+    print("INPUT:")
+    print(repr(lines))
 
     blocks = split_certification_blocks(lines)
 
-    # Some returned blocks may still contain multiple title/org pairs
-    # (e.g., ['Title1', 'Org1', 'Title2', 'Org2']). Further split those
-    # using the flat-line splitter heuristics.
-    refined_blocks = []
+    print("\nBLOCKS:")
+    print(repr(blocks))
+    # ========================================================
+    # VALIDATE INPUT
+    # ========================================================
 
-    for block in blocks:
-        # Count how many lines look like certification starts
-        starts = sum(1 for l in block if is_certification_start(l))
-        if starts > 1:
-            refined_blocks.extend(split_flat_certification_lines(block))
-        else:
-            # If there are multiple organization-like lines in a block,
-            # split by pairing each organization line with the preceding
-            # title line. This handles cases like
-            # ['TensorFlow Developer Certificate', 'TensorFlow (2022)',
-            #  'Python for Data Science', 'IBM (2021)']
-            org_hint = re.compile(r"\b(?:microsoft|google\s+cloud|coursera|deep\s*learning\.ai|tensorflow|ibm)\b", re.IGNORECASE)
-            year_hint = re.compile(r"\b(?:19|20)\d{2}\b")
+    if not lines:
+        return []
 
-            org_indices = [i for i, l in enumerate(block) if org_hint.search(l) or year_hint.search(l)]
+    # ========================================================
+    # STEP 1
+    # Split certification section into logical blocks
+    # ========================================================
 
-            if org_indices and len(org_indices) >= 1 and len(block) > 2:
-                used = set()
-                for idx in org_indices:
-                    if idx == 0:
-                        continue
-                    if idx - 1 in used:
-                        continue
-                    # form a subblock from previous line to this org line
-                    refined_blocks.append([block[idx - 1], block[idx]])
-                    used.add(idx)
-                    used.add(idx - 1)
-                # add any remaining lines that weren't used as individual blocks
-                leftovers = [block[i] for i in range(len(block)) if i not in used]
-                if leftovers:
-                    refined_blocks.append(leftovers)
-            else:
-                refined_blocks.append(block)
+    try:
+        blocks = split_certification_blocks(lines)
+    except Exception:
+        return []
 
-    blocks = refined_blocks
+    if not blocks:
+        return []
 
     certifications = []
 
+    # ========================================================
+    # STEP 2
+    # Process every certification block
+    # ========================================================
+
     for block in blocks:
 
-        name = extract_certification_name(block)
-        org = extract_issuing_organization(block)
-
-        # Skip blocks that don't contain a meaningful certification name.
-        if not name or not any(c.isalpha() for c in name):
+        if not block:
             continue
-        
-        # certification_date---------
-        print("================================")
-        print("BLOCK:", repr(block))
 
+        # ----------------------------------------------------
+        # Ensure block is a list
+        # ----------------------------------------------------
 
-        date=extract_certification_date(block)
-        issue_date = date["issue_date"]
-        expiration_date = date["expiration_date"]
+        if isinstance(block, str):
+            block = [block]
 
-        creditie_id=extract_credential_id(block)
-        
-        
+        if not isinstance(block, list):
+            continue
+
+        # ----------------------------------------------------
+        # Remove empty values
+        # ----------------------------------------------------
+
+        block = [
+            line.strip()
+            for line in block
+            if isinstance(line, str)
+            and line.strip()
+        ]
+
+        if not block:
+            continue
+
+        # ====================================================
+        # CERTIFICATION NAME
+        # ====================================================
+
+        try:
+            name = extract_certification_name(block)
+        except Exception:
+            name = None
+
+        if not _has_meaningful_text(name):
+            continue
+
+        name = str(name).strip()
+
+        # ============================================================
+        # ISSUING ORGANIZATION
+        # ============================================================
+
+        try:
+            organization = extract_issuing_organization(
+                block
+            )
+        except Exception:
+            organization = None
+
+        if organization is not None:
+
+            organization = str(
+                organization
+            ).strip()
+
+            if not organization:
+                organization = None
+
+            # --------------------------------------------------------
+            # Prevent completion/status words from being treated
+            # as issuing organizations.
+            #
+            # Example:
+            #
+            # "Professional Development Program Completed"
+            #
+            # Current extraction:
+            #   name         = "Professional Development Program"
+            #   organization = "Completed"
+            #
+            # Correct:
+            #   name         = "Professional Development Program"
+            #   organization = None
+            # --------------------------------------------------------
+
+            if (
+                organization
+                and organization.lower() in COMPLETION_WORDS
+            ):
+                organization = None
+
+        # ====================================================
+        # DATE
+        # ====================================================
+
+        date = _safe_date_extraction(block)
+
+        issue_date = date.get(
+            "issue_date"
+        )
+
+        expiration_date = date.get(
+            "expiration_date"
+        )
+
+        # ====================================================
+        # CREDENTIAL ID
+        # ====================================================
+
+        credential_id = _safe_credential_extraction(
+            block
+        )
+
+        if credential_id is not None:
+            credential_id = str(
+                credential_id
+            ).strip()
+
+            if not credential_id:
+                credential_id = None
+
+        # ====================================================
+        # BUILD CERTIFICATION
+        # ====================================================
+
         certification = {
             "certification_name": name,
-            "issuing_organization": org,
+            "issuing_organization": organization,
             "issue_date": issue_date,
             "expiration_date": expiration_date,
-            "credential_id": creditie_id,
+            "credential_id": credential_id,
         }
 
-        certifications.append(certification)
+        certifications.append(
+            certification
+        )
 
     return certifications
+
+
+# ============================================================
+# BACKWARD-COMPATIBLE ALIAS
+# ============================================================
+
+extract_certifications = certification_pipeline
+

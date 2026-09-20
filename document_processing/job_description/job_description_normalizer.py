@@ -3,10 +3,12 @@ import re
 def normalize_jd(text):
     headings = {
     "job title": "job_title",
+    "position title": "job_title",
     "position": "job_title",
     "role": "job_title",
 
     "company": "company",
+    "company name": "company",
 
     "location": "location",
 
@@ -40,6 +42,7 @@ def normalize_jd(text):
 
     "employment type": "employment_type",
     "job type": "employment_type",
+    "employment": "employment_type",
 
     "soft skills": "soft_skills",
 

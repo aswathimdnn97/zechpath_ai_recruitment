@@ -5,6 +5,7 @@ Extract the field/specialization studied by the candidate.
 
 Examples
 --------
+
 Bachelor of Engineering
 Computer Science and Engineering
 
@@ -14,6 +15,10 @@ Bachelor of Technology
 Information Technology
 
 -> Information Technology
+
+Electronics Communication Engineering 2026
+
+-> Electronics Communication Engineering
 """
 
 import re
@@ -26,19 +31,33 @@ import re
 DEGREE_PATTERNS = [
 
     r"\bbachelor\b",
+
     r"\bmaster\b",
+
     r"\bb\.?\s*tech\b",
+
     r"\bb\.?\s*e\b",
+
     r"\bb\.?\s*sc\b",
+
     r"\bbca\b",
+
     r"\bm\.?\s*tech\b",
+
     r"\bm\.?\s*e\b",
+
     r"\bm\.?\s*sc\b",
+
     r"\bmca\b",
+
     r"\bmba\b",
+
     r"\bphd\b",
+
     r"\bdoctor of philosophy\b",
+
     r"\bassociate\b",
+
     r"\bdiploma\b",
 ]
 
@@ -50,45 +69,94 @@ DEGREE_PATTERNS = [
 FIELD_KEYWORDS = [
 
     "computer science",
+
     "computer applications",
+
     "information technology",
+
     "information systems",
 
     "electronics",
+
     "electronics and communication",
+
     "electrical engineering",
+
     "mechanical engineering",
+
     "civil engineering",
 
     "chemical engineering",
+
     "aerospace engineering",
+
     "biomedical engineering",
 
     "software engineering",
+
     "data science",
+
     "artificial intelligence",
+
     "machine learning",
 
+    "natural language processing",
+
     "business administration",
+
     "business management",
+
     "management",
+
     "commerce",
 
     "physics",
+
     "chemistry",
+
     "mathematics",
+
     "biology",
 
     "economics",
+
     "finance",
+
     "accounting",
 
     "marketing",
+
     "human resources",
 
     "arts",
+
     "science",
 ]
+
+
+# ---------------------------------------------------------
+# Academic Year Patterns
+# ---------------------------------------------------------
+
+YEAR_PATTERN = re.compile(
+    r"\b(?:19|20)\d{2}\b"
+)
+
+YEAR_RANGE_PATTERN = re.compile(
+    r"""
+    \b(?:19|20)\d{2}
+    \s*
+    [-–—]
+    \s*
+    (?:
+        (?:19|20)\d{2}
+        |
+        present
+    )
+    \b
+    """,
+    flags=re.IGNORECASE | re.VERBOSE,
+)
 
 
 # ---------------------------------------------------------
@@ -107,37 +175,94 @@ def is_degree_line(line):
 
     for pattern in DEGREE_PATTERNS:
 
-        if re.search(pattern, text):
+        if re.search(
+            pattern,
+            text,
+        ):
             return True
 
     return False
 
 
-def clean_field(field):
+# ---------------------------------------------------------
+# Remove Academic Years
+# ---------------------------------------------------------
+
+def _remove_academic_years(field):
     """
-    Clean extracted field text.
+    Remove academic years from field-of-study text.
+
+    Examples
+    --------
+    Electronics Communication Engineering 2026
+        ->
+    Electronics Communication Engineering
+
+    Computer Science 2022-2026
+        ->
+    Computer Science
     """
 
-    if not field:
+    if not isinstance(field, str):
+        return ""
+
+    # Remove ranges first
+    field = YEAR_RANGE_PATTERN.sub(
+        "",
+        field,
+    )
+
+    # Remove standalone years
+    field = YEAR_PATTERN.sub(
+        "",
+        field,
+    )
+
+    # Normalize whitespace
+    field = re.sub(
+        r"\s+",
+        " ",
+        field,
+    )
+
+    return field.strip()
+
+
+def clean_field(field):
+    """
+    Clean extracted field-of-study text.
+
+    Years are removed because graduation_year is
+    extracted separately.
+    """
+
+    if not isinstance(field, str):
         return None
 
     field = field.strip()
 
+    if not field:
+        return None
+
+    # Remove academic years
+    field = _remove_academic_years(field)
+
+    # Remove surrounding punctuation
+    field = field.strip(
+        " ,.;:-|–—"
+    )
+
+    # Normalize whitespace
     field = re.sub(
         r"\s+",
         " ",
-        field
-    )
-
-    field = field.strip(
-        " ,.;:-"
+        field,
     )
 
     if not field:
         return None
 
     return field
-
 
 # ---------------------------------------------------------
 # Extract Field of Study
@@ -161,7 +286,10 @@ def extract_field_of_study(block):
 
     for line in block:
 
-        if not isinstance(line, str):
+        if not isinstance(
+            line,
+            str,
+        ):
             continue
 
         line = line.strip()
@@ -173,82 +301,206 @@ def extract_field_of_study(block):
 
         # =============================================
         # Handle "Degree in FieldOfStudy" pattern
-        # e.g., "B.Tech in Computer Science and Engineering"
+        #
+        # Example:
+        # B.Tech in Computer Science and Engineering
         # =============================================
-        
+
         if " in " in lower_line:
-            # Split on " in " to extract the field part
-            parts = re.split(r"\s+in\s+", line, flags=re.IGNORECASE)
-            
+
+            parts = re.split(
+                r"\s+in\s+",
+                line,
+                flags=re.IGNORECASE,
+            )
+
             if len(parts) > 1:
-                # The part after "in" might contain field of study
-                # e.g., "Computer Science and Engineering ΓÇö Visvesvaraya Technological University | 2017 ΓÇô 2021"
+
                 field_candidate = parts[1]
-                
-                # Remove the pipe and anything after it (dates)
+
+                # -------------------------------------
+                # Remove everything after "|"
+                # -------------------------------------
+
                 if "|" in field_candidate:
-                    field_candidate = field_candidate.split("|")[0].strip()
-                
-                # Now remove from first separator (dash, em-dash, etc.) onwards
-                # But be more careful to match the actual separator
-                # Match patterns like: " — ", " – ", " - " (with spaces)
-                match = re.search(r"\s[—–\-]\s", field_candidate)
+
+                    field_candidate = (
+                        field_candidate
+                        .split("|")[0]
+                        .strip()
+                    )
+
+                # -------------------------------------
+                # Remove text after dash separator
+                # -------------------------------------
+
+                match = re.search(
+                    r"\s[—–-]\s",
+                    field_candidate,
+                )
+
                 if match:
-                    # Split at the separator
-                    field_candidate = field_candidate[:match.start()].strip()
+
+                    field_candidate = (
+                        field_candidate[
+                            :match.start()
+                        ].strip()
+                    )
+
                 else:
-                    # No standard dash separator found, check for institution keywords
-                    # Try to find where an institution keyword starts
+
+                    # ---------------------------------
+                    # Remove institution information
+                    # ---------------------------------
+
                     match = re.search(
                         r"\b(?:university|college|institute|institution|technological|polytechnic)\b",
                         field_candidate,
-                        re.IGNORECASE
+                        re.IGNORECASE,
                     )
-                    
+
                     if match:
-                        # Remove from the institution keyword onwards
-                        field_candidate = field_candidate[:match.start()].strip()
-                
-                # Final cleanup - remove any trailing separators
-                field_candidate = re.sub(r"[\s\-–—ΓÇö~]+$", "", field_candidate).strip()
-                
-                # Check if this looks like a field of study
+
+                        field_candidate = (
+                            field_candidate[
+                                :match.start()
+                            ].strip()
+                        )
+
+                # -------------------------------------
+                # Clean academic years
+                # -------------------------------------
+
+                field_candidate = clean_field(
+                    field_candidate
+                )
+
                 if field_candidate:
+
                     for keyword in FIELD_KEYWORDS:
-                        if keyword.lower() in field_candidate.lower():
-                            return clean_field(field_candidate)
+
+                        if (
+                            keyword.lower()
+                            in field_candidate.lower()
+                        ):
+                            return field_candidate
+
+        # =============================================
+        # Fallback: field embedded in a degree line
+        #
+        # Example:
+        #
+        # Bachelor of Technology
+        # Computer Science and Engineering
+        # =============================================
+
+        for keyword in FIELD_KEYWORDS:
+
+            keyword_lower = keyword.lower()
+
+            idx = lower_line.find(
+                keyword_lower
+            )
+
+            if idx != -1:
+
+                field_candidate = line[idx:]
+
+                # -------------------------------------
+                # Stop at pipe
+                # -------------------------------------
+
+                field_candidate = re.split(
+                    r"\|",
+                    field_candidate,
+                    maxsplit=1,
+                )[0]
+
+                # -------------------------------------
+                # Stop at institution separators
+                # -------------------------------------
+
+                field_candidate = re.split(
+                    r"""
+                    \s*-\s*
+                    |
+                    \s*,\s*
+                    (?=
+                        university
+                        |
+                        college
+                        |
+                        institute
+                        |
+                        institution
+                        |
+                        technological
+                        |
+                        polytechnic
+                    )
+                    """,
+                    field_candidate,
+                    maxsplit=1,
+                    flags=re.IGNORECASE | re.VERBOSE,
+                )[0]
+
+                # -------------------------------------
+                # Clean field
+                # -------------------------------------
+
+                field_candidate = clean_field(
+                    field_candidate
+                )
+
+                if field_candidate:
+
+                    return field_candidate
 
         # =============================================
         # Original logic
         # =============================================
-        
+
         # Never treat a degree line as a field
+
         if is_degree_line(line):
             continue
 
+        # ---------------------------------------------
         # Ignore academic metadata
+        # ---------------------------------------------
+
         ignored_patterns = [
 
-            r"^\d{4}\s*[-–]\s*(?:\d{4}|present)$",
+            r"^\d{4}\s*[-–—]\s*(?:\d{4}|present)$",
+
             r"^cgpa",
+
             r"^gpa",
+
             r"^sgpa",
+
             r"^aggregate",
+
             r"^marks obtained",
+
             r"^percentage",
+
             r"^grade",
         ]
 
         if any(
             re.search(
                 pattern,
-                lower_line
+                lower_line,
             )
             for pattern in ignored_patterns
         ):
             continue
 
+        # ---------------------------------------------
         # Exact field keyword matching
+        # ---------------------------------------------
+
         for keyword in FIELD_KEYWORDS:
 
             if keyword in lower_line:
@@ -286,6 +538,18 @@ if __name__ == "__main__":
             "Information Technology",
             "2018-2022",
         ],
+
+        [
+            "Electronics Communication Engineering 2026",
+        ],
+
+        [
+            "B.Tech Electronics Communication Engineering 2026",
+        ],
+
+        [
+            "Electronics Communication Engineering | 2022-2026",
+        ],
     ]
 
     for block in examples:
@@ -295,18 +559,3 @@ if __name__ == "__main__":
                 block
             )
         )
-
-
-
-if __name__ == "__main__":
-
-    block = [
-
-        "2012-2016 Bachelor of Engineering (B.E), P.E.S Institute of Technology",
-        "Visvesvaraya Technological University",
-        "Computer Science and Engineering",
-        "Aggregate Score : 64.2"
-
-    ]
-
-    print(extract_field_of_study(block))

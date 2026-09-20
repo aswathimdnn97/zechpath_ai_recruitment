@@ -23,6 +23,23 @@ def is_date(text):
 
 
 # ----------------------------------------------------
+# Location Detection
+# ----------------------------------------------------
+
+def is_location(text):
+    """Detect city/state patterns like 'Kochi, Kerala'."""
+    if not isinstance(text, str):
+        return False
+    
+    candidate = text.strip()
+    if not candidate:
+        return False
+    
+    # Pattern: City, State (e.g., Kochi, Kerala; New York, NY)
+    return bool(re.fullmatch(r"[A-Z][a-zA-Z]+\s*,\s*[A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+)*", candidate))
+
+
+# ----------------------------------------------------
 # Company Detection
 # ----------------------------------------------------
 
@@ -136,6 +153,10 @@ def extract_description(experience_block):
 
         # Skip date line
         if is_date(line):
+            continue
+
+        # Skip location line
+        if is_location(line):
             continue
 
         descriptions.append(line)

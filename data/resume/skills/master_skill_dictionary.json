@@ -128,6 +128,14 @@
     "status": "active"
   },
   {
+    "skill_id": "TECH016A",
+    "name": "SQL",
+    "category": "Technical",
+    "subcategory": "Database",
+    "type": "Query Language",
+    "status": "active"
+  },
+  {
     "skill_id": "TECH017",
     "name": "MySQL",
     "category": "Technical",

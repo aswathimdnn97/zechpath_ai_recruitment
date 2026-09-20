@@ -11,6 +11,7 @@ Responsibilities
 """
 
 import json
+import re
 from pathlib import Path
 
 
@@ -154,16 +155,13 @@ def extract_location(experience_block):
 
 
 
+        city_state_pattern = r"\b[A-Z][a-zA-Z]*\s*,\s*[A-Z][a-zA-Z]*(?:\s+[A-Z][a-zA-Z]*)*\b"
+        if re.search(city_state_pattern, candidate_line):
+            return candidate_line.strip()
+
         # Location dictionary match
-
         for location in locations:
-
-
             if location.lower() in line.lower():
-
-
                 return location
-
-
 
     return None

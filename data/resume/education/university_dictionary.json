@@ -1,0 +1,28 @@
+{
+  "universities": [
+    {
+      "canonical_name": "Visvesvaraya Technological University",
+      "aliases": [
+        "VTU",
+        "Visvesvaraya Technological University",
+        "Visvesvaraya Tech University"
+      ]
+    },
+    {
+      "canonical_name": "University of Kerala",
+      "aliases": [
+        "University of Kerala",
+        "Kerala University",
+        "KU"
+      ]
+    },
+    {
+      "canonical_name": "Mahatma Gandhi University",
+      "aliases": [
+        "Mahatma Gandhi University",
+        "MG University",
+        "MGU"
+      ]
+    }
+  ]
+}

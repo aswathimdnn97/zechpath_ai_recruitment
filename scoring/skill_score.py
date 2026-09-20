@@ -135,7 +135,59 @@ def _extract_skill_names(skills: Any) -> List[str]:
 
     return list(dict.fromkeys(result))
 
+def _extract_candidate_skills(
+    candidate_data: Dict[str, Any]
+) -> List[Any]:
 
+    skills = []
+
+    # -----------------------------------------
+    # Top-level skills
+    # -----------------------------------------
+
+    top_level_skills = candidate_data.get(
+        "skills",
+        []
+    )
+
+    if isinstance(top_level_skills, list):
+        skills.extend(top_level_skills)
+
+    # -----------------------------------------
+    # Experience-level skills
+    # -----------------------------------------
+
+    experience = candidate_data.get(
+        "experience",
+        []
+    )
+
+    if isinstance(experience, list):
+
+        for experience_item in experience:
+
+            if not isinstance(
+                experience_item,
+                dict
+            ):
+                continue
+
+            experience_skills = (
+                experience_item.get(
+                    "skills",
+                    []
+                )
+            )
+
+            if isinstance(
+                experience_skills,
+                list
+            ):
+                skills.extend(
+                    experience_skills
+                )
+
+    return skills
 # ============================================================
 # Profile handling
 # ============================================================
@@ -425,7 +477,7 @@ def calculate_skill_score(
     # --------------------------------------------------------
 
     candidate_skills = _extract_skill_names(
-        candidate_data.get("skills", [])
+    _extract_candidate_skills(candidate_data)
     )
 
     # --------------------------------------------------------
