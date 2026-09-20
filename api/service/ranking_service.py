@@ -1,7 +1,41 @@
+"""
+ranking_service.py
+
+Service layer for candidate ranking and shortlisting.
+
+Responsibilities
+----------------
+1. Load persisted ATS scoring results.
+2. Support nested scoring-result storage:
+
+       data/
+       └── candidates/
+           └── scoring_results/
+               ├── CAN_001/
+               │   ├── JD_001.json
+               │   └── JD_002.json
+               └── CAN_002/
+                   └── JD_001.json
+
+3. Extract candidate information from scoring results.
+4. Rank candidates using the ranking engine.
+5. Apply shortlisting rules.
+6. Build recruiter-facing responses.
+
+Important
+---------
+This service does NOT calculate ATS scores.
+
+ATS scores are already calculated by scoring_service.py
+and persisted to disk.
+"""
+
+
 from pathlib import Path
 import json
 import logging
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
+
 
 from scoring.ranking.candidate_ranker import (
     rank_candidates,
@@ -44,21 +78,50 @@ SCORING_RESULTS_DIR = (
 # LOAD ALL SCORING RESULTS
 # ============================================================
 
-def load_scoring_results() -> List[Dict[str, Any]]:
+def load_scoring_results(
+    jd_id: Optional[str] = None,
+) -> List[Dict[str, Any]]:
     """
-    Load all persisted ATS scoring results.
+    Load persisted ATS scoring results.
 
-    Ranking does NOT recalculate ATS scores.
+    Scoring results are stored using the structure:
 
-    It reads the already calculated results from:
+        scoring_results/
+            candidate_id/
+                jd_id.json
 
-        data/candidates/scoring_results/
+    Example:
+
+        scoring_results/
+            CAN_001/
+                JD_EVAL_001.json
+            CAN_002/
+                JD_EVAL_001.json
+
+    Parameters
+    ----------
+    jd_id:
+        Optional job-description ID.
+
+        If supplied, only scoring results belonging
+        to that JD are returned.
+
+        If None, all scoring results are returned.
+
+    Returns
+    -------
+    list[dict]
+        Loaded scoring results.
     """
 
     logger.info(
         "Loading scoring results from: %s",
         SCORING_RESULTS_DIR,
     )
+
+    # --------------------------------------------------------
+    # Check directory
+    # --------------------------------------------------------
 
     if not SCORING_RESULTS_DIR.exists():
 
@@ -69,11 +132,40 @@ def load_scoring_results() -> List[Dict[str, Any]]:
 
         return []
 
+    # --------------------------------------------------------
+    # Normalize JD filter
+    # --------------------------------------------------------
+
+    normalized_jd_id = None
+
+    if isinstance(jd_id, str):
+        normalized_jd_id = Path(
+            jd_id
+        ).stem.strip()
+
+        if not normalized_jd_id:
+            normalized_jd_id = None
+
+    # --------------------------------------------------------
+    # Recursively find scoring files
+    # --------------------------------------------------------
+
+    scoring_files = sorted(
+        SCORING_RESULTS_DIR.rglob("*.json")
+    )
+
+    logger.info(
+        "Scoring result files found: count=%s",
+        len(scoring_files),
+    )
+
     results: List[Dict[str, Any]] = []
 
-    for scoring_file in sorted(
-        SCORING_RESULTS_DIR.glob("*.json")
-    ):
+    # --------------------------------------------------------
+    # Read each scoring result
+    # --------------------------------------------------------
+
+    for scoring_file in scoring_files:
 
         try:
 
@@ -84,28 +176,153 @@ def load_scoring_results() -> List[Dict[str, Any]]:
 
                 data = json.load(file)
 
-            if isinstance(
-                data,
-                dict,
-            ):
-                results.append(data)
-
-        except (
-            json.JSONDecodeError,
-            OSError,
-        ):
+        except json.JSONDecodeError:
 
             logger.warning(
-                "Invalid scoring result file ignored: %s",
-                scoring_file.name,
+                "Invalid JSON scoring result ignored: %s",
+                scoring_file,
             )
 
             continue
+
+        except OSError:
+
+            logger.warning(
+                "Unable to read scoring result file: %s",
+                scoring_file,
+            )
+
+            continue
+
+        # ----------------------------------------------------
+        # Validate basic structure
+        # ----------------------------------------------------
+
+        if not isinstance(
+            data,
+            dict,
+        ):
+
+            logger.warning(
+                "Invalid scoring result structure ignored: %s",
+                scoring_file,
+            )
+
+            continue
+
+        # ----------------------------------------------------
+        # Get candidate ID
+        # ----------------------------------------------------
+
+        candidate_id = data.get(
+            "candidate_id"
+        )
+
+        if not isinstance(
+            candidate_id,
+            str,
+        ) or not candidate_id.strip():
+
+            logger.warning(
+                "Scoring result missing candidate_id: %s",
+                scoring_file,
+            )
+
+            continue
+
+        candidate_id = candidate_id.strip()
+
+        # ----------------------------------------------------
+        # Get JD ID
+        # ----------------------------------------------------
+
+        result_jd_id = data.get(
+            "jd_id"
+        )
+
+        if isinstance(
+            result_jd_id,
+            str,
+        ):
+
+            result_jd_id = Path(
+                result_jd_id
+            ).stem.strip()
+
+        else:
+
+            result_jd_id = ""
+
+        # ----------------------------------------------------
+        # Fallback JD ID from filename
+        # ----------------------------------------------------
+        #
+        # This makes the loader more robust if an older
+        # scoring file does not contain jd_id.
+        #
+        # Example:
+        #
+        # CAN_001/JD_EVAL_001.json
+        #
+        # → JD_EVAL_001
+        #
+        # ----------------------------------------------------
+
+        if not result_jd_id:
+
+            result_jd_id = scoring_file.stem
+
+            logger.debug(
+                "JD ID recovered from filename: "
+                "candidate_id=%s jd_id=%s",
+                candidate_id,
+                result_jd_id,
+            )
+
+            data["jd_id"] = result_jd_id
+
+        # ----------------------------------------------------
+        # Apply JD filter
+        # ----------------------------------------------------
+
+        if (
+            normalized_jd_id
+            and result_jd_id != normalized_jd_id
+        ):
+
+            continue
+
+        # ----------------------------------------------------
+        # Store result
+        # ----------------------------------------------------
+
+        results.append(
+            data
+        )
+
+        logger.debug(
+            "Scoring result loaded: "
+            "candidate_id=%s jd_id=%s file=%s",
+            candidate_id,
+            result_jd_id,
+            scoring_file,
+        )
+
+    # --------------------------------------------------------
+    # Final logging
+    # --------------------------------------------------------
 
     logger.info(
         "Scoring results loaded: count=%s",
         len(results),
     )
+
+    if normalized_jd_id:
+
+        logger.info(
+            "Scoring results filtered by jd_id=%s",
+            normalized_jd_id,
+        )
 
     return results
 
@@ -118,8 +335,14 @@ def get_candidate_id(
     candidate: Dict[str, Any],
 ) -> str:
     """
-    Extract candidate ID from scoring result.
+    Extract candidate ID from a scoring result.
     """
+
+    if not isinstance(
+        candidate,
+        dict,
+    ):
+        return ""
 
     candidate_id = candidate.get(
         "candidate_id"
@@ -129,6 +352,7 @@ def get_candidate_id(
         candidate_id,
         str,
     ):
+
         return candidate_id.strip()
 
     return ""
@@ -142,9 +366,17 @@ def get_candidate_name(
     candidate: Dict[str, Any],
 ) -> str:
     """
-    Extract candidate name from the persisted
-    scoring result.
+    Extract candidate name from a scoring result.
+
+    If candidate_name is unavailable, candidate_id
+    is used as a fallback.
     """
+
+    if not isinstance(
+        candidate,
+        dict,
+    ):
+        return ""
 
     candidate_name = candidate.get(
         "candidate_name"
@@ -157,6 +389,7 @@ def get_candidate_name(
         )
         and candidate_name.strip()
     ):
+
         return candidate_name.strip()
 
     return get_candidate_id(
@@ -172,8 +405,24 @@ def get_candidate_score(
     candidate: Dict[str, Any],
 ) -> float:
     """
-    Extract final ATS score from scoring result.
+    Extract final ATS score from a scoring result.
+
+    Expected structure:
+
+        {
+            "candidate_score": {
+                "final_score": 87.5
+            }
+        }
+
+    Invalid or missing scores return 0.0.
     """
+
+    if not isinstance(
+        candidate,
+        dict,
+    ):
+        return 0.0
 
     candidate_score = candidate.get(
         "candidate_score",
@@ -184,6 +433,13 @@ def get_candidate_score(
         candidate_score,
         dict,
     ):
+
+        logger.warning(
+            "Invalid candidate_score structure: "
+            "candidate_id=%s",
+            get_candidate_id(candidate),
+        )
+
         return 0.0
 
     score = candidate_score.get(
@@ -193,7 +449,9 @@ def get_candidate_score(
 
     try:
 
-        return float(score)
+        numeric_score = float(
+            score
+        )
 
     except (
         TypeError,
@@ -201,11 +459,41 @@ def get_candidate_score(
     ):
 
         logger.warning(
-            "Invalid candidate score found: candidate_id=%s",
+            "Invalid candidate score found: "
+            "candidate_id=%s score=%s",
             get_candidate_id(candidate),
+            score,
         )
 
         return 0.0
+
+    # --------------------------------------------------------
+    # Validate score range
+    # --------------------------------------------------------
+
+    if numeric_score < 0:
+
+        logger.warning(
+            "Candidate score below 0: "
+            "candidate_id=%s score=%s",
+            get_candidate_id(candidate),
+            numeric_score,
+        )
+
+        return 0.0
+
+    if numeric_score > 100:
+
+        logger.warning(
+            "Candidate score above 100: "
+            "candidate_id=%s score=%s",
+            get_candidate_id(candidate),
+            numeric_score,
+        )
+
+        return 100.0
+
+    return numeric_score
 
 
 # ============================================================
@@ -215,28 +503,49 @@ def get_candidate_score(
 def rank_all_candidates(
     shortlist_threshold: float = 80.0,
     review_threshold: float = 60.0,
+    jd_id: Optional[str] = None,
 ) -> Dict[str, Any]:
     """
     Rank all scored candidates and apply
     shortlisting rules.
 
-    Ranking and shortlisting errors are handled
-    separately so that the API can return the
-    correct error category.
+    Parameters
+    ----------
+    shortlist_threshold:
+        Minimum score required for SHORTLIST.
+
+    review_threshold:
+        Minimum score required for REVIEW.
+
+    jd_id:
+        Optional JD ID.
+
+        If supplied, candidates are ranked only against
+        that specific JD.
+
+    Returns
+    -------
+    dict
+        Recruiter-facing ranking and shortlisting result.
     """
 
     logger.info(
-        "Ranking started: shortlist_threshold=%s "
-        "review_threshold=%s",
+        "Ranking started: "
+        "shortlist_threshold=%s "
+        "review_threshold=%s "
+        "jd_id=%s",
         shortlist_threshold,
         review_threshold,
+        jd_id,
     )
 
     # ========================================================
     # 1. LOAD SCORING RESULTS
     # ========================================================
 
-    scoring_results = load_scoring_results()
+    scoring_results = load_scoring_results(
+        jd_id=jd_id
+    )
 
     if not scoring_results:
 
@@ -246,7 +555,6 @@ def rank_all_candidates(
 
         raise RankingError(
             message="No scored candidates found.",
-           
         )
 
     # ========================================================
@@ -265,6 +573,7 @@ def rank_all_candidates(
         )
 
     except RankingError:
+
         # Preserve an already classified ranking error.
         raise
 
@@ -276,7 +585,6 @@ def rank_all_candidates(
 
         raise RankingError(
             message="Failed to rank candidates.",
-            status_code=500,
         )
 
     logger.info(
@@ -302,7 +610,6 @@ def rank_all_candidates(
                 "Ranking engine returned "
                 "an invalid result."
             ),
-            status_code=500,
         )
 
     # ========================================================
@@ -330,6 +637,7 @@ def rank_all_candidates(
         )
 
     except ShortlistingError:
+
         # Preserve an already classified shortlisting error.
         raise
 
@@ -344,7 +652,6 @@ def rank_all_candidates(
                 "Failed to apply "
                 "shortlisting rules."
             ),
-            status_code=500,
         )
 
     # ========================================================
@@ -365,7 +672,6 @@ def rank_all_candidates(
                 "Shortlisting engine returned "
                 "an invalid result."
             ),
-            status_code=500,
         )
 
     # ========================================================
@@ -392,6 +698,15 @@ def rank_all_candidates(
         candidate_id = get_candidate_id(
             candidate
         )
+
+        if not candidate_id:
+
+            logger.warning(
+                "Ranked candidate missing candidate_id; "
+                "entry ignored"
+            )
+
+            continue
 
         candidate_name = get_candidate_name(
             candidate
@@ -433,7 +748,6 @@ def rank_all_candidates(
             message=(
                 "No valid ranked candidates found."
             ),
-            status_code=422,
         )
 
     # ========================================================
@@ -508,19 +822,53 @@ def get_candidate_ranking(
     candidate_id: str,
     shortlist_threshold: float = 80.0,
     review_threshold: float = 60.0,
+    jd_id: Optional[str] = None,
 ) -> Dict[str, Any]:
     """
     Return ranking information for one candidate.
 
-    The candidate's rank is calculated against
-    ALL scored candidates.
+    The candidate's rank is calculated against all
+    scored candidates for the selected JD.
+
+    Parameters
+    ----------
+    candidate_id:
+        Candidate ID to find.
+
+    shortlist_threshold:
+        Minimum score for SHORTLIST.
+
+    review_threshold:
+        Minimum score for REVIEW.
+
+    jd_id:
+        Optional JD ID.
+
+        If supplied, ranking is calculated only against
+        candidates scored for that JD.
     """
 
     logger.info(
         "Candidate ranking lookup started: "
-        "candidate_id=%s",
+        "candidate_id=%s jd_id=%s",
         candidate_id,
+        jd_id,
     )
+
+    # ========================================================
+    # VALIDATE CANDIDATE ID
+    # ========================================================
+
+    if not isinstance(
+        candidate_id,
+        str,
+    ) or not candidate_id.strip():
+
+        raise RankingError(
+            message="Candidate ID is required.",
+        )
+
+    candidate_id = candidate_id.strip()
 
     # ========================================================
     # 1. RANK ALL CANDIDATES
@@ -533,6 +881,7 @@ def get_candidate_ranking(
         review_threshold=(
             review_threshold
         ),
+        jd_id=jd_id,
     )
 
     # ========================================================
@@ -561,6 +910,7 @@ def get_candidate_ranking(
 
             return {
                 "status": "RANKED",
+
                 "candidate": candidate,
             }
 
@@ -570,8 +920,9 @@ def get_candidate_ranking(
 
     logger.warning(
         "Candidate ranking not found: "
-        "candidate_id=%s",
+        "candidate_id=%s jd_id=%s",
         candidate_id,
+        jd_id,
     )
 
     raise RankingError(
@@ -579,5 +930,4 @@ def get_candidate_ranking(
             f"Candidate '{candidate_id}' "
             f"has no ranking result."
         ),
-        status_code=404,
     )

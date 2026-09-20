@@ -3,7 +3,9 @@ import json
 import logging
 from typing import Any, Dict
 
-from scoring.ats_scoring_engine import calculate_ats_score
+from scoring.ats_scoring_engine import (
+    calculate_ats_score,
+)
 
 from embeddings.embedding_generator import (
     EmbeddingGenerator,
@@ -12,6 +14,10 @@ from embeddings.embedding_generator import (
 from embeddings.embedding_text_builder import (
     profile_to_embedding_text,
     build_jd_embedding_text,
+)
+
+from document_processing.job_description.job_description_pipeline import (
+    job_description_pipeline,
 )
 
 from api.utils.exception import (
@@ -32,8 +38,14 @@ logger = logging.getLogger(
 # PATH CONFIGURATION
 # ============================================================
 
-BASE_DIR = Path(__file__).resolve().parents[2]
+BASE_DIR = (
+    Path(__file__)
+    .resolve()
+    .parents[2]
+)
 
+
+# Candidate profiles
 CANDIDATE_STORAGE_DIR = (
     BASE_DIR
     / "data"
@@ -41,6 +53,8 @@ CANDIDATE_STORAGE_DIR = (
     / "candidate_profile"
 )
 
+
+# Scoring results
 SCORING_RESULTS_DIR = (
     BASE_DIR
     / "data"
@@ -48,11 +62,12 @@ SCORING_RESULTS_DIR = (
     / "scoring_results"
 )
 
-JD_FILE = (
+
+# Job descriptions
+JD_STORAGE_DIR = (
     BASE_DIR
     / "data"
-    / "extracted"
-    / "jd_python_developer.json"
+    / "job_descriptions"
 )
 
 
@@ -66,11 +81,19 @@ SCORING_RESULTS_DIR.mkdir(
 )
 
 
+JD_STORAGE_DIR.mkdir(
+    parents=True,
+    exist_ok=True,
+)
+
+
 # ============================================================
 # EMBEDDING GENERATOR
 # ============================================================
 
-embedding_generator = EmbeddingGenerator()
+embedding_generator = (
+    EmbeddingGenerator()
+)
 
 
 # ============================================================
@@ -82,13 +105,11 @@ def load_candidate(
 ) -> dict:
     """
     Load candidate profile from candidate_profile storage.
-
-    Scoring-related errors are raised as ScoringError and
-    handled centrally by FastAPI.
     """
 
     logger.info(
-        "Loading candidate profile: candidate_id=%s",
+        "Loading candidate profile: "
+        "candidate_id=%s",
         candidate_id,
     )
 
@@ -112,6 +133,16 @@ def load_candidate(
             status_code=404,
         )
 
+    if not candidate_file.is_file():
+
+        raise ScoringError(
+            message=(
+                f"Candidate '{candidate_id}' "
+                "is not a valid file."
+            ),
+            status_code=404,
+        )
+
     try:
 
         with candidate_file.open(
@@ -119,7 +150,9 @@ def load_candidate(
             encoding="utf-8",
         ) as file:
 
-            candidate_data = json.load(file)
+            candidate_data = json.load(
+                file
+            )
 
     except json.JSONDecodeError:
 
@@ -187,6 +220,9 @@ def get_masked_profile(
 ) -> dict:
     """
     Extract the masked candidate profile.
+
+    Only the masked profile is passed
+    to the ATS scoring engine.
     """
 
     if not isinstance(
@@ -195,8 +231,10 @@ def get_masked_profile(
     ):
         return {}
 
-    masked_profile = candidate_data.get(
-        "masked_profile"
+    masked_profile = (
+        candidate_data.get(
+            "masked_profile"
+        )
     )
 
     if isinstance(
@@ -205,10 +243,7 @@ def get_masked_profile(
     ):
         return masked_profile
 
-    # --------------------------------------------------------
     # Backward compatibility
-    # --------------------------------------------------------
-
     return candidate_data
 
 
@@ -220,10 +255,10 @@ def get_candidate_name(
     candidate_data: Dict[str, Any],
 ) -> str:
     """
-    Extract candidate name from the original profile.
+    Extract candidate name from original profile.
 
-    Candidate name is used only for API/output purposes
-    and is never passed to the ATS scoring engine.
+    Candidate name is used only for output.
+    It is never passed to ATS scoring.
     """
 
     if not isinstance(
@@ -232,8 +267,10 @@ def get_candidate_name(
     ):
         return ""
 
-    original_profile = candidate_data.get(
-        "original_profile"
+    original_profile = (
+        candidate_data.get(
+            "original_profile"
+        )
     )
 
     if not isinstance(
@@ -270,63 +307,187 @@ def get_candidate_name(
 
 
 # ============================================================
-# LOAD JOB DESCRIPTION
+# RESOLVE JD FILE
 # ============================================================
 
-def load_job_description() -> dict:
+def resolve_jd_file(
+    jd_id: str,
+) -> Path:
     """
-    Load the extracted job description.
+    Resolve a JD ID or JD filename to a PDF.
+
+    Supported:
+
+        JD_001_Python_Developer
+
+    OR
+
+        JD_001_Python_Developer.pdf
+
+    Example:
+
+        jd_id = "JD_001_Python_Developer"
+
+        resolves to:
+
+        data/job_descriptions/
+        JD_001_Python_Developer.pdf
     """
 
-    logger.info(
-        "Loading job description"
+    if not isinstance(
+        jd_id,
+        str,
+    ):
+
+        raise ScoringError(
+            message=(
+                "jd_id must be a string."
+            ),
+            status_code=422,
+        )
+
+    jd_id = jd_id.strip()
+
+    if not jd_id:
+
+        raise ScoringError(
+            message=(
+                "jd_id is required."
+            ),
+            status_code=422,
+        )
+
+    # --------------------------------------------------------
+    # Prevent directory traversal
+    # --------------------------------------------------------
+
+    jd_name = Path(
+        jd_id
+    ).name
+
+    # --------------------------------------------------------
+    # Only PDF files are supported
+    # --------------------------------------------------------
+
+    if not jd_name.lower().endswith(
+        ".pdf"
+    ):
+
+        jd_name = (
+            jd_name
+            + ".pdf"
+        )
+
+    jd_file = (
+        JD_STORAGE_DIR
+        / jd_name
     )
 
-    if not JD_FILE.exists():
+    # --------------------------------------------------------
+    # Make sure resolved path stays inside
+    # JD storage directory
+    # --------------------------------------------------------
 
-        logger.warning(
-            "Job description file not found: %s",
-            JD_FILE,
+    try:
+
+        jd_file.resolve().relative_to(
+            JD_STORAGE_DIR.resolve()
+        )
+
+    except ValueError:
+
+        logger.error(
+            "Invalid JD file path: jd_id=%s",
+            jd_id,
         )
 
         raise ScoringError(
             message=(
-                "Job description file not found."
+                "Invalid JD file path."
+            ),
+            status_code=400,
+        )
+
+    # --------------------------------------------------------
+    # Check file existence
+    # --------------------------------------------------------
+
+    if not jd_file.exists():
+
+        logger.warning(
+            "JD file not found: %s",
+            jd_file,
+        )
+
+        raise ScoringError(
+            message=(
+                f"Job description "
+                f"'{jd_id}' not found."
             ),
             status_code=404,
         )
 
+    if not jd_file.is_file():
+
+        raise ScoringError(
+            message=(
+                f"JD '{jd_id}' is not a valid file."
+            ),
+            status_code=404,
+        )
+
+    return jd_file
+
+
+# ============================================================
+# LOAD + PARSE JOB DESCRIPTION
+# ============================================================
+
+def load_job_description(
+    jd_id: str,
+) -> dict:
+    """
+    Load and parse the selected JD PDF.
+
+    The JD parser is used here.
+
+    No manually edited JSON file is required.
+    """
+
+    jd_file = resolve_jd_file(
+        jd_id
+    )
+
+    logger.info(
+        "Parsing job description: "
+        "jd_id=%s file=%s",
+        jd_id,
+        jd_file.name,
+    )
+
     try:
 
-        with JD_FILE.open(
-            "r",
-            encoding="utf-8",
-        ) as file:
+        jd_data = (
+            job_description_pipeline(
+                str(jd_file)
+            )
+        )
 
-            jd_data = json.load(file)
+    except ScoringError:
 
-    except json.JSONDecodeError:
+        raise
+
+    except Exception:
 
         logger.exception(
-            "Invalid job description JSON"
+            "Job description parsing failed: "
+            "jd_id=%s",
+            jd_id,
         )
 
         raise ScoringError(
             message=(
-                "Job description JSON file is invalid."
-            ),
-            status_code=500,
-        )
-
-    except OSError:
-
-        logger.exception(
-            "Failed to read job description"
-        )
-
-        raise ScoringError(
-            message=(
-                "Failed to load job description."
+                "Failed to parse job description."
             ),
             status_code=500,
         )
@@ -337,27 +498,58 @@ def load_job_description() -> dict:
     ):
 
         logger.error(
-            "Invalid job description structure"
+            "Invalid JD structure: "
+            "jd_id=%s",
+            jd_id,
         )
 
         raise ScoringError(
             message=(
-                "Invalid job description structure."
+                "Job description parser "
+                "returned invalid data."
             ),
             status_code=500,
         )
 
-    resume_text = jd_data.get(
-        "resume_text"
+    logger.info(
+        "Job description parsed successfully: "
+        "jd_id=%s",
+        jd_id,
     )
 
-    if isinstance(
-        resume_text,
-        dict,
-    ):
-        return resume_text
-
     return jd_data
+
+
+# ============================================================
+# BUILD SCORING RESULT FILE PATH
+# ============================================================
+
+def get_scoring_result_file(
+    candidate_id: str,
+    jd_id: str,
+) -> Path:
+    """
+    Build the scoring result path for a
+    candidate + JD combination.
+    """
+
+    safe_candidate_id = Path(
+        candidate_id
+    ).name
+
+    safe_jd_id = Path(
+        jd_id
+    ).stem
+
+    candidate_result_dir = (
+        SCORING_RESULTS_DIR
+        / safe_candidate_id
+    )
+
+    return (
+        candidate_result_dir
+        / f"{safe_jd_id}.json"
+    )
 
 
 # ============================================================
@@ -366,15 +558,38 @@ def load_job_description() -> dict:
 
 def save_scoring_result(
     candidate_id: str,
+    jd_id: str,
     score_result: dict,
 ) -> None:
     """
-    Persist the ATS scoring result.
+    Persist ATS scoring result.
+
+    Result is stored using BOTH candidate and JD.
+
+    Example:
+
+        scoring_results/
+            CAN_123/
+                JD_001.json
+
+    This prevents one JD score from overwriting
+    another JD score for the same candidate.
     """
 
     scoring_file = (
-        SCORING_RESULTS_DIR
-        / f"{candidate_id}.json"
+        get_scoring_result_file(
+            candidate_id,
+            jd_id,
+        )
+    )
+
+    candidate_result_dir = (
+        scoring_file.parent
+    )
+
+    candidate_result_dir.mkdir(
+        parents=True,
+        exist_ok=True,
     )
 
     try:
@@ -396,8 +611,9 @@ def save_scoring_result(
 
         logger.exception(
             "Failed to save scoring result: "
-            "candidate_id=%s",
+            "candidate_id=%s jd_id=%s",
             candidate_id,
+            jd_id,
         )
 
         raise ScoringError(
@@ -408,9 +624,198 @@ def save_scoring_result(
         )
 
     logger.info(
-        "Scoring result saved: candidate_id=%s",
+        "Scoring result saved: "
+        "candidate_id=%s jd_id=%s path=%s",
         candidate_id,
+        jd_id,
+        scoring_file,
     )
+
+
+# ============================================================
+# LOAD SCORING RESULT
+# ============================================================
+
+def load_scoring_result(
+    candidate_id: str,
+    jd_id: str,
+) -> dict:
+    """
+    Load an already-completed scoring result.
+
+    This function is used by the scoring-result API.
+
+    It does NOT create a new scoring job.
+    """
+
+    scoring_file = (
+        get_scoring_result_file(
+            candidate_id,
+            jd_id,
+        )
+    )
+
+    logger.info(
+        "Loading scoring result: "
+        "candidate_id=%s jd_id=%s",
+        candidate_id,
+        jd_id,
+    )
+
+    if not scoring_file.exists():
+
+        logger.warning(
+            "Scoring result not found: "
+            "candidate_id=%s jd_id=%s",
+            candidate_id,
+            jd_id,
+        )
+
+        raise ScoringError(
+            message=(
+                f"No scoring result found for "
+                f"candidate '{candidate_id}' "
+                f"and JD '{jd_id}'."
+            ),
+            status_code=404,
+        )
+
+    if not scoring_file.is_file():
+
+        raise ScoringError(
+            message=(
+                "Scoring result path is not a file."
+            ),
+            status_code=500,
+        )
+
+    try:
+
+        with scoring_file.open(
+            "r",
+            encoding="utf-8",
+        ) as file:
+
+            score_result = json.load(
+                file
+            )
+
+    except json.JSONDecodeError:
+
+        logger.exception(
+            "Invalid scoring result JSON: "
+            "candidate_id=%s jd_id=%s",
+            candidate_id,
+            jd_id,
+        )
+
+        raise ScoringError(
+            message=(
+                "Scoring result file is invalid."
+            ),
+            status_code=500,
+        )
+
+    except OSError:
+
+        logger.exception(
+            "Failed to read scoring result: "
+            "candidate_id=%s jd_id=%s",
+            candidate_id,
+            jd_id,
+        )
+
+        raise ScoringError(
+            message=(
+                "Failed to load scoring result."
+            ),
+            status_code=500,
+        )
+
+    # ========================================================
+    # Validate saved result
+    # ========================================================
+
+    if not isinstance(
+        score_result,
+        dict,
+    ):
+
+        logger.error(
+            "Invalid scoring result structure: "
+            "candidate_id=%s jd_id=%s",
+            candidate_id,
+            jd_id,
+        )
+
+        raise ScoringError(
+            message=(
+                "Invalid scoring result structure."
+            ),
+            status_code=500,
+        )
+
+    candidate_score = (
+        score_result.get(
+            "candidate_score"
+        )
+    )
+
+    if not isinstance(
+        candidate_score,
+        dict,
+    ):
+
+        logger.error(
+            "candidate_score missing or invalid: "
+            "candidate_id=%s jd_id=%s",
+            candidate_id,
+            jd_id,
+        )
+
+        raise ScoringError(
+            message=(
+                "Invalid scoring result: "
+                "candidate_score missing."
+            ),
+            status_code=500,
+        )
+
+    final_score = (
+        candidate_score.get(
+            "final_score"
+        )
+    )
+
+    if not isinstance(
+        final_score,
+        (int, float),
+    ):
+
+        logger.error(
+            "final_score missing or invalid: "
+            "candidate_id=%s jd_id=%s",
+            candidate_id,
+            jd_id,
+        )
+
+        raise ScoringError(
+            message=(
+                "Invalid scoring result: "
+                "final_score missing or invalid."
+            ),
+            status_code=500,
+        )
+
+    logger.info(
+        "Scoring result loaded successfully: "
+        "candidate_id=%s jd_id=%s final_score=%s",
+        candidate_id,
+        jd_id,
+        final_score,
+    )
+
+    return score_result
 
 
 # ============================================================
@@ -419,34 +824,42 @@ def save_scoring_result(
 
 def score_candidate(
     candidate_id: str,
+    jd_id: str,
 ) -> dict:
     """
     Complete candidate scoring pipeline.
 
     Only the masked candidate profile is passed
     to the ATS scoring engine.
+
+    The selected JD is identified by jd_id.
     """
 
     logger.info(
         "Candidate scoring started: "
-        "candidate_id=%s",
+        "candidate_id=%s jd_id=%s",
         candidate_id,
+        jd_id,
     )
 
     # ========================================================
-    # 1. LOAD CANDIDATE PROFILE
+    # 1. LOAD CANDIDATE
     # ========================================================
 
-    candidate_data = load_candidate(
-        candidate_id
+    candidate_data = (
+        load_candidate(
+            candidate_id
+        )
     )
 
     # ========================================================
     # 2. EXTRACT MASKED PROFILE
     # ========================================================
 
-    candidate = get_masked_profile(
-        candidate_data
+    candidate = (
+        get_masked_profile(
+            candidate_data
+        )
     )
 
     if not candidate:
@@ -469,26 +882,52 @@ def score_candidate(
     # 3. EXTRACT CANDIDATE NAME
     # ========================================================
 
-    candidate_name = get_candidate_name(
-        candidate_data
+    candidate_name = (
+        get_candidate_name(
+            candidate_data
+        )
     )
 
     # ========================================================
-    # 4. LOAD JOB DESCRIPTION
+    # 4. LOAD + PARSE SELECTED JD
     # ========================================================
 
     job_description = (
-        load_job_description()
+        load_job_description(
+            jd_id
+        )
     )
 
     # ========================================================
-    # 5. GENERATE EMBEDDINGS + SCORE
+    # 5. VALIDATE MASKING
+    # ========================================================
+
+    if "personal_information" in candidate:
+
+        logger.error(
+            "Masked profile contains "
+            "personal_information: "
+            "candidate_id=%s",
+            candidate_id,
+        )
+
+        raise ScoringError(
+            message=(
+                "Masked candidate profile contains "
+                "personal information."
+            ),
+            status_code=422,
+        )
+
+    # ========================================================
+    # 6. GENERATE EMBEDDINGS + SCORE
     # ========================================================
 
     logger.info(
         "Generating embeddings and calculating ATS score: "
-        "candidate_id=%s",
+        "candidate_id=%s jd_id=%s",
         candidate_id,
+        jd_id,
     )
 
     try:
@@ -543,8 +982,9 @@ def score_candidate(
 
             logger.error(
                 "Empty JD embedding text: "
-                "candidate_id=%s",
+                "candidate_id=%s jd_id=%s",
                 candidate_id,
+                jd_id,
             )
 
             raise ScoringError(
@@ -569,24 +1009,27 @@ def score_candidate(
         # ATS SCORE
         # ----------------------------------------------------
 
-        score_result = calculate_ats_score(
-            candidate_profile=candidate,
-            jd_profile=job_description,
-            resume_embedding=resume_embedding,
-            jd_embedding=jd_embedding,
-            embedding_generator=embedding_generator,
+        score_result = (
+            calculate_ats_score(
+                candidate_profile=candidate,
+                jd_profile=job_description,
+                resume_embedding=resume_embedding,
+                jd_embedding=jd_embedding,
+                embedding_generator=embedding_generator,
+            )
         )
 
     except ScoringError:
-        # Preserve expected scoring errors.
+
         raise
 
     except Exception:
 
         logger.exception(
             "Candidate scoring engine failed: "
-            "candidate_id=%s",
+            "candidate_id=%s jd_id=%s",
             candidate_id,
+            jd_id,
         )
 
         raise ScoringError(
@@ -597,7 +1040,7 @@ def score_candidate(
         )
 
     # ========================================================
-    # 6. VALIDATE SCORE RESULT
+    # 7. VALIDATE SCORE RESULT
     # ========================================================
 
     if not isinstance(
@@ -607,62 +1050,150 @@ def score_candidate(
 
         logger.error(
             "Invalid scoring result returned: "
-            "candidate_id=%s",
+            "candidate_id=%s jd_id=%s",
             candidate_id,
+            jd_id,
         )
 
         raise ScoringError(
             message=(
-                "Scoring engine returned an invalid result."
+                "Scoring engine returned "
+                "an invalid result."
+            ),
+            status_code=500,
+        )
+
+    # --------------------------------------------------------
+    # Validate candidate_score
+    # --------------------------------------------------------
+
+    candidate_score = (
+        score_result.get(
+            "candidate_score"
+        )
+    )
+
+    if not isinstance(
+        candidate_score,
+        dict,
+    ):
+
+        logger.error(
+            "candidate_score missing or invalid: "
+            "candidate_id=%s jd_id=%s",
+            candidate_id,
+            jd_id,
+        )
+
+        raise ScoringError(
+            message=(
+                "Invalid scoring result: "
+                "candidate_score missing."
+            ),
+            status_code=500,
+        )
+
+    # --------------------------------------------------------
+    # Validate final_score
+    # --------------------------------------------------------
+
+    final_score = (
+        candidate_score.get(
+            "final_score"
+        )
+    )
+
+    if not isinstance(
+        final_score,
+        (int, float),
+    ):
+
+        logger.error(
+            "final_score missing or invalid: "
+            "candidate_id=%s jd_id=%s",
+            candidate_id,
+            jd_id,
+        )
+
+        raise ScoringError(
+            message=(
+                "Invalid scoring result: "
+                "final_score missing or invalid."
+            ),
+            status_code=500,
+        )
+
+    # --------------------------------------------------------
+    # Validate final score range
+    # --------------------------------------------------------
+
+    if not 0 <= final_score <= 100:
+
+        logger.error(
+            "final_score outside valid range: "
+            "candidate_id=%s jd_id=%s final_score=%s",
+            candidate_id,
+            jd_id,
+            final_score,
+        )
+
+        raise ScoringError(
+            message=(
+                "Invalid scoring result: "
+                "final_score must be between 0 and 100."
             ),
             status_code=500,
         )
 
     # ========================================================
-    # 7. ATTACH NON-SCORING IDENTITY
+    # 8. ATTACH NON-SCORING METADATA
     # ========================================================
 
     score_result["candidate_id"] = (
         candidate_id
     )
 
-    # Candidate name is attached only AFTER scoring.
     score_result["candidate_name"] = (
         candidate_name
     )
 
+    score_result["jd_id"] = (
+        Path(jd_id).stem
+    )
+
+    score_result["jd_file"] = (
+        resolve_jd_file(jd_id).name
+    )
+
     # ========================================================
-    # 8. SAVE SCORING RESULT
+    # 9. SAVE RESULT
     # ========================================================
 
     save_scoring_result(
         candidate_id=candidate_id,
+        jd_id=jd_id,
         score_result=score_result,
     )
 
     # ========================================================
-    # 9. LOG SCORE COMPLETION
+    # 10. LOG COMPLETION
     # ========================================================
-
-    final_score = (
-        score_result
-        .get("candidate_score", {})
-        .get("final_score")
-    )
 
     logger.info(
         "Candidate scoring completed successfully: "
-        "candidate_id=%s final_score=%s",
+        "candidate_id=%s jd_id=%s final_score=%s",
         candidate_id,
+        jd_id,
         final_score,
     )
 
     # ========================================================
-    # 10. RETURN API RESPONSE
+    # 11. RETURN SCORING RESULT
     # ========================================================
 
     return {
         "candidate_id": candidate_id,
+        "jd_id": Path(jd_id).stem,
         "status": "SCORED",
         "score": score_result,
     }
