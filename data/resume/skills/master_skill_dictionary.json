@@ -319,6 +319,7 @@
     "type": "Tool",
     "status": "active"
   },
+  
   {
     "skill_id": "TECH040",
     "name": "Responsive Web Design",
@@ -327,6 +328,7 @@
     "type": "Design Principle",
     "status": "active"
   },
+ 
   {
     "skill_id": "BUS001",
     "name": "Project Management",
@@ -567,6 +569,7 @@
     "type": "Deployment Platform",
     "status": "active"
   },
+
   {
     "skill_id": "TECH059",
     "name": "Netlify",
@@ -582,5 +585,659 @@
     "subcategory": "Cloud / Deployment",
     "type": "Deployment Platform",
     "status": "active"
+  },
+   {
+    "skill_id": "TECH061",
+    "name": "API Testing",
+    "category": "Technical",
+    "subcategory": "Testing",
+    "type": "Skill",
+    "status": "active"
+},
+
+  {
+    "skill_id": "TECH062",
+    "name": "Spring",
+    "category": "Technical",
+    "subcategory": "Java Framework",
+    "type": "Framework",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH063",
+    "name": "Spring Boot",
+    "category": "Technical",
+    "subcategory": "Java Framework",
+    "type": "Framework",
+    "status": "active"
+  },
+
+  {
+    "skill_id": "HR001",
+    "name": "Human Resources",
+    "category": "HR",
+    "subcategory": "HR Fundamentals",
+    "type": "Domain",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR002",
+    "name": "Human Resource Management",
+    "category": "HR",
+    "subcategory": "HR Fundamentals",
+    "type": "Domain",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR003",
+    "name": "HR Operations",
+    "category": "HR",
+    "subcategory": "HR Operations",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR004",
+    "name": "HR Administration",
+    "category": "HR",
+    "subcategory": "HR Operations",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR005",
+    "name": "Recruitment",
+    "category": "HR",
+    "subcategory": "Talent Acquisition",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR006",
+    "name": "Talent Acquisition",
+    "category": "HR",
+    "subcategory": "Talent Acquisition",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR007",
+    "name": "Candidate Screening",
+    "category": "HR",
+    "subcategory": "Talent Acquisition",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR008",
+    "name": "Resume Screening",
+    "category": "HR",
+    "subcategory": "Talent Acquisition",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR009",
+    "name": "Candidate Shortlisting",
+    "category": "HR",
+    "subcategory": "Talent Acquisition",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR010",
+    "name": "Interview Coordination",
+    "category": "HR",
+    "subcategory": "Talent Acquisition",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR011",
+    "name": "Interview Scheduling",
+    "category": "HR",
+    "subcategory": "Talent Acquisition",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR012",
+    "name": "Candidate Sourcing",
+    "category": "HR",
+    "subcategory": "Talent Acquisition",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR013",
+    "name": "Job Posting",
+    "category": "HR",
+    "subcategory": "Talent Acquisition",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR014",
+    "name": "Job Description",
+    "category": "HR",
+    "subcategory": "Talent Acquisition",
+    "type": "Document",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR015",
+    "name": "Boolean Search",
+    "category": "HR",
+    "subcategory": "Talent Acquisition",
+    "type": "Technique",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR016",
+    "name": "LinkedIn Recruiter",
+    "category": "HR",
+    "subcategory": "Recruitment Tools",
+    "type": "Tool",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR017",
+    "name": "Applicant Tracking System",
+    "category": "HR",
+    "subcategory": "Recruitment Tools",
+    "type": "Software",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR018",
+    "name": "Talent Management",
+    "category": "HR",
+    "subcategory": "Talent Management",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR019",
+    "name": "Employee Onboarding",
+    "category": "HR",
+    "subcategory": "Employee Lifecycle",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR020",
+    "name": "Employee Offboarding",
+    "category": "HR",
+    "subcategory": "Employee Lifecycle",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR021",
+    "name": "Employee Lifecycle Management",
+    "category": "HR",
+    "subcategory": "Employee Lifecycle",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR022",
+    "name": "Employee Records Management",
+    "category": "HR",
+    "subcategory": "HR Administration",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR023",
+    "name": "HR Documentation",
+    "category": "HR",
+    "subcategory": "HR Administration",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR024",
+    "name": "Attendance Management",
+    "category": "HR",
+    "subcategory": "HR Operations",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR025",
+    "name": "Leave Management",
+    "category": "HR",
+    "subcategory": "HR Operations",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR026",
+    "name": "Payroll Processing",
+    "category": "HR",
+    "subcategory": "HR Operations",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR027",
+    "name": "Payroll Administration",
+    "category": "HR",
+    "subcategory": "HR Operations",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR028",
+    "name": "HRIS",
+    "category": "HR",
+    "subcategory": "HR Technology",
+    "type": "Software",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR029",
+    "name": "HRMS",
+    "category": "HR",
+    "subcategory": "HR Technology",
+    "type": "Software",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR030",
+    "name": "Workday",
+    "category": "HR",
+    "subcategory": "HR Technology",
+    "type": "Software",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR031",
+    "name": "SAP SuccessFactors",
+    "category": "HR",
+    "subcategory": "HR Technology",
+    "type": "Software",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR032",
+    "name": "Zoho People",
+    "category": "HR",
+    "subcategory": "HR Technology",
+    "type": "Software",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR033",
+    "name": "Keka",
+    "category": "HR",
+    "subcategory": "HR Technology",
+    "type": "Software",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR034",
+    "name": "BambooHR",
+    "category": "HR",
+    "subcategory": "HR Technology",
+    "type": "Software",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR035",
+    "name": "Microsoft Excel",
+    "category": "HR",
+    "subcategory": "HR Tools",
+    "type": "Tool",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR036",
+    "name": "Microsoft Office",
+    "category": "HR",
+    "subcategory": "Office Tools",
+    "type": "Tool",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR037",
+    "name": "Google Workspace",
+    "category": "HR",
+    "subcategory": "Office Tools",
+    "type": "Tool",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR038",
+    "name": "Performance Management",
+    "category": "HR",
+    "subcategory": "Performance Management",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR039",
+    "name": "Performance Appraisal",
+    "category": "HR",
+    "subcategory": "Performance Management",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR040",
+    "name": "Performance Evaluation",
+    "category": "HR",
+    "subcategory": "Performance Management",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR041",
+    "name": "Employee Engagement",
+    "category": "HR",
+    "subcategory": "Employee Relations",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR042",
+    "name": "Employee Relations",
+    "category": "HR",
+    "subcategory": "Employee Relations",
+    "type": "Domain",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR043",
+    "name": "Employee Grievance Handling",
+    "category": "HR",
+    "subcategory": "Employee Relations",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR044",
+    "name": "Conflict Resolution",
+    "category": "HR",
+    "subcategory": "Employee Relations",
+    "type": "Soft Skill",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR045",
+    "name": "Training and Development",
+    "category": "HR",
+    "subcategory": "Learning and Development",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR046",
+    "name": "Learning and Development",
+    "category": "HR",
+    "subcategory": "Learning and Development",
+    "type": "Domain",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR047",
+    "name": "Training Needs Analysis",
+    "category": "HR",
+    "subcategory": "Learning and Development",
+    "type": "Technique",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR048",
+    "name": "Compensation and Benefits",
+    "category": "HR",
+    "subcategory": "Compensation and Benefits",
+    "type": "Domain",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR049",
+    "name": "Compensation Management",
+    "category": "HR",
+    "subcategory": "Compensation and Benefits",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR050",
+    "name": "Benefits Administration",
+    "category": "HR",
+    "subcategory": "Compensation and Benefits",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR051",
+    "name": "Workforce Planning",
+    "category": "HR",
+    "subcategory": "Workforce Management",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR052",
+    "name": "Manpower Planning",
+    "category": "HR",
+    "subcategory": "Workforce Management",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR053",
+    "name": "HR Policies",
+    "category": "HR",
+    "subcategory": "HR Compliance",
+    "type": "Policy",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR054",
+    "name": "Policy Implementation",
+    "category": "HR",
+    "subcategory": "HR Compliance",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR055",
+    "name": "Labour Law",
+    "category": "HR",
+    "subcategory": "HR Compliance",
+    "type": "Knowledge",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR056",
+    "name": "Labour Compliance",
+    "category": "HR",
+    "subcategory": "HR Compliance",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR057",
+    "name": "Statutory Compliance",
+    "category": "HR",
+    "subcategory": "HR Compliance",
+    "type": "Compliance",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR058",
+    "name": "POSH",
+    "category": "HR",
+    "subcategory": "HR Compliance",
+    "type": "Compliance",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR059",
+    "name": "Background Verification",
+    "category": "HR",
+    "subcategory": "Talent Acquisition",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR060",
+    "name": "Offer Management",
+    "category": "HR",
+    "subcategory": "Talent Acquisition",
+    "type": "Process",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR061",
+    "name": "HR Analytics",
+    "category": "HR",
+    "subcategory": "HR Analytics",
+    "type": "Analytical",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR062",
+    "name": "People Analytics",
+    "category": "HR",
+    "subcategory": "HR Analytics",
+    "type": "Analytical",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR063",
+    "name": "HR Reporting",
+    "category": "HR",
+    "subcategory": "HR Analytics",
+    "type": "Analytical",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR064",
+    "name": "HR Metrics",
+    "category": "HR",
+    "subcategory": "HR Analytics",
+    "type": "Analytical",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR065",
+    "name": "Recruitment Metrics",
+    "category": "HR",
+    "subcategory": "HR Analytics",
+    "type": "Analytical",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR066",
+    "name": "Time to Hire",
+    "category": "HR",
+    "subcategory": "Recruitment Analytics",
+    "type": "Metric",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR067",
+    "name": "Employee Retention",
+    "category": "HR",
+    "subcategory": "HR Analytics",
+    "type": "Metric",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR068",
+    "name": "Attrition Analysis",
+    "category": "HR",
+    "subcategory": "HR Analytics",
+    "type": "Analytical",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR069",
+    "name": "Communication",
+    "category": "HR",
+    "subcategory": "Soft Skills",
+    "type": "Soft Skill",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR070",
+    "name": "Interpersonal Skills",
+    "category": "HR",
+    "subcategory": "Soft Skills",
+    "type": "Soft Skill",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR071",
+    "name": "Negotiation",
+    "category": "HR",
+    "subcategory": "Soft Skills",
+    "type": "Soft Skill",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR072",
+    "name": "Problem Solving",
+    "category": "HR",
+    "subcategory": "Soft Skills",
+    "type": "Soft Skill",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR073",
+    "name": "Time Management",
+    "category": "HR",
+    "subcategory": "Soft Skills",
+    "type": "Soft Skill",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR074",
+    "name": "Organizational Skills",
+    "category": "HR",
+    "subcategory": "Soft Skills",
+    "type": "Soft Skill",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR075",
+    "name": "Stakeholder Management",
+    "category": "HR",
+    "subcategory": "Soft Skills",
+    "type": "Soft Skill",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR076",
+    "name": "Team Management",
+    "category": "HR",
+    "subcategory": "Soft Skills",
+    "type": "Soft Skill",
+    "status": "active"
+  },
+  {
+    "skill_id": "HR077",
+    "name": "Leadership",
+    "category": "HR",
+    "subcategory": "Soft Skills",
+    "type": "Soft Skill",
+    "status": "active"
+  },
+  
+
+  {
+    "skill_id": "HR078",
+    "name": "Payroll",
+    "category": "HR",
+    "subcategory": "HR Operations",
+    "type": "Process",
+    "status": "active"
   }
+
+  
 ]

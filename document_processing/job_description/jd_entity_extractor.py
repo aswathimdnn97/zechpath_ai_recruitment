@@ -737,6 +737,144 @@ def _clean_responsibilities(responsibilities):
 
 
 # ============================================================
+# NORMALIZE EXPERIENCE
+# ============================================================
+
+def _normalize_experience(experience):
+    """
+    Convert raw JD experience text into structured data.
+
+    Examples
+    --------
+    "0-1 year experience, internship or relevant project experience acceptable."
+        ->
+        {
+            "minimum_years": 0,
+            "maximum_years": 1,
+            "description": "..."
+        }
+
+    "2-3 years of experience"
+        ->
+        {
+            "minimum_years": 2,
+            "maximum_years": 3,
+            "description": "..."
+        }
+
+    "2+ years experience"
+        ->
+        {
+            "minimum_years": 2,
+            "maximum_years": None,
+            "description": "..."
+        }
+
+    "3 years experience"
+        ->
+        {
+            "minimum_years": 3,
+            "maximum_years": None,
+            "description": "..."
+        }
+    """
+
+    if not isinstance(experience, list):
+        experience = [experience]
+
+    normalized = []
+
+    for item in experience:
+
+        if not isinstance(item, str):
+            continue
+
+        text = item.strip()
+
+        if not text:
+            continue
+
+        minimum_years = None
+        maximum_years = None
+
+        # ----------------------------------------------------
+        # Match experience ranges
+        #
+        # Examples:
+        # 0-1 year
+        # 1-2 years
+        # 2 to 3 years
+        # ----------------------------------------------------
+
+        range_match = re.search(
+            r"\b(\d+(?:\.\d+)?)\s*"
+            r"(?:-|–|—|to)\s*"
+            r"(\d+(?:\.\d+)?)\s*"
+            r"years?\b",
+            text,
+            flags=re.IGNORECASE,
+        )
+
+        if range_match:
+
+            minimum_years = float(
+                range_match.group(1)
+            )
+
+            maximum_years = float(
+                range_match.group(2)
+            )
+
+        else:
+
+            # ------------------------------------------------
+            # Match minimum experience
+            #
+            # Examples:
+            # 2+ years
+            # 3 years experience
+            # ------------------------------------------------
+
+            minimum_match = re.search(
+                r"\b(\d+(?:\.\d+)?)\s*\+?\s*"
+                r"years?\b",
+                text,
+                flags=re.IGNORECASE,
+            )
+
+            if minimum_match:
+
+                minimum_years = float(
+                    minimum_match.group(1)
+                )
+
+        # ----------------------------------------------------
+        # Convert 0.0 -> 0 and 1.0 -> 1
+        # ----------------------------------------------------
+
+        if (
+            minimum_years is not None
+            and minimum_years.is_integer()
+        ):
+            minimum_years = int(minimum_years)
+
+        if (
+            maximum_years is not None
+            and maximum_years.is_integer()
+        ):
+            maximum_years = int(maximum_years)
+
+        normalized.append(
+            {
+                "minimum_years": minimum_years,
+                "maximum_years": maximum_years,
+                "description": text,
+            }
+        )
+
+    return normalized
+
+# ============================================================
 # EXTRACT ENTITIES
 # ============================================================
 
@@ -984,13 +1122,15 @@ def extract_entities(sections):
         [],
     )
 
-    # ========================================================
+   # ========================================================
     # EXPERIENCE
     # ========================================================
 
-    entities["experience"] = sections.get(
-        "experience",
-        [],
+    entities["experience"] = _normalize_experience(
+        sections.get(
+            "experience",
+            [],
+        )
     )
 
     # ========================================================

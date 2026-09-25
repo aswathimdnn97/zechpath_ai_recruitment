@@ -90,5 +90,79 @@ def normalize_jd(text):
         normalized_lines.append(line)
 
     return "\n".join(normalized_lines)
+
+
+
+def normalize_experience(experience_data):
+    """
+    Convert JD experience text into structured experience data.
+    """
+
+    if not experience_data:
+        return []
+
+    if isinstance(experience_data, str):
+        experience_data = [experience_data]
+
+    normalized_experience = []
+
+    for item in experience_data:
+
+        if not isinstance(item, str):
+            continue
+
+        text = item.strip()
+
+        if not text:
+            continue
+
+        minimum_years = None
+        maximum_years = None
+
+        # Match ranges:
+        # 0-1 year
+        # 1-2 years
+        # 2 to 3 years
+        range_match = re.search(
+            r"(\d+(?:\.\d+)?)\s*(?:-|–|—|to)\s*(\d+(?:\.\d+)?)\s*years?",
+            text,
+            re.IGNORECASE,
+        )
+
+        if range_match:
+            minimum_years = float(range_match.group(1))
+            maximum_years = float(range_match.group(2))
+
+        else:
+            # Match minimum experience:
+            # 2+ years
+            # 3 years experience
+            minimum_match = re.search(
+                r"(\d+(?:\.\d+)?)\s*\+?\s*years?",
+                text,
+                re.IGNORECASE,
+            )
+
+            if minimum_match:
+                minimum_years = float(
+                    minimum_match.group(1)
+                )
+
+        # Convert 0.0 → 0 and 1.0 → 1
+        if minimum_years is not None and minimum_years.is_integer():
+            minimum_years = int(minimum_years)
+
+        if maximum_years is not None and maximum_years.is_integer():
+            maximum_years = int(maximum_years)
+
+        normalized_experience.append(
+            {
+                "minimum_years": minimum_years,
+                "maximum_years": maximum_years,
+                "description": text,
+            }
+        )
+
+    return normalized_experience
         
         

@@ -73,19 +73,41 @@ def _normalize(value):
 # ============================================================
 
 def _get_skill_name(candidate):
+    """
+    Extract skill name from supported input formats.
+
+    Supports:
+
+        "Python"
+
+        {
+            "skill": "Python"
+        }
+
+        {
+            "name": "Python"
+        }
+
+        {
+            "canonical_name": "Python"
+        }
+    """
 
     if isinstance(candidate, str):
         return candidate.strip()
 
     if isinstance(candidate, dict):
 
-        skill = candidate.get("skill")
+        skill = (
+            candidate.get("skill")
+            or candidate.get("name")
+            or candidate.get("canonical_name")
+        )
 
         if isinstance(skill, str):
             return skill.strip()
 
     return ""
-
 
 # ============================================================
 # MERGE METADATA

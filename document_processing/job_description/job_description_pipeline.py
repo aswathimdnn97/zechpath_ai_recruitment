@@ -9,7 +9,7 @@ from document_processing.common.json_writer import save_resume
 
 
 
-def job_description_pipeline(file):
+def job_description_pipeline(file,job_id):
     
     # extract raw text
     raw_text=extract_raw_text(file)
@@ -28,6 +28,9 @@ def job_description_pipeline(file):
     
     # extract entity from parsed jd
     extracted_entity=extract_entities(parsed_jd)
+    
+    # Add identifiers before saving
+    extracted_entity["job_id"] = job_id
     
     # save extracted entity
     save_resume(extracted_entity, file)

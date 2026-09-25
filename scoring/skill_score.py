@@ -1,15 +1,66 @@
-from typing import Any, Dict, List, Tuple
+"""
+Skill Scorer
+
+Responsibilities:
+    - Extract candidate skills
+    - Extract required and preferred JD skills
+    - Match candidate skills against JD skills
+    - Support:
+        1. Exact matching
+        2. Relationship matching
+        3. Fuzzy matching
+        4. Semantic matching
+    - Calculate required/preferred skill scores
+    - Return explainable scoring results
+
+Matching priority:
+    Exact
+        ↓
+    Broader relationship
+        ↓
+    Fuzzy
+        ↓
+    Semantic
+        ↓
+    Missing
+
+Important:
+    "related" skills from skill_relationships.json are NOT treated
+    as automatic matches.
+
+Example:
+    Candidate: REST API
+    Required: API
+
+    REST API -> broader -> API
+
+    This can receive relationship credit.
+
+But:
+
+    Candidate: PostgreSQL
+    Required: MySQL
+
+    PostgreSQL -> related -> MySQL
+
+    This is NOT counted as a skill match.
+"""
+
+from __future__ import annotations
+
+from typing import Any, Dict, List, Optional, Tuple
 
 from rapidfuzz import fuzz
 
-from scoring.skill_semantic_matcher import (
-    find_semantic_skill_matches,
+from scoring.semantic_scorer import find_semantic_skill_matches
+from scoring.skill_relationship_resolver import (
+    SkillRelationshipResolver,
 )
 
 
-# ============================================================
-# Configuration
-# ============================================================
+# ----------------------------------------------------------------------
+# CONFIGURATION
+# ----------------------------------------------------------------------
 
 FUZZY_MATCH_THRESHOLD = 90
 
@@ -21,313 +72,544 @@ FUZZY_MATCH_CONFIDENCE = 0.90
 SEMANTIC_MATCH_MIN_THRESHOLD = 0.70
 
 
-# ============================================================
-# Normalization
-# ============================================================
-
-def _normalize_skill(skill: str) -> str:
-    """Normalize skill names for comparison."""
-
-    if not isinstance(skill, str):
-        return ""
-
-    return " ".join(
-        skill.lower().strip().split()
-    )
-
-
-def _calculate_skill_similarity(
-    candidate_skill: str,
-    jd_skill: str,
-) -> float:
+class SkillScore:
     """
-    Calculate conservative fuzzy similarity.
-
-    Avoids token_set_ratio because it can incorrectly
-    treat a shorter skill as a perfect match for a
-    longer skill.
-
-    Example:
-
-        django
-        django rest framework
-
-    token_set_ratio -> 100
-    which is too permissive.
+    Calculate candidate skill match score against a job description.
     """
 
-    candidate_skill = _normalize_skill(
-        candidate_skill
-    )
+    def __init__(
+        self,
+        relationship_resolver: Optional[
+            SkillRelationshipResolver
+        ] = None,
+    ) -> None:
+        """
+        Initialize the skill scorer.
 
-    jd_skill = _normalize_skill(
-        jd_skill
-    )
+        Args:
+            relationship_resolver:
+                Optional shared SkillRelationshipResolver.
 
-    if not candidate_skill or not jd_skill:
-        return 0.0
+                If not supplied, a new resolver is created.
+        """
 
-    # Exact match
-    if candidate_skill == jd_skill:
-        return 100.0
+        self.relationship_resolver = (
+            relationship_resolver
+            if relationship_resolver is not None
+            else SkillRelationshipResolver()
+        )
 
-    ratio_score = fuzz.ratio(
-        candidate_skill,
-        jd_skill,
-    )
+    # ------------------------------------------------------------------
+    # NORMALIZATION
+    # ------------------------------------------------------------------
 
-    token_sort_score = fuzz.token_sort_ratio(
-        candidate_skill,
-        jd_skill,
-    )
+    @staticmethod
+    def _normalize_skill(skill: Any) -> str:
+        """
+        Normalize a skill for comparison.
 
-    return max(
-        ratio_score,
-        token_sort_score,
-    )
+        Example:
+            " Python " -> "python"
+            "REST   API" -> "rest api"
+        """
 
-# ============================================================
-# Skill extraction
-# ============================================================
+        if not isinstance(skill, str):
+            return ""
 
-def _extract_skill_names(skills: Any) -> List[str]:
-    """
-    Convert candidate/JD skills into normalized names.
+        return " ".join(
+            skill.strip().lower().split()
+        )
 
-    Supports:
+    # ------------------------------------------------------------------
+    # SKILL SIMILARITY
+    # ------------------------------------------------------------------
 
-        ["Python", "Django"]
+    @staticmethod
+    def _calculate_skill_similarity(
+        candidate_skill: str,
+        required_skill: str,
+    ) -> float:
+        """
+        Calculate fuzzy similarity between two skills.
 
-    and:
+        Uses:
+            - fuzz.ratio
+            - fuzz.token_sort_ratio
 
-        [
-            {"skill": "Python"},
-            {"skill": "Django"}
-        ]
-    """
+        token_set_ratio is intentionally avoided because it can
+        produce false perfect matches.
 
-    if not isinstance(skills, list):
-        return []
+        Example problem:
 
-    result = []
+            "django"
+            "django rest framework"
 
-    for skill in skills:
+        token_set_ratio can consider these too similar.
+        """
 
-        if isinstance(skill, str):
+        candidate = SkillScore._normalize_skill(
+            candidate_skill
+        )
 
-            name = skill
+        required = SkillScore._normalize_skill(
+            required_skill
+        )
 
-        elif isinstance(skill, dict):
+        if not candidate or not required:
+            return 0.0
 
-            name = (
-                skill.get("skill")
-                or skill.get("name")
-                or skill.get("canonical_name")
-            )
+        ratio_score = fuzz.ratio(
+            candidate,
+            required,
+        )
 
-        else:
-            continue
+        token_sort_score = fuzz.token_sort_ratio(
+            candidate,
+            required,
+        )
 
-        normalized = _normalize_skill(name)
+        return max(
+            float(ratio_score),
+            float(token_sort_score),
+        )
 
-        if normalized:
-            result.append(normalized)
+    # ------------------------------------------------------------------
+    # EXTRACT SKILL NAMES
+    # ------------------------------------------------------------------
 
-    return list(dict.fromkeys(result))
+    @staticmethod
+    def _extract_skill_names(
+        skills: Any,
+    ) -> List[str]:
+        """
+        Extract skill names from either:
 
-def _extract_candidate_skills(
-    candidate_data: Dict[str, Any]
-) -> List[Any]:
+            [
+                "Python",
+                "Django"
+            ]
 
-    skills = []
+        or:
 
-    # -----------------------------------------
-    # Top-level skills
-    # -----------------------------------------
+            [
+                {
+                    "skill": "Python"
+                },
+                {
+                    "name": "Django"
+                }
+            ]
 
-    top_level_skills = candidate_data.get(
-        "skills",
-        []
-    )
+        Supported dictionary keys:
+            - skill
+            - name
+            - canonical_name
+        """
 
-    if isinstance(top_level_skills, list):
-        skills.extend(top_level_skills)
+        if not isinstance(skills, list):
+            return []
 
-    # -----------------------------------------
-    # Experience-level skills
-    # -----------------------------------------
+        extracted: List[str] = []
 
-    experience = candidate_data.get(
-        "experience",
-        []
-    )
+        for skill in skills:
 
-    if isinstance(experience, list):
+            # ----------------------------------------------------------
+            # String skill
+            # ----------------------------------------------------------
 
-        for experience_item in experience:
+            if isinstance(skill, str):
 
-            if not isinstance(
-                experience_item,
-                dict
-            ):
+                value = skill.strip()
+
+                if value:
+                    extracted.append(value)
+
                 continue
 
-            experience_skills = (
-                experience_item.get(
+            # ----------------------------------------------------------
+            # Dictionary skill
+            # ----------------------------------------------------------
+
+            if isinstance(skill, dict):
+
+                value = (
+                    skill.get("skill")
+                    or skill.get("name")
+                    or skill.get("canonical_name")
+                )
+
+                if isinstance(value, str):
+
+                    value = value.strip()
+
+                    if value:
+                        extracted.append(value)
+
+        return extracted
+
+    # ------------------------------------------------------------------
+    # CANDIDATE SKILL EXTRACTION
+    # ------------------------------------------------------------------
+
+    def _extract_candidate_skills(
+        self,
+        profile: Dict[str, Any],
+    ) -> List[str]:
+        """
+        Extract candidate skills from:
+
+            profile["skills"]
+
+        and skills inside:
+
+            profile["experience"][...]["skills"]
+
+        Duplicate skills are removed while preserving order.
+        """
+
+        if not isinstance(profile, dict):
+            return []
+
+        candidate_skills: List[str] = []
+
+        # --------------------------------------------------------------
+        # Top-level skills
+        # --------------------------------------------------------------
+
+        top_level_skills = profile.get(
+            "skills",
+            [],
+        )
+
+        candidate_skills.extend(
+            self._extract_skill_names(
+                top_level_skills
+            )
+        )
+
+        # --------------------------------------------------------------
+        # Experience skills
+        # --------------------------------------------------------------
+
+        experience = profile.get(
+            "experience",
+            [],
+        )
+
+        if isinstance(experience, list):
+
+            for experience_item in experience:
+
+                if not isinstance(
+                    experience_item,
+                    dict,
+                ):
+                    continue
+
+                experience_skills = experience_item.get(
                     "skills",
-                    []
+                    [],
                 )
+
+                candidate_skills.extend(
+                    self._extract_skill_names(
+                        experience_skills
+                    )
+                )
+
+        # --------------------------------------------------------------
+        # Remove duplicates
+        # --------------------------------------------------------------
+
+        unique_skills: List[str] = []
+
+        seen = set()
+
+        for skill in candidate_skills:
+
+            normalized = self._normalize_skill(
+                skill
             )
 
-            if isinstance(
-                experience_skills,
-                list
+            if not normalized:
+                continue
+
+            if normalized in seen:
+                continue
+
+            seen.add(normalized)
+
+            unique_skills.append(skill)
+
+        return unique_skills
+
+    # ------------------------------------------------------------------
+    # PROFILE DATA
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _get_profile_data(
+        profile: Dict[str, Any],
+    ) -> Dict[str, Any]:
+        """
+        Return the actual candidate profile data.
+
+        Supports both:
+
+            profile = {
+                "skills": [...]
+            }
+
+        and:
+
+            profile = {
+                "resume_text": {
+                    "skills": [...]
+                }
+            }
+        """
+
+        if not isinstance(profile, dict):
+            return {}
+
+        resume_text = profile.get(
+            "resume_text"
+        )
+
+        if isinstance(
+            resume_text,
+            dict,
+        ):
+            return resume_text
+
+        return profile
+
+    # ------------------------------------------------------------------
+    # REQUIRED / PREFERRED SKILLS
+    # ------------------------------------------------------------------
+
+    def _extract_required_skills(
+        self,
+        job_description: Dict[str, Any],
+    ) -> List[str]:
+        """
+        Extract required skills from JD.
+        """
+
+        if not isinstance(
+            job_description,
+            dict,
+        ):
+            return []
+
+        return self._extract_skill_names(
+            job_description.get(
+                "required_skills",
+                [],
+            )
+        )
+
+    def _extract_preferred_skills(
+        self,
+        job_description: Dict[str, Any],
+    ) -> List[str]:
+        """
+        Extract preferred skills from JD.
+        """
+
+        if not isinstance(
+            job_description,
+            dict,
+        ):
+            return []
+
+        return self._extract_skill_names(
+            job_description.get(
+                "preferred_skills",
+                [],
+            )
+        )
+
+    # ------------------------------------------------------------------
+    # EXACT MATCH
+    # ------------------------------------------------------------------
+
+    def _find_exact_match(
+        self,
+        candidate_skills: List[str],
+        required_skill: str,
+    ) -> Optional[str]:
+        """
+        Find an exact normalized skill match.
+        """
+
+        required_normalized = self._normalize_skill(
+            required_skill
+        )
+
+        if not required_normalized:
+            return None
+
+        for candidate_skill in candidate_skills:
+
+            candidate_normalized = self._normalize_skill(
+                candidate_skill
+            )
+
+            if (
+                candidate_normalized
+                == required_normalized
             ):
-                skills.extend(
-                    experience_skills
+                return candidate_skill
+
+        return None
+
+    # ------------------------------------------------------------------
+    # RELATIONSHIP MATCH
+    # ------------------------------------------------------------------
+
+    def _find_relationship_match(
+        self,
+        candidate_skills: List[str],
+        required_skill: str,
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Find a data-driven relationship match.
+
+        Only "broader" relationships are allowed to satisfy a
+        required skill.
+
+        "related" relationships are intentionally ignored as
+        scoring matches.
+
+        Example:
+
+            Candidate:
+                REST API
+
+            Required:
+                API
+
+            Relationship:
+                REST API -> broader -> API
+
+        Result:
+
+            {
+                "candidate_skill": "REST API",
+                "required_skill": "API",
+                "relationship": "broader",
+                "matched": True
+            }
+        """
+
+        if not candidate_skills:
+            return None
+
+        for candidate_skill in candidate_skills:
+
+            relationship_type = (
+                self.relationship_resolver.get_relationship_type(
+                    candidate_skill,
+                    required_skill,
                 )
-
-    return skills
-# ============================================================
-# Profile handling
-# ============================================================
-
-def _get_profile_data(
-    profile: Dict[str, Any]
-) -> Dict[str, Any]:
-
-    if not isinstance(profile, dict):
-        return {}
-
-    resume_data = profile.get("resume_text")
-
-    if isinstance(resume_data, dict):
-        return resume_data
-
-    return profile
-
-
-# ============================================================
-# Fuzzy skill matching
-# ============================================================
-
-def _find_best_skill_match(
-    candidate_skill: str,
-    jd_skills: List[str],
-    threshold: int = FUZZY_MATCH_THRESHOLD,
-) -> Tuple[str, float]:
-    """
-    Find the best fuzzy match for a candidate skill.
-
-    Returns:
-
-        (matched_skill, confidence)
-
-    If no suitable match exists:
-
-        ("", 0.0)
-    """
-
-    best_match = ""
-    best_score = 0.0
-
-    for jd_skill in jd_skills:
-
-        similarity = fuzz.token_set_ratio(
-            candidate_skill,
-            jd_skill,
-        )
-
-        if similarity > best_score:
-
-            best_score = similarity
-            best_match = jd_skill
-
-    if best_score >= threshold:
-
-        return (
-            best_match,
-            best_score / 100.0,
-        )
-
-    return "", 0.0
-
-
-# ============================================================
-# Match required skills
-# ============================================================
-
-def _match_skills(
-    candidate_skills: List[str],
-    jd_skills: List[str],
-    embedding_generator: Any = None,
-) -> Tuple[
-    List[str],
-    List[str],
-    List[Dict[str, Any]],
-    List[Dict[str, Any]],
-]:
-    """
-    Match candidate skills against JD skills.
-
-    Matching order:
-
-        1. Exact match
-        2. Conservative fuzzy match
-        3. Semantic match
-
-    Exact matches are preferred over fuzzy and semantic
-    matches.
-
-    Returns:
-        matched skills
-        missing skills
-        fuzzy match details
-        semantic match details
-    """
-
-    candidate = set(candidate_skills)
-
-    matched = []
-    missing = []
-
-    fuzzy_matches = []
-    semantic_matches = []
-
-    # ========================================================
-    # Match each JD skill
-    # ========================================================
-
-    for jd_skill in jd_skills:
-
-        # ----------------------------------------------------
-        # 1. Exact match
-        # ----------------------------------------------------
-
-        if jd_skill in candidate:
-
-            matched.append(
-                jd_skill
             )
 
-            # IMPORTANT:
-            # Do not perform fuzzy or semantic matching
-            # when an exact match already exists.
+            # ----------------------------------------------------------
+            # Only broader relationships receive match status.
+            # ----------------------------------------------------------
 
-            continue
+            if relationship_type == "broader":
 
-        # ----------------------------------------------------
-        # 2. Fuzzy match
-        # ----------------------------------------------------
+                return {
+                    "candidate_skill": candidate_skill,
+                    "required_skill": required_skill,
+                    "relationship": "broader",
+                    "matched": True,
+                }
 
-        best_candidate = ""
+        return None
+
+    # ------------------------------------------------------------------
+    # RELATED SKILL INFORMATION
+    # ------------------------------------------------------------------
+
+    def _find_related_skill_context(
+        self,
+        candidate_skills: List[str],
+        required_skill: str,
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Detect related skills for explainability.
+
+        Related skills are NOT counted as matches.
+
+        Example:
+
+            Candidate:
+                PostgreSQL
+
+            Required:
+                MySQL
+
+            Result:
+
+                {
+                    "candidate_skill": "PostgreSQL",
+                    "required_skill": "MySQL",
+                    "relationship": "related",
+                    "matched": False
+                }
+        """
+
+        if not candidate_skills:
+            return None
+
+        for candidate_skill in candidate_skills:
+
+            relationship_type = (
+                self.relationship_resolver.get_relationship_type(
+                    candidate_skill,
+                    required_skill,
+                )
+            )
+
+            if relationship_type == "related":
+
+                return {
+                    "candidate_skill": candidate_skill,
+                    "required_skill": required_skill,
+                    "relationship": "related",
+                    "matched": False,
+                }
+
+        return None
+
+    # ------------------------------------------------------------------
+    # FUZZY MATCH
+    # ------------------------------------------------------------------
+
+    def _find_fuzzy_match(
+        
+        self,
+        candidate_skills: List[str],
+        required_skill: str,
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Find the best fuzzy candidate skill.
+
+        Returns a match only when the score reaches
+        FUZZY_MATCH_THRESHOLD.
+        """
+
+        best_candidate: Optional[str] = None
         best_score = 0.0
 
-        for candidate_skill in candidate:
+        for candidate_skill in candidate_skills:
 
-            similarity = _calculate_skill_similarity(
+            similarity = self._calculate_skill_similarity(
                 candidate_skill,
-                jd_skill,
+                required_skill,
             )
 
             if similarity > best_score:
@@ -335,394 +617,751 @@ def _match_skills(
                 best_score = similarity
                 best_candidate = candidate_skill
 
-        # ----------------------------------------------------
-        # Accept fuzzy match
-        # ----------------------------------------------------
-
         if (
-            best_candidate
+            best_candidate is not None
             and best_score >= FUZZY_MATCH_THRESHOLD
         ):
 
-            matched.append(
-                jd_skill
+            return {
+                "candidate_skill": best_candidate,
+                "required_skill": required_skill,
+                "similarity": round(
+                    best_score / 100,
+                    4,
+                ),
+                "similarity_percentage": round(
+                    best_score,
+                    2,
+                ),
+                "confidence": FUZZY_MATCH_CONFIDENCE,
+                "matched": True,
+            }
+
+        return None
+
+    # ------------------------------------------------------------------
+    # SEMANTIC MATCH
+    # ------------------------------------------------------------------
+
+    def _find_semantic_match(
+        self,
+        candidate_skills: List[str],
+        required_skill: str,
+        embedding_generator: Any = None,
+        ) -> Optional[Dict[str, Any]]:
+        
+        
+      
+    
+        """
+        Find semantic skill matches using the existing
+        semantic_scorer implementation.
+        """
+
+        if not candidate_skills:
+            return None
+
+        try:
+            semantic_matches = find_semantic_skill_matches(
+                candidate_skills,
+                [required_skill],
+                embedding_generator=embedding_generator,
+                threshold=SEMANTIC_MATCH_MIN_THRESHOLD,
             )
 
-            fuzzy_matches.append(
-                {
-                    "jd_skill": jd_skill,
+        except Exception:
+            # Semantic matching should not break the entire ATS
+            # scoring pipeline.
+            return None
 
-                    "candidate_skill":
-                        best_candidate,
+        if not semantic_matches:
+            return None
 
-                    "similarity":
-                        round(
-                            best_score,
-                            2,
+        # ----------------------------------------------------------
+        # Current semantic_scorer returns:
+        #
+        # {
+        #     "semantic_matches": [...],
+        #     "unmatched_required_skills": [...],
+        #     "scores": {...}
+        # }
+        # ----------------------------------------------------------
+
+        if isinstance(semantic_matches, dict):
+
+            matches = semantic_matches.get(
+                "semantic_matches",
+                []
+            )
+
+            if isinstance(matches, list):
+
+                best_match = None
+
+                for item in matches:
+
+                    if not isinstance(item, dict):
+                        continue
+
+                    candidate_skill = (
+                        item.get("candidate_skill")
+                        or item.get("skill")
+                        or item.get("candidate")
+                    )
+
+                    similarity = item.get(
+                        "similarity",
+                        item.get("score")
+                    )
+
+                    if not isinstance(
+                        similarity,
+                        (int, float)
+                    ):
+                        continue
+
+                    if float(similarity) < SEMANTIC_MATCH_MIN_THRESHOLD:
+                        continue
+
+                    if (
+                        best_match is None
+                        or float(similarity) > best_match["similarity"]
+                    ):
+                        best_match = {
+                            "candidate_skill": candidate_skill,
+                            "similarity": float(similarity),
+                        }
+
+                if best_match is not None:
+
+                    return {
+                        "candidate_skill": best_match[
+                            "candidate_skill"
+                        ],
+                        "required_skill": required_skill,
+                        "similarity": round(
+                            best_match["similarity"],
+                            4
                         ),
+                        "matched": True,
+                    }
 
-                    "confidence":
-                        FUZZY_MATCH_CONFIDENCE,
+        return None
+    # ------------------------------------------------------------------
+    # MAIN MATCH FUNCTION
+    # ------------------------------------------------------------------
 
-                    "match_type":
-                        "fuzzy",
-                }
+    def _match_skills(
+    self,
+    candidate_skills: List[str],
+    required_skills: List[str],
+    embedding_generator: Any = None,
+) -> Dict[str, Any]:
+        """
+        Match candidate skills against required skills.
+
+        Matching priority:
+
+            1. Exact
+            2. Broader relationship
+            3. Fuzzy
+            4. Semantic
+            5. Missing
+
+        Related skills are reported separately and are not counted
+        as successful matches.
+        """
+
+        exact_matches: List[str] = []
+        relationship_matches: List[Dict[str, Any]] = []
+        fuzzy_matches: List[Dict[str, Any]] = []
+        semantic_matches: List[Dict[str, Any]] = []
+        related_skill_context: List[Dict[str, Any]] = []
+        missing_skills: List[str] = []
+
+        matched_required_skills: List[str] = []
+
+        used_candidate_skills = set()
+
+        # --------------------------------------------------------------
+        # Process every required skill
+        # --------------------------------------------------------------
+
+        for required_skill in required_skills:
+
+            # ==========================================================
+            # 1. EXACT MATCH
+            # ==========================================================
+
+            exact_candidate = self._find_exact_match(
+                candidate_skills,
+                required_skill,
             )
 
-            # IMPORTANT:
-            # Don't also perform semantic matching
-            # for a skill already matched fuzzily.
+            if exact_candidate is not None:
 
-            continue
+                normalized_candidate = self._normalize_skill(
+                    exact_candidate
+                )
 
-        # ----------------------------------------------------
-        # 3. Semantic matching
-        # ----------------------------------------------------
+                if normalized_candidate not in used_candidate_skills:
 
-        if embedding_generator is not None:
+                    exact_matches.append(
+                        exact_candidate
+                    )
 
-            semantic_results = (
-                find_semantic_skill_matches(
-                    candidate_skills=
-                        list(candidate),
+                    matched_required_skills.append(
+                        required_skill
+                    )
 
-                    jd_skills=[
-                        jd_skill
-                    ],
+                    used_candidate_skills.add(
+                        normalized_candidate
+                    )
 
-                    embedding_generator=
-                        embedding_generator,
+                    continue
 
-                    threshold=
-                        SEMANTIC_MATCH_MIN_THRESHOLD,
+            # ==========================================================
+            # 2. BROADER RELATIONSHIP MATCH
+            # ==========================================================
+
+            relationship_match = (
+                self._find_relationship_match(
+                    candidate_skills,
+                    required_skill,
                 )
             )
-            print(
-            "SEMANTIC INPUT:",
-            candidate,
-            jd_skill,
+
+            if relationship_match is not None:
+
+                relationship_candidate = (
+                    relationship_match[
+                        "candidate_skill"
+                    ]
+                )
+
+                normalized_candidate = (
+                    self._normalize_skill(
+                        relationship_candidate
+                    )
+                )
+
+                if (
+                    normalized_candidate
+                    not in used_candidate_skills
+                ):
+
+                    relationship_matches.append(
+                        relationship_match
+                    )
+
+                    matched_required_skills.append(
+                        required_skill
+                    )
+
+                    used_candidate_skills.add(
+                        normalized_candidate
+                    )
+
+                    continue
+
+            # ==========================================================
+            # RELATED CONTEXT
+            # ==========================================================
+
+            related_context = (
+                self._find_related_skill_context(
+                    candidate_skills,
+                    required_skill,
+                )
             )
 
-            print(
-            "SEMANTIC RESULTS:",
-            semantic_results,
+            if related_context is not None:
+
+                related_skill_context.append(
+                    related_context
+                )
+
+            # ==========================================================
+            # 3. FUZZY MATCH
+            # ==========================================================
+
+            fuzzy_match = self._find_fuzzy_match(
+                candidate_skills,
+                required_skill,
             )
-            if semantic_results:
 
-                semantic_match = (
-                    semantic_results[0]
+            if fuzzy_match is not None:
+
+                fuzzy_candidate = (
+                    fuzzy_match[
+                        "candidate_skill"
+                    ]
                 )
 
-                matched.append(
-                    jd_skill
+                normalized_candidate = (
+                    self._normalize_skill(
+                        fuzzy_candidate
+                    )
                 )
 
-                semantic_matches.append(
-                    semantic_match
+                if (
+                    normalized_candidate
+                    not in used_candidate_skills
+                ):
+
+                    fuzzy_matches.append(
+                        fuzzy_match
+                    )
+
+                    matched_required_skills.append(
+                        required_skill
+                    )
+
+                    used_candidate_skills.add(
+                        normalized_candidate
+                    )
+
+                    continue
+
+            # ==========================================================
+            # 4. SEMANTIC MATCH
+            # ==========================================================
+
+            semantic_match = self._find_semantic_match(
+                candidate_skills,
+                required_skill,
+                embedding_generator=embedding_generator,
+            )
+
+            if semantic_match is not None:
+
+                semantic_candidate = (
+                    semantic_match.get(
+                        "candidate_skill",
+                        "",
+                    )
                 )
 
-                # Skill has been matched semantically.
-                continue
+                normalized_candidate = (
+                    self._normalize_skill(
+                        semantic_candidate
+                    )
+                )
 
-        # ----------------------------------------------------
-        # 4. No match
-        # ----------------------------------------------------
+                if (
+                    normalized_candidate
+                    and normalized_candidate
+                    not in used_candidate_skills
+                ):
 
-        missing.append(
-            jd_skill
+                    semantic_matches.append(
+                        semantic_match
+                    )
+
+                    matched_required_skills.append(
+                        required_skill
+                    )
+
+                    used_candidate_skills.add(
+                        normalized_candidate
+                    )
+
+                    continue
+
+            # ==========================================================
+            # 5. MISSING
+            # ==========================================================
+
+            missing_skills.append(
+                required_skill
+            )
+
+        # --------------------------------------------------------------
+        # Match counts
+        # --------------------------------------------------------------
+
+        total_required = len(
+            required_skills
         )
 
-    return (
-        sorted(set(matched)),
-        sorted(set(missing)),
-        fuzzy_matches,
-        semantic_matches,
-    )
+        matched_required = len(
+            matched_required_skills
+        )
+
+        required_match_percentage = (
+            (
+                matched_required
+                / total_required
+            ) * 100
+            if total_required > 0
+            else 0.0
+        )
+
+        return {
+            "exact_matches": exact_matches,
+            "relationship_matches": relationship_matches,
+            "fuzzy_matches": fuzzy_matches,
+            "semantic_matches": semantic_matches,
+            "related_skill_context": related_skill_context,
+            "missing_skills": missing_skills,
+
+            "matched_required_skills": (
+                matched_required_skills
+            ),
+
+            "total_required_skills": (
+                total_required
+            ),
+
+            "matched_required_skills_count": (
+                matched_required
+            ),
+
+            "required_match_percentage": round(
+                required_match_percentage,
+                2,
+            ),
+        }
+
+    # ------------------------------------------------------------------
+    # PREFERRED SKILL MATCHING
+    # ------------------------------------------------------------------
+
+    def _match_preferred_skills(
+        self,
+        candidate_skills: List[str],
+        preferred_skills: List[str],
+        embedding_generator: Any = None,
+    ) -> Dict[str, Any]:
+        """
+        Match preferred skills using the same matching pipeline.
+        """
+
+        return self._match_skills(
+            candidate_skills,
+            preferred_skills,
+            embedding_generator=embedding_generator,
+        )
+
+    # ------------------------------------------------------------------
+    # PUBLIC SCORING METHOD
+    # ------------------------------------------------------------------
+
+    def calculate_skill_score(
+        self,
+        profile: Dict[str, Any],
+        job_description: Dict[str, Any],
+        embedding_generator: Any = None,
+    ) -> Dict[str, Any]:
+        """
+        Calculate the final skill score.
+
+        Required skills:
+            80%
+
+        Preferred skills:
+            20%
+
+        If only required skills exist:
+            required score is used.
+
+        If only preferred skills exist:
+            preferred score is used.
+
+        If neither exists:
+            score is 0.
+        """
+
+        # --------------------------------------------------------------
+        # Get profile data
+        # --------------------------------------------------------------
+
+        profile_data = self._get_profile_data(
+            profile
+        )
+
+        # --------------------------------------------------------------
+        # Extract skills
+        # --------------------------------------------------------------
+
+        candidate_skills = (
+            self._extract_candidate_skills(
+                profile_data
+            )
+        )
+
+        required_skills = (
+            self._extract_required_skills(
+                job_description
+            )
+        )
+
+        preferred_skills = (
+            self._extract_preferred_skills(
+                job_description
+            )
+        )
+
+        # --------------------------------------------------------------
+        # Match required skills
+        # --------------------------------------------------------------
+
+        required_results = self._match_skills(
+            candidate_skills,
+            required_skills,
+            embedding_generator=embedding_generator,
+        )
+
+        # --------------------------------------------------------------
+        # Match preferred skills
+        # --------------------------------------------------------------
+
+        preferred_results = (
+            self._match_preferred_skills(
+                candidate_skills,
+                preferred_skills,
+                embedding_generator=embedding_generator,
+            )
+        )
+
+        # --------------------------------------------------------------
+        # Scores
+        # --------------------------------------------------------------
+
+        required_score = (
+            required_results[
+                "required_match_percentage"
+            ]
+        )
+
+        preferred_score = (
+            preferred_results[
+                "required_match_percentage"
+            ]
+        )
+
+        # --------------------------------------------------------------
+        # Final weighted score
+        # --------------------------------------------------------------
+
+        if required_skills and preferred_skills:
+
+            final_score = (
+                required_score
+                * REQUIRED_WEIGHT
+                + preferred_score
+                * PREFERRED_WEIGHT
+            )
+
+        elif required_skills:
+
+            final_score = required_score
+
+        elif preferred_skills:
+
+            final_score = preferred_score
+
+        else:
+
+            final_score = 0.0
+
+        # --------------------------------------------------------------
+        # Return detailed scoring result
+        # --------------------------------------------------------------
+
+        return {
+            "score": round(
+                final_score,
+                2,
+            ),
+
+            "weight": 0.40,
+
+            "weight_percentage": 40.0,
+
+            "candidate_skills": candidate_skills,
+
+            "required_skills": required_skills,
+
+            "preferred_skills": preferred_skills,
+
+            "required": {
+                "score": round(
+                    required_score,
+                    2,
+                ),
+
+                "weight": (
+                    REQUIRED_WEIGHT
+                ),
+
+                "weight_percentage": (
+                    REQUIRED_WEIGHT * 100
+                ),
+
+                "contribution": round(
+                    required_score
+                    * REQUIRED_WEIGHT,
+                    2,
+                ),
+
+                "total_skills": (
+                    required_results[
+                        "total_required_skills"
+                    ]
+                ),
+
+                "matched_skills": (
+                    required_results[
+                        "matched_required_skills_count"
+                    ]
+                ),
+
+                "match_percentage": (
+                    required_results[
+                        "required_match_percentage"
+                    ]
+                ),
+
+                "exact_matches": (
+                    required_results[
+                        "exact_matches"
+                    ]
+                ),
+
+                "relationship_matches": (
+                    required_results[
+                        "relationship_matches"
+                    ]
+                ),
+
+                "fuzzy_matches": (
+                    required_results[
+                        "fuzzy_matches"
+                    ]
+                ),
+
+                "semantic_matches": (
+                    required_results[
+                        "semantic_matches"
+                    ]
+                ),
+
+                "related_skill_context": (
+                    required_results[
+                        "related_skill_context"
+                    ]
+                ),
+
+                "missing_skills": (
+                    required_results[
+                        "missing_skills"
+                    ]
+                ),
+            },
+
+            "preferred": {
+                "score": round(
+                    preferred_score,
+                    2,
+                ),
+
+                "weight": (
+                    PREFERRED_WEIGHT
+                ),
+
+                "weight_percentage": (
+                    PREFERRED_WEIGHT * 100
+                ),
+
+                "contribution": round(
+                    preferred_score
+                    * PREFERRED_WEIGHT,
+                    2,
+                ),
+
+                "total_skills": (
+                    preferred_results[
+                        "total_required_skills"
+                    ]
+                ),
+
+                "matched_skills": (
+                    preferred_results[
+                        "matched_required_skills_count"
+                    ]
+                ),
+
+                "match_percentage": (
+                    preferred_results[
+                        "required_match_percentage"
+                    ]
+                ),
+
+                "exact_matches": (
+                    preferred_results[
+                        "exact_matches"
+                    ]
+                ),
+
+                "relationship_matches": (
+                    preferred_results[
+                        "relationship_matches"
+                    ]
+                ),
+
+                "fuzzy_matches": (
+                    preferred_results[
+                        "fuzzy_matches"
+                    ]
+                ),
+
+                "semantic_matches": (
+                    preferred_results[
+                        "semantic_matches"
+                    ]
+                ),
+
+                "related_skill_context": (
+                    preferred_results[
+                        "related_skill_context"
+                    ]
+                ),
+
+                "missing_skills": (
+                    preferred_results[
+                        "missing_skills"
+                    ]
+                ),
+            },
+        }
 
 
-# ============================================================
-# Skill Score
-# ============================================================
+# ----------------------------------------------------------------------
+# OPTIONAL CONVENIENCE FUNCTION
+# ----------------------------------------------------------------------
 
 def calculate_skill_score(
-    candidate_profile: Dict[str, Any],
-    jd_profile: Dict[str, Any],
+    profile: Dict[str, Any],
+    job_description: Dict[str, Any],
     embedding_generator: Any = None,
 ) -> Dict[str, Any]:
     """
-    Calculate ATS skill score.
+    Convenience wrapper.
 
-    Matching strategy:
+    Allows existing code to call:
 
-        1. Exact matching
-        2. Fuzzy matching
-
-    Required skills:
-        80%
-
-    Preferred skills:
-        20%
+        calculate_skill_score(
+            profile,
+            jd,
+            embedding_generator=embedding_generator
+        )
     """
 
-    candidate_data = _get_profile_data(
-        candidate_profile
+    scorer = SkillScore()
+
+    return scorer.calculate_skill_score(
+        profile,
+        job_description,
+        embedding_generator=embedding_generator,
     )
-
-    jd_data = _get_profile_data(
-        jd_profile
-    )
-
-    # --------------------------------------------------------
-    # Candidate skills
-    # --------------------------------------------------------
-
-    candidate_skills = _extract_skill_names(
-    _extract_candidate_skills(candidate_data)
-    )
-
-    # --------------------------------------------------------
-    # JD skills
-    # --------------------------------------------------------
-
-    required_skills = _extract_skill_names(
-        jd_data.get("required_skills", [])
-    )
-
-    preferred_skills = _extract_skill_names(
-        jd_data.get("preferred_skills", [])
-    )
-
-    candidate = set(candidate_skills)
-
-    # --------------------------------------------------------
-    # Required matching
-    # --------------------------------------------------------
-
-    (
-        matched_required,
-        missing_required,
-        fuzzy_required,
-        semantic_required,
-    ) = _match_skills(
-        candidate_skills,
-        required_skills,
-        embedding_generator,
-    )
-
-    # --------------------------------------------------------
-    # Preferred matching
-    # --------------------------------------------------------
-
-    (
-        matched_preferred,
-        missing_preferred,
-        fuzzy_preferred,
-        semantic_preferred
-    ) = _match_skills(
-        candidate_skills,
-        preferred_skills,
-        embedding_generator,
-    )
-
-    # --------------------------------------------------------
-    # Required score
-    # --------------------------------------------------------
-
-    if required_skills:
-
-        required_score = (
-            len(matched_required)
-            / len(required_skills)
-        ) * 100
-
-    else:
-
-        required_score = None
-    # --------------------------------------------------------
-    # Preferred score
-    # --------------------------------------------------------
-
-    if preferred_skills:
-
-        preferred_score = (
-            len(matched_preferred)
-            / len(preferred_skills)
-        ) * 100
-
-    else:
-
-        preferred_score = None
-
-    # --------------------------------------------------------
-    # Final score
-    # --------------------------------------------------------
-
-    if (
-        required_score is not None
-        and preferred_score is not None
-    ):
-
-        final_score = (
-            required_score * REQUIRED_WEIGHT
-            + preferred_score * PREFERRED_WEIGHT
-        )
-
-    elif required_score is not None:
-
-        final_score = required_score
-
-    elif preferred_score is not None:
-
-        final_score = preferred_score
-
-    else:
-
-        final_score = 0.0
-
-    # --------------------------------------------------------
-    # Status
-    # --------------------------------------------------------
-
-    if not candidate:
-
-        status = "no_data"
-
-    elif not required_skills and not preferred_skills:
-
-        status = "no_requirements"
-
-    else:
-
-        status = "calculated"
-
-    # --------------------------------------------------------
-    # Match statistics
-    # --------------------------------------------------------
-
-    fuzzy_required_skills = {
-    item["jd_skill"]
-    for item in fuzzy_required
-    }
-
-    semantic_required_skills = {
-        item["jd_skill"]
-        for item in semantic_required
-    }
-
-    exact_required = [
-        skill
-        for skill in matched_required
-        if (
-            skill not in fuzzy_required_skills
-            and skill not in semantic_required_skills
-        )
-    ]
-
-    fuzzy_preferred_skills = {
-    item["jd_skill"]
-    for item in fuzzy_preferred
-    }
-
-    semantic_preferred_skills = {
-        item["jd_skill"]
-        for item in semantic_preferred
-    }
-
-    exact_preferred = [
-        skill
-        for skill in matched_preferred
-        if (
-            skill not in fuzzy_preferred_skills
-            and skill not in semantic_preferred_skills
-        )
-    ]
-
-    # --------------------------------------------------------
-    # Output
-    # --------------------------------------------------------
-
-    return {
-
-        "score": round(
-            final_score,
-            2
-        ),
-
-        "required_score": (
-            round(required_score, 2)
-            if required_score is not None
-            else None
-        ),
-
-        "preferred_score": (
-            round(preferred_score, 2)
-            if preferred_score is not None
-            else None
-        ),
-
-        "required_total": len(
-            required_skills
-        ),
-
-      "required_matched": len(
-            matched_required
-
-        ),
-       
-
-
-        "required_match_percentage": (
-            round(required_score, 2)
-            if required_score is not None
-            else None
-        ),
-
-        "matched_required_skills":
-            matched_required,
-
-        "missing_required_skills":
-            missing_required,
-
-        "fuzzy_required_matches":
-            fuzzy_required,
-        
-        "semantic_required_matches":
-            semantic_required,
-
-        "exact_required_matches":
-            exact_required,
-
-        "preferred_total": len(
-            preferred_skills
-        ),
-
-        "preferred_matched": len(
-            matched_preferred
-        ),
-        "preferred_match_percentage": (
-            round(preferred_score, 2)
-            if preferred_score is not None
-            else None
-        ),
-
-        "matched_preferred_skills":
-            matched_preferred,
-
-        "missing_preferred_skills":
-            missing_preferred,
-
-        "fuzzy_preferred_matches":
-            fuzzy_preferred,
-            
-        "semantic_preferred_matches":
-            semantic_preferred,
-
-        "exact_preferred_matches":
-            exact_preferred,
-
-        "candidate_skill_count":
-            len(candidate),
-
-        "status":
-            status,
-    }

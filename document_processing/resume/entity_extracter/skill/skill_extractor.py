@@ -67,11 +67,7 @@ SKILL_SOURCE_SECTIONS = {
     "summary",
     "experience",
     "projects",
-    "certifications",
-    "education",
-    "achievements",
-    "publications",
-    "activities",
+    
 }
 
 
@@ -150,6 +146,15 @@ def _normalize(value):
     return " ".join(
         value.strip().lower().split()
     )
+    
+
+def _normalize_section_name(section_name):
+    if not isinstance(section_name, str):
+        return ""
+
+    return " ".join(
+        section_name.strip().lower().split()
+    )
 
 
 # ============================================================
@@ -169,6 +174,7 @@ def _collect_candidates(sections):
     skill_extractor_from_section.py
     """
 
+    
     candidates = []
 
     if not isinstance(sections, dict):
@@ -180,9 +186,9 @@ def _collect_candidates(sections):
         # Normalize section name
         # ----------------------------------------------------
 
-        section_name = str(
-            section_name
-        ).strip().lower()
+        section_name = _normalize_section_name(
+        section_name
+    )
 
         # ----------------------------------------------------
         # Ignore sections that should not produce
@@ -682,6 +688,16 @@ def extract_skill(sections):
 
     if not sections:
         return []
+    
+    print("\n========== SECTION DEBUG ==========")
+
+    if isinstance(sections, dict):
+        for key, value in sections.items():
+            print("SECTION:", repr(key))
+            print("TYPE:", type(value).__name__)
+            print("VALUE:", value)
+
+    print("===================================\n")
 
     # ========================================================
     # STEP 1 — COLLECT CANDIDATES
@@ -690,6 +706,18 @@ def extract_skill(sections):
     candidates = _collect_candidates(
         sections
     )
+    
+    print("\n========== STEP 1: RAW CANDIDATES ==========")
+
+    for candidate in candidates:
+        print(
+            "SKILL:",
+            candidate.get("skill"),
+            "| SOURCE:",
+            candidate.get("source_section")
+        )
+
+    print("============================================\n")
 
     if not candidates:
         return []
@@ -712,6 +740,12 @@ def extract_skill(sections):
     candidates = resolve_spelling(
         candidates
     )
+    print("\n========== STEP 3: AFTER SPELLING ==========")
+
+    for candidate in candidates:
+        print(candidate.get("skill"))
+
+    print("============================================\n")
 
     if not candidates:
         return []
@@ -723,6 +757,12 @@ def extract_skill(sections):
     candidates = resolve_synonyms(
         candidates
     )
+    print("\n========== STEP 4: AFTER SYNONYMS ==========")
+
+    for candidate in candidates:
+        print(candidate.get("skill"))
+
+    print("=============================================\n")
 
     if not candidates:
         return []
@@ -734,6 +774,16 @@ def extract_skill(sections):
     validated_skills = validate_skills(
         candidates
     )
+    print("\n========== STEP 5: AFTER VALIDATION ==========")
+
+    for skill in validated_skills:
+        print(
+            skill.get("skill"),
+            "|",
+            skill.get("skill_id")
+        )
+
+    print("================================================\n")
 
     if not validated_skills:
         return []

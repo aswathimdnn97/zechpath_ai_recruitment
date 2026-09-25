@@ -1,23 +1,35 @@
 from api.service.scoring_service import score_candidate
 
 from api.service.job_service import (
-    mark_job_processing,
-    mark_job_completed,
-    mark_job_failed,
+    mark_task_processing,
+    mark_task_completed,
+    mark_task_failed,
 )
 
 
 def run_scoring_job(
-    job_id: str,
+    task_id: str,
     candidate_id: str,
     jd_id: str,
+    recruitment_job_id: str,
 ):
+    """
+    Execute candidate scoring as an asynchronous task.
+
+    task_id:
+        Unique ID for this scoring execution.
+
+    recruitment_job_id:
+        Persistent recruitment/job ID shared by all candidates
+        being evaluated against the same recruitment job.
+    """
 
     print(
-        f"[WORKER] Starting job "
-        f"{job_id} "
+        f"[WORKER] Starting task "
+        f"{task_id} "
         f"for candidate={candidate_id} "
-        f"jd={jd_id}"
+        f"jd={jd_id} "
+        f"recruitment_job_id={recruitment_job_id}"
     )
 
     try:
@@ -26,14 +38,14 @@ def run_scoring_job(
         # PROCESSING
         # --------------------------------------------
 
-        processing_job = mark_job_processing(
-            job_id,
+        processing_task = mark_task_processing(
+            task_id,
             progress=10,
         )
 
         print(
-            f"[WORKER] Job marked PROCESSING: "
-            f"{processing_job}"
+            f"[WORKER] Task marked PROCESSING: "
+            f"{processing_task}"
         )
 
         # --------------------------------------------
@@ -41,15 +53,16 @@ def run_scoring_job(
         # --------------------------------------------
 
         print(
-            f"[WORKER] Calling "
-            f"score_candidate("
+            f"[WORKER] Calling score_candidate("
             f"candidate_id={candidate_id}, "
-            f"jd_id={jd_id})"
+            f"jd_id={jd_id}, "
+            f"job_id={recruitment_job_id})"
         )
 
         result = score_candidate(
             candidate_id=candidate_id,
             jd_id=jd_id,
+            job_id=recruitment_job_id,
         )
 
         print(
@@ -64,34 +77,34 @@ def run_scoring_job(
         result_reference = (
             f"data/candidates/"
             f"scoring_results/"
-            f"{candidate_id}/"
-            f"{jd_id}.json"
+            f"{recruitment_job_id}/"
+            f"{candidate_id}.json"
         )
 
-        completed_job = mark_job_completed(
-            job_id,
+        completed_task = mark_task_completed(
+            task_id,
             result_reference=result_reference,
         )
 
         print(
-            f"[WORKER] Job marked COMPLETED: "
-            f"{completed_job}"
+            f"[WORKER] Task marked COMPLETED: "
+            f"{completed_task}"
         )
 
     except Exception as exc:
 
         print(
-            f"[WORKER] Job FAILED: "
-            f"{job_id} | {exc}"
+            f"[WORKER] Task FAILED: "
+            f"{task_id} | {exc}"
         )
 
-        failed_job = mark_job_failed(
-            job_id,
+        failed_task = mark_task_failed(
+            task_id,
             error_code="SCORING_FAILED",
             message=str(exc),
         )
 
         print(
-            f"[WORKER] Failed job record: "
-            f"{failed_job}"
+            f"[WORKER] Failed task record: "
+            f"{failed_task}"
         )

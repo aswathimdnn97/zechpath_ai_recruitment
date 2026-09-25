@@ -23,5 +23,182 @@
 
     "phd": "Doctor of Philosophy",
     "ph.d": "Doctor of Philosophy",
-    "doctor of philosophy": "Doctor of Philosophy"
+    "doctor of philosophy": "Doctor of Philosophy",
+    "ba": "Bachelor of Arts",
+  "b.a": "Bachelor of Arts",
+  "b.a.": "Bachelor of Arts",
+  "bachelor of arts": "Bachelor of Arts",
+  "bachelor arts": "Bachelor of Arts",
+  "bachelors of arts": "Bachelor of Arts",
+  "bachelors arts": "Bachelor of Arts",
+
+  "bba": "Bachelor of Business Administration",
+  "b.b.a": "Bachelor of Business Administration",
+  "b.b.a.": "Bachelor of Business Administration",
+  "bachelor of business administration": "Bachelor of Business Administration",
+  "bachelor business administration": "Bachelor of Business Administration",
+  "bachelors of business administration": "Bachelor of Business Administration",
+
+  "bca": "Bachelor of Computer Applications",
+  "b.c.a": "Bachelor of Computer Applications",
+  "b.c.a.": "Bachelor of Computer Applications",
+  "bachelor of computer applications": "Bachelor of Computer Applications",
+  "bachelor computer applications": "Bachelor of Computer Applications",
+  "bachelors of computer applications": "Bachelor of Computer Applications",
+
+  "bcom": "Bachelor of Commerce",
+  "b.com": "Bachelor of Commerce",
+  "b.com.": "Bachelor of Commerce",
+  "bachelor of commerce": "Bachelor of Commerce",
+  "bachelor commerce": "Bachelor of Commerce",
+  "bachelors of commerce": "Bachelor of Commerce",
+
+  "bpharm": "Bachelor of Pharmacy",
+  "b.pharm": "Bachelor of Pharmacy",
+  "b.pharm.": "Bachelor of Pharmacy",
+  "bachelor of pharmacy": "Bachelor of Pharmacy",
+  "bachelor pharmacy": "Bachelor of Pharmacy",
+  "bachelors of pharmacy": "Bachelor of Pharmacy",
+
+  "bds": "Bachelor of Dental Surgery",
+  "b.d.s": "Bachelor of Dental Surgery",
+  "b.d.s.": "Bachelor of Dental Surgery",
+  "bachelor of dental surgery": "Bachelor of Dental Surgery",
+  "bachelor dental surgery": "Bachelor of Dental Surgery",
+
+  "mbbs": "Bachelor of Medicine and Bachelor of Surgery",
+  "m.b.b.s": "Bachelor of Medicine and Bachelor of Surgery",
+  "m.b.b.s.": "Bachelor of Medicine and Bachelor of Surgery",
+  "bachelor of medicine and bachelor of surgery": "Bachelor of Medicine and Bachelor of Surgery",
+  "bachelor medicine bachelor surgery": "Bachelor of Medicine and Bachelor of Surgery",
+
+  "bpt": "Bachelor of Physiotherapy",
+  "b.p.t": "Bachelor of Physiotherapy",
+  "b.p.t.": "Bachelor of Physiotherapy",
+  "bachelor of physiotherapy": "Bachelor of Physiotherapy",
+  "bachelor physiotherapy": "Bachelor of Physiotherapy",
+
+  "bsc nursing": "Bachelor of Science in Nursing",
+  "b.sc nursing": "Bachelor of Science in Nursing",
+  "b.sc. nursing": "Bachelor of Science in Nursing",
+  "bachelor of science in nursing": "Bachelor of Science in Nursing",
+  "bachelor nursing": "Bachelor of Science in Nursing",
+
+  
+  "b.tech.": "Bachelor of Technology",
+
+  "barch": "Bachelor of Architecture",
+  "b.arch": "Bachelor of Architecture",
+  "b.arch.": "Bachelor of Architecture",
+  "bachelor of architecture": "Bachelor of Architecture",
+  "bachelor architecture": "Bachelor of Architecture",
+
+  "bdes": "Bachelor of Design",
+  "b.des": "Bachelor of Design",
+  "b.des.": "Bachelor of Design",
+  "bachelor of design": "Bachelor of Design",
+  "bachelor design": "Bachelor of Design",
+
+  "bfa": "Bachelor of Fine Arts",
+  "b.f.a": "Bachelor of Fine Arts",
+  "b.f.a.": "Bachelor of Fine Arts",
+  "bachelor of fine arts": "Bachelor of Fine Arts",
+  "bachelor fine arts": "Bachelor of Fine Arts",
+
+  "bjmc": "Bachelor of Journalism and Mass Communication",
+  "b.j.m.c": "Bachelor of Journalism and Mass Communication",
+  "b.j.m.c.": "Bachelor of Journalism and Mass Communication",
+  "bachelor of journalism and mass communication": "Bachelor of Journalism and Mass Communication",
+  "bachelor journalism mass communication": "Bachelor of Journalism and Mass Communication",
+
+  "bmm": "Bachelor of Mass Media",
+  "b.m.m": "Bachelor of Mass Media",
+  "b.m.m.": "Bachelor of Mass Media",
+  "bachelor of mass media": "Bachelor of Mass Media",
+
+  "llb": "Bachelor of Laws",
+  "l.l.b": "Bachelor of Laws",
+  "l.l.b.": "Bachelor of Laws",
+  "bachelor of laws": "Bachelor of Laws",
+  "bachelor laws": "Bachelor of Laws",
+
+  "blis": "Bachelor of Library and Information Science",
+  "b.l.i.s": "Bachelor of Library and Information Science",
+  "b.l.i.s.": "Bachelor of Library and Information Science",
+  "bachelor of library and information science": "Bachelor of Library and Information Science",
+
+  "bsw": "Bachelor of Social Work",
+  "b.s.w": "Bachelor of Social Work",
+  "b.s.w.": "Bachelor of Social Work",
+  "bachelor of social work": "Bachelor of Social Work",
+
+  "bms": "Bachelor of Management Studies",
+  "b.m.s": "Bachelor of Management Studies",
+  "b.m.s.": "Bachelor of Management Studies",
+  "bachelor of management studies": "Bachelor of Management Studies",
+
+  "bhrm": "Bachelor of Human Resource Management",
+  "b.h.r.m": "Bachelor of Human Resource Management",
+  "b.h.r.m.": "Bachelor of Human Resource Management",
+  "bachelor of human resource management": "Bachelor of Human Resource Management",
+
+  "bhm": "Bachelor of Hotel Management",
+  "b.h.m": "Bachelor of Hotel Management",
+  "b.h.m.": "Bachelor of Hotel Management",
+  "bachelor of hotel management": "Bachelor of Hotel Management",
+
+  "bttm": "Bachelor of Travel and Tourism Management",
+  "b.t.t.m": "Bachelor of Travel and Tourism Management",
+  "b.t.t.m.": "Bachelor of Travel and Tourism Management",
+  "bachelor of travel and tourism management": "Bachelor of Travel and Tourism Management",
+
+  "b.a. economics": "Bachelor of Arts in Economics",
+  "ba economics": "Bachelor of Arts in Economics",
+  "bachelor of arts economics": "Bachelor of Arts in Economics",
+
+  "ba english": "Bachelor of Arts in English",
+  "b.a english": "Bachelor of Arts in English",
+  "bachelor of arts in english": "Bachelor of Arts in English",
+
+  "ba psychology": "Bachelor of Arts in Psychology",
+  "b.a psychology": "Bachelor of Arts in Psychology",
+  "bachelor of arts in psychology": "Bachelor of Arts in Psychology",
+
+  "ba sociology": "Bachelor of Arts in Sociology",
+  "b.a sociology": "Bachelor of Arts in Sociology",
+  "bachelor of arts in sociology": "Bachelor of Arts in Sociology",
+
+  "bsc computer science": "Bachelor of Science in Computer Science",
+  "b.sc computer science": "Bachelor of Science in Computer Science",
+  "b.sc. computer science": "Bachelor of Science in Computer Science",
+  "bachelor of science in computer science": "Bachelor of Science in Computer Science",
+
+  "bsc mathematics": "Bachelor of Science in Mathematics",
+  "b.sc mathematics": "Bachelor of Science in Mathematics",
+  "bachelor of science in mathematics": "Bachelor of Science in Mathematics",
+
+  "bsc physics": "Bachelor of Science in Physics",
+  "b.sc physics": "Bachelor of Science in Physics",
+  "bachelor of science in physics": "Bachelor of Science in Physics",
+
+  "bsc chemistry": "Bachelor of Science in Chemistry",
+  "b.sc chemistry": "Bachelor of Science in Chemistry",
+  "bachelor of science in chemistry": "Bachelor of Science in Chemistry",
+
+  "bsc biotechnology": "Bachelor of Science in Biotechnology",
+  "b.sc biotechnology": "Bachelor of Science in Biotechnology",
+  "bachelor of science in biotechnology": "Bachelor of Science in Biotechnology",
+
+  "bsc microbiology": "Bachelor of Science in Microbiology",
+  "b.sc microbiology": "Bachelor of Science in Microbiology",
+  "bachelor of science in microbiology": "Bachelor of Science in Microbiology",
+
+  "bsc agriculture": "Bachelor of Science in Agriculture",
+  "b.sc agriculture": "Bachelor of Science in Agriculture",
+  "bachelor of science in agriculture": "Bachelor of Science in Agriculture",
+
+  "bsc statistics": "Bachelor of Science in Statistics",
+  "b.sc statistics": "Bachelor of Science in Statistics",
+  "bachelor of science in statistics": "Bachelor of Science in Statistics"
+  
 }

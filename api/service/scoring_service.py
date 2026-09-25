@@ -3,22 +3,27 @@ import json
 import logging
 from typing import Any, Dict
 
+
 from scoring.ats_scoring_engine import (
     calculate_ats_score,
 )
 
+
 from embeddings.embedding_generator import (
     EmbeddingGenerator,
 )
+
 
 from embeddings.embedding_text_builder import (
     profile_to_embedding_text,
     build_jd_embedding_text,
 )
 
+
 from document_processing.job_description.job_description_pipeline import (
     job_description_pipeline,
 )
+
 
 from api.utils.exception import (
     ScoringError,
@@ -45,7 +50,10 @@ BASE_DIR = (
 )
 
 
-# Candidate profiles
+# ============================================================
+# CANDIDATE PROFILE STORAGE
+# ============================================================
+
 CANDIDATE_STORAGE_DIR = (
     BASE_DIR
     / "data"
@@ -54,7 +62,19 @@ CANDIDATE_STORAGE_DIR = (
 )
 
 
-# Scoring results
+# ============================================================
+# SCORING RESULT STORAGE
+#
+# Structure:
+#
+# scoring_results/
+#     JOB_120215F8D847/
+#         CAN_001.json
+#         CAN_002.json
+#
+# One job -> many candidates
+# ============================================================
+
 SCORING_RESULTS_DIR = (
     BASE_DIR
     / "data"
@@ -63,7 +83,10 @@ SCORING_RESULTS_DIR = (
 )
 
 
-# Job descriptions
+# ============================================================
+# JOB DESCRIPTION STORAGE
+# ============================================================
+
 JD_STORAGE_DIR = (
     BASE_DIR
     / "data"
@@ -72,8 +95,35 @@ JD_STORAGE_DIR = (
 
 
 # ============================================================
+# PARSED JOB DESCRIPTION STORAGE
+#
+# Structure:
+#
+# extracted/
+#     jd/
+#         JOB_120215F8D847.json
+#         JOB_ABC123456789.json
+#
+# One parsed JD instance per job_id.
+# ============================================================
+
+PARSED_JD_STORAGE_DIR = (
+    BASE_DIR
+    / "data"
+    / "extracted"
+    / "jd"
+)
+
+
+# ============================================================
 # CREATE REQUIRED DIRECTORIES
 # ============================================================
+
+PARSED_JD_STORAGE_DIR.mkdir(
+    parents=True,
+    exist_ok=True,
+)
+
 
 SCORING_RESULTS_DIR.mkdir(
     parents=True,
@@ -97,6 +147,84 @@ embedding_generator = (
 
 
 # ============================================================
+# VALIDATE IDENTIFIER
+# ============================================================
+
+def validate_identifier(
+    value: str,
+    field_name: str,
+) -> str:
+    """
+    Validate an identifier used for filesystem paths.
+
+    Prevents directory traversal and ensures
+    the identifier is a non-empty string.
+    """
+
+    if not isinstance(
+        value,
+        str,
+    ):
+        raise ScoringError(
+            message=f"{field_name} must be a string.",
+            status_code=422,
+        )
+
+    value = value.strip()
+
+    if not value:
+        raise ScoringError(
+            message=f"{field_name} is required.",
+            status_code=422,
+        )
+
+    # --------------------------------------------------------
+    # Prevent directory traversal
+    # --------------------------------------------------------
+
+    safe_value = Path(
+        value
+    ).name
+
+    if safe_value != value:
+        logger.error(
+            "Invalid %s path: %s",
+            field_name,
+            value,
+        )
+
+        raise ScoringError(
+            message=f"Invalid {field_name}.",
+            status_code=400,
+        )
+
+    return value
+
+
+# ============================================================
+# VALIDATE JOB ID
+# ============================================================
+
+def validate_job_id(
+    job_id: str,
+) -> str:
+    """
+    Validate the existing job_id.
+
+    IMPORTANT:
+    This function does NOT generate a job_id.
+
+    The job_id must already have been created
+    when the job/requisition was created.
+    """
+
+    return validate_identifier(
+        job_id,
+        "job_id",
+    )
+
+
+# ============================================================
 # LOAD CANDIDATE PROFILE
 # ============================================================
 
@@ -106,6 +234,11 @@ def load_candidate(
     """
     Load candidate profile from candidate_profile storage.
     """
+
+    candidate_id = validate_identifier(
+        candidate_id,
+        "candidate_id",
+    )
 
     logger.info(
         "Loading candidate profile: "
@@ -243,7 +376,10 @@ def get_masked_profile(
     ):
         return masked_profile
 
+    # --------------------------------------------------------
     # Backward compatibility
+    # --------------------------------------------------------
+
     return candidate_data
 
 
@@ -258,6 +394,7 @@ def get_candidate_name(
     Extract candidate name from original profile.
 
     Candidate name is used only for output.
+
     It is never passed to ATS scoring.
     """
 
@@ -334,31 +471,13 @@ def resolve_jd_file(
         JD_001_Python_Developer.pdf
     """
 
-    if not isinstance(
+    jd_id = validate_identifier(
         jd_id,
-        str,
-    ):
-
-        raise ScoringError(
-            message=(
-                "jd_id must be a string."
-            ),
-            status_code=422,
-        )
-
-    jd_id = jd_id.strip()
-
-    if not jd_id:
-
-        raise ScoringError(
-            message=(
-                "jd_id is required."
-            ),
-            status_code=422,
-        )
+        "jd_id",
+    )
 
     # --------------------------------------------------------
-    # Prevent directory traversal
+    # Remove any supplied path information
     # --------------------------------------------------------
 
     jd_name = Path(
@@ -445,14 +564,35 @@ def resolve_jd_file(
 
 def load_job_description(
     jd_id: str,
+    job_id: str,
 ) -> dict:
     """
-    Load and parse the selected JD PDF.
+    Load and parse the JD associated with a job.
 
-    The JD parser is used here.
+    Important relationship:
 
-    No manually edited JSON file is required.
+        job_id
+            |
+            +---- jd_id
+            |
+            +---- jd_file
+
+    The job_id is supplied by the caller.
+    This function does NOT generate a new job_id.
     """
+
+    jd_id = validate_identifier(
+        jd_id,
+        "jd_id",
+    )
+
+    job_id = validate_job_id(
+        job_id,
+    )
+
+    # --------------------------------------------------------
+    # Resolve JD file
+    # --------------------------------------------------------
 
     jd_file = resolve_jd_file(
         jd_id
@@ -460,64 +600,122 @@ def load_job_description(
 
     logger.info(
         "Parsing job description: "
-        "jd_id=%s file=%s",
+        "jd_id=%s job_id=%s file=%s",
         jd_id,
+        job_id,
         jd_file.name,
     )
 
     try:
 
-        jd_data = (
-            job_description_pipeline(
-                str(jd_file)
-            )
+        # ----------------------------------------------------
+        # Parse JD
+        # ----------------------------------------------------
+
+        jd_data = job_description_pipeline(
+            str(jd_file),
+            job_id=job_id,
         )
+
+        if not isinstance(
+            jd_data,
+            dict,
+        ):
+
+            logger.error(
+                "Invalid JD structure: "
+                "jd_id=%s job_id=%s",
+                jd_id,
+                job_id,
+            )
+
+            raise ScoringError(
+                message=(
+                    "Job description parser "
+                    "returned invalid data."
+                ),
+                status_code=500,
+            )
+
+        # ----------------------------------------------------
+        # Add identifiers to parsed JD
+        # ----------------------------------------------------
+
+        jd_data["jd_id"] = (
+            Path(jd_id).stem
+        )
+
+        jd_data["job_id"] = (
+            job_id
+        )
+
+        jd_data["jd_file"] = (
+            jd_file.name
+        )
+
+        # ----------------------------------------------------
+        # Save parsed JD by JOB ID
+        #
+        # IMPORTANT:
+        #
+        # Do NOT save only as:
+        #
+        # SeniorPythonDeveloper.json
+        #
+        # because multiple job postings may use
+        # the same JD.
+        #
+        # Instead:
+        #
+        # JOB_120215F8D847.json
+        # ----------------------------------------------------
+
+        parsed_jd_file = (
+            PARSED_JD_STORAGE_DIR
+            / f"{job_id}.json"
+        )
+
+        with parsed_jd_file.open(
+            "w",
+            encoding="utf-8",
+        ) as file:
+
+            json.dump(
+                jd_data,
+                file,
+                indent=4,
+                ensure_ascii=False,
+            )
+
+        logger.info(
+            "Parsed JD saved successfully: "
+            "jd_id=%s job_id=%s path=%s",
+            jd_id,
+            job_id,
+            parsed_jd_file,
+        )
+
+        return jd_data
 
     except ScoringError:
 
         raise
 
-    except Exception:
+    except Exception as exc:
 
         logger.exception(
             "Job description parsing failed: "
-            "jd_id=%s",
+            "jd_id=%s job_id=%s",
             jd_id,
+            job_id,
         )
 
         raise ScoringError(
             message=(
-                "Failed to parse job description."
+                f"Failed to parse job description: {exc}"
             ),
             status_code=500,
         )
-
-    if not isinstance(
-        jd_data,
-        dict,
-    ):
-
-        logger.error(
-            "Invalid JD structure: "
-            "jd_id=%s",
-            jd_id,
-        )
-
-        raise ScoringError(
-            message=(
-                "Job description parser "
-                "returned invalid data."
-            ),
-            status_code=500,
-        )
-
-    logger.info(
-        "Job description parsed successfully: "
-        "jd_id=%s",
-        jd_id,
-    )
-
-    return jd_data
 
 
 # ============================================================
@@ -526,29 +724,46 @@ def load_job_description(
 
 def get_scoring_result_file(
     candidate_id: str,
-    jd_id: str,
+    job_id: str,
 ) -> Path:
     """
-    Build the scoring result path for a
-    candidate + JD combination.
+    Build the scoring result path using:
+
+        job_id + candidate_id
+
+    Structure:
+
+        scoring_results/
+            JOB_120215F8D847/
+                CAN_001.json
+                CAN_002.json
+
+    This represents:
+
+        ONE JOB
+            |
+            +---- Candidate 1
+            +---- Candidate 2
+            +---- Candidate 3
     """
 
-    safe_candidate_id = Path(
-        candidate_id
-    ).name
+    candidate_id = validate_identifier(
+        candidate_id,
+        "candidate_id",
+    )
 
-    safe_jd_id = Path(
-        jd_id
-    ).stem
+    job_id = validate_job_id(
+        job_id,
+    )
 
-    candidate_result_dir = (
+    job_result_dir = (
         SCORING_RESULTS_DIR
-        / safe_candidate_id
+        / job_id
     )
 
     return (
-        candidate_result_dir
-        / f"{safe_jd_id}.json"
+        job_result_dir
+        / f"{candidate_id}.json"
     )
 
 
@@ -558,36 +773,39 @@ def get_scoring_result_file(
 
 def save_scoring_result(
     candidate_id: str,
-    jd_id: str,
+    job_id: str,
     score_result: dict,
 ) -> None:
     """
     Persist ATS scoring result.
 
-    Result is stored using BOTH candidate and JD.
+    Result is stored using:
+
+        job_id + candidate_id
 
     Example:
 
         scoring_results/
-            CAN_123/
-                JD_001.json
+            JOB_120215F8D847/
+                CAN_001.json
+                CAN_002.json
 
-    This prevents one JD score from overwriting
-    another JD score for the same candidate.
+    This prevents scores for different jobs
+    from overwriting each other.
     """
 
     scoring_file = (
         get_scoring_result_file(
             candidate_id,
-            jd_id,
+            job_id,
         )
     )
 
-    candidate_result_dir = (
+    job_result_dir = (
         scoring_file.parent
     )
 
-    candidate_result_dir.mkdir(
+    job_result_dir.mkdir(
         parents=True,
         exist_ok=True,
     )
@@ -611,9 +829,9 @@ def save_scoring_result(
 
         logger.exception(
             "Failed to save scoring result: "
-            "candidate_id=%s jd_id=%s",
+            "candidate_id=%s job_id=%s",
             candidate_id,
-            jd_id,
+            job_id,
         )
 
         raise ScoringError(
@@ -625,9 +843,9 @@ def save_scoring_result(
 
     logger.info(
         "Scoring result saved: "
-        "candidate_id=%s jd_id=%s path=%s",
+        "candidate_id=%s job_id=%s path=%s",
         candidate_id,
-        jd_id,
+        job_id,
         scoring_file,
     )
 
@@ -638,7 +856,7 @@ def save_scoring_result(
 
 def load_scoring_result(
     candidate_id: str,
-    jd_id: str,
+    job_id: str,
 ) -> dict:
     """
     Load an already-completed scoring result.
@@ -646,36 +864,40 @@ def load_scoring_result(
     This function is used by the scoring-result API.
 
     It does NOT create a new scoring job.
+
+    Result is identified by:
+
+        job_id + candidate_id
     """
 
     scoring_file = (
         get_scoring_result_file(
             candidate_id,
-            jd_id,
+            job_id,
         )
     )
 
     logger.info(
         "Loading scoring result: "
-        "candidate_id=%s jd_id=%s",
+        "candidate_id=%s job_id=%s",
         candidate_id,
-        jd_id,
+        job_id,
     )
 
     if not scoring_file.exists():
 
         logger.warning(
             "Scoring result not found: "
-            "candidate_id=%s jd_id=%s",
+            "candidate_id=%s job_id=%s",
             candidate_id,
-            jd_id,
+            job_id,
         )
 
         raise ScoringError(
             message=(
                 f"No scoring result found for "
                 f"candidate '{candidate_id}' "
-                f"and JD '{jd_id}'."
+                f"and job '{job_id}'."
             ),
             status_code=404,
         )
@@ -704,9 +926,9 @@ def load_scoring_result(
 
         logger.exception(
             "Invalid scoring result JSON: "
-            "candidate_id=%s jd_id=%s",
+            "candidate_id=%s job_id=%s",
             candidate_id,
-            jd_id,
+            job_id,
         )
 
         raise ScoringError(
@@ -720,9 +942,9 @@ def load_scoring_result(
 
         logger.exception(
             "Failed to read scoring result: "
-            "candidate_id=%s jd_id=%s",
+            "candidate_id=%s job_id=%s",
             candidate_id,
-            jd_id,
+            job_id,
         )
 
         raise ScoringError(
@@ -743,9 +965,9 @@ def load_scoring_result(
 
         logger.error(
             "Invalid scoring result structure: "
-            "candidate_id=%s jd_id=%s",
+            "candidate_id=%s job_id=%s",
             candidate_id,
-            jd_id,
+            job_id,
         )
 
         raise ScoringError(
@@ -754,6 +976,68 @@ def load_scoring_result(
             ),
             status_code=500,
         )
+
+    # ========================================================
+    # Validate candidate ID
+    # ========================================================
+
+    saved_candidate_id = (
+        score_result.get(
+            "candidate_id"
+        )
+    )
+
+    if (
+        saved_candidate_id is not None
+        and saved_candidate_id != candidate_id
+    ):
+
+        logger.error(
+            "Candidate ID mismatch in scoring result: "
+            "requested=%s saved=%s",
+            candidate_id,
+            saved_candidate_id,
+        )
+
+        raise ScoringError(
+            message=(
+                "Scoring result candidate_id does not match."
+            ),
+            status_code=500,
+        )
+
+    # ========================================================
+    # Validate job ID
+    # ========================================================
+
+    saved_job_id = (
+        score_result.get(
+            "job_id"
+        )
+    )
+
+    if (
+        saved_job_id is not None
+        and saved_job_id != job_id
+    ):
+
+        logger.error(
+            "Job ID mismatch in scoring result: "
+            "requested=%s saved=%s",
+            job_id,
+            saved_job_id,
+        )
+
+        raise ScoringError(
+            message=(
+                "Scoring result job_id does not match."
+            ),
+            status_code=500,
+        )
+
+    # ========================================================
+    # Validate candidate_score
+    # ========================================================
 
     candidate_score = (
         score_result.get(
@@ -768,9 +1052,9 @@ def load_scoring_result(
 
         logger.error(
             "candidate_score missing or invalid: "
-            "candidate_id=%s jd_id=%s",
+            "candidate_id=%s job_id=%s",
             candidate_id,
-            jd_id,
+            job_id,
         )
 
         raise ScoringError(
@@ -780,6 +1064,10 @@ def load_scoring_result(
             ),
             status_code=500,
         )
+
+    # ========================================================
+    # Validate final_score
+    # ========================================================
 
     final_score = (
         candidate_score.get(
@@ -794,9 +1082,9 @@ def load_scoring_result(
 
         logger.error(
             "final_score missing or invalid: "
-            "candidate_id=%s jd_id=%s",
+            "candidate_id=%s job_id=%s",
             candidate_id,
-            jd_id,
+            job_id,
         )
 
         raise ScoringError(
@@ -809,9 +1097,9 @@ def load_scoring_result(
 
     logger.info(
         "Scoring result loaded successfully: "
-        "candidate_id=%s jd_id=%s final_score=%s",
+        "candidate_id=%s job_id=%s final_score=%s",
         candidate_id,
-        jd_id,
+        job_id,
         final_score,
     )
 
@@ -825,21 +1113,54 @@ def load_scoring_result(
 def score_candidate(
     candidate_id: str,
     jd_id: str,
+    job_id: str,
 ) -> dict:
     """
     Complete candidate scoring pipeline.
 
+    Important relationship:
+
+        job_id
+            |
+            +---- jd_id
+            |
+            +---- candidate_id
+            |
+            +---- score
+
+    The job_id MUST already exist before this
+    function is called.
+
+    This function does NOT generate a new job_id.
+
     Only the masked candidate profile is passed
     to the ATS scoring engine.
-
-    The selected JD is identified by jd_id.
     """
+
+    # ========================================================
+    # VALIDATE INPUTS
+    # ========================================================
+
+    candidate_id = validate_identifier(
+        candidate_id,
+        "candidate_id",
+    )
+
+    jd_id = validate_identifier(
+        jd_id,
+        "jd_id",
+    )
+
+    job_id = validate_job_id(
+        job_id,
+    )
 
     logger.info(
         "Candidate scoring started: "
-        "candidate_id=%s jd_id=%s",
+        "candidate_id=%s jd_id=%s job_id=%s",
         candidate_id,
         jd_id,
+        job_id,
     )
 
     # ========================================================
@@ -866,8 +1187,9 @@ def score_candidate(
 
         logger.error(
             "Masked candidate profile not found: "
-            "candidate_id=%s",
+            "candidate_id=%s job_id=%s",
             candidate_id,
+            job_id,
         )
 
         raise ScoringError(
@@ -894,7 +1216,8 @@ def score_candidate(
 
     job_description = (
         load_job_description(
-            jd_id
+            jd_id=jd_id,
+            job_id=job_id,
         )
     )
 
@@ -907,8 +1230,9 @@ def score_candidate(
         logger.error(
             "Masked profile contains "
             "personal_information: "
-            "candidate_id=%s",
+            "candidate_id=%s job_id=%s",
             candidate_id,
+            job_id,
         )
 
         raise ScoringError(
@@ -925,9 +1249,10 @@ def score_candidate(
 
     logger.info(
         "Generating embeddings and calculating ATS score: "
-        "candidate_id=%s jd_id=%s",
+        "candidate_id=%s jd_id=%s job_id=%s",
         candidate_id,
         jd_id,
+        job_id,
     )
 
     try:
@@ -946,8 +1271,9 @@ def score_candidate(
 
             logger.error(
                 "Empty resume embedding text: "
-                "candidate_id=%s",
+                "candidate_id=%s job_id=%s",
                 candidate_id,
+                job_id,
             )
 
             raise ScoringError(
@@ -982,9 +1308,10 @@ def score_candidate(
 
             logger.error(
                 "Empty JD embedding text: "
-                "candidate_id=%s jd_id=%s",
+                "candidate_id=%s jd_id=%s job_id=%s",
                 candidate_id,
                 jd_id,
+                job_id,
             )
 
             raise ScoringError(
@@ -1027,9 +1354,10 @@ def score_candidate(
 
         logger.exception(
             "Candidate scoring engine failed: "
-            "candidate_id=%s jd_id=%s",
+            "candidate_id=%s jd_id=%s job_id=%s",
             candidate_id,
             jd_id,
+            job_id,
         )
 
         raise ScoringError(
@@ -1050,9 +1378,10 @@ def score_candidate(
 
         logger.error(
             "Invalid scoring result returned: "
-            "candidate_id=%s jd_id=%s",
+            "candidate_id=%s jd_id=%s job_id=%s",
             candidate_id,
             jd_id,
+            job_id,
         )
 
         raise ScoringError(
@@ -1080,9 +1409,10 @@ def score_candidate(
 
         logger.error(
             "candidate_score missing or invalid: "
-            "candidate_id=%s jd_id=%s",
+            "candidate_id=%s jd_id=%s job_id=%s",
             candidate_id,
             jd_id,
+            job_id,
         )
 
         raise ScoringError(
@@ -1110,9 +1440,10 @@ def score_candidate(
 
         logger.error(
             "final_score missing or invalid: "
-            "candidate_id=%s jd_id=%s",
+            "candidate_id=%s jd_id=%s job_id=%s",
             candidate_id,
             jd_id,
+            job_id,
         )
 
         raise ScoringError(
@@ -1131,9 +1462,10 @@ def score_candidate(
 
         logger.error(
             "final_score outside valid range: "
-            "candidate_id=%s jd_id=%s final_score=%s",
+            "candidate_id=%s jd_id=%s job_id=%s final_score=%s",
             candidate_id,
             jd_id,
+            job_id,
             final_score,
         )
 
@@ -1161,8 +1493,14 @@ def score_candidate(
         Path(jd_id).stem
     )
 
+    score_result["job_id"] = (
+        job_id
+    )
+
     score_result["jd_file"] = (
-        resolve_jd_file(jd_id).name
+        resolve_jd_file(
+            jd_id
+        ).name
     )
 
     # ========================================================
@@ -1171,7 +1509,7 @@ def score_candidate(
 
     save_scoring_result(
         candidate_id=candidate_id,
-        jd_id=jd_id,
+        job_id=job_id,
         score_result=score_result,
     )
 
@@ -1181,9 +1519,10 @@ def score_candidate(
 
     logger.info(
         "Candidate scoring completed successfully: "
-        "candidate_id=%s jd_id=%s final_score=%s",
+        "candidate_id=%s jd_id=%s job_id=%s final_score=%s",
         candidate_id,
         jd_id,
+        job_id,
         final_score,
     )
 
@@ -1194,6 +1533,7 @@ def score_candidate(
     return {
         "candidate_id": candidate_id,
         "jd_id": Path(jd_id).stem,
+        "job_id": job_id,
         "status": "SCORED",
         "score": score_result,
     }

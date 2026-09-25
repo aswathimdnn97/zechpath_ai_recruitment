@@ -26,6 +26,10 @@ def generate_candidate_score(
         - Semantic
 
     Dynamic weights are obtained from weight_config.py.
+
+    Important:
+        This function is the single source of truth for
+        component weights in the final scoring response.
     """
 
     # ========================================================
@@ -62,7 +66,19 @@ def generate_candidate_score(
 
     for component, result in component_results.items():
 
+        # ----------------------------------------------------
+        # Safety check
+        # ----------------------------------------------------
+
+        if not isinstance(result, dict):
+            missing_components.append(component)
+            continue
+
         score = result.get("score")
+
+        # ----------------------------------------------------
+        # Missing score
+        # ----------------------------------------------------
 
         if score is None:
 
@@ -72,19 +88,47 @@ def generate_candidate_score(
 
             continue
 
-        score = normalize_percentage(score)
+        # ----------------------------------------------------
+        # Normalize score
+        # ----------------------------------------------------
 
-        weight = weights[component]
+        score = normalize_percentage(
+            score
+        )
 
-        contribution = score * weight
+        # ----------------------------------------------------
+        # Get configured weight
+        # ----------------------------------------------------
+
+        weight = weights.get(
+            component,
+            0.0
+        )
+
+        # ----------------------------------------------------
+        # Calculate contribution
+        # ----------------------------------------------------
+
+        contribution = (
+            score * weight
+        )
 
         contributions[component] = {
-            "score": round(score, 2),
-            "weight": round(weight, 4),
+            "score": round(
+                score,
+                2
+            ),
+
+            "weight": round(
+                weight,
+                4
+            ),
+
             "weight_percentage": round(
                 weight * 100,
                 2
             ),
+
             "contribution": round(
                 contribution,
                 2
@@ -114,7 +158,13 @@ def generate_candidate_score(
             "weight_source":
                 weight_config["source"],
 
-            "weights": weights,
+            "weights": {
+                key: round(
+                    value,
+                    4
+                )
+                for key, value in weights.items()
+            },
 
             "component_scores": {},
 
@@ -123,55 +173,131 @@ def generate_candidate_score(
             "missing_components":
                 missing_components,
 
+            "available_weight": 0.0,
+
             "explanation":
                 "No scoring components contain usable data.",
         }
 
     # ========================================================
-    # Missing data policy
-    #
-    # IMPORTANT:
-    #
-    # We do not penalize the candidate simply because
-    # one component is unavailable.
-    #
-    # Available weights are normalized.
+    # Calculate available weight
     # ========================================================
 
     available_weight = sum(
-        weights[component]
+        weights.get(
+            component,
+            0.0
+        )
         for component in available_components
     )
+
+    # ========================================================
+    # Calculate weighted score
+    # ========================================================
 
     weighted_score = sum(
-        contributions[component]["contribution"]
+        contributions[component][
+            "contribution"
+        ]
         for component in available_components
     )
 
-    # Normalize against available weights.
+    # ========================================================
+    # Normalize against available weights
+    # ========================================================
+
     final_score = (
         weighted_score / available_weight
     ) if available_weight > 0 else 0.0
 
     # ========================================================
     # Build component score output
+    #
+    # IMPORTANT:
+    #
+    # Weight and status are now generated here rather than
+    # copied from individual scorers.
+    #
+    # Therefore:
+    #
+    # candidate_score.weights.skill
+    # component_scores.skill.weight
+    # contributions.skill.weight
+    #
+    # all use the same configured value.
     # ========================================================
 
     component_scores = {}
 
     for component, result in component_results.items():
 
-        score = result.get("score")
+        if not isinstance(
+            result,
+            dict
+        ):
+            component_scores[component] = {
+                "score": None,
+                "status": "unavailable",
+                "weight": round(
+                    weights.get(
+                        component,
+                        0.0
+                    ),
+                    4
+                ),
+                "weight_percentage": round(
+                    weights.get(
+                        component,
+                        0.0
+                    ) * 100,
+                    2
+                ),
+            }
+
+            continue
+
+        score = result.get(
+            "score"
+        )
+
+        configured_weight = weights.get(
+            component,
+            0.0
+        )
+
+        # ----------------------------------------------------
+        # Determine status
+        # ----------------------------------------------------
+
+        if score is None:
+
+            status = "unavailable"
+
+        else:
+
+            # A valid score was calculated.
+            status = "calculated"
 
         component_scores[component] = {
             "score": (
-                round(float(score), 2)
+                round(
+                    float(score),
+                    2
+                )
                 if score is not None
                 else None
             ),
-            "status": result.get(
-                "status",
-                "unknown"
+
+            "status": status,
+
+            "weight": round(
+                configured_weight,
+                4
+            ),
+
+            "weight_percentage": round(
+                configured_weight * 100,
+                2
             ),
         }
 
@@ -190,10 +316,15 @@ def generate_candidate_score(
         explanation_parts.append(
             f"{component.title()} score "
             f"{contribution['score']:.2f} "
-            f"with {contribution['weight_percentage']:.0f}% "
+            f"with "
+            f"{contribution['weight_percentage']:.0f}% "
             f"weight contributed "
             f"{contribution['contribution']:.2f} points."
         )
+
+    # ========================================================
+    # Missing component explanation
+    # ========================================================
 
     if missing_components:
 
@@ -231,25 +362,52 @@ def generate_candidate_score(
         "weight_source":
             weight_config["source"],
 
+        # ----------------------------------------------------
+        # Configured weights
+        # ----------------------------------------------------
+
         "weights": {
-            key: round(value, 4)
+            key: round(
+                value,
+                4
+            )
             for key, value in weights.items()
         },
+
+        # ----------------------------------------------------
+        # Component scores
+        # ----------------------------------------------------
 
         "component_scores":
             component_scores,
 
+        # ----------------------------------------------------
+        # Weighted contributions
+        # ----------------------------------------------------
+
         "contributions":
             contributions,
 
+        # ----------------------------------------------------
+        # Missing components
+        # ----------------------------------------------------
+
         "missing_components":
             missing_components,
+
+        # ----------------------------------------------------
+        # Available weight
+        # ----------------------------------------------------
 
         "available_weight":
             round(
                 available_weight,
                 4
             ),
+
+        # ----------------------------------------------------
+        # Explanation
+        # ----------------------------------------------------
 
         "explanation":
             explanation_parts,

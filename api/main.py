@@ -16,6 +16,7 @@ from api.routes import ranking_routes
 from api.routes import short_listing_routes
 from api.routes import job_routes
 from api.utils.logging_config import configure_logging
+from api.routes.recruitment_jobs_route import router as recruitment_job_router
 
 app=FastAPI(title="ZechPath AI recruitment", version="1.0.0")
 
@@ -46,4 +47,5 @@ app.include_router(scoring_routes.router)
 app.include_router(ranking_routes.router)
 app.include_router(short_listing_routes.router)
 app.include_router(job_routes.router)
+app.include_router(recruitment_job_router)
  

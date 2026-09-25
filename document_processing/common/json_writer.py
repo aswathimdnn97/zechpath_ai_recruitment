@@ -4,15 +4,15 @@ import os
 
 def save_resume(text, original_pdf_path):
 
-    # Create folder to save structured resume
-    output_dir = "data/extracted"
+    # Create folder to save structured JD
+    output_dir = "data/extracted/jd"
     os.makedirs(output_dir, exist_ok=True)
 
     # Get filename from original PDF
     # Example:
-    # data/resumes/Arjun_Menon_Resume.pdf
+    # data/job_descriptions/PythonDeveloperFresher(2).pdf
     #          ↓
-    # Arjun_Menon_Resume
+    # PythonDeveloperFresher(2)
     file_name = os.path.splitext(
         os.path.basename(original_pdf_path)
     )[0]
@@ -23,15 +23,15 @@ def save_resume(text, original_pdf_path):
         file_name + ".json"
     )
 
-    # Resume data
-    resume_data = {
-        "resume_text": text
-    }
-
-    # Save JSON
+    # Save structured JD data
     with open(output_path, "w", encoding="utf-8") as file:
-        json.dump(resume_data, file, indent=4, ensure_ascii=False)
+        json.dump(
+            text,
+            file,
+            indent=4,
+            ensure_ascii=False
+        )
 
-    print(f"Extracted jsonfile saved: {output_path}")
+    print(f"Extracted JD JSON file saved: {output_path}")
 
     return output_path

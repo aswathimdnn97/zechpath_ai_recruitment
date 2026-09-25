@@ -16,36 +16,247 @@ Responsibilities
 import re
 
 
-# =========================================================
-# DEGREE KEYWORDS
-# =========================================================
-
 DEGREE_KEYWORDS = [
+    # =====================================================
+    # ENGINEERING
+    # =====================================================
+
     "b.tech",
     "btech",
+    "b.e.",
     "b.e",
     "be ",
-    "b.sc",
-    "bsc",
-    "bachelor",
+    "bachelor of technology",
+    "bachelor of engineering",
+
     "m.tech",
     "mtech",
+    "m.e.",
     "m.e",
     "me ",
+    "master of technology",
+    "master of engineering",
+
+    # =====================================================
+    # SCIENCE
+    # =====================================================
+
+    "b.sc.",
+    "b.sc",
+    "bsc",
+    "bachelor of science",
+
+    "m.sc.",
     "m.sc",
     "msc",
-    "master",
+    "master of science",
+
+    # =====================================================
+    # COMMERCE
+    # =====================================================
+
+    "b.com.",
+    "b.com",
+    "bcom",
+    "bachelor of commerce",
+
+    "m.com.",
+    "m.com",
+    "mcom",
+    "master of commerce",
+
+    # =====================================================
+    # COMPUTER APPLICATIONS
+    # =====================================================
+
+    "b.c.a.",
+    "b.c.a",
+    "bca",
+    "bachelor of computer applications",
+
+    "m.c.a.",
+    "m.c.a",
     "mca",
+    "master of computer applications",
+
+    # =====================================================
+    # MANAGEMENT
+    # =====================================================
+
+    "b.b.a.",
+    "b.b.a",
+    "bba",
+    "bachelor of business administration",
+
+    "b.m.s.",
+    "b.m.s",
+    "bms",
+    "bachelor of management studies",
+
+    "m.b.a.",
+    "m.b.a",
     "mba",
+    "master of business administration",
+
+    # =====================================================
+    # ARTS
+    # =====================================================
+
+    "b.a.",
+    "b.a",
+    "ba ",
+    "bachelor of arts",
+
+    "m.a.",
+    "m.a",
+    "ma ",
+    "master of arts",
+
+    # =====================================================
+    # PHARMACY
+    # =====================================================
+
+    "b.pharm.",
+    "b.pharm",
+    "bpharm",
+    "bachelor of pharmacy",
+
+    "m.pharm.",
+    "m.pharm",
+    "mpharm",
+    "master of pharmacy",
+
+    # =====================================================
+    # ARCHITECTURE / DESIGN
+    # =====================================================
+
+    "b.arch.",
+    "b.arch",
+    "barch",
+    "bachelor of architecture",
+
+    "b.des.",
+    "b.des",
+    "bdes",
+    "bachelor of design",
+
+    # =====================================================
+    # FINE ARTS
+    # =====================================================
+
+    "b.f.a.",
+    "b.f.a",
+    "bfa",
+    "bachelor of fine arts",
+
+    # =====================================================
+    # LAW
+    # =====================================================
+
+    "l.l.b.",
+    "l.l.b",
+    "llb",
+    "bachelor of laws",
+
+    # =====================================================
+    # SOCIAL WORK
+    # =====================================================
+
+    "b.s.w.",
+    "b.s.w",
+    "bsw",
+    "bachelor of social work",
+
+    # =====================================================
+    # LIBRARY SCIENCE
+    # =====================================================
+
+    "b.l.i.s.",
+    "b.l.i.s",
+    "blis",
+    "bachelor of library and information science",
+
+    # =====================================================
+    # HOTEL MANAGEMENT
+    # =====================================================
+
+    "b.h.m.",
+    "b.h.m",
+    "bhm",
+    "bachelor of hotel management",
+
+    # =====================================================
+    # JOURNALISM / MASS COMMUNICATION
+    # =====================================================
+
+    "b.j.m.c.",
+    "b.j.m.c",
+    "bjmc",
+    "bachelor of journalism and mass communication",
+
+    # =====================================================
+    # MEDICAL
+    # =====================================================
+
+    "m.b.b.s.",
+    "m.b.b.s",
+    "mbbs",
+    "bachelor of medicine and bachelor of surgery",
+
+    "b.d.s.",
+    "b.d.s",
+    "bds",
+    "bachelor of dental surgery",
+
+    "b.p.t.",
+    "b.p.t",
+    "bpt",
+    "bachelor of physiotherapy",
+
+    # =====================================================
+    # HR
+    # =====================================================
+
+    "b.h.r.m.",
+    "b.h.r.m",
+    "bhrm",
+    "bachelor of human resource management",
+
+    # =====================================================
+    # TRAVEL / TOURISM
+    # =====================================================
+
+    "b.t.t.m.",
+    "b.t.t.m",
+    "bttm",
+    "bachelor of travel and tourism management",
+
+    # =====================================================
+    # GENERAL
+    # =====================================================
+
+    "bachelor",
+    "master",
+
+    # =====================================================
+    # DOCTORATE
+    # =====================================================
+
+    "ph.d.",
+    "ph.d",
     "phd",
     "doctor of philosophy",
+
+    # =====================================================
+    # OTHER QUALIFICATIONS
+    # =====================================================
+
     "associate degree",
     "associate",
     "diploma",
     "computer operator and programming assistant",
     "copa",
 ]
-
 
 # =========================================================
 # SCHOOL QUALIFICATION KEYWORDS

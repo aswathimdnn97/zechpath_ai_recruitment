@@ -79,6 +79,7 @@
   "bootstrap": "Bootstrap",
   "bootstrap5": "Bootstrap",
   "mysql": "MySQL",
+  "my sql": "MySQL",
   "mysql database": "MySQL",
   "postgres": "PostgreSQL",
   "postgresql": "PostgreSQL",
@@ -97,6 +98,7 @@
   "google cloud": "Google Cloud Platform",
   "docker": "Docker",
   "docker container": "Docker",
+  "docker containers": "Docker",
   "kubernetes": "Kubernetes",
   "k8s": "Kubernetes",
   "git": "Git",
@@ -151,6 +153,9 @@
   "mean": "MEAN",
   "mean stack": "MEAN",
   "postman": "Postman",
+  "api testing": "API Testing",
+  "api test": "API Testing",
+  "api tests": "API Testing",
   "responsive web design": "Responsive Web Design",
   "ci/cd": "CI/CD",
   "ci cd": "CI/CD",
@@ -188,5 +193,245 @@
   "Netlify Platform": "Netlify",
   "Netlify Hosting": "Netlify",
   "Heroku Platform": "Heroku",
-  "Heroku Cloud": "Heroku"
+  "Heroku Cloud": "Heroku",
+  
+  "spring": "Spring",
+  "spring framework": "Spring",
+  "spring-framework": "Spring",
+  "springboot": "Spring Boot",
+  "spring boot": "Spring Boot",
+  "spring-boot": "Spring Boot",
+  "spring boot framework": "Spring Boot",
+
+   "hr": "Human Resources",
+    "human resource": "Human Resources",
+    "human resources": "Human Resources",
+
+    "hrm": "Human Resource Management",
+    "human resources management": "Human Resource Management",
+
+    "hr ops": "HR Operations",
+    "hr operations": "HR Operations",
+    "human resources operations": "HR Operations",
+
+    "hr admin": "HR Administration",
+    "hr administration": "HR Administration",
+
+    "hiring": "Recruitment",
+    "recruiting": "Recruitment",
+    "recruitment": "Recruitment",
+
+    "ta": "Talent Acquisition",
+    "talent acquisition": "Talent Acquisition",
+    "talent hiring": "Talent Acquisition",
+
+    "resume screening": "Candidate Screening",
+    "cv screening": "Candidate Screening",
+    "candidate screening": "Candidate Screening",
+    "candidate shortlisting": "Candidate Screening",
+
+    "interview coordination": "Interview Coordination",
+    "interview scheduling": "Interview Scheduling",
+
+    "employee onboarding": "Onboarding",
+    "new hire onboarding": "Onboarding",
+    "onboarding": "Onboarding",
+
+    "offboarding": "Employee Offboarding",
+    "exit process": "Employee Offboarding",
+
+    "employee relations": "Employee Relations",
+    "employee relationship management": "Employee Relations",
+
+    "performance appraisal": "Performance Appraisal",
+    "performance review": "Performance Appraisal",
+    "employee appraisal": "Performance Appraisal",
+    "performance evaluation": "Performance Management",
+
+    "training and development": "Training and Development",
+    "training & development": "Training and Development",
+    "l&d": "Learning and Development",
+    "learning and development": "Learning and Development",
+
+    "tna": "Training Needs Analysis",
+    "training needs analysis": "Training Needs Analysis",
+    "training need analysis": "Training Needs Analysis",
+
+    "payroll processing": "Payroll",
+    "payroll" :"Payroll",
+    "salary processing": "Payroll",
+    "payroll administration": "Payroll Administration",
+    "payroll management": "Payroll Administration",
+
+    "attendance tracking": "Attendance Management",
+    "time and attendance": "Attendance Management",
+
+    "leave administration": "Leave Management",
+    "leave tracking": "Leave Management",
+
+    "hris": "HRIS",
+    "human resources information system": "HRIS",
+    "hr information system": "HRIS",
+
+    "hrms": "HRMS",
+    "human resource management system": "HRMS",
+
+    "ats": "Applicant Tracking System",
+    "applicant tracking system": "Applicant Tracking System",
+    "applicant tracking software": "Applicant Tracking System",
+
+    "workday": "Workday",
+    "workday hcm": "Workday",
+
+    "successfactors": "SAP SuccessFactors",
+    "sap sf": "SAP SuccessFactors",
+    "sap successfactors": "SAP SuccessFactors",
+
+    "zoho people": "Zoho People",
+    "zoho hr": "Zoho People",
+
+    "keka": "Keka",
+    "keka hr": "Keka",
+
+    "bamboo hr": "BambooHR",
+    "bamboohr": "BambooHR",
+
+    "excel": "Microsoft Excel",
+    "ms excel": "Microsoft Excel",
+    "microsoft excel": "Microsoft Excel",
+
+    "ms office": "Microsoft Office",
+    "microsoft office": "Microsoft Office",
+    "microsoft office suite": "Microsoft Office",
+
+    "g suite": "Google Workspace",
+    "google workspace": "Google Workspace",
+
+    "personnel records": "Employee Records Management",
+    "employee documentation": "Employee Records Management",
+
+    "hr documentation": "HR Documentation",
+    "human resources documentation": "HR Documentation",
+
+    "hr policies": "HR Policies",
+    "human resources policies": "HR Policies",
+    "hr policy development": "HR Policies",
+
+    "hr policy implementation": "Policy Implementation",
+
+    "labour law": "Labour Law",
+    "labor law": "Labour Law",
+    "employment law": "Labour Law",
+
+    "labour compliance": "Labour Compliance",
+    "labor compliance": "Labour Compliance",
+    "employment compliance": "Labour Compliance",
+
+    "hr statutory compliance": "Statutory Compliance",
+    "statutory compliance": "Statutory Compliance",
+
+    "posh": "POSH",
+    "posh compliance": "POSH",
+    "prevention of sexual harassment": "POSH",
+
+    "employee engagement": "Employee Engagement",
+    "employee engagement activities": "Employee Engagement",
+
+    "grievance handling": "Employee Grievance Handling",
+    "employee grievance management": "Employee Grievance Handling",
+
+    "conflict management": "Conflict Resolution",
+    "conflict resolution": "Conflict Resolution",
+
+    "hr analytics": "HR Analytics",
+    "human resources analytics": "HR Analytics",
+    "people analytics": "People Analytics",
+
+    "workforce planning": "Workforce Planning",
+    "manpower planning": "Workforce Planning",
+    "staffing planning": "Manpower Planning",
+
+    "job description": "Job Description",
+    "job descriptions": "Job Description",
+    "jd": "Job Description",
+
+    "job posting": "Job Posting",
+    "job advertisement": "Job Posting",
+    "job advertising": "Job Posting",
+
+    "candidate sourcing": "Sourcing",
+    "talent sourcing": "Sourcing",
+    "sourcing": "Sourcing",
+
+    "boolean recruiting": "Boolean Search",
+    "boolean search recruiting": "Boolean Search",
+
+    "linkedin recruitment": "LinkedIn Recruiter",
+    "linkedin recruiter": "LinkedIn Recruiter",
+
+    "background check": "Background Verification",
+    "employee background verification": "Background Verification",
+
+    "offer processing": "Offer Management",
+    "offer letter management": "Offer Management",
+
+    "offer letters": "Offer Letter",
+    "employment offer": "Offer Letter",
+
+    "hiring metrics": "Recruitment Metrics",
+    "recruitment analytics": "Recruitment Metrics",
+
+    "time-to-hire": "Time to Hire",
+    "time to hire": "Time to Hire",
+    "hiring time": "Time to Hire",
+
+    "staff retention": "Employee Retention",
+    "talent retention": "Employee Retention",
+
+    "employee attrition": "Attrition Analysis",
+    "attrition management": "Attrition Analysis",
+
+    "compensation & benefits": "Compensation and Benefits",
+    "compensation and benefits": "Compensation and Benefits",
+    "c&b": "Compensation and Benefits",
+
+    "salary management": "Compensation Management",
+    "compensation administration": "Compensation Management",
+
+    "benefits administration": "Benefits Administration",
+    "benefits management": "Benefits Administration",
+    "employee benefits": "Employee Benefits",
+
+    "hr reports": "HR Reporting",
+    "human resources reporting": "HR Reporting",
+
+    "hr metrics": "HR Metrics",
+    "people metrics": "HR Metrics",
+
+    "verbal communication": "Communication",
+    "written communication": "Communication",
+
+    "interpersonal communication": "Interpersonal Skills",
+    "interpersonal skills": "Interpersonal Skills",
+
+    "negotiation skills": "Negotiation",
+    "negotiation": "Negotiation",
+
+    "problem-solving": "Problem Solving",
+    "problem solving": "Problem Solving",
+
+    "time management skills": "Time Management",
+    "time management": "Time Management",
+
+    "organization skills": "Organizational Skills",
+    "organizational skills": "Organizational Skills",
+
+    "stakeholder engagement": "Stakeholder Management",
+    "stakeholder management": "Stakeholder Management",
+
+    "team leadership": "Team Management",
+    "people management": "Team Management"
+
+    
+
 }

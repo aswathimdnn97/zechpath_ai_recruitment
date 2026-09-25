@@ -370,6 +370,12 @@ def detect_sections(
     if not text.strip():
         return sections
 
+    print("\n========== RAW TEXT SENT TO SECTION DETECTOR ==========")
+
+    for i, raw_line in enumerate(text.splitlines(), start=1):
+        print(i, repr(raw_line))
+
+    print("=======================================================\n")
     # ========================================================
     # ACTIVE HEADING MAP
     # ========================================================
@@ -536,22 +542,81 @@ def detect_sections(
 
     return cleaned_sections
 
+# if __name__ == "__main__":
+
+#     test_headings = [
+#     "Summary",
+#     "Experience",
+#     "Education",
+#     "Certificate",
+#     "Certifications",
+#     "Professional Certifications",
+#     "Technical Certifications",
+#     "Licenses",
+#     "Awards",
+#     "Python / Domain Certification Completed",
+#     "Professional Development Program Completed",
+#     "Workplace Communication Completed",
+# ]
+
+#     print("\n========== HEADING TEST ==========")
+
+#     for line in test_headings:
+
+#         print(
+#             repr(line),
+#             "=>",
+#             _canonical_heading(line)
+#         )
+
+#         print(
+#             "PREFIX =>",
+#             _detect_heading_prefix(line)
+#         )
+# print("\n========== SECTION DETECTOR TEST ==========")
+
+# test_text = """
+# Summary
+# Recent engineering graduate with practical Java experience.
+
+# Experience
+# Backend Intern - ByteCraft Technologies
+# Worked with Spring Boot.
+
+# Education
+# B.Tech in Electronics and Communication Engineering
+
+# Certifications
+# Python / Domain Certification Completed
+# Professional Development Program Completed
+# Workplace Communication Completed
+
+# Awards
+# Best Project Award
+# """
+
+# result = detect_sections(test_text)
+
+# from pprint import pprint
+# pprint(result)
+
+
 if __name__ == "__main__":
 
     test_headings = [
-    "Summary",
-    "Experience",
-    "Education",
-    "Certificate",
-    "Certifications",
-    "Professional Certifications",
-    "Technical Certifications",
-    "Licenses",
-    "Awards",
-    "Python / Domain Certification Completed",
-    "Professional Development Program Completed",
-    "Workplace Communication Completed",
-]
+        "Summary",
+        "Experience",
+        "Education",
+        "Certificate",
+        "Certifications",
+        "Professional Certifications",
+        "Technical Certifications",
+        "Licenses",
+        "Awards",
+        "Python / Domain Certification Completed",
+        "Professional Development Program Completed",
+        "Workplace Communication Completed",
+    ]
 
     print("\n========== HEADING TEST ==========")
 
@@ -567,29 +632,54 @@ if __name__ == "__main__":
             "PREFIX =>",
             _detect_heading_prefix(line)
         )
-print("\n========== SECTION DETECTOR TEST ==========")
 
-test_text = """
-Summary
-Recent engineering graduate with practical Java experience.
+    # ========================================================
+    # SECTION DETECTOR TEST
+    # ========================================================
 
-Experience
-Backend Intern - ByteCraft Technologies
-Worked with Spring Boot.
+    print("\n========== SECTION DETECTOR TEST ==========")
 
-Education
-B.Tech in Electronics and Communication Engineering
+    test_text = """
+    Summary
+    Entry-level software trainee with exposure to Java, Spring Boot and relational databases.
 
-Certifications
-Python / Domain Certification Completed
-Professional Development Program Completed
-Workplace Communication Completed
+    Experience
+    Software Trainee - App Works Academy
+    Developed basic Java applications.
 
-Awards
-Best Project Award
-"""
+    Education
+    B.Tech in Electronics and Communication Engineering
 
-result = detect_sections(test_text)
+    Skills
+    Java • Spring Boot • SQL • MySQL • HTML • CSS • Git
 
-from pprint import pprint
-pprint(result)
+    Certifications
+    Java / Domain Certification Completed
+    Professional Development Program Completed
+
+    Achievements
+    Java Project Showcase - 2026
+    """
+
+    result = detect_sections(test_text)
+
+    from pprint import pprint
+
+    pprint(result)
+
+    # ========================================================
+    # SKILLS CHECK
+    # ========================================================
+
+    print("\n========== SKILLS CHECK ==========")
+
+    if "skills" in result:
+        print("✅ Skills section detected")
+
+        print(
+            "Skills content:",
+            result["skills"]
+        )
+
+    else:
+        print("❌ Skills section NOT detected")

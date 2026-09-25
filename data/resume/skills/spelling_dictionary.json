@@ -28,6 +28,8 @@
     "Html": "HTML",
     "Css": "CSS",
     "Mysql": "MySQL",
+     "mysql": "MySQL",
+    "my sql": "MySQL",
     "Postgress": "PostgreSQL",
     "Postgre Sql": "PostgreSQL",
     "Mongo Db": "MongoDB",
@@ -94,5 +96,173 @@
   "visual studio code": "VS Code",
 
   "jira software": "Jira",
-  "atlassian jira": "Jira"
+  "atlassian jira": "Jira",
+  
+  "springboot": "Spring Boot",
+  "spring boot": "Spring Boot",
+  "spring-boot": "Spring Boot",
+  "spring framework": "Spring",
+  "spring-framework": "Spring",
+
+   "recrutment": "recruitment",
+    "recruiment": "recruitment",
+    "recruitmant": "recruitment",
+    "recruitement": "recruitment",
+
+    "recuitment": "recruitment",
+    "recruitng": "recruiting",
+    "recruting": "recruiting",
+
+    "talent aquisition": "talent acquisition",
+    "talent acqisition": "talent acquisition",
+    "talent acquisiton": "talent acquisition",
+
+    "onborading": "onboarding",
+    "onboading": "onboarding",
+    "onboardng": "onboarding",
+
+    "offborading": "offboarding",
+    "offboading": "offboarding",
+
+    "intervew": "interview",
+    "interiew": "interview",
+    "interviewng": "interviewing",
+
+    "screening": "screening",
+    "shortlisting": "shortlisting",
+    "shortlisting": "shortlisting",
+
+    "payrol": "payroll",
+    "payrol processing": "payroll processing",
+
+    "attendence": "attendance",
+    "attandance": "attendance",
+
+    "absense": "absence",
+    "absenteeism": "absenteeism",
+
+    "employe": "employee",
+    "emploee": "employee",
+    "employess": "employees",
+    "employes": "employees",
+
+    "employement": "employment",
+    "employmnt": "employment",
+
+    "managment": "management",
+    "managemnt": "management",
+    "mangement": "management",
+
+    "performence": "performance",
+    "performace": "performance",
+    "performnce": "performance",
+
+    "appraisel": "appraisal",
+    "appraissal": "appraisal",
+    "appraisal": "appraisal",
+
+    "compansation": "compensation",
+    "compensation": "compensation",
+
+    "benifits": "benefits",
+    "benifit": "benefit",
+
+    "compliance": "compliance",
+    "compliace": "compliance",
+    "complaince": "compliance",
+
+    "labour": "labour",
+    "labor": "labor",
+
+    "grievance": "grievance",
+    "greivance": "grievance",
+    "grievences": "grievances",
+
+    "communicaton": "communication",
+    "comunication": "communication",
+    "communication": "communication",
+
+    "interpersonal": "interpersonal",
+    "interpersonel": "interpersonal",
+
+    "negotiaton": "negotiation",
+    "negotiation": "negotiation",
+
+    "leadreship": "leadership",
+    "leardership": "leadership",
+
+    "organizatonal": "organizational",
+    "organisational": "organizational",
+    "organiztional": "organizational",
+
+    "stakehoder": "stakeholder",
+    "stakeholders": "stakeholders",
+
+    "analytics": "analytics",
+    "analytcs": "analytics",
+
+    "workforce": "workforce",
+    "workfoce": "workforce",
+
+    "manpower": "manpower",
+    "manpowr": "manpower",
+
+    "sucessfactors": "successfactors",
+    "successfactor": "successfactors",
+
+    "microsoft exel": "microsoft excel",
+    "ms exel": "ms excel",
+    "excel": "excel",
+
+    "hris": "hris",
+    "hrms": "hrms",
+
+    "posh": "posh",
+    "psoh": "posh",
+
+    "linkedin": "linkedin",
+    "linkdin": "linkedin",
+
+    "candidate": "candidate",
+    "candiate": "candidate",
+    "candidates": "candidates",
+    "candidtae": "candidate",
+
+    "resume": "resume",
+    "resumee": "resume",
+    "resuma": "resume",
+
+    "employee": "employee",
+    "employe": "employee",
+
+    "training": "training",
+    "traning": "training",
+
+    "development": "development",
+    "developement": "development",
+
+    "retention": "retention",
+    "retension": "retention",
+
+    "attrition": "attrition",
+    "attricion": "attrition",
+
+    "salary": "salary",
+    "salery": "salary",
+
+    "administration": "administration",
+    "adminstration": "administration",
+
+    "documentation": "documentation",
+    "documantation": "documentation",
+
+    "coordination": "coordination",
+    "co-ordination": "coordination",
+
+    "sourcing": "sourcing",
+    "sorcing": "sourcing",
+
+    "boolean": "boolean",
+    "booleean": "boolean"
+
 }
