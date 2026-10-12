@@ -1,0 +1,242 @@
+{
+  "candidate_id": "CAN_B67DE2B9BADB",
+  "candidate_score": {
+    "final_score": 36.76,
+    "status": "calculated",
+    "job_title": "Python Developer",
+    "role_category": "backend",
+    "weight_source": "role_category",
+    "weights": {
+      "skill": 0.45,
+      "experience": 0.3,
+      "education": 0.1,
+      "semantic": 0.15
+    },
+    "component_scores": {
+      "skill": {
+        "score": 12.5,
+        "status": "calculated",
+        "weight": 0.45,
+        "weight_percentage": 45.0
+      },
+      "experience": {
+        "score": 40.0,
+        "status": "calculated",
+        "weight": 0.3,
+        "weight_percentage": 30.0
+      },
+      "education": {
+        "score": 76.0,
+        "status": "calculated",
+        "weight": 0.1,
+        "weight_percentage": 10.0
+      },
+      "semantic": {
+        "score": 76.95,
+        "status": "calculated",
+        "weight": 0.15,
+        "weight_percentage": 15.0
+      }
+    },
+    "contributions": {
+      "skill": {
+        "score": 12.5,
+        "weight": 0.45,
+        "weight_percentage": 45.0,
+        "contribution": 5.62
+      },
+      "experience": {
+        "score": 40.0,
+        "weight": 0.3,
+        "weight_percentage": 30.0,
+        "contribution": 12.0
+      },
+      "education": {
+        "score": 76.0,
+        "weight": 0.1,
+        "weight_percentage": 10.0,
+        "contribution": 7.6
+      },
+      "semantic": {
+        "score": 76.95,
+        "weight": 0.15,
+        "weight_percentage": 15.0,
+        "contribution": 11.54
+      }
+    },
+    "missing_components": [],
+    "available_weight": 1.0,
+    "explanation": [
+      "Skill score 12.50 with 45% weight contributed 5.62 points.",
+      "Experience score 40.00 with 30% weight contributed 12.00 points.",
+      "Education score 76.00 with 10% weight contributed 7.60 points.",
+      "Semantic score 76.95 with 15% weight contributed 11.54 points."
+    ]
+  },
+  "component_scores": {
+    "skill": {
+      "score": 12.5,
+      "weight": 0.4,
+      "weight_percentage": 40.0,
+      "candidate_skills": [
+        "Python",
+        "SQL",
+        "Communication"
+      ],
+      "required_skills": [
+        "Python",
+        "Django",
+        "FastAPI",
+        "REST API",
+        "PostgreSQL",
+        "Git",
+        "API",
+        "Testing"
+      ],
+      "preferred_skills": [],
+      "required": {
+        "score": 12.5,
+        "weight": 0.8,
+        "weight_percentage": 80.0,
+        "contribution": 10.0,
+        "total_skills": 8,
+        "matched_skills": 1,
+        "match_percentage": 12.5,
+        "exact_matches": [
+          "Python"
+        ],
+        "relationship_matches": [],
+        "fuzzy_matches": [],
+        "semantic_matches": [],
+        "related_skill_context": [
+          {
+            "candidate_skill": "Python",
+            "required_skill": "Django",
+            "relationship": "related",
+            "matched": false
+          },
+          {
+            "candidate_skill": "Python",
+            "required_skill": "FastAPI",
+            "relationship": "related",
+            "matched": false
+          },
+          {
+            "candidate_skill": "SQL",
+            "required_skill": "PostgreSQL",
+            "relationship": "related",
+            "matched": false
+          }
+        ],
+        "missing_skills": [
+          "Django",
+          "FastAPI",
+          "REST API",
+          "PostgreSQL",
+          "Git",
+          "API",
+          "Testing"
+        ]
+      },
+      "preferred": {
+        "score": 0.0,
+        "weight": 0.2,
+        "weight_percentage": 20.0,
+        "contribution": 0.0,
+        "total_skills": 0,
+        "matched_skills": 0,
+        "match_percentage": 0.0,
+        "exact_matches": [],
+        "relationship_matches": [],
+        "fuzzy_matches": [],
+        "semantic_matches": [],
+        "related_skill_context": [],
+        "missing_skills": []
+      }
+    },
+    "experience": {
+      "score": 40.0,
+      "years_score": 100.0,
+      "role_relevance_score": 0.0,
+      "technology_relevance_score": 12.5,
+      "candidate_years": 0.67,
+      "required_minimum_years": 0.0,
+      "preferred_maximum_years": 1.0,
+      "candidate_roles": [
+        "Software Trainee"
+      ],
+      "target_job_title": "Python Developer",
+      "experience_skills": [],
+      "candidate_skills": [
+        "Python",
+        "SQL",
+        "Communication"
+      ],
+      "required_skills": [
+        "Python",
+        "Django",
+        "FastAPI",
+        "REST API",
+        "PostgreSQL",
+        "Git",
+        "API",
+        "Testing"
+      ],
+      "status": "calculated"
+    },
+    "education": {
+      "score": 76.0,
+      "degree_score": 100.0,
+      "field_score": 40.0,
+      "candidate_education": [
+        {
+          "degree_type": "Bachelor of Technology",
+          "field_of_study": "Electronics Communication Engineering 2026",
+          "institution": "KTU",
+          "university": null,
+          "board": null,
+          "graduation_year": "2026"
+        }
+      ],
+      "best_matching_education": {
+        "degree_score": 100.0,
+        "field_score": 40.0,
+        "score": 76.0,
+        "degree_type": "Bachelor of Technology",
+        "field_of_study": "Electronics Communication Engineering 2026",
+        "institution": "KTU",
+        "graduation_year": "2026"
+      },
+      "required_education": [
+        "B.Tech / B.E. / equivalent technical degree preferred."
+      ],
+      "status": "calculated"
+    },
+    "semantic": {
+      "score": 76.95,
+      "similarity": 0.5389,
+      "status": "calculated"
+    }
+  },
+  "metadata": {
+    "job_title": "Python Developer",
+    "required_skills_count": 8,
+    "preferred_skills_count": 0,
+    "candidate_skills_count": 3,
+    "candidate_years": 0.67,
+    "candidate_roles": [
+      "Software Trainee"
+    ],
+    "candidate_education_count": 1,
+    "jd_experience_count": 1,
+    "jd_education_count": 1
+  },
+  "bias_mitigation": {
+    "personal_attributes_masked": true,
+    "candidate_id_preserved": true
+  },
+  "candidate_name": "RAHUL MENON",
+  "jd_id": "PythonDeveloperFresher",
+  "job_id": "JOB_4F29B02A1D0A",
+  "jd_file": "PythonDeveloperFresher.pdf"
+}

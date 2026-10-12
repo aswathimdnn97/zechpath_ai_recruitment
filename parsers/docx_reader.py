@@ -3,18 +3,19 @@ def read_docx(file):
     """Read a DOCX resume and return its text."""
     document=Document(file)
     
-    text=""
+    text_parts = []
     #read paragraph
     for paragraph in document.paragraphs:
         if(paragraph.text.strip()!=""):
-            text=text+paragraph.text +"\n"
+            text_parts.append(paragraph.text + "\n")
 
     #read table
     for table in document.tables:
         for row in table.rows:
             for cell in row.cells:
-                if(cell.text.strip!=""):
-                    text=text+cell.text+" "
-        text=text+"\n"
+                cell_text = cell.text.strip()
+                if cell_text:
+                    text_parts.append(cell.text + " ")
+        text_parts.append("\n")
         
-    return text
+    return "".join(text_parts)

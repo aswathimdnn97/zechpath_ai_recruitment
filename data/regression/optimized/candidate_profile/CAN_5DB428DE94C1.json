@@ -1,0 +1,563 @@
+{
+  "candidate_id": "CAN_5DB428DE94C1",
+  "masked_profile": {
+    "candidate_id": "CAN_5DB428DE94C1",
+    "skills": [
+      {
+        "source_section": "summary",
+        "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+            "source_skill": "Communication"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Communication",
+            "source_skill": "Communication"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "skill": "Communication",
+        "skill_id": "HR069",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Recruitment",
+            "source_skill": "Recruitment"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "skill": "Recruitment",
+        "skill_id": "HR005",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Prepared Excel reports and office documents.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "summary",
+            "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+            "source_skill": "ms excel"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "ms excel",
+            "source_skill": "ms excel"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "original_skill": "excel",
+        "resolved_from": "excel",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "excel",
+          "ms excel"
+        ],
+        "skill": "Microsoft Excel",
+        "skill_id": "HR035",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+            "source_skill": "employee documentation"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Employee Records",
+            "source_skill": "Employee Records"
+          }
+        ],
+        "original_skill": "employee documentation",
+        "resolved_from": "employee documentation",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "employee documentation",
+          "Employee Records"
+        ],
+        "skill": "Employee Records Management",
+        "skill_id": "HR022",
+        "matched_by": "exact",
+        "source_sections": [
+          "summary",
+          "skills"
+        ]
+      },
+      {
+        "source_section": "experience",
+        "source_text": "HR Assistant Trainee - TalentBridge Academy",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "HR Assistant Trainee - TalentBridge Academy",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Assistant Trainee",
+            "source_skill": "hr"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "original_skill": "hr",
+        "resolved_from": "hr",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "hr"
+        ],
+        "skill": "Human Resources",
+        "skill_id": "HR001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Assisted with candidate screening and interview scheduling.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Assisted with candidate screening and interview scheduling.",
+            "source_skill": "Candidate Screening"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "skill": "Candidate Screening",
+        "skill_id": "HR007",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Assisted with candidate screening and interview scheduling.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Assisted with candidate screening and interview scheduling.",
+            "source_skill": "Interview Scheduling"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "skill": "Interview Scheduling",
+        "skill_id": "HR011",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "ms office",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "ms office",
+            "source_skill": "ms office"
+          }
+        ],
+        "original_skill": "ms office",
+        "resolved_from": "ms office",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "ms office"
+        ],
+        "skill": "Microsoft Office",
+        "skill_id": "HR036",
+        "matched_by": "exact"
+      }
+    ],
+    "education": [
+      {
+        "degree_type": "Bachelor of Commerce",
+        "field_of_study": "Finance",
+        "institution": null,
+        "university": null,
+        "board": null,
+        "graduation_year": "2025"
+      }
+    ],
+    "experience": [
+      {
+        "title": {
+          "title_id": null,
+          "title": "HR Assistant Trainee",
+          "category": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "company": {
+          "company_id": null,
+          "company": "TalentBridge Academy",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Aug 2025",
+          "end_date": "Mar 2026"
+        },
+        "total_experience": {
+          "total_months": 8,
+          "total_years": 0.7
+        },
+        "location": "Kozhikode, Kerala",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP004",
+          "department": "Human Resources",
+          "matched_by": "keyword",
+          "confidence": 75
+        },
+        "description": [
+          "Assisted with candidate screening and interview scheduling.",
+          "Maintained basic employee records.",
+          "Prepared Excel reports and office documents."
+        ]
+      }
+    ],
+    "projects": [],
+    "certifications": [],
+    "metadata": {
+      "parser_version": "1.0",
+      "created_at": "2026-10-09T06:49:52.487481+00:00"
+    }
+  },
+  "bias_report": {
+    "bias_detected": false,
+    "risk_level": "none",
+    "indicator_count": 0,
+    "indicators": [],
+    "status": "clear"
+  },
+  "original_profile": {
+    "candidate_id": "CAN_5DB428DE94C1",
+    "personal_information": {
+      "name": "KEERTHANA R",
+      "email": "keerthana.r@example.com",
+      "phone": null,
+      "location": "Kozhikode, Kerala",
+      "linkedin": null,
+      "github": null,
+      "portfolio": null
+    },
+    "skills": [
+      {
+        "source_section": "summary",
+        "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+            "source_skill": "Communication"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Communication",
+            "source_skill": "Communication"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "skill": "Communication",
+        "skill_id": "HR069",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Recruitment",
+            "source_skill": "Recruitment"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "skill": "Recruitment",
+        "skill_id": "HR005",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Prepared Excel reports and office documents.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "summary",
+            "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+            "source_skill": "ms excel"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "ms excel",
+            "source_skill": "ms excel"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "original_skill": "excel",
+        "resolved_from": "excel",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "excel",
+          "ms excel"
+        ],
+        "skill": "Microsoft Excel",
+        "skill_id": "HR035",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+            "source_skill": "employee documentation"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Employee Records",
+            "source_skill": "Employee Records"
+          }
+        ],
+        "original_skill": "employee documentation",
+        "resolved_from": "employee documentation",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "employee documentation",
+          "Employee Records"
+        ],
+        "skill": "Employee Records Management",
+        "skill_id": "HR022",
+        "matched_by": "exact",
+        "source_sections": [
+          "summary",
+          "skills"
+        ]
+      },
+      {
+        "source_section": "experience",
+        "source_text": "HR Assistant Trainee - TalentBridge Academy",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "HR Assistant Trainee - TalentBridge Academy",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Assistant Trainee",
+            "source_skill": "hr"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "original_skill": "hr",
+        "resolved_from": "hr",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "hr"
+        ],
+        "skill": "Human Resources",
+        "skill_id": "HR001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Assisted with candidate screening and interview scheduling.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Assisted with candidate screening and interview scheduling.",
+            "source_skill": "Candidate Screening"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "skill": "Candidate Screening",
+        "skill_id": "HR007",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Assisted with candidate screening and interview scheduling.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Assisted with candidate screening and interview scheduling.",
+            "source_skill": "Interview Scheduling"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "skill": "Interview Scheduling",
+        "skill_id": "HR011",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "ms office",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "ms office",
+            "source_skill": "ms office"
+          }
+        ],
+        "original_skill": "ms office",
+        "resolved_from": "ms office",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "ms office"
+        ],
+        "skill": "Microsoft Office",
+        "skill_id": "HR036",
+        "matched_by": "exact"
+      }
+    ],
+    "education": [
+      {
+        "degree_type": "Bachelor of Commerce",
+        "field_of_study": "Finance",
+        "institution": null,
+        "university": null,
+        "board": null,
+        "graduation_year": "2025"
+      }
+    ],
+    "experience": [
+      {
+        "title": {
+          "title_id": null,
+          "title": "HR Assistant Trainee",
+          "category": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "company": {
+          "company_id": null,
+          "company": "TalentBridge Academy",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Aug 2025",
+          "end_date": "Mar 2026"
+        },
+        "total_experience": {
+          "total_months": 8,
+          "total_years": 0.7
+        },
+        "location": "Kozhikode, Kerala",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP004",
+          "department": "Human Resources",
+          "matched_by": "keyword",
+          "confidence": 75
+        },
+        "description": [
+          "Assisted with candidate screening and interview scheduling.",
+          "Maintained basic employee records.",
+          "Prepared Excel reports and office documents."
+        ]
+      }
+    ],
+    "projects": [],
+    "certifications": [],
+    "metadata": {
+      "parser_version": "1.0",
+      "created_at": "2026-10-09T06:49:52.487481+00:00"
+    }
+  }
+}

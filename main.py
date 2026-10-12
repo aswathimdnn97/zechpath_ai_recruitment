@@ -39,6 +39,8 @@ from scoring.ranking.recruiters_output import (
     generate_recruiter_output,
 )
 
+import json
+
 
 # ============================================================
 # CONFIGURATION
@@ -49,8 +51,7 @@ RESUME_FOLDER = Path(
 )
 
 JOB_DESCRIPTION_FILE = (
-    "data/job_descriptions/"
-    "jd_python_developer.pdf"
+    "data/job_descriptions/JD_001_Python_Developer.pdf"
 )
 
 TOP_N = 5
@@ -252,6 +253,38 @@ for resume_file in resume_files:
         candidate_name = personal_information.get(
             "name"
         )
+        
+        
+
+
+        IDENTITY_DIR = Path(
+            "data/candidates/candidate_identity"
+        )
+
+        IDENTITY_DIR.mkdir(
+            parents=True,
+            exist_ok=True
+        )
+
+
+        identity_file = (
+            IDENTITY_DIR
+            / f"{candidate_id}.json"
+        )
+
+        with identity_file.open(
+            "w",
+            encoding="utf-8"
+        ) as file:
+
+            json.dump(
+                {
+                    "candidate_id": candidate_id,
+                    "candidate_name": candidate_name,
+                },
+                file,
+                indent=2,
+            )
 
         if isinstance(candidate_name, str):
             candidate_name = candidate_name.strip()
@@ -371,6 +404,31 @@ for resume_file in resume_files:
             jd_embedding=jd_embedding,
             embedding_generator=embedding_generator,
         )
+        
+        SCORING_DIR = Path(
+            "data/candidates/scoring_results"
+        )
+
+        SCORING_DIR.mkdir(
+            parents=True,
+            exist_ok=True
+        )
+
+        scoring_file = (
+            SCORING_DIR
+            / f"{candidate_id}.json"
+        )
+
+        with scoring_file.open(
+            "w",
+            encoding="utf-8"
+        ) as file:
+
+            json.dump(
+                ats_result,
+                file,
+                indent=2,
+            )
 
         if not isinstance(
             ats_result,

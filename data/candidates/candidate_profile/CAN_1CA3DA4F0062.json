@@ -1,0 +1,472 @@
+{
+    "candidate_id": "CAN_1CA3DA4F0062",
+    "masked_profile": {
+        "candidate_id": "CAN_1CA3DA4F0062",
+        "skills": [
+            {
+                "skill_id": "HR005",
+                "skill": "Recruitment",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+                "sources": [
+                    "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+                    "HR Intern - People Bridge Jan 2026 - Apr 2026 Ernakulam, Kerala Screened resumes, scheduled interviews and updated candidate records in HRMS. Prepared Excel reports for recruitment activity.",
+                    "Recruitment"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR007",
+                "skill": "Candidate Screening",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR010",
+                "skill": "Interview Coordination",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "skills"
+                ],
+                "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+                "sources": [
+                    "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+                    "Interview Coordination"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR029",
+                "skill": "HRMS",
+                "category": "HR",
+                "subcategory": "HR Technology",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+                "sources": [
+                    "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+                    "HR Intern - People Bridge Jan 2026 - Apr 2026 Ernakulam, Kerala Screened resumes, scheduled interviews and updated candidate records in HRMS. Prepared Excel reports for recruitment activity.",
+                    "HRMS"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR001",
+                "skill": "Human Resources",
+                "category": "HR",
+                "subcategory": "HR Fundamentals",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+                "sources": [
+                    "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+                    "HR Intern - People Bridge Jan 2026 - Apr 2026 Ernakulam, Kerala Screened resumes, scheduled interviews and updated candidate records in HRMS. Prepared Excel reports for recruitment activity."
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR035",
+                "skill": "Microsoft Excel",
+                "category": "HR",
+                "subcategory": "HR Tools",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_sections": [
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR Intern - People Bridge Jan 2026 - Apr 2026 Ernakulam, Kerala Screened resumes, scheduled interviews and updated candidate records in HRMS. Prepared Excel reports for recruitment activity.",
+                "sources": [
+                    "HR Intern - People Bridge Jan 2026 - Apr 2026 Ernakulam, Kerala Screened resumes, scheduled interviews and updated candidate records in HRMS. Prepared Excel reports for recruitment activity.",
+                    "Excel"
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR069",
+                "skill": "Communication",
+                "category": "HR",
+                "subcategory": "Soft Skills",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "skills",
+                "source_text": "Communication",
+                "extraction_method": "skills_section"
+            },
+            {
+                "skill_id": "HR017",
+                "skill": "Applicant Tracking System",
+                "category": "HR",
+                "subcategory": "Recruitment Tools",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "skills",
+                "source_text": "ATS",
+                "extraction_method": "skills_section"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Master of Business Administration",
+                "field_of_study": "Human Resources",
+                "institution": null,
+                "university": "MG University",
+                "board": null,
+                "graduation_year": "2026"
+            },
+            {
+                "degree_type": "Bachelor of Commerce",
+                "field_of_study": "Commerce",
+                "institution": null,
+                "university": "MG University",
+                "board": null,
+                "graduation_year": "2024"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": null,
+                    "title": "HR Intern",
+                    "category": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "People Bridge",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jan 2026",
+                    "end_date": "Apr 2026"
+                },
+                "total_experience": {
+                    "total_months": 4,
+                    "total_years": 0.3
+                },
+                "location": "Ernakulam, Kerala",
+                "employment_type": {
+                    "type_id": "EMP003",
+                    "employment_type": "Internship",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "department": {
+                    "department_id": "DEP004",
+                    "department": "Human Resources",
+                    "matched_by": "keyword",
+                    "confidence": 50
+                },
+                "description": [
+                    "Screened resumes, scheduled interviews and updated candidate records in HRMS.",
+                    "Prepared Excel reports for recruitment activity."
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [
+            {
+                "certification_name": "Professional Certification",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "Industry Skills Program",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "Advanced Workplace Training",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            }
+        ],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-09-24T18:45:23.922263+00:00"
+        }
+    },
+    "bias_report": {
+        "bias_detected": false,
+        "risk_level": "none",
+        "indicator_count": 0,
+        "indicators": [],
+        "status": "clear"
+    },
+    "original_profile": {
+        "candidate_id": "CAN_1CA3DA4F0062",
+        "personal_information": {
+            "name": "ANJALI K",
+            "email": "anjali.k@example.com",
+            "phone": null,
+            "location": "n Ernakulam, Kerala",
+            "linkedin": null,
+            "github": null,
+            "portfolio": null
+        },
+        "skills": [
+            {
+                "skill_id": "HR005",
+                "skill": "Recruitment",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+                "sources": [
+                    "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+                    "HR Intern - People Bridge Jan 2026 - Apr 2026 Ernakulam, Kerala Screened resumes, scheduled interviews and updated candidate records in HRMS. Prepared Excel reports for recruitment activity.",
+                    "Recruitment"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR007",
+                "skill": "Candidate Screening",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR010",
+                "skill": "Interview Coordination",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "skills"
+                ],
+                "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+                "sources": [
+                    "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+                    "Interview Coordination"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR029",
+                "skill": "HRMS",
+                "category": "HR",
+                "subcategory": "HR Technology",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+                "sources": [
+                    "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+                    "HR Intern - People Bridge Jan 2026 - Apr 2026 Ernakulam, Kerala Screened resumes, scheduled interviews and updated candidate records in HRMS. Prepared Excel reports for recruitment activity.",
+                    "HRMS"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR001",
+                "skill": "Human Resources",
+                "category": "HR",
+                "subcategory": "HR Fundamentals",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+                "sources": [
+                    "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+                    "HR Intern - People Bridge Jan 2026 - Apr 2026 Ernakulam, Kerala Screened resumes, scheduled interviews and updated candidate records in HRMS. Prepared Excel reports for recruitment activity."
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR035",
+                "skill": "Microsoft Excel",
+                "category": "HR",
+                "subcategory": "HR Tools",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_sections": [
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR Intern - People Bridge Jan 2026 - Apr 2026 Ernakulam, Kerala Screened resumes, scheduled interviews and updated candidate records in HRMS. Prepared Excel reports for recruitment activity.",
+                "sources": [
+                    "HR Intern - People Bridge Jan 2026 - Apr 2026 Ernakulam, Kerala Screened resumes, scheduled interviews and updated candidate records in HRMS. Prepared Excel reports for recruitment activity.",
+                    "Excel"
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR069",
+                "skill": "Communication",
+                "category": "HR",
+                "subcategory": "Soft Skills",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "skills",
+                "source_text": "Communication",
+                "extraction_method": "skills_section"
+            },
+            {
+                "skill_id": "HR017",
+                "skill": "Applicant Tracking System",
+                "category": "HR",
+                "subcategory": "Recruitment Tools",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "skills",
+                "source_text": "ATS",
+                "extraction_method": "skills_section"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Master of Business Administration",
+                "field_of_study": "Human Resources",
+                "institution": null,
+                "university": "MG University",
+                "board": null,
+                "graduation_year": "2026"
+            },
+            {
+                "degree_type": "Bachelor of Commerce",
+                "field_of_study": "Commerce",
+                "institution": null,
+                "university": "MG University",
+                "board": null,
+                "graduation_year": "2024"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": null,
+                    "title": "HR Intern",
+                    "category": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "People Bridge",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jan 2026",
+                    "end_date": "Apr 2026"
+                },
+                "total_experience": {
+                    "total_months": 4,
+                    "total_years": 0.3
+                },
+                "location": "Ernakulam, Kerala",
+                "employment_type": {
+                    "type_id": "EMP003",
+                    "employment_type": "Internship",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "department": {
+                    "department_id": "DEP004",
+                    "department": "Human Resources",
+                    "matched_by": "keyword",
+                    "confidence": 50
+                },
+                "description": [
+                    "Screened resumes, scheduled interviews and updated candidate records in HRMS.",
+                    "Prepared Excel reports for recruitment activity."
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [
+            {
+                "certification_name": "Professional Certification",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "Industry Skills Program",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "Advanced Workplace Training",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            }
+        ],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-09-24T18:45:23.922263+00:00"
+        }
+    },
+    "resume_hash": "73ced8b89d3e58c7995938367d34588ba598d462d48ef90de60c01263fff3b43"
+}

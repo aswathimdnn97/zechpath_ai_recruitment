@@ -1,160 +1,168 @@
-from typing import Any, Dict, List
-
+from typing import Any, List, Optional
 import numpy as np
 
-
-# ============================================================
-# Configuration
-# ============================================================
-
-SEMANTIC_MATCH_THRESHOLD = 0.70
+SEMANTIC_MATCH_MIN_THRESHOLD = 0.70
 
 
-# ============================================================
-# Cosine Similarity
-# ============================================================
-
-def _cosine_similarity(
-    vector_a: np.ndarray,
-    vector_b: np.ndarray,
-) -> float:
-    """
-    Calculate cosine similarity between two embeddings.
-    """
-
-    if vector_a is None or vector_b is None:
+def cosine_similarity(a, b) -> float:
+    if a is None or b is None:
         return 0.0
-
-    norm_a = np.linalg.norm(vector_a)
-    norm_b = np.linalg.norm(vector_b)
-
-    if norm_a == 0 or norm_b == 0:
+    a = np.asarray(a, dtype=float)
+    b = np.asarray(b, dtype=float)
+    if a.size == 0 or b.size == 0:
         return 0.0
+    if a.shape != b.shape:
+        raise ValueError("Embedding vectors must have the same dimensions.")
+    na = np.linalg.norm(a)
+    nb = np.linalg.norm(b)
+    if na == 0 or nb == 0:
+        return 0.0
+    return float(np.dot(a, b) / (na * nb))
 
-    return float(
-        np.dot(vector_a, vector_b)
-        / (norm_a * norm_b)
-    )
 
+def _generate_embedding(text: str, generator: Any) -> Optional[List[float]]:
+    if not text or generator is None:
+        return None
+    if hasattr(generator, "generate_embedding"):
+        e = generator.generate_embedding(text)
+    elif hasattr(generator, "encode"):
+        e = generator.encode(text)
+    elif hasattr(generator, "model") and hasattr(generator.model, "encode"):
+        e = generator.model.encode(text, convert_to_numpy=True)
+    else:
+        return None
+    if e is None:
+        return None
+    if isinstance(e, np.ndarray):
+        return e.tolist()
+    if hasattr(e, "tolist"):
+        return e.tolist()
+    return list(e)
 
-# ============================================================
-# Semantic Skill Matching
-# ============================================================
 
 def find_semantic_skill_matches(
     candidate_skills: List[str],
-    jd_skills: List[str],
-    embedding_generator: Any,
-    threshold: float = SEMANTIC_MATCH_THRESHOLD,
-) -> List[Dict[str, Any]]:
+    required_skills: Optional[List[str]] = None,
+    embedding_generator: Any = None,
+    threshold: float = SEMANTIC_MATCH_MIN_THRESHOLD,
+    *,
+    jd_skills: Optional[List[str]] = None,
+) -> List[dict]:
     """
-    Find semantically similar candidate skills for JD skills.
+    Find semantic matches between candidate skills and JD skills.
 
-    Only JD skills that are not already exact matches should
-    normally be passed to this function.
+    Compatibility:
+        required_skills -> existing/internal API
+        jd_skills       -> JD/test-friendly API
 
-    Returns explainable semantic matches.
+    Related skills do not automatically receive semantic credit.
+    A skill only becomes a semantic match when its embedding
+    similarity reaches the configured threshold.
     """
 
-    if not candidate_skills or not jd_skills:
+    # Support both parameter names.
+    if required_skills is None:
+        required_skills = jd_skills
+
+    if (
+        not candidate_skills
+        or not required_skills
+        or embedding_generator is None
+    ):
         return []
 
-    if embedding_generator is None:
-        return []
-
-    # --------------------------------------------------------
-    # Generate candidate skill embeddings
-    # --------------------------------------------------------
+    try:
+        threshold = max(
+            0.0,
+            min(1.0, float(threshold)),
+        )
+    except (TypeError, ValueError):
+        threshold = SEMANTIC_MATCH_MIN_THRESHOLD
 
     candidate_embeddings = {}
 
-    for skill in candidate_skills:
-
-        if not isinstance(skill, str):
+    for candidate_skill in candidate_skills:
+        if not isinstance(candidate_skill, str):
             continue
 
-        skill = skill.strip()
+        candidate_skill = candidate_skill.strip()
 
-        if not skill:
+        if not candidate_skill:
             continue
 
-        embedding = embedding_generator.model.encode(
-            skill,
-            convert_to_numpy=True,
+        embedding = _generate_embedding(
+            candidate_skill,
+            embedding_generator,
         )
 
-        candidate_embeddings[skill] = embedding
-
-    # --------------------------------------------------------
-    # Generate JD skill embeddings
-    # --------------------------------------------------------
-
-    jd_embeddings = {}
-
-    for skill in jd_skills:
-
-        if not isinstance(skill, str):
-            continue
-
-        skill = skill.strip()
-
-        if not skill:
-            continue
-
-        embedding = embedding_generator.model.encode(
-            skill,
-            convert_to_numpy=True,
-        )
-
-        jd_embeddings[skill] = embedding
-
-    # --------------------------------------------------------
-    # Compare skills
-    # --------------------------------------------------------
+        if embedding is not None:
+            candidate_embeddings[candidate_skill] = embedding
 
     matches = []
+    used_candidate_skills = set()
 
-    for jd_skill, jd_embedding in jd_embeddings.items():
+    for required_skill in required_skills:
+        if not isinstance(required_skill, str):
+            continue
 
-        best_candidate_skill = None
-        best_similarity = 0.0
+        required_skill = required_skill.strip()
 
-        for (
-            candidate_skill,
-            candidate_embedding
-        ) in candidate_embeddings.items():
+        if not required_skill:
+            continue
 
-            similarity = _cosine_similarity(
-                candidate_embedding,
-                jd_embedding,
-            )
+        required_embedding = _generate_embedding(
+            required_skill,
+            embedding_generator,
+        )
+
+        if required_embedding is None:
+            continue
+
+        best_candidate = None
+        best_similarity = -1.0
+
+        for candidate_skill, candidate_embedding in candidate_embeddings.items():
+
+            if candidate_skill in used_candidate_skills:
+                continue
+
+            try:
+                similarity = cosine_similarity(
+                    candidate_embedding,
+                    required_embedding,
+                )
+            except (TypeError, ValueError):
+                continue
 
             if similarity > best_similarity:
-
                 best_similarity = similarity
-                best_candidate_skill = (
-                    candidate_skill
-                )
-
-        # ----------------------------------------------------
-        # Accept semantic match
-        # ----------------------------------------------------
+                best_candidate = candidate_skill
 
         if (
-            best_candidate_skill is not None
+            best_candidate is not None
             and best_similarity >= threshold
         ):
-
             matches.append(
                 {
-                    "jd_skill": jd_skill,
-                    "candidate_skill":
-                        best_candidate_skill,
-                    "similarity":
-                        round(best_similarity, 4),
-                    "match_type":
-                        "semantic",
+                    "jd_skill": required_skill,
+                    "required_skill": required_skill,
+                    "candidate_skill": best_candidate,
+                    "matched_skill": best_candidate,
+                    "similarity": round(
+                        best_similarity,
+                        4,
+                    ),
+                    "score": round(
+                        best_similarity * 100,
+                        2,
+                    ),
+                    "match_type": "semantic",
+                    "matched": True,
                 }
+            )
+
+            used_candidate_skills.add(
+                best_candidate
             )
 
     return matches

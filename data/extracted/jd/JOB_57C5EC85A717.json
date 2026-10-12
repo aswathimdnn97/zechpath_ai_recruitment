@@ -1,0 +1,44 @@
+{
+    "job_title": "Senior Python Developer",
+    "company": "TechNova Solutions",
+    "location": "Kochi, Kerala",
+    "employment_type": "Full-time",
+    "salary": "",
+    "availability": "",
+    "job_id": "JOB_57C5EC85A717",
+    "job_summary": "We are looking for a Senior Python Developer to design and maintain production backend systems and REST APIs.",
+    "responsibilities": [
+        "Design scalable Python backend services.",
+        "Develop and maintain REST APIs.",
+        "Design and optimize PostgreSQL data models and queries.",
+        "Review code and support production releases.",
+        "Collaborate using Git and cloud deployment practices.",
+        "TechNova Solutions Job Description Page 1 of 1"
+    ],
+    "required_skills": [
+        "Python",
+        "Django",
+        "FastAPI",
+        "REST API",
+        "PostgreSQL",
+        "Git",
+        "API Testing",
+        "Docker",
+        "AWS"
+    ],
+    "preferred_skills": [],
+    "education": [
+        "B.Tech / B.E. / equivalent technical degree preferred."
+    ],
+    "soft_skills": [],
+    "experience": [
+        {
+            "minimum_years": 5,
+            "maximum_years": null,
+            "description": "5 years of relevant backend development experience."
+        }
+    ],
+    "requirements": [],
+    "jd_id": "SeniorPythonDeveloper",
+    "jd_file": "SeniorPythonDeveloper.pdf"
+}

@@ -1,0 +1,503 @@
+{
+  "candidate_id": "CAN_4CFB167D7487",
+  "candidate_score": {
+    "final_score": 95.16,
+    "status": "calculated",
+    "job_title": "Python Developer",
+    "weights": {
+      "skill": 0.45,
+      "experience": 0.3,
+      "education": 0.1,
+      "semantic": 0.15
+    },
+    "component_scores": {
+      "skill": {
+        "score": 100.0,
+        "weight": 0.45,
+        "weight_percentage": 45.0
+      },
+      "experience": {
+        "score": 100.0,
+        "weight": 0.3,
+        "weight_percentage": 30.0
+      },
+      "education": {
+        "score": 76.0,
+        "weight": 0.1,
+        "weight_percentage": 10.0
+      },
+      "semantic": {
+        "score": 83.72,
+        "weight": 0.15,
+        "weight_percentage": 15.0
+      }
+    },
+    "contributions": {
+      "skill": {
+        "score": 100.0,
+        "weight": 0.45,
+        "weight_percentage": 45.0,
+        "contribution": 45.0
+      },
+      "experience": {
+        "score": 100.0,
+        "weight": 0.3,
+        "weight_percentage": 30.0,
+        "contribution": 30.0
+      },
+      "education": {
+        "score": 76.0,
+        "weight": 0.1,
+        "weight_percentage": 10.0,
+        "contribution": 7.6
+      },
+      "semantic": {
+        "score": 83.72,
+        "weight": 0.15,
+        "weight_percentage": 15.0,
+        "contribution": 12.56
+      }
+    },
+    "missing_components": [],
+    "available_weight": 1.0,
+    "weight_source": "role_category",
+    "role_category": "backend",
+    "explanation": [
+      "Skill score: 100.00 (45.00% weight)",
+      "Experience score: 100.00 (30.00% weight)",
+      "Education score: 76.00 (10.00% weight)",
+      "Semantic score: 83.72 (15.00% weight)"
+    ]
+  },
+  "component_scores": {
+    "skill": {
+      "score": 100.0,
+      "weight": 0.4,
+      "candidate_skills": [
+        "Python",
+        "REST API",
+        "API",
+        "Django",
+        "FastAPI",
+        "PostgreSQL",
+        "Git",
+        "API Testing"
+      ],
+      "required": {
+        "skills": [
+          "Python",
+          "Django",
+          "FastAPI",
+          "REST API",
+          "PostgreSQL",
+          "Git",
+          "API Testing"
+        ],
+        "matched": [
+          {
+            "required_skill": "Python",
+            "matched_skill": "Python",
+            "matched": true,
+            "match_type": "exact",
+            "confidence": 1.0
+          },
+          {
+            "required_skill": "Django",
+            "matched_skill": "Django",
+            "matched": true,
+            "match_type": "exact",
+            "confidence": 1.0
+          },
+          {
+            "required_skill": "FastAPI",
+            "matched_skill": "FastAPI",
+            "matched": true,
+            "match_type": "exact",
+            "confidence": 1.0
+          },
+          {
+            "required_skill": "REST API",
+            "matched_skill": "REST API",
+            "matched": true,
+            "match_type": "exact",
+            "confidence": 1.0
+          },
+          {
+            "required_skill": "PostgreSQL",
+            "matched_skill": "PostgreSQL",
+            "matched": true,
+            "match_type": "exact",
+            "confidence": 1.0
+          },
+          {
+            "required_skill": "Git",
+            "matched_skill": "Git",
+            "matched": true,
+            "match_type": "exact",
+            "confidence": 1.0
+          },
+          {
+            "required_skill": "API Testing",
+            "matched_skill": "API Testing",
+            "matched": true,
+            "match_type": "exact",
+            "confidence": 1.0
+          }
+        ],
+        "missing": [],
+        "match_percentage": 100.0
+      },
+      "preferred": {
+        "skills": [],
+        "matched": [],
+        "missing": [],
+        "match_percentage": 100.0
+      },
+      "weights": {
+        "required": 0.8,
+        "preferred": 0.2
+      }
+    },
+    "experience": {
+      "score": 100.0,
+      "weight": 0.3,
+      "component_scores": {
+        "years": {
+          "score": 100.0,
+          "weight": 0.35
+        },
+        "role": {
+          "score": 100.0,
+          "weight": 0.25
+        },
+        "technology": 100.0
+      },
+      "weights": {
+        "years": 0.35,
+        "role": 0.25,
+        "technology": 0.4
+      },
+      "candidate_years": 0.6,
+      "required_minimum_years": 0.0,
+      "required_maximum_years": 1.0,
+      "candidate_roles": [
+        "{'title_id': 'JOB002', 'title': 'Python Developer', 'category': 'Software Development', 'matched_by': 'fuzzy', 'confidence': 95}",
+        "{'title_id': None, 'title': 'Backend Trainee', 'category': 'Unknown', 'matched_by': 'none', 'confidence': 0}"
+      ],
+      "target_role": "Python Developer",
+      "candidate_skills": [
+        "Python",
+        "REST API",
+        "API",
+        "Django",
+        "FastAPI",
+        "PostgreSQL",
+        "Git",
+        "API Testing"
+      ],
+      "experience_skills": [
+        "Python",
+        "REST API",
+        "API",
+        "Django",
+        "FastAPI",
+        "PostgreSQL",
+        "Git",
+        "API Testing"
+      ],
+      "required_skills": [
+        "Python",
+        "Django",
+        "FastAPI",
+        "REST API",
+        "PostgreSQL",
+        "Git",
+        "API Testing"
+      ],
+      "technology_score_source": "skill_score",
+      "status": "calculated"
+    },
+    "education": {
+      "score": 76.0,
+      "weight": 0.1,
+      "degree_score": 100.0,
+      "field_score": 40.0,
+      "candidate_education": [
+        {
+          "degree_type": "Bachelor of Technology",
+          "field_of_study": "Computer Science and Engineering",
+          "institution": null,
+          "university": "KTU",
+          "board": null,
+          "graduation_year": "2026"
+        }
+      ],
+      "best_matching_education": {
+        "degree_score": 100.0,
+        "field_score": 40.0,
+        "score": 76.0,
+        "degree_type": "Bachelor of Technology",
+        "field_of_study": "Computer Science and Engineering",
+        "institution": null,
+        "graduation_year": "2026"
+      },
+      "required_education": [
+        "B.Tech / B.E. / equivalent technical degree preferred."
+      ],
+      "status": "calculated"
+    },
+    "semantic": {
+      "score": 83.72,
+      "weight": 0.2,
+      "similarity": 0.6743,
+      "status": "calculated"
+    }
+  },
+  "metadata": {
+    "candidate_id": "CAN_4CFB167D7487",
+    "candidate_skills": [
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level Python developer with hands-on experience building REST APIs and data-driven applications.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level Python developer with hands-on experience building REST APIs and data-driven applications.",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "summary",
+            "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL and Git.",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Python Developer Intern - TechNova Labs",
+            "source_skill": "Python"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "Python",
+        "skill_id": "TECH001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level Python developer with hands-on experience building REST APIs and data-driven applications.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level Python developer with hands-on experience building REST APIs and data-driven applications.",
+            "source_skill": "rest apis"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Built REST API endpoints using FastAPI and validated request payloads.",
+            "source_skill": "REST API"
+          }
+        ],
+        "original_skill": "rest apis",
+        "resolved_from": "rest apis",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "rest apis"
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "REST API",
+        "skill_id": "TECH025",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level Python developer with hands-on experience building REST APIs and data-driven applications.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level Python developer with hands-on experience building REST APIs and data-driven applications.",
+            "source_skill": "apis"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Built REST API endpoints using FastAPI and validated request payloads.",
+            "source_skill": "API"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Worked with PostgreSQL queries, Git branches and API testing.",
+            "source_skill": "API"
+          }
+        ],
+        "original_skill": "apis",
+        "resolved_from": "apis",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "apis"
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "API",
+        "skill_id": "TECH087",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL and Git.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL and Git.",
+            "source_skill": "Django"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Developed a Django application for student records and authentication.",
+            "source_skill": "Django"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "Django",
+        "skill_id": "TECH012",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL and Git.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL and Git.",
+            "source_skill": "FastAPI"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Built REST API endpoints using FastAPI and validated request payloads.",
+            "source_skill": "FastAPI"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "FastAPI",
+        "skill_id": "TECH014",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL and Git.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL and Git.",
+            "source_skill": "PostgreSQL"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Worked with PostgreSQL queries, Git branches and API testing.",
+            "source_skill": "PostgreSQL"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "PostgreSQL",
+        "skill_id": "TECH018",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL and Git.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL and Git.",
+            "source_skill": "Git"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Worked with PostgreSQL queries, Git branches and API testing.",
+            "source_skill": "Git"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "Git",
+        "skill_id": "TECH023",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Worked with PostgreSQL queries, Git branches and API testing.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Worked with PostgreSQL queries, Git branches and API testing.",
+            "source_skill": "API Testing"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "skill": "API Testing",
+        "skill_id": "TECH061",
+        "matched_by": "exact"
+      }
+    ],
+    "candidate_roles": [
+      {
+        "title_id": "JOB002",
+        "title": "Python Developer",
+        "category": "Software Development",
+        "matched_by": "fuzzy",
+        "confidence": 95
+      },
+      {
+        "title_id": null,
+        "title": "Backend Trainee",
+        "category": "Unknown",
+        "matched_by": "none",
+        "confidence": 0
+      }
+    ],
+    "candidate_education": [
+      {
+        "degree_type": "Bachelor of Technology",
+        "field_of_study": "Computer Science and Engineering",
+        "institution": null,
+        "university": "KTU",
+        "board": null,
+        "graduation_year": "2026"
+      }
+    ],
+    "candidate_years": 0.6
+  },
+  "bias_mitigation": {
+    "applied": true
+  },
+  "candidate_name": "ARUN KUMAR",
+  "jd_id": "PythonDeveloperFresher",
+  "job_id": "JOB_BF2FEFE4A4A3",
+  "jd_file": "PythonDeveloperFresher.pdf"
+}

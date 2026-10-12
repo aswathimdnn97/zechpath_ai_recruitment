@@ -1,0 +1,253 @@
+{
+  "candidate_id": "CAN_410B14422E90",
+  "candidate_score": {
+    "final_score": 56.0,
+    "status": "calculated",
+    "job_title": "Senior Python Developer",
+    "role_category": "backend",
+    "weight_source": "role_category",
+    "weights": {
+      "skill": 0.45,
+      "experience": 0.3,
+      "education": 0.1,
+      "semantic": 0.15
+    },
+    "component_scores": {
+      "skill": {
+        "score": 44.44,
+        "status": "calculated",
+        "weight": 0.45,
+        "weight_percentage": 45.0
+      },
+      "experience": {
+        "score": 52.78,
+        "status": "calculated",
+        "weight": 0.3,
+        "weight_percentage": 30.0
+      },
+      "education": {
+        "score": 76.0,
+        "status": "calculated",
+        "weight": 0.1,
+        "weight_percentage": 10.0
+      },
+      "semantic": {
+        "score": 83.81,
+        "status": "calculated",
+        "weight": 0.15,
+        "weight_percentage": 15.0
+      }
+    },
+    "contributions": {
+      "skill": {
+        "score": 44.44,
+        "weight": 0.45,
+        "weight_percentage": 45.0,
+        "contribution": 20.0
+      },
+      "experience": {
+        "score": 52.78,
+        "weight": 0.3,
+        "weight_percentage": 30.0,
+        "contribution": 15.83
+      },
+      "education": {
+        "score": 76.0,
+        "weight": 0.1,
+        "weight_percentage": 10.0,
+        "contribution": 7.6
+      },
+      "semantic": {
+        "score": 83.81,
+        "weight": 0.15,
+        "weight_percentage": 15.0,
+        "contribution": 12.57
+      }
+    },
+    "missing_components": [],
+    "available_weight": 1.0,
+    "explanation": [
+      "Skill score 44.44 with 45% weight contributed 20.00 points.",
+      "Experience score 52.78 with 30% weight contributed 15.83 points.",
+      "Education score 76.00 with 10% weight contributed 7.60 points.",
+      "Semantic score 83.81 with 15% weight contributed 12.57 points."
+    ]
+  },
+  "component_scores": {
+    "skill": {
+      "score": 44.44,
+      "weight": 0.4,
+      "weight_percentage": 40.0,
+      "candidate_skills": [
+        "Python",
+        "Flask",
+        "SQL",
+        "MySQL",
+        "Docker",
+        "Git",
+        "REST API"
+      ],
+      "required_skills": [
+        "Python",
+        "Django",
+        "FastAPI",
+        "REST API",
+        "PostgreSQL",
+        "Git",
+        "API Testing",
+        "Docker",
+        "AWS"
+      ],
+      "preferred_skills": [],
+      "required": {
+        "score": 44.44,
+        "weight": 0.8,
+        "weight_percentage": 80.0,
+        "contribution": 35.55,
+        "total_skills": 9,
+        "matched_skills": 4,
+        "match_percentage": 44.44,
+        "exact_matches": [
+          "Python",
+          "REST API",
+          "Git",
+          "Docker"
+        ],
+        "relationship_matches": [],
+        "fuzzy_matches": [],
+        "semantic_matches": [],
+        "related_skill_context": [
+          {
+            "candidate_skill": "Python",
+            "required_skill": "Django",
+            "relationship": "related",
+            "matched": false
+          },
+          {
+            "candidate_skill": "Python",
+            "required_skill": "FastAPI",
+            "relationship": "related",
+            "matched": false
+          },
+          {
+            "candidate_skill": "SQL",
+            "required_skill": "PostgreSQL",
+            "relationship": "related",
+            "matched": false
+          }
+        ],
+        "missing_skills": [
+          "Django",
+          "FastAPI",
+          "PostgreSQL",
+          "API Testing",
+          "AWS"
+        ]
+      },
+      "preferred": {
+        "score": 0.0,
+        "weight": 0.2,
+        "weight_percentage": 20.0,
+        "contribution": 0.0,
+        "total_skills": 0,
+        "matched_skills": 0,
+        "match_percentage": 0.0,
+        "exact_matches": [],
+        "relationship_matches": [],
+        "fuzzy_matches": [],
+        "semantic_matches": [],
+        "related_skill_context": [],
+        "missing_skills": []
+      }
+    },
+    "experience": {
+      "score": 52.78,
+      "years_score": 100.0,
+      "role_relevance_score": 0.0,
+      "technology_relevance_score": 44.44,
+      "candidate_years": 6.75,
+      "required_minimum_years": 5.0,
+      "preferred_maximum_years": 0.0,
+      "candidate_roles": [
+        "Backend Engineer"
+      ],
+      "target_job_title": "Senior Python Developer",
+      "experience_skills": [],
+      "candidate_skills": [
+        "Python",
+        "Flask",
+        "SQL",
+        "MySQL",
+        "Docker",
+        "Git",
+        "REST API"
+      ],
+      "required_skills": [
+        "Python",
+        "Django",
+        "FastAPI",
+        "REST API",
+        "PostgreSQL",
+        "Git",
+        "API Testing",
+        "Docker",
+        "AWS"
+      ],
+      "status": "calculated"
+    },
+    "education": {
+      "score": 76.0,
+      "degree_score": 100.0,
+      "field_score": 40.0,
+      "candidate_education": [
+        {
+          "degree_type": "Bachelor of Technology",
+          "field_of_study": "Information Technology",
+          "institution": null,
+          "university": null,
+          "board": null,
+          "graduation_year": "2019"
+        }
+      ],
+      "best_matching_education": {
+        "degree_score": 100.0,
+        "field_score": 40.0,
+        "score": 76.0,
+        "degree_type": "Bachelor of Technology",
+        "field_of_study": "Information Technology",
+        "institution": null,
+        "graduation_year": "2019"
+      },
+      "required_education": [
+        "B.Tech / B.E. / equivalent technical degree preferred."
+      ],
+      "status": "calculated"
+    },
+    "semantic": {
+      "score": 83.81,
+      "similarity": 0.6761,
+      "status": "calculated"
+    }
+  },
+  "metadata": {
+    "job_title": "Senior Python Developer",
+    "required_skills_count": 9,
+    "preferred_skills_count": 0,
+    "candidate_skills_count": 7,
+    "candidate_years": 6.75,
+    "candidate_roles": [
+      "Backend Engineer"
+    ],
+    "candidate_education_count": 1,
+    "jd_experience_count": 1,
+    "jd_education_count": 1
+  },
+  "bias_mitigation": {
+    "personal_attributes_masked": true,
+    "candidate_id_preserved": true
+  },
+  "candidate_name": "SNEHA PILLAI",
+  "jd_id": "SeniorPythonDeveloper",
+  "job_id": "JOB_57C5EC85A717",
+  "jd_file": "SeniorPythonDeveloper.pdf"
+}

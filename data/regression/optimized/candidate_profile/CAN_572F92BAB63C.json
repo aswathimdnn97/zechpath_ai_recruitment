@@ -1,0 +1,787 @@
+{
+  "candidate_id": "CAN_572F92BAB63C",
+  "masked_profile": {
+    "candidate_id": "CAN_572F92BAB63C",
+    "skills": [
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+            "source_skill": "HR Administration"
+          }
+        ],
+        "source_sections": [
+          "summary"
+        ],
+        "skill": "HR Administration",
+        "skill_id": "HR004",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Recruitment",
+            "source_skill": "Recruitment"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "skill": "Recruitment",
+        "skill_id": "HR005",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+            "source_skill": "Talent Acquisition"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Coordinated candidate interview schedules, screened applicant profiles, and assisted in talent acquisition.",
+            "source_skill": "Talent Acquisition"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Talent Acquisition",
+            "source_skill": "Talent Acquisition"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Talent Acquisition",
+        "skill_id": "HR006",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+            "source_skill": "HRMS"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Maintained accurate employee records, updated HRMS databases, and supported new hire onboarding processes.",
+            "source_skill": "HRMS"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "HRMS",
+            "source_skill": "HRMS"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "HRMS",
+        "skill_id": "HR029",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+            "source_skill": "Employee Relations"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Assisted with payroll documentation, employee relations initiatives, and general HR operations.",
+            "source_skill": "Employee Relations"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Employee Relations",
+            "source_skill": "Employee Relations"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Employee Relations",
+        "skill_id": "HR042",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Executive Intern - TalentBridge Solutions",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Intern",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Assisted with payroll documentation, employee relations initiatives, and general HR operations.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Prepared weekly HR activity summaries and basic operational reports using MS Excel.",
+            "source_skill": "hr"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skill": "hr",
+        "resolved_from": "hr",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "hr"
+        ],
+        "skill": "Human Resources",
+        "skill_id": "HR001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+            "source_skill": "onboarding"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Maintained accurate employee records, updated HRMS databases, and supported new hire onboarding processes.",
+            "source_skill": "onboarding"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Maintained accurate employee records, updated HRMS databases, and supported new hire onboarding processes.",
+            "source_skill": "new hire onboarding"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skill": "onboarding",
+        "resolved_from": "onboarding",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "onboarding",
+          "new hire onboarding"
+        ],
+        "skill": "Employee Onboarding",
+        "skill_id": "HR019",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Prepared weekly HR activity summaries and basic operational reports using MS Excel.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Prepared weekly HR activity summaries and basic operational reports using MS Excel.",
+            "source_skill": "ms excel"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "ms excel",
+            "source_skill": "ms excel"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "original_skill": "excel",
+        "resolved_from": "excel",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "excel",
+          "ms excel"
+        ],
+        "skill": "Microsoft Excel",
+        "skill_id": "HR035",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Assisted with payroll documentation, employee relations initiatives, and general HR operations.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Assisted with payroll documentation, employee relations initiatives, and general HR operations.",
+            "source_skill": "HR Operations"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "HR Operations",
+            "source_skill": "HR Operations"
+          }
+        ],
+        "source_sections": [
+          "experience",
+          "skills"
+        ],
+        "skill": "HR Operations",
+        "skill_id": "HR003",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Assisted with payroll documentation, employee relations initiatives, and general HR operations.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Assisted with payroll documentation, employee relations initiatives, and general HR operations.",
+            "source_skill": "Payroll"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Payroll",
+            "source_skill": "Payroll"
+          }
+        ],
+        "source_sections": [
+          "experience",
+          "skills"
+        ],
+        "skill": "Payroll",
+        "skill_id": "HR078",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "Communication",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "Communication",
+            "source_skill": "Communication"
+          }
+        ],
+        "skill": "Communication",
+        "skill_id": "HR069",
+        "matched_by": "exact"
+      }
+    ],
+    "education": [
+      {
+        "degree_type": "Bachelor of Business Administration",
+        "field_of_study": "Management",
+        "institution": null,
+        "university": null,
+        "board": null,
+        "graduation_year": "2026"
+      }
+    ],
+    "experience": [
+      {
+        "title": {
+          "title_id": null,
+          "title": "HR Executive Intern",
+          "category": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "company": {
+          "company_id": null,
+          "company": "TalentBridge Solutions",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jan 2026",
+          "end_date": "Jun 2026"
+        },
+        "total_experience": {
+          "total_months": 6,
+          "total_years": 0.5
+        },
+        "location": "Kochi, Kerala",
+        "employment_type": {
+          "type_id": "EMP003",
+          "employment_type": "Internship",
+          "matched_by": "keyword",
+          "confidence": 100
+        },
+        "department": {
+          "department_id": "DEP004",
+          "department": "Human Resources",
+          "matched_by": "keyword",
+          "confidence": 75
+        },
+        "description": [
+          "Coordinated candidate interview schedules, screened applicant profiles, and assisted in talent acquisition.",
+          "Maintained accurate employee records, updated HRMS databases, and supported new hire onboarding processes.",
+          "Assisted with payroll documentation, employee relations initiatives, and general HR operations.",
+          "Prepared weekly HR activity summaries and basic operational reports using MS Excel."
+        ]
+      }
+    ],
+    "projects": [],
+    "certifications": [],
+    "metadata": {
+      "parser_version": "1.0",
+      "created_at": "2026-10-09T06:49:52.402435+00:00"
+    }
+  },
+  "bias_report": {
+    "bias_detected": false,
+    "risk_level": "none",
+    "indicator_count": 0,
+    "indicators": [],
+    "status": "clear"
+  },
+  "original_profile": {
+    "candidate_id": "CAN_572F92BAB63C",
+    "personal_information": {
+      "name": "SNEHA RAJ",
+      "email": "sneha.r@example.com",
+      "phone": null,
+      "location": "Kochi, Kerala",
+      "linkedin": null,
+      "github": null,
+      "portfolio": null
+    },
+    "skills": [
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+            "source_skill": "HR Administration"
+          }
+        ],
+        "source_sections": [
+          "summary"
+        ],
+        "skill": "HR Administration",
+        "skill_id": "HR004",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Recruitment",
+            "source_skill": "Recruitment"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "skill": "Recruitment",
+        "skill_id": "HR005",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+            "source_skill": "Talent Acquisition"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Coordinated candidate interview schedules, screened applicant profiles, and assisted in talent acquisition.",
+            "source_skill": "Talent Acquisition"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Talent Acquisition",
+            "source_skill": "Talent Acquisition"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Talent Acquisition",
+        "skill_id": "HR006",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+            "source_skill": "HRMS"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Maintained accurate employee records, updated HRMS databases, and supported new hire onboarding processes.",
+            "source_skill": "HRMS"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "HRMS",
+            "source_skill": "HRMS"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "HRMS",
+        "skill_id": "HR029",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+            "source_skill": "Employee Relations"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Assisted with payroll documentation, employee relations initiatives, and general HR operations.",
+            "source_skill": "Employee Relations"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Employee Relations",
+            "source_skill": "Employee Relations"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Employee Relations",
+        "skill_id": "HR042",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Executive Intern - TalentBridge Solutions",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Intern",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Assisted with payroll documentation, employee relations initiatives, and general HR operations.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Prepared weekly HR activity summaries and basic operational reports using MS Excel.",
+            "source_skill": "hr"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skill": "hr",
+        "resolved_from": "hr",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "hr"
+        ],
+        "skill": "Human Resources",
+        "skill_id": "HR001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+            "source_skill": "onboarding"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Maintained accurate employee records, updated HRMS databases, and supported new hire onboarding processes.",
+            "source_skill": "onboarding"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Maintained accurate employee records, updated HRMS databases, and supported new hire onboarding processes.",
+            "source_skill": "new hire onboarding"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skill": "onboarding",
+        "resolved_from": "onboarding",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "onboarding",
+          "new hire onboarding"
+        ],
+        "skill": "Employee Onboarding",
+        "skill_id": "HR019",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level HR Executive with hands-on internship experience in talent acquisition, employee relations, HRMS management, and Excel reporting. Skilled in supporting end-to-end recruitment pipelines, onboarding workflows, and general HR administration.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Prepared weekly HR activity summaries and basic operational reports using MS Excel.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Prepared weekly HR activity summaries and basic operational reports using MS Excel.",
+            "source_skill": "ms excel"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "ms excel",
+            "source_skill": "ms excel"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "original_skill": "excel",
+        "resolved_from": "excel",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "excel",
+          "ms excel"
+        ],
+        "skill": "Microsoft Excel",
+        "skill_id": "HR035",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Assisted with payroll documentation, employee relations initiatives, and general HR operations.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Assisted with payroll documentation, employee relations initiatives, and general HR operations.",
+            "source_skill": "HR Operations"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "HR Operations",
+            "source_skill": "HR Operations"
+          }
+        ],
+        "source_sections": [
+          "experience",
+          "skills"
+        ],
+        "skill": "HR Operations",
+        "skill_id": "HR003",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Assisted with payroll documentation, employee relations initiatives, and general HR operations.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Assisted with payroll documentation, employee relations initiatives, and general HR operations.",
+            "source_skill": "Payroll"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Payroll",
+            "source_skill": "Payroll"
+          }
+        ],
+        "source_sections": [
+          "experience",
+          "skills"
+        ],
+        "skill": "Payroll",
+        "skill_id": "HR078",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "Communication",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "Communication",
+            "source_skill": "Communication"
+          }
+        ],
+        "skill": "Communication",
+        "skill_id": "HR069",
+        "matched_by": "exact"
+      }
+    ],
+    "education": [
+      {
+        "degree_type": "Bachelor of Business Administration",
+        "field_of_study": "Management",
+        "institution": null,
+        "university": null,
+        "board": null,
+        "graduation_year": "2026"
+      }
+    ],
+    "experience": [
+      {
+        "title": {
+          "title_id": null,
+          "title": "HR Executive Intern",
+          "category": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "company": {
+          "company_id": null,
+          "company": "TalentBridge Solutions",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jan 2026",
+          "end_date": "Jun 2026"
+        },
+        "total_experience": {
+          "total_months": 6,
+          "total_years": 0.5
+        },
+        "location": "Kochi, Kerala",
+        "employment_type": {
+          "type_id": "EMP003",
+          "employment_type": "Internship",
+          "matched_by": "keyword",
+          "confidence": 100
+        },
+        "department": {
+          "department_id": "DEP004",
+          "department": "Human Resources",
+          "matched_by": "keyword",
+          "confidence": 75
+        },
+        "description": [
+          "Coordinated candidate interview schedules, screened applicant profiles, and assisted in talent acquisition.",
+          "Maintained accurate employee records, updated HRMS databases, and supported new hire onboarding processes.",
+          "Assisted with payroll documentation, employee relations initiatives, and general HR operations.",
+          "Prepared weekly HR activity summaries and basic operational reports using MS Excel."
+        ]
+      }
+    ],
+    "projects": [],
+    "certifications": [],
+    "metadata": {
+      "parser_version": "1.0",
+      "created_at": "2026-10-09T06:49:52.402435+00:00"
+    }
+  }
+}

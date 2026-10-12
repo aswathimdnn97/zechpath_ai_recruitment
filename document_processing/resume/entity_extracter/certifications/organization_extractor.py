@@ -36,6 +36,92 @@ DATE_ONLY_PATTERN = re.compile(
     re.IGNORECASE | re.VERBOSE
 )
 
+ISSUER_TYPE_PATTERN = re.compile(
+    r"\b(?:academy|university|college|institute|school|"
+    r"learning|education|training|boot\s*camp|labs?|"
+    r"foundation|association|council|board|center|centre|"
+    r"technologies|technology|private\s+limited|pvt\.?\s*ltd\.?|"
+    r"limited|ltd\.?|llp|incorporated|inc\.?|corporation|corp\.?|llc)\b",
+    re.IGNORECASE,
+)
+
+CERTIFICATION_MONTH_PATTERN = (
+    r"(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|"
+    r"jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t(?:ember)?)?|"
+    r"oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)"
+)
+
+
+def _strip_trailing_dates(text):
+    month_year = (
+        rf"{CERTIFICATION_MONTH_PATTERN}\s*,?\s*(?:19|20)\d{{2}}"
+    )
+    date_value = rf"(?:{month_year}|(?:19|20)\d{{2}})"
+
+    text = re.sub(
+        rf"\s*\(?\s*{date_value}\s*[-–—]\s*"
+        rf"(?:{date_value}|present|current|ongoing)\s*\)?\s*$",
+        "",
+        text,
+        flags=re.IGNORECASE,
+    )
+    text = re.sub(
+        rf"[,\s]+\(?\s*{month_year}\s*\)?\s*$",
+        "",
+        text,
+        flags=re.IGNORECASE,
+    )
+    text = re.sub(
+        r"[,\s]+\(?\s*(?:19|20)\d{2}\s*\)?\s*$",
+        "",
+        text,
+    )
+    return text.strip(" ,;|")
+
+
+def _is_issuing_organization(text):
+    return bool(
+        text
+        and (
+            KNOWN_ORGANIZATION_PATTERN.search(text)
+            or ISSUER_TYPE_PATTERN.search(text)
+        )
+    )
+
+
+def split_organization_suffix(text):
+    """Split a certification title from a recognizable issuer suffix."""
+    if not isinstance(text, str):
+        return None
+
+    pipe_separators = list(re.finditer(r"\s*\|\s*", text))
+    for separator in reversed(pipe_separators):
+        title = text[:separator.start()].strip()
+        organization = _strip_trailing_dates(
+            text[separator.end():].strip()
+        )
+
+        if title and _is_issuing_organization(organization):
+            return title, organization
+
+    separators = list(
+        re.finditer(r"\s*(?:\||[—–]|-)\s*", text)
+    )
+
+    for separator in reversed(separators):
+        title = text[:separator.start()].strip()
+        organization = _strip_trailing_dates(
+            text[separator.end():].strip()
+        )
+
+        if not title or not organization:
+            continue
+
+        if _is_issuing_organization(organization):
+            return title, organization
+
+    return None
+
 
 def _infer_org_from_title(title):
     """Infer a likely issuing organization from a certification title."""
@@ -72,6 +158,11 @@ def extract_issuing_organization(
     if not block:
         return None
 
+    if isinstance(block, list) and block:
+        suffix = split_organization_suffix(block[0])
+        if suffix:
+            return suffix[1]
+
     # Prefer lines after the title (commonly the second line contains org)
     if isinstance(block, list):
         for line in block[1:]:
@@ -105,6 +196,10 @@ def extract_issuing_organization(
             return inferred
 
     text = " ".join(block) if isinstance(block, list) else str(block)
+    suffix = split_organization_suffix(text)
+    if suffix:
+        return suffix[1]
+
     parts = re.split(r"\s*[—–]\s*", text, maxsplit=1)
 
     if len(parts) == 2:

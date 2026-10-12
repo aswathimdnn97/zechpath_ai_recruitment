@@ -1,473 +1,335 @@
-"""
-skill_list_splitter.py
-
-Responsibilities
-----------------
-1. Split a dedicated Skills section into individual skill candidates.
-2. Handle common separators.
-3. Handle space-separated skills using the master skill dictionary
-   and skill aliases.
-4. Remove category labels such as:
-       Backend:
-       Frontend:
-       Database:
-       Programming Languages:
-5. Preserve multi-word skill names.
-6. Preserve technology names such as:
-       C++
-       C#
-       .NET
-       Node.js
-       React.js
-
-This module does NOT:
-    - resolve spelling
-    - resolve synonyms
-    - validate skills
-    - perform fuzzy matching
-    - expand technology stacks
-
-Those responsibilities belong to:
-    spelling_resolver.py
-    synonym_resolver.py
-    master_skill_validator.py
-    stack_resolver.py
-"""
-
 import json
 import re
 from pathlib import Path
+from typing import Any
 
-
-# ============================================================
-# PATHS
-# ============================================================
 
 BASE_DIR = Path(__file__).resolve().parents[4]
 
 MASTER_SKILL_DICTIONARY = (
-    BASE_DIR / "data" / "resume" / "skills" / "master_skill_dictionary.json"
+    BASE_DIR
+    / "data"
+    / "resume"
+    / "skills"
+    / "master_skill_dictionary.json"
 )
 
 SKILL_ALIASES = (
-    BASE_DIR / "data" / "resume" / "skills" / "skill_aliases.json"
+    BASE_DIR
+    / "data"
+    / "resume"
+    / "skills"
+    / "skill_aliases.json"
 )
 
 
-# ============================================================
-# CATEGORY PREFIXES
-# ============================================================
+# ---------------------------------------------------------------------
+# JSON LOADERS
+# ---------------------------------------------------------------------
 
-CATEGORY_PREFIX_PATTERN = re.compile(
-    r"""
-    ^\s*
-    (?:
-        backend
-        |frontend
-        |full[-\s]?stack
-        |database
-        |databases
-        |programming\s+languages?
-        |technical\s+skills?
-        |technologies
-        |technology
-        |frameworks?
-        |libraries
-        |tools
-        |devops
-        |cloud
-        |testing
-        |testing\s+tools
-        |web\s+technologies
-        |soft\s+skills
-        |skills
-    )
-    \s*:\s*
-    """,
-    flags=re.IGNORECASE | re.VERBOSE,
-)
-
-
-# ============================================================
-# BULLET PREFIX
-# ============================================================
-
-BULLET_PATTERN = re.compile(
-    r"^[\s•●▪◦‣\*-]+"
-)
-
-
-# ============================================================
-# EXPLICIT SKILL SEPARATORS
-# ============================================================
-
-SEPARATOR_PATTERN = re.compile(
-    r"""
-    \s*
-    (?:
-        \|
-        |,
-        |;
-        |\u2022
-        |\u00b7
-    )
-    \s*
-    """,
-    flags=re.VERBOSE,
-)
-
-
-# ============================================================
-# LOAD MASTER SKILLS
-# ============================================================
-
-def _load_master_skills():
-    """
-    Load canonical skill names from the master dictionary.
-
-    Expected structure:
-
-    [
-        {
-            "skill_id": "TECH001",
-            "name": "Python",
-            ...
-        }
-    ]
-    """
-
+def _load_json(path: Path) -> Any:
+    """Load JSON safely."""
     try:
-        if not MASTER_SKILL_DICTIONARY.exists():
-            return []
+        with path.open("r", encoding="utf-8") as file:
+            return json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError, OSError):
+        return None
 
-        with open(
-            MASTER_SKILL_DICTIONARY,
-            "r",
-            encoding="utf-8",
-        ) as file:
 
-            data = json.load(file)
+def _load_master_skills() -> list[str]:
+    """
+    Load active skill names from master_skill_dictionary.json.
+    """
+    data = _load_json(MASTER_SKILL_DICTIONARY)
 
-    except (
-        OSError,
-        json.JSONDecodeError,
-    ):
+    if not data:
         return []
 
-    if not isinstance(data, list):
-        return []
+    skills: list[str] = []
 
-    skills = []
+    if isinstance(data, list):
+        for item in data:
 
-    for item in data:
+            if isinstance(item, str):
+                value = item.strip()
 
-        if not isinstance(item, dict):
-            continue
+                if value:
+                    skills.append(value)
 
-        name = item.get("name")
+            elif isinstance(item, dict):
 
-        if not isinstance(name, str):
-            continue
+                status = item.get("status", "active")
 
-        name = name.strip()
+                if status not in ("active", None):
+                    continue
 
-        if not name:
-            continue
+                value = (
+                    item.get("name")
+                    or item.get("skill")
+                    or item.get("skill_name")
+                    or item.get("canonical_name")
+                )
 
-        status = item.get(
-            "status",
-            "active",
-        )
+                if isinstance(value, str) and value.strip():
+                    skills.append(value.strip())
 
-        if isinstance(status, str):
-            if status.lower() != "active":
-                continue
+    elif isinstance(data, dict):
 
-        skills.append(name)
+        for key, value in data.items():
 
-    return skills
+            if isinstance(value, str):
+                value = value.strip()
+
+                if value:
+                    skills.append(value)
+
+            elif isinstance(key, str):
+                key = key.strip()
+
+                if key:
+                    skills.append(key)
+
+    # Remove duplicates while preserving order.
+    return list(dict.fromkeys(skills))
 
 
-# ============================================================
-# LOAD ALIASES
-# ============================================================
-
-def _load_aliases():
+def _load_aliases() -> dict[str, str]:
     """
-    Load aliases from skill_aliases.json.
+    Load skill aliases.
 
-    Example:
-
-        {
-            "aws": "AWS",
-            "amazon web services": "AWS",
-            "docker": "Docker",
-            "docker container": "Docker",
-            "fast api": "FastAPI"
-        }
+    Keys are normalized for matching.
+    Values are canonical skill names.
     """
-
-    try:
-        if not SKILL_ALIASES.exists():
-            return {}
-
-        with open(
-            SKILL_ALIASES,
-            "r",
-            encoding="utf-8",
-        ) as file:
-
-            data = json.load(file)
-
-    except (
-        OSError,
-        json.JSONDecodeError,
-    ):
-        return {}
+    data = _load_json(SKILL_ALIASES)
 
     if not isinstance(data, dict):
         return {}
 
-    aliases = {}
+    aliases: dict[str, str] = {}
 
-    for alias, canonical in data.items():
+    for key, value in data.items():
 
-        if not isinstance(
-            alias,
-            str,
-        ):
+        if not isinstance(key, str):
             continue
 
-        if not isinstance(
-            canonical,
-            str,
-        ):
+        if not isinstance(value, str):
             continue
 
-        alias = alias.strip()
-        canonical = canonical.strip()
+        key = key.strip()
+        value = value.strip()
 
-        if not alias or not canonical:
+        if not key or not value:
             continue
 
-        aliases[
-            alias.lower()
-        ] = canonical
+        aliases[_normalize_match_text(key)] = value
 
     return aliases
 
 
-# ============================================================
-# NORMALIZE MATCH TEXT
-# ============================================================
+# ---------------------------------------------------------------------
+# NORMALIZATION
+# ---------------------------------------------------------------------
 
-def _normalize_match_text(value):
+def _normalize_match_text(value: str) -> str:
     """
-    Normalize text only for matching.
+    Normalize text only for comparison.
 
-    Examples:
-
-        "Fast API" -> "fast api"
-        "REST APIs" -> "rest apis"
-        "AWS" -> "aws"
+    This does NOT change the returned skill.
     """
-
-    if not isinstance(
-        value,
-        str,
-    ):
+    if not isinstance(value, str):
         return ""
 
-    value = value.strip().lower()
+    value = value.lower().strip()
 
-    value = re.sub(
-        r"\s+",
-        " ",
-        value,
-    )
+    value = value.replace("–", "-")
+    value = value.replace("—", "-")
+
+    value = re.sub(r"\s+", " ", value)
 
     return value
 
 
-# ============================================================
-# CLEAN ONE SKILL ITEM
-# ============================================================
-
-def _clean_skill_item(skill):
+def _compact_match_text(value: str) -> str:
     """
-    Clean one extracted skill candidate.
+    Create a compact comparison form.
 
-    This function intentionally does not perform
-    spelling correction or synonym resolution.
+    Examples:
+
+        Fast API
+        fastapi
+
+    both become:
+
+        fastapi
     """
+    normalized = _normalize_match_text(value)
 
-    if not isinstance(
-        skill,
-        str,
-    ):
+    return re.sub(r"[^a-z0-9]+", "", normalized)
+
+
+# ---------------------------------------------------------------------
+# CLEANING
+# ---------------------------------------------------------------------
+
+def _clean_skill_item(skill: str) -> str:
+    """Clean an individual skill."""
+    if not isinstance(skill, str):
         return ""
 
     skill = skill.strip()
 
-    if not skill:
-        return ""
+    skill = re.sub(r"^[,;|•·]+", "", skill)
+    skill = re.sub(r"[,;|•·]+$", "", skill)
 
-    # Remove bullet characters.
-    skill = BULLET_PATTERN.sub(
-        "",
-        skill,
-    ).strip()
-
-    # Remove category prefix.
-    skill = CATEGORY_PREFIX_PATTERN.sub(
-        "",
-        skill,
-    ).strip()
-
-    # Normalize repeated whitespace.
-    skill = re.sub(
-        r"\s+",
-        " ",
-        skill,
-    )
+    skill = re.sub(r"\s+", " ", skill)
 
     return skill.strip()
 
 
-# ============================================================
-# DICTIONARY-AWARE SPACE SEPARATED SPLITTER
-# ============================================================
-
-def _split_using_known_skills(line):
+def _remove_category_prefix(skill: str) -> str:
     """
-    Extract known skills from a space-separated Skills line.
+    Remove a category prefix.
 
-    Example:
+    Examples:
 
-        Python Django Fast API REST API PostgreSQL Git Docker AWS API Testing
+        Backend: Django, Flask
+        Frontend: React
+        Database: MySQL
 
-    becomes:
+    become:
 
-        Python
-        Django
-        Fast API
-        REST API
-        PostgreSQL
-        Git
-        Docker
-        AWS
-        API Testing
-
-    The longest matching skill phrases are checked first so
-    multi-word skills are preserved.
-
-    IMPORTANT
-    ---------
-    This function does not perform fuzzy matching.
-
-    It only uses exact normalized matching against:
-
-        1. master skill dictionary
-        2. skill aliases
+        Django, Flask
+        React
+        MySQL
     """
+    if not isinstance(skill, str):
+        return ""
 
-    if not isinstance(
-        line,
-        str,
-    ):
-        return []
+    skill = skill.strip()
 
-    line = _clean_skill_item(line)
+    # Only remove a prefix when a colon is present.
+    match = re.match(
+        r"^[A-Za-z][A-Za-z0-9 /&+.#-]*\s*:\s*",
+        skill,
+    )
 
-    if not line:
-        return []
+    if match:
+        skill = skill[match.end():]
 
-    master_skills = _load_master_skills()
-    aliases = _load_aliases()
-    
-    print("\n========== SPLITTER DEBUG ==========")
+    return skill.strip()
 
-    print("MASTER DICTIONARY PATH:")
-    print(MASTER_SKILL_DICTIONARY)
-    print("EXISTS:", MASTER_SKILL_DICTIONARY.exists())
-    print("MASTER SKILLS COUNT:", len(master_skills))
 
-    print("\nALIASES PATH:")
-    print(SKILL_ALIASES)
-    print("EXISTS:", SKILL_ALIASES.exists())
-    print("ALIASES COUNT:", len(aliases))
+# ---------------------------------------------------------------------
+# ALIAS HANDLING
+# ---------------------------------------------------------------------
 
-    print("\nCHECKING REQUIRED SKILLS:")
+def _apply_formatting_alias(
+    skill: str,
+    aliases: dict[str, str],
+) -> str:
+    """
+    Apply ONLY formatting-equivalent aliases.
 
-    for value in [
-        "Python",
-        "Django",
-        "FastAPI",
-        "PostgreSQL",
-        "Git",
-        "Docker",
-        "AWS",
-        "API Testing",
-    ]:
-        print(
-            value,
-            "=>",
-            value.lower() in [
-                str(skill).lower()
-                for skill in master_skills
-            ]
+    Examples:
+
+        Fast API -> FastAPI
+        node js -> Node.js
+        django-rest-framework -> Django REST Framework
+
+    But:
+
+        REST APIs -> REST APIs
+
+    because:
+
+        restapis != restapi
+    """
+    skill = _clean_skill_item(skill)
+
+    if not skill:
+        return ""
+
+    normalized = _normalize_match_text(skill)
+
+    canonical = aliases.get(normalized)
+
+    if not canonical:
+        return skill
+
+    # Only normalize if the difference is formatting.
+    if _compact_match_text(skill) == _compact_match_text(canonical):
+        return canonical
+
+    # Otherwise preserve the candidate text.
+    return skill
+
+
+# ---------------------------------------------------------------------
+# EXPLICIT-SEPARATOR SPLITTING
+# ---------------------------------------------------------------------
+
+def _split_explicit_separators(
+    text: str,
+    aliases: dict[str, str],
+) -> list[str]:
+    """
+    Split comma/semicolon/pipe/bullet separated skills.
+    """
+    parts = re.split(r"[,;|•·]+", text)
+
+    result: list[str] = []
+
+    for part in parts:
+
+        part = _clean_skill_item(part)
+        part = _remove_category_prefix(part)
+
+        if not part:
+            continue
+
+        part = _apply_formatting_alias(
+            part,
+            aliases,
         )
 
-    print("====================================\n")
+        if part:
+            result.append(part)
 
-    # --------------------------------------------------------
-    # Build known phrases.
-    # --------------------------------------------------------
+    return result
 
-    known_phrases = {}
 
-    # Canonical master skills.
+# ---------------------------------------------------------------------
+# MASTER-DICTIONARY MATCHING
+# ---------------------------------------------------------------------
+
+def _build_known_skill_phrases(
+    master_skills: list[str],
+    aliases: dict[str, str],
+) -> dict[str, list[tuple[str, list[str]]]]:
+    """
+    Build all recognized phrases.
+
+    Both master names and alias names are accepted for matching.
+    """
+    phrases: set[str] = set()
+
     for skill in master_skills:
 
-        normalized = _normalize_match_text(
-            skill
-        )
+        normalized = _normalize_match_text(skill)
 
         if normalized:
-            known_phrases[
-                normalized
-            ] = skill
+            phrases.add(normalized)
 
-    # Aliases.
-    for alias, canonical in aliases.items():
+    for alias in aliases:
 
-        normalized_alias = _normalize_match_text(
-            alias
-        )
+        normalized = _normalize_match_text(alias)
 
-        if normalized_alias:
-            known_phrases[
-                normalized_alias
-            ] = alias
+        if normalized:
+            phrases.add(normalized)
 
-    if not known_phrases:
-        return [line]
-
-    # --------------------------------------------------------
-    # Sort longest phrases first.
-    #
-    # This is important.
-    #
-    # Example:
-    #
-    # API
-    # API Testing
-    #
-    # We must match API Testing first.
-    # --------------------------------------------------------
-
-    phrases = sorted(
-        known_phrases.keys(),
+    # Keep the original longest-first order within each initial token.
+    ordered_phrases = sorted(
+        phrases,
         key=lambda value: (
             len(value.split()),
             len(value),
@@ -475,120 +337,135 @@ def _split_using_known_skills(line):
         reverse=True,
     )
 
-    # --------------------------------------------------------
-    # Tokenize input while preserving original tokens.
-    # --------------------------------------------------------
+    phrases_by_first_token: dict[
+        str,
+        list[tuple[str, list[str]]],
+    ] = {}
 
-    tokens = line.split()
+    for phrase in ordered_phrases:
+        phrase_tokens = phrase.split()
 
-    if not tokens:
+        if phrase_tokens:
+            phrases_by_first_token.setdefault(
+                phrase_tokens[0],
+                [],
+            ).append((phrase, phrase_tokens))
+
+    return phrases_by_first_token
+
+
+def _find_matching_phrase(
+    tokens: list[str],
+    start: int,
+    phrases: dict[str, list[tuple[str, list[str]]]],
+) -> tuple[str | None, int]:
+    """
+    Find the longest known skill beginning at `start`.
+
+    Returns:
+
+        (matched_phrase, number_of_tokens)
+
+    or:
+
+        (None, 0)
+    """
+    for phrase, phrase_tokens in phrases.get(tokens[start], ()):
+        count = len(phrase_tokens)
+
+        if start + count > len(tokens):
+            continue
+
+        if tokens[start:start + count] == phrase_tokens:
+            return phrase, count
+
+    return None, 0
+
+
+def _split_using_known_skills(
+    text: str,
+    aliases: dict[str, str],
+    phrases: dict[str, list[tuple[str, list[str]]]],
+) -> list[str]:
+    """
+    Split whitespace-separated skills using the master dictionary.
+
+    Example:
+
+        Python SQL MySQL JavaScript HTML CSS Git
+
+    becomes:
+
+        Python
+        SQL
+        MySQL
+        JavaScript
+        HTML
+        CSS
+        Git
+    """
+    text = _clean_skill_item(text)
+
+    if not text:
         return []
 
-    results = []
+    if not phrases:
+        return []
+
+    normalized_text = _normalize_match_text(text)
+
+    tokens = normalized_text.split()
+
+    result: list[str] = []
 
     index = 0
 
     while index < len(tokens):
 
-        matched = False
+        matched_phrase, token_count = _find_matching_phrase(
+            tokens,
+            index,
+            phrases,
+        )
 
-        # ----------------------------------------------------
-        # Try longest phrase first.
-        # ----------------------------------------------------
+        if matched_phrase is None:
 
-        for phrase in phrases:
-
-            phrase_tokens = phrase.split()
-
-            phrase_length = len(
-                phrase_tokens
-            )
-
-            if (
-                index + phrase_length
-                > len(tokens)
-            ):
-                continue
-
-            candidate_tokens = tokens[
-                index:
-                index + phrase_length
-            ]
-
-            candidate = " ".join(
-                candidate_tokens
-            )
-
-            normalized_candidate = (
-                _normalize_match_text(
-                    candidate
-                )
-            )
-
-            if normalized_candidate != phrase:
-                continue
-
-            # ------------------------------------------------
-            # Preserve original text from resume.
-            # ------------------------------------------------
-
-            original_candidate = " ".join(
-                candidate_tokens
-            )
-
-            results.append(
-                original_candidate
-            )
-
-            index += phrase_length
-
-            matched = True
-
-            break
-
-        # ----------------------------------------------------
-        # No known skill matched.
-        # ----------------------------------------------------
-
-        if not matched:
-
-            # Move one token forward.
-            #
-            # Do NOT add unknown tokens as skills.
-            #
-            # They will be ignored by this dictionary-aware
-            # splitter.
+            # Unknown token.
             index += 1
+            continue
 
-    return results
+        # Preserve the candidate's token spelling as much as possible.
+        original_tokens = tokens[
+            index:index + token_count
+        ]
+
+        candidate = " ".join(original_tokens)
+
+        # Apply only formatting aliases.
+        candidate = _apply_formatting_alias(
+            candidate,
+            aliases,
+        )
+
+        if candidate:
+            result.append(candidate)
+
+        index += token_count
+
+    return result
 
 
-# ============================================================
-# SPLIT ONE LINE
-# ============================================================
+# ---------------------------------------------------------------------
+# ONE-LINE PROCESSING
+# ---------------------------------------------------------------------
 
-def _split_line(line):
-    """
-    Split one Skills-section line.
+def _split_line(
+    line: str,
+    aliases: dict[str, str],
+    phrases: dict[str, list[tuple[str, list[str]]]],
+) -> list[str]:
 
-    Supports:
-
-        Backend: Django, FastAPI, Flask
-
-        Frontend: React | JavaScript | HTML | CSS
-
-        Database: PostgreSQL; MongoDB
-
-        Python Django Fast API REST API PostgreSQL Git Docker AWS
-
-    The final example is handled using dictionary-aware
-    matching rather than whitespace splitting.
-    """
-
-    if not isinstance(
-        line,
-        str,
-    ):
+    if not isinstance(line, str):
         return []
 
     line = line.strip()
@@ -596,242 +473,164 @@ def _split_line(line):
     if not line:
         return []
 
-    # --------------------------------------------------------
-    # Remove bullet.
-    # --------------------------------------------------------
-
-    line = BULLET_PATTERN.sub(
-        "",
-        line,
-    ).strip()
-
-    # --------------------------------------------------------
-    # Remove category prefix.
-    # --------------------------------------------------------
-
-    line = CATEGORY_PREFIX_PATTERN.sub(
-        "",
-        line,
-    ).strip()
+    # Remove category labels such as Backend:
+    line = _remove_category_prefix(line)
 
     if not line:
         return []
 
-    # --------------------------------------------------------
-    # First try explicit separators.
-    # --------------------------------------------------------
+    # -------------------------------------------------------------
+    # Case 1: explicit separators
+    # -------------------------------------------------------------
+    if re.search(r"[,;|•·]", line):
 
-    if SEPARATOR_PATTERN.search(line):
-
-        parts = SEPARATOR_PATTERN.split(
-            line
+        return _split_explicit_separators(
+            line,
+            aliases,
         )
 
-        cleaned = []
+    # -------------------------------------------------------------
+    # Case 2: whitespace-separated skills
+    # -------------------------------------------------------------
+    result = _split_using_known_skills(
+        line,
+        aliases,
+        phrases,
+    )
 
-        for part in parts:
+    if result:
+        return result
 
-            skill = _clean_skill_item(
-                part
+    # -------------------------------------------------------------
+    # Case 3: entire line is one skill
+    # -------------------------------------------------------------
+    cleaned = _clean_skill_item(line)
+
+    if cleaned:
+        return [
+            _apply_formatting_alias(
+                cleaned,
+                aliases,
             )
-
-            if skill:
-                cleaned.append(
-                    skill
-                )
-
-        return cleaned
-
-    # --------------------------------------------------------
-    # No explicit separators.
-    #
-    # Use dictionary-aware matching.
-    # --------------------------------------------------------
-
-    dictionary_skills = (
-        _split_using_known_skills(
-            line
-        )
-    )
-
-    if dictionary_skills:
-        return dictionary_skills
-
-    # --------------------------------------------------------
-    # Fallback:
-    #
-    # Preserve the complete item rather than incorrectly
-    # splitting multi-word skills.
-    # --------------------------------------------------------
-
-    cleaned = _clean_skill_item(
-        line
-    )
-
-    return [cleaned] if cleaned else []
-
-
-# ============================================================
-# MAIN FUNCTION
-# ============================================================
-
-def split_skill_line(lines):
-    """
-    Split a dedicated Skills section into raw skill candidates.
-
-    Input
-    -----
-    Can be:
-
-        - string
-        - list[str]
-        - nested list
-
-    Examples
-    --------
-
-        Input:
-
-            [
-                "Backend: Django, FastAPI, Flask",
-                "Frontend: React, JavaScript, HTML, CSS",
-                "Database: PostgreSQL, MongoDB"
-            ]
-
-        Output:
-
-            [
-                "Django",
-                "FastAPI",
-                "Flask",
-                "React",
-                "JavaScript",
-                "HTML",
-                "CSS",
-                "PostgreSQL",
-                "MongoDB"
-            ]
-
-    Space-separated input:
-
-        "Python Django Fast API REST API PostgreSQL Git Docker AWS API Testing"
-
-    becomes:
-
-        [
-            "Python",
-            "Django",
-            "Fast API",
-            "REST API",
-            "PostgreSQL",
-            "Git",
-            "Docker",
-            "AWS",
-            "API Testing"
         ]
 
-    IMPORTANT
-    ---------
+    return []
 
-    This function returns RAW candidates.
 
-    It does not perform:
+# ---------------------------------------------------------------------
+# PUBLIC FUNCTION
+# ---------------------------------------------------------------------
 
-        spelling correction
-        synonym resolution
-        fuzzy matching
-        validation
-        stack expansion
+def split_skill_line(raw_skills: Any) -> list[str]:
     """
+    Split skills from a resume skills section.
+
+    Supported:
+
+        "Python SQL MySQL Git"
+
+        ["Python SQL MySQL Git"]
+
+        [["Backend: Django, Flask, Fast API"]]
+
+        [["Backend: Django"], ["Frontend: React"]]
+
+    Responsibilities:
+
+        - split skills
+        - recognize master-dictionary skills
+        - recognize aliases
+        - preserve candidate spelling where appropriate
+        - normalize formatting-only aliases
+
+    Not responsible for:
+
+        - fuzzy matching
+        - synonym resolution
+        - semantic relationships
+        - stack expansion
+        - skill IDs
+        - confidence scoring
+    """
+
+    master_skills = _load_master_skills()
+    aliases = _load_aliases()
+
+    if raw_skills is None:
+        return []
+
+    # -------------------------------------------------------------
+    # Flatten input
+    # -------------------------------------------------------------
+
+    lines: list[str] = []
+
+    def collect(value: Any) -> None:
+
+        if isinstance(value, str):
+
+            if value.strip():
+                lines.append(value)
+
+        elif isinstance(value, (list, tuple)):
+
+            for item in value:
+                collect(item)
+
+    collect(raw_skills)
 
     if not lines:
         return []
 
-    # --------------------------------------------------------
-    # Accept a single string.
-    # --------------------------------------------------------
-
-    if isinstance(
-        lines,
+    phrases: dict[
         str,
+        list[tuple[str, list[str]]],
+    ] = {}
+
+    if any(
+        not re.search(r"[,;|•·]", line)
+        for line in lines
     ):
-        lines = lines.splitlines()
-
-    # --------------------------------------------------------
-    # Make sure input is a list.
-    # --------------------------------------------------------
-
-    if not isinstance(
-        lines,
-        list,
-    ):
-        return []
-
-    skills = []
-
-    # --------------------------------------------------------
-    # Flatten nested lists.
-    # --------------------------------------------------------
-
-    def flatten(items):
-
-        for item in items:
-
-            if isinstance(
-                item,
-                list,
-            ):
-
-                yield from flatten(
-                    item
-                )
-
-            elif isinstance(
-                item,
-                str,
-            ):
-
-                if item.strip():
-                    yield item
-
-    # --------------------------------------------------------
-    # Process every line.
-    # --------------------------------------------------------
-
-    for line in flatten(lines):
-
-        extracted = _split_line(
-            line
+        phrases = _build_known_skill_phrases(
+            master_skills,
+            aliases,
         )
 
-        skills.extend(
-            extracted
+    # -------------------------------------------------------------
+    # Split every line
+    # -------------------------------------------------------------
+
+    result: list[str] = []
+
+    for line in lines:
+
+        result.extend(
+            _split_line(
+                line,
+                aliases,
+                phrases,
+            )
         )
 
-    # --------------------------------------------------------
-    # Remove duplicates while preserving order.
-    # --------------------------------------------------------
+    # -------------------------------------------------------------
+    # Deduplicate
+    # -------------------------------------------------------------
 
-    unique_skills = []
+    deduplicated: list[str] = []
 
-    seen = set()
+    seen: set[str] = set()
 
-    for skill in skills:
+    for skill in result:
 
-        key = _normalize_match_text(
-            skill
-        )
+        normalized = _normalize_match_text(skill)
 
-        if not key:
+        if not normalized:
             continue
 
-        if key in seen:
+        if normalized in seen:
             continue
 
-        seen.add(key)
+        seen.add(normalized)
+        deduplicated.append(skill)
 
-        unique_skills.append(
-            skill
-        )
-
-    return unique_skills
+    return deduplicated

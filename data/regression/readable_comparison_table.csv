@@ -1,0 +1,477 @@
+﻿Record type,Candidate ID,Compared area,Status,Old count,Optimized count,Removed from optimized / Old score,Added in optimized / New score,All old extracted values,All optimized extracted values,Details
+Candidate profile,CAN_18CF07232472,Skills,No change,21,21,,,"Python
+Java
+React
+Django
+JavaScript
+TypeScript
+HTML
+CSS
+Next.js
+Spring Boot
+Apache
+VS Code
+MySQL
+MongoDB
+Linux
+Git
+Problem Solving
+Spring
+Postman
+API Testing
+API","Python
+Java
+React
+Django
+JavaScript
+TypeScript
+HTML
+CSS
+Next.js
+Spring Boot
+Apache
+VS Code
+MySQL
+MongoDB
+Linux
+Git
+Problem Solving
+Spring
+Postman
+API Testing
+API",
+Candidate profile,CAN_18CF07232472,Certifications,No change,2,2,,,"Java With SpringBoot / ROGERSOFT Technology Private Limited (May 2022)
+Python Full-Stack Development / ROGERSOFT Technology Private Limited (May 2026)","Java With SpringBoot / ROGERSOFT Technology Private Limited (May 2022)
+Python Full-Stack Development / ROGERSOFT Technology Private Limited (May 2026)",
+Candidate profile,CAN_18CF07232472,Education,No change,1,1,,,Degree: Bachelor of Technology; Field: Electronics and Communication Engineering; Institution: Govt. College of Engineering Kannur; Year: 2018,Degree: Bachelor of Technology; Field: Electronics and Communication Engineering; Institution: Govt. College of Engineering Kannur; Year: 2018,
+Candidate profile,CAN_18CF07232472,Experience,No change,2,2,,,"Software Engineer; Zecser Business LLP; July 2026 to present; 4 months; Applying Python programming concepts for data processing, analysis, and problem-solving.; Gaining hands-on exposure to real-world project development, debugging, testing, and documentation.
+Java Developer Trainee; Sorice Solutions Private Limited; July 2022 to July 2023; 13 months; Developed and maintained Java-based web applications (US healthcare application - MPI) using the Spring framework.; Debugged and resolved high-priority production bugs.; Wrote and executed comprehensive unit tests using JUnit and Mockito, ensuring high code quality.; Utilized Postman for comprehensive API testing and documentation.; Implemented data persistence and retrieval functionalities using MongoDB, optimizing query performance.; Integrated Solr for efficient full-text search capabilities within the application, improving search response time.; Collaborated on code reviews and managed source control using GitLab.","Software Engineer; Zecser Business LLP; July 2026 to present; 4 months; Applying Python programming concepts for data processing, analysis, and problem-solving.; Gaining hands-on exposure to real-world project development, debugging, testing, and documentation.
+Java Developer Trainee; Sorice Solutions Private Limited; July 2022 to July 2023; 13 months; Developed and maintained Java-based web applications (US healthcare application - MPI) using the Spring framework.; Debugged and resolved high-priority production bugs.; Wrote and executed comprehensive unit tests using JUnit and Mockito, ensuring high code quality.; Utilized Postman for comprehensive API testing and documentation.; Implemented data persistence and retrieval functionalities using MongoDB, optimizing query performance.; Integrated Solr for efficient full-text search capabilities within the application, improving search response time.; Collaborated on code reviews and managed source control using GitLab.",
+Candidate profile,CAN_1CA3DA4F0062,Skills,No change,8,8,,,"Recruitment
+Candidate Screening
+Interview Coordination
+HRMS
+Human Resources
+Microsoft Excel
+Communication
+Applicant Tracking System","Recruitment
+Candidate Screening
+Interview Coordination
+HRMS
+Human Resources
+Microsoft Excel
+Communication
+Applicant Tracking System",
+Candidate profile,CAN_1CA3DA4F0062,Certifications,No change,3,3,,,"Professional Certification
+Industry Skills Program
+Advanced Workplace Training","Professional Certification
+Industry Skills Program
+Advanced Workplace Training",
+Candidate profile,CAN_1CA3DA4F0062,Education,No change,2,2,,,"Degree: Master of Business Administration; Field: Human Resources; University: MG University; Year: 2026
+Degree: Bachelor of Commerce; Field: Commerce; University: MG University; Year: 2024","Degree: Master of Business Administration; Field: Human Resources; University: MG University; Year: 2026
+Degree: Bachelor of Commerce; Field: Commerce; University: MG University; Year: 2024",
+Candidate profile,CAN_1CA3DA4F0062,Experience,Changed,1,1,"HR Intern; People Bridge; Jan 2026 to Apr 2026; 4 months; Screened resumes, scheduled interviews and updated candidate records in HRMS.; Prepared Excel reports for recruitment activity.","HR Intern; PeopleBridge; Jan 2026 to Apr 2026; 4 months; Screened resumes, scheduled interviews and updated candidate records in HRMS.; Prepared Excel reports for recruitment activity.","HR Intern; People Bridge; Jan 2026 to Apr 2026; 4 months; Screened resumes, scheduled interviews and updated candidate records in HRMS.; Prepared Excel reports for recruitment activity.","HR Intern; PeopleBridge; Jan 2026 to Apr 2026; 4 months; Screened resumes, scheduled interviews and updated candidate records in HRMS.; Prepared Excel reports for recruitment activity.",
+Candidate profile,CAN_2325AD0B18CE,Skills,Changed,13,13,Applicant Tracking System,Customer Relationship Management,"HR Operations
+Recruitment
+Talent Acquisition
+HRMS
+Employee Relations
+Payroll
+Human Resources
+Microsoft Excel
+Employee Onboarding
+Employee Records Management
+HR Reporting
+Communication
+Applicant Tracking System","HR Operations
+Recruitment
+Talent Acquisition
+HRMS
+Employee Relations
+Payroll
+Human Resources
+Microsoft Excel
+HR Reporting
+Employee Onboarding
+Employee Records Management
+Customer Relationship Management
+Communication",
+Candidate profile,CAN_2325AD0B18CE,Certifications,No change,0,0,,,,,
+Candidate profile,CAN_2325AD0B18CE,Education,No change,1,1,,,Degree: Master of Business Administration; Field: Human Resources; Year: 2018,Degree: Master of Business Administration; Field: Human Resources; Year: 2018,
+Candidate profile,CAN_2325AD0B18CE,Experience,Changed,2,2,"Senior HR Manager; People Works Technologies; Jan 2020 to Present; 81 months; Managed recruitment and talent acquisition activities.; Coordinated payroll and employee relations processes.; Maintained HRMS records and HR reports using MS Excel.
+Jun 2018 to Dec 2019; 19 months; Supported onboarding, employee documentation and HR operations.","Senior HR Manager; PeopleWorks Technologies; Jan 2020 to Present; 82 months; Managed recruitment and talent acquisition activities.; Coordinated payroll and employee relations processes.; Maintained HRMS records and HR reports using MS Excel.
+HR Executive; TalentCore Solutions; Jun 2018 to Dec 2019; 19 months; Supported onboarding, employee documentation and HR operations.","Senior HR Manager; People Works Technologies; Jan 2020 to Present; 81 months; Managed recruitment and talent acquisition activities.; Coordinated payroll and employee relations processes.; Maintained HRMS records and HR reports using MS Excel.
+Jun 2018 to Dec 2019; 19 months; Supported onboarding, employee documentation and HR operations.","Senior HR Manager; PeopleWorks Technologies; Jan 2020 to Present; 82 months; Managed recruitment and talent acquisition activities.; Coordinated payroll and employee relations processes.; Maintained HRMS records and HR reports using MS Excel.
+HR Executive; TalentCore Solutions; Jun 2018 to Dec 2019; 19 months; Supported onboarding, employee documentation and HR operations.",
+Candidate profile,CAN_410B14422E90,Skills,Changed,7,8,,API,"Python
+Flask
+SQL
+MySQL
+Docker
+Git
+REST API","Python
+Flask
+SQL
+MySQL
+Docker
+API
+Git
+REST API",
+Candidate profile,CAN_410B14422E90,Certifications,No change,3,3,,,"Professional Certification
+Industry Skills Program
+Advanced Workplace Training","Professional Certification
+Industry Skills Program
+Advanced Workplace Training",
+Candidate profile,CAN_410B14422E90,Education,Changed,1,1,Degree: Bachelor of Technology; Field: Information Technology; Year: 2019,Degree: Bachelor of Technology; Field: Information Technology; University: KTU; Year: 2019,Degree: Bachelor of Technology; Field: Information Technology; Year: 2019,Degree: Bachelor of Technology; Field: Information Technology; University: KTU; Year: 2019,
+Candidate profile,CAN_410B14422E90,Experience,Changed,1,1,Backend Engineer; Enterprise Soft; Jan 2020 to Present; 81 months; Developed Python backend services and database integrations.; Built APIs using Flask and maintained MySQL databases.; Used Docker and Git in team development.,Backend Engineer; EnterpriseSoft; Jan 2020 to Present; 82 months; Developed Python backend services and database integrations.; Built APIs using Flask and maintained MySQL databases.; Used Docker and Git in team development.,Backend Engineer; Enterprise Soft; Jan 2020 to Present; 81 months; Developed Python backend services and database integrations.; Built APIs using Flask and maintained MySQL databases.; Used Docker and Git in team development.,Backend Engineer; EnterpriseSoft; Jan 2020 to Present; 82 months; Developed Python backend services and database integrations.; Built APIs using Flask and maintained MySQL databases.; Used Docker and Git in team development.,
+Candidate profile,CAN_4CFB167D7487,Skills,Changed,7,8,Communication,"API
+API Testing","Python
+Django
+PostgreSQL
+Git
+FastAPI
+REST API
+Communication","Python
+REST API
+API
+Django
+FastAPI
+PostgreSQL
+Git
+API Testing",
+Candidate profile,CAN_4CFB167D7487,Certifications,Changed,3,3,Python / Domain Certification,Python Domain Certification,"Python / Domain Certification
+Professional Development Program
+Workplace Communication","Python Domain Certification
+Professional Development Program
+Workplace Communication",
+Candidate profile,CAN_4CFB167D7487,Education,Changed,1,1,Degree: Bachelor of Technology; Field: Computer Science and Engineering; Institution: KTU; Year: 2026,Degree: Bachelor of Technology; Field: Computer Science and Engineering; University: KTU; Year: 2026,Degree: Bachelor of Technology; Field: Computer Science and Engineering; Institution: KTU; Year: 2026,Degree: Bachelor of Technology; Field: Computer Science and Engineering; University: KTU; Year: 2026,
+Candidate profile,CAN_4CFB167D7487,Experience,Changed,2,2,"Python Developer; Tech Nova Labs; Jan 2026 to Apr 2026; 4 months; Built REST API endpoints using Fast API and validated request payloads.; Worked with PostgreSQL queries, Git branches and API testing.
+Backend Trainee; Code Nest Academy; Jun 2025 to Dec 2025; 7 months; Developed a Django application for student records and authentication.","Python Developer; TechNova Labs; Jan 2026 to Apr 2026; 4 months; Built REST API endpoints using FastAPI and validated request payloads.; Worked with PostgreSQL queries, Git branches and API testing.
+Backend Trainee; CodeNest Academy; Jun 2025 to Dec 2025; 7 months; Backend Trainee - CodeNest Academy; Developed a Django application for student records and authentication.","Python Developer; Tech Nova Labs; Jan 2026 to Apr 2026; 4 months; Built REST API endpoints using Fast API and validated request payloads.; Worked with PostgreSQL queries, Git branches and API testing.
+Backend Trainee; Code Nest Academy; Jun 2025 to Dec 2025; 7 months; Developed a Django application for student records and authentication.","Python Developer; TechNova Labs; Jan 2026 to Apr 2026; 4 months; Built REST API endpoints using FastAPI and validated request payloads.; Worked with PostgreSQL queries, Git branches and API testing.
+Backend Trainee; CodeNest Academy; Jun 2025 to Dec 2025; 7 months; Backend Trainee - CodeNest Academy; Developed a Django application for student records and authentication.",
+Candidate profile,CAN_5441F5865D9B,Skills,Changed,2,4,,"Spring
+Spring Boot","Java
+SQL","Java
+Spring
+Spring Boot
+SQL",
+Candidate profile,CAN_5441F5865D9B,Certifications,Changed,3,3,Java / Domain Certification,Java Domain Certification,"Java / Domain Certification
+Professional Development Program
+Workplace Communication","Java Domain Certification
+Professional Development Program
+Workplace Communication",
+Candidate profile,CAN_5441F5865D9B,Education,Changed,1,1,Degree: Bachelor of Technology; Field: Electronics and Communication Engineering; Year: 2025,Degree: Bachelor of Technology; Field: Electronics and Communication Engineering; University: KTU; Year: 2025,Degree: Bachelor of Technology; Field: Electronics and Communication Engineering; Year: 2025,Degree: Bachelor of Technology; Field: Electronics and Communication Engineering; University: KTU; Year: 2025,
+Candidate profile,CAN_5441F5865D9B,Experience,Changed,1,1,Software Trainee; App Works Academy; Jan 2026 to May 2026; 5 months; Developed basic Java applications.; Practiced Spring Boot concepts and SQL queries.,Software Trainee; AppWorks Academy; Jan 2026 to May 2026; 5 months; Developed basic Java applications.; Practiced Spring Boot concepts and SQL queries.,Software Trainee; App Works Academy; Jan 2026 to May 2026; 5 months; Developed basic Java applications.; Practiced Spring Boot concepts and SQL queries.,Software Trainee; AppWorks Academy; Jan 2026 to May 2026; 5 months; Developed basic Java applications.; Practiced Spring Boot concepts and SQL queries.,
+Candidate profile,CAN_572F92BAB63C,Skills,Changed,10,11,,Payroll,"HR Administration
+Recruitment
+Talent Acquisition
+HRMS
+Employee Relations
+Human Resources
+Employee Onboarding
+Microsoft Excel
+HR Operations
+Communication","HR Administration
+Recruitment
+Talent Acquisition
+HRMS
+Employee Relations
+Human Resources
+Employee Onboarding
+Microsoft Excel
+HR Operations
+Payroll
+Communication",
+Candidate profile,CAN_572F92BAB63C,Certifications,No change,0,0,,,,,
+Candidate profile,CAN_572F92BAB63C,Education,No change,1,1,,,Degree: Bachelor of Business Administration; Field: Management; Year: 2026,Degree: Bachelor of Business Administration; Field: Management; Year: 2026,
+Candidate profile,CAN_572F92BAB63C,Experience,Changed,1,1,"HR Executive Intern; Talent Bridge Solutions; Jan 2026 to Jun 2026; 6 months; Coordinated candidate interview schedules, screened applicant profiles, and assisted in talent acquisition.; Maintained accurate employee records, updated HRMS databases, and supported new hire onboarding processes.; Assisted with payroll documentation, employee relations initiatives, and general HR operations.; Prepared weekly HR activity summaries and basic operational reports using MS Excel.","HR Executive Intern; TalentBridge Solutions; Jan 2026 to Jun 2026; 6 months; Coordinated candidate interview schedules, screened applicant profiles, and assisted in talent acquisition.; Maintained accurate employee records, updated HRMS databases, and supported new hire onboarding processes.; Assisted with payroll documentation, employee relations initiatives, and general HR operations.; Prepared weekly HR activity summaries and basic operational reports using MS Excel.","HR Executive Intern; Talent Bridge Solutions; Jan 2026 to Jun 2026; 6 months; Coordinated candidate interview schedules, screened applicant profiles, and assisted in talent acquisition.; Maintained accurate employee records, updated HRMS databases, and supported new hire onboarding processes.; Assisted with payroll documentation, employee relations initiatives, and general HR operations.; Prepared weekly HR activity summaries and basic operational reports using MS Excel.","HR Executive Intern; TalentBridge Solutions; Jan 2026 to Jun 2026; 6 months; Coordinated candidate interview schedules, screened applicant profiles, and assisted in talent acquisition.; Maintained accurate employee records, updated HRMS databases, and supported new hire onboarding processes.; Assisted with payroll documentation, employee relations initiatives, and general HR operations.; Prepared weekly HR activity summaries and basic operational reports using MS Excel.",
+Candidate profile,CAN_5DB428DE94C1,Skills,No change,8,8,,,"Communication
+Recruitment
+Microsoft Excel
+Employee Records Management
+Candidate Screening
+Interview Scheduling
+Human Resources
+Microsoft Office","Communication
+Recruitment
+Microsoft Excel
+Employee Records Management
+Human Resources
+Candidate Screening
+Interview Scheduling
+Microsoft Office",
+Candidate profile,CAN_5DB428DE94C1,Certifications,No change,0,0,,,,,
+Candidate profile,CAN_5DB428DE94C1,Education,No change,1,1,,,Degree: Bachelor of Commerce; Field: Finance; Year: 2025,Degree: Bachelor of Commerce; Field: Finance; Year: 2025,
+Candidate profile,CAN_5DB428DE94C1,Experience,Changed,1,1,HR Assistant Trainee; Talent Bridge Academy; Aug 2025 to Mar 2026; 8 months; Assisted with candidate screening and interview scheduling.; Maintained basic employee records.; Prepared Excel reports and office documents.,HR Assistant Trainee; TalentBridge Academy; Aug 2025 to Mar 2026; 8 months; Assisted with candidate screening and interview scheduling.; Maintained basic employee records.; Prepared Excel reports and office documents.,HR Assistant Trainee; Talent Bridge Academy; Aug 2025 to Mar 2026; 8 months; Assisted with candidate screening and interview scheduling.; Maintained basic employee records.; Prepared Excel reports and office documents.,HR Assistant Trainee; TalentBridge Academy; Aug 2025 to Mar 2026; 8 months; Assisted with candidate screening and interview scheduling.; Maintained basic employee records.; Prepared Excel reports and office documents.,
+Candidate profile,CAN_6EEC4CAA4B86,Skills,No change,23,23,,,"Python
+REST API
+API
+Django
+FastAPI
+SQL
+PostgreSQL
+Git
+Pytest
+JavaScript
+Django REST Framework
+MySQL
+Pandas
+NumPy
+API Testing
+GitHub
+Docker
+Postman
+VS Code
+Recruitment
+Applicant Tracking System
+HTML
+CSS","Python
+REST API
+API
+Django
+FastAPI
+SQL
+PostgreSQL
+Git
+Pytest
+JavaScript
+Django REST Framework
+MySQL
+Pandas
+NumPy
+API Testing
+GitHub
+Docker
+Postman
+VS Code
+Recruitment
+Applicant Tracking System
+HTML
+CSS",
+Candidate profile,CAN_6EEC4CAA4B86,Certifications,No change,3,3,,,"Python Programming Fundamentals / SkillForge Academy (2024)
+REST API Development with FastAPI / DevPath Learning (2024)
+SQL and PostgreSQL Essentials / OpenLearn Labs (2023)","Python Programming Fundamentals / SkillForge Academy (2024)
+REST API Development with FastAPI / DevPath Learning (2024)
+SQL and PostgreSQL Essentials / OpenLearn Labs (2023)",
+Candidate profile,CAN_6EEC4CAA4B86,Education,No change,2,2,,,"Degree: Bachelor of Technology; Field: Computer Science and Engineering; Institution: Kerala Institute of Technology; Year: 2024
+Degree: Higher Secondary; Field: Computer Science; Institution: Government Higher Secondary School; Year: 2020","Degree: Bachelor of Technology; Field: Computer Science and Engineering; Institution: Kerala Institute of Technology; Year: 2024
+Degree: Higher Secondary; Field: Computer Science; Institution: Government Higher Secondary School; Year: 2020",
+Candidate profile,CAN_6EEC4CAA4B86,Experience,No change,2,2,,,"Python Developer; CodeNest Technologies; Jan 2024 to Jun 2024; 6 months; Developed FastAPI endpoints for candidate, job-description and application workflows.; Designed PostgreSQL tables and SQL queries for candidate profiles and scoring results.; Built Pydantic request and response schemas with validation for REST API payloads.; Wrote pytest cases for authentication, validation, CRUD operations and error handling.; Used Git and pull requests for source control, code review and release preparation.
+BluePeak Digital Labs; Jul 2023 to Dec 2023; 6 months; Implemented Django modules for student registration and administrative dashboards.; Created reusable service functions for database operations and input validation.; Tested APIs with Postman and documented common request and response examples.; Investigated defects involving form validation, database constraints and JSON responses.","Python Developer; CodeNest Technologies; Jan 2024 to Jun 2024; 6 months; Developed FastAPI endpoints for candidate, job-description and application workflows.; Designed PostgreSQL tables and SQL queries for candidate profiles and scoring results.; Built Pydantic request and response schemas with validation for REST API payloads.; Wrote pytest cases for authentication, validation, CRUD operations and error handling.; Used Git and pull requests for source control, code review and release preparation.
+BluePeak Digital Labs; Jul 2023 to Dec 2023; 6 months; Implemented Django modules for student registration and administrative dashboards.; Created reusable service functions for database operations and input validation.; Tested APIs with Postman and documented common request and response examples.; Investigated defects involving form validation, database constraints and JSON responses.",
+Candidate profile,CAN_79F428525AFE,Skills,Changed,12,11,Applicant Tracking System,,"HR Operations
+Recruitment
+Talent Acquisition
+HR Documentation
+Human Resources
+Microsoft Excel
+Interview Scheduling
+Employee Onboarding
+Employee Records Management
+HR Reporting
+Communication
+Applicant Tracking System","HR Operations
+Recruitment
+Talent Acquisition
+HR Documentation
+Human Resources
+Microsoft Excel
+Interview Scheduling
+Employee Onboarding
+HR Reporting
+Employee Records Management
+Communication","Baseline-only false positive: ATS was captured from the document header, not the candidate's Skills section; the current extraction excludes it."
+Candidate profile,CAN_79F428525AFE,Certifications,No change,0,0,,,,,
+Candidate profile,CAN_79F428525AFE,Education,No change,1,1,,,Degree: Master of Business Administration; Field: Business Administration; Year: 2019,Degree: Master of Business Administration; Field: Business Administration; Year: 2019,
+Candidate profile,CAN_79F428525AFE,Experience,Changed,2,2,"Tamil Nadu; Jan 2021 to Present; 69 months; Coordinated recruitment and interview scheduling.; Supported onboarding and employee records.; Prepared HR reports using Excel.
+HR Assistant; Office People; 2019 to 2020; 13 months; Maintained employee documentation.","HR Executive; TalentBridge Solutions; Jan 2021 to Present; 70 months; Coordinated recruitment and interview scheduling.; Supported onboarding and employee records.; Prepared HR reports using Excel.
+HR Assistant; OfficePeople; 2019 to 2020; 13 months; Maintained employee documentation.","Tamil Nadu; Jan 2021 to Present; 69 months; Coordinated recruitment and interview scheduling.; Supported onboarding and employee records.; Prepared HR reports using Excel.
+HR Assistant; Office People; 2019 to 2020; 13 months; Maintained employee documentation.","HR Executive; TalentBridge Solutions; Jan 2021 to Present; 70 months; Coordinated recruitment and interview scheduling.; Supported onboarding and employee records.; Prepared HR reports using Excel.
+HR Assistant; OfficePeople; 2019 to 2020; 13 months; Maintained employee documentation.",
+Candidate profile,CAN_7B72257C5D85,Skills,No change,10,10,,,"Communication
+HR Operations
+Recruitment
+Human Resources
+Microsoft Excel
+Employee Records Management
+Interview Scheduling
+HR Documentation
+HR Reporting
+Talent Acquisition","HR Operations
+Recruitment
+Human Resources
+Employee Records Management
+Communication
+Microsoft Excel
+Interview Scheduling
+HR Documentation
+HR Reporting
+Talent Acquisition",
+Candidate profile,CAN_7B72257C5D85,Certifications,Changed,3,3,HR Operations / Domain Certification,HR Operations Domain Certification,"HR Operations / Domain Certification
+Professional Development Program
+Workplace Communication","HR Operations Domain Certification
+Professional Development Program
+Workplace Communication",
+Candidate profile,CAN_7B72257C5D85,Education,Changed,0,1,,Degree: Bachelor of Business Administration; Field: Human Resources; Year: 2026,,Degree: Bachelor of Business Administration; Field: Human Resources; Year: 2026,
+Candidate profile,CAN_7B72257C5D85,Experience,Changed,1,1,HR Intern; People First Services; Jan 2026 to Jun 2026; 6 months; Supported recruitment screening and interview scheduling.; Maintained employee records and HR documentation.; Used MS Excel for basic HR reports.,HR Intern; PeopleFirst Services; Jan 2026 to Jun 2026; 6 months; Supported recruitment screening and interview scheduling.; Maintained employee records and HR documentation.; Used MS Excel for basic HR reports.,HR Intern; People First Services; Jan 2026 to Jun 2026; 6 months; Supported recruitment screening and interview scheduling.; Maintained employee records and HR documentation.; Used MS Excel for basic HR reports.,HR Intern; PeopleFirst Services; Jan 2026 to Jun 2026; 6 months; Supported recruitment screening and interview scheduling.; Maintained employee records and HR documentation.; Used MS Excel for basic HR reports.,
+Candidate profile,CAN_81791789C6AA,Skills,Changed,8,8,Communication,API,"Python
+Django
+PostgreSQL
+Docker
+FastAPI
+REST API
+AWS
+Communication","Python
+REST API
+API
+Django
+FastAPI
+PostgreSQL
+Docker
+AWS",
+Candidate profile,CAN_81791789C6AA,Certifications,Changed,3,3,Python / Domain Certification,Python Domain Certification,"Python / Domain Certification
+Professional Development Program
+Workplace Communication","Python Domain Certification
+Professional Development Program
+Workplace Communication",
+Candidate profile,CAN_81791789C6AA,Education,Changed,1,1,Degree: Bachelor of Technology; Field: Computer Science and Engineering; Year: 2020,Degree: Bachelor of Technology; Field: Computer Science and Engineering; University: VTU; Year: 2020,Degree: Bachelor of Technology; Field: Computer Science and Engineering; Year: 2020,Degree: Bachelor of Technology; Field: Computer Science and Engineering; University: VTU; Year: 2020,
+Candidate profile,CAN_81791789C6AA,Experience,Changed,2,2,"Python Developer; Soft Labs; Jan 2022 to Present; 57 months; Designed backend services and REST APIs for enterprise applications.; Worked with PostgreSQL, Docker and AWS environments.
+Python Developer; Web Core; Jun 2020 to Dec 2021; 19 months; Built Django applications and PostgreSQL integrations.","Python Developer; SoftLabs; Jan 2022 to Present; 58 months; Designed backend services and REST APIs for enterprise applications.; Worked with PostgreSQL, Docker and AWS environments.
+Python Developer; WebCore; Jun 2020 to Dec 2021; 19 months; Built Django applications and PostgreSQL integrations.","Python Developer; Soft Labs; Jan 2022 to Present; 57 months; Designed backend services and REST APIs for enterprise applications.; Worked with PostgreSQL, Docker and AWS environments.
+Python Developer; Web Core; Jun 2020 to Dec 2021; 19 months; Built Django applications and PostgreSQL integrations.","Python Developer; SoftLabs; Jan 2022 to Present; 58 months; Designed backend services and REST APIs for enterprise applications.; Worked with PostgreSQL, Docker and AWS environments.
+Python Developer; WebCore; Jun 2020 to Dec 2021; 19 months; Built Django applications and PostgreSQL integrations.",
+Candidate profile,CAN_B67DE2B9BADB,Skills,Changed,3,8,Communication,"Object-Oriented Programming
+MySQL
+JavaScript
+HTML
+CSS
+Git","Python
+SQL
+Communication","Python
+SQL
+Object-Oriented Programming
+MySQL
+JavaScript
+HTML
+CSS
+Git",
+Candidate profile,CAN_B67DE2B9BADB,Certifications,No change,0,0,,,,,
+Candidate profile,CAN_B67DE2B9BADB,Education,Changed,1,1,Degree: Bachelor of Technology; Field: Electronics Communication Engineering 2026; Institution: KTU; Year: 2026,Degree: Bachelor of Technology; Field: Electronics and Communication Engineering; University: KTU; Year: 2026,Degree: Bachelor of Technology; Field: Electronics Communication Engineering 2026; Institution: KTU; Year: 2026,Degree: Bachelor of Technology; Field: Electronics and Communication Engineering; University: KTU; Year: 2026,
+Candidate profile,CAN_B67DE2B9BADB,Experience,Changed,1,1,Software Trainee; Learn Code Institute; Aug 2025 to Mar 2026; 8 months; Prepared SQL queries and documented application workflows.,Software Trainee; LearnCode Institute; Aug 2025 to Mar 2026; 8 months; Prepared SQL queries and documented application workflows.,Software Trainee; Learn Code Institute; Aug 2025 to Mar 2026; 8 months; Prepared SQL queries and documented application workflows.,Software Trainee; LearnCode Institute; Aug 2025 to Mar 2026; 8 months; Prepared SQL queries and documented application workflows.,
+Candidate profile,CAN_C5D1338F49C1,Skills,Changed,10,10,Communication,API,"Python
+Django
+PostgreSQL
+Git
+FastAPI
+REST API
+API Testing
+Docker
+AWS
+Communication","Python
+REST API
+API
+Django
+FastAPI
+PostgreSQL
+Git
+API Testing
+Docker
+AWS",
+Candidate profile,CAN_C5D1338F49C1,Certifications,Changed,3,3,Python / Domain Certification,Python Domain Certification,"Python / Domain Certification
+Professional Development Program
+Workplace Communication","Python Domain Certification
+Professional Development Program
+Workplace Communication",
+Candidate profile,CAN_C5D1338F49C1,Education,Changed,1,1,Degree: Bachelor of Technology; Field: Computer Science and Engineering; Year: 2020,Degree: Bachelor of Technology; Field: Computer Science and Engineering; University: KTU; Year: 2020,Degree: Bachelor of Technology; Field: Computer Science and Engineering; Year: 2020,Degree: Bachelor of Technology; Field: Computer Science and Engineering; University: KTU; Year: 2020,
+Candidate profile,CAN_C5D1338F49C1,Experience,Changed,2,2,"Python Developer; Cloud Axis Technologies; Jan 2022 to Present; 57 months; Designed REST APIs using Fast API and Django.; Built PostgreSQL data models and optimized queries.; Managed Git workflows and production releases.
+Python Developer; Web Core Systems; Jun 2020 to Dec 2021; 19 months; Developed backend services and automated API testing.","Python Developer; CloudAxis Technologies; Jan 2022 to Present; 58 months; Designed REST APIs using FastAPI and Django.; Built PostgreSQL data models and optimized queries.; Managed Git workflows and production releases.
+Python Developer; WebCore Systems; Jun 2020 to Dec 2021; 19 months; Developed backend services and automated API testing.","Python Developer; Cloud Axis Technologies; Jan 2022 to Present; 57 months; Designed REST APIs using Fast API and Django.; Built PostgreSQL data models and optimized queries.; Managed Git workflows and production releases.
+Python Developer; Web Core Systems; Jun 2020 to Dec 2021; 19 months; Developed backend services and automated API testing.","Python Developer; CloudAxis Technologies; Jan 2022 to Present; 58 months; Designed REST APIs using FastAPI and Django.; Built PostgreSQL data models and optimized queries.; Managed Git workflows and production releases.
+Python Developer; WebCore Systems; Jun 2020 to Dec 2021; 19 months; Developed backend services and automated API testing.",
+Candidate profile,CAN_CB63A04EDA0B,Skills,Changed,9,11,SQL,"API
+Git
+Applicant Tracking System","Python
+Django
+PostgreSQL
+Docker
+AWS
+Redis
+FastAPI
+REST API
+SQL","Python
+Django
+FastAPI
+PostgreSQL
+Docker
+AWS
+Redis
+REST API
+API
+Git
+Applicant Tracking System",
+Candidate profile,CAN_CB63A04EDA0B,Certifications,No change,3,3,,,"Professional Certification
+Industry Skills Program
+Advanced Workplace Training","Professional Certification
+Industry Skills Program
+Advanced Workplace Training",
+Candidate profile,CAN_CB63A04EDA0B,Education,Changed,1,1,Degree: Bachelor of Technology; Field: Computer Science and Engineering; Year: 2019,Degree: Bachelor of Technology; Field: Computer Science and Engineering; University: VTU; Year: 2019,Degree: Bachelor of Technology; Field: Computer Science and Engineering; Year: 2019,Degree: Bachelor of Technology; Field: Computer Science and Engineering; University: VTU; Year: 2019,
+Candidate profile,CAN_CB63A04EDA0B,Experience,Changed,3,3,"Python Developer; Cloud Bridge Systems; Apr 2022 to Present; 54 months; Designed Fast API micro services and Postgre SQL-backed workflows.; Introduced Redis caching and improved high-volume API response times.
+Python Developer; Data Works Pvt Ltd; Jun 2020 to Mar 2022; 22 months; Developed Django REST APIs and background processing jobs.; Integrated third-party services and CI workflows.
+Software Engineer; Web Matrix Solutions; Jul 2019 to May 2020; 11 months; Built Python utilities and API integrations.","Python Developer; CloudBridge Systems; Apr 2022 to Present; 55 months; Designed FastAPI microservices and PostgreSQL-backed workflows.; Introduced Redis caching and improved high-volume API response times.
+Python Developer; DataWorks Pvt Ltd; Jun 2020 to Mar 2022; 22 months; Developed Django REST APIs and background processing jobs.; Integrated third-party services and CI workflows.
+Software Engineer; WebMatrix Solutions; Jul 2019 to May 2020; 11 months; Built Python utilities and API integrations.","Python Developer; Cloud Bridge Systems; Apr 2022 to Present; 54 months; Designed Fast API micro services and Postgre SQL-backed workflows.; Introduced Redis caching and improved high-volume API response times.
+Python Developer; Data Works Pvt Ltd; Jun 2020 to Mar 2022; 22 months; Developed Django REST APIs and background processing jobs.; Integrated third-party services and CI workflows.
+Software Engineer; Web Matrix Solutions; Jul 2019 to May 2020; 11 months; Built Python utilities and API integrations.","Python Developer; CloudBridge Systems; Apr 2022 to Present; 55 months; Designed FastAPI microservices and PostgreSQL-backed workflows.; Introduced Redis caching and improved high-volume API response times.
+Python Developer; DataWorks Pvt Ltd; Jun 2020 to Mar 2022; 22 months; Developed Django REST APIs and background processing jobs.; Integrated third-party services and CI workflows.
+Software Engineer; WebMatrix Solutions; Jul 2019 to May 2020; 11 months; Built Python utilities and API integrations.",
+Candidate profile,CAN_E3036E1C2BDA,Skills,Changed,13,12,Angular,,"HR Operations
+Recruitment
+HRMS
+Employee Relations
+Human Resources
+Interview Coordination
+Interview Scheduling
+HR Documentation
+HR Metrics
+Employee Onboarding
+Candidate Screening
+Microsoft Excel
+Angular","HR Operations
+Recruitment
+HRMS
+Employee Relations
+Human Resources
+Interview Coordination
+Employee Onboarding
+HR Metrics
+Interview Scheduling
+HR Documentation
+Candidate Screening
+Microsoft Excel",Baseline-only false positive: the old parse matched the single-character source 'l' to Angular using fuzzy matching; the source resume contains no Angular evidence.
+Candidate profile,CAN_E3036E1C2BDA,Certifications,No change,0,0,,,,,
+Candidate profile,CAN_E3036E1C2BDA,Education,No change,1,1,,,Degree: Master of Business Administration; Field: Human Resources; University: Bangalore University; Year: 2018,Degree: Master of Business Administration; Field: Human Resources; University: Bangalore University; Year: 2018,
+Candidate profile,CAN_E3036E1C2BDA,Experience,Changed,3,3,"People Sphere Bengaluru; Apr 2021 to Present; 66 months; People Sphere Bengaluru, Karnataka; Managed end to end recruitment, interview coordination and onboarding.; Maintained HR metrics and supported employee relations activities.
+Talent Works Bengaluru; Jun 2019 to Mar 2021; 22 months; Talent Works Bengaluru, Karnataka; Handled HRMS updates, employee records and recruitment coordination.
+l; Jul 2018 to May 2019; 11 months; Core Staff Bengaluru, Karnataka; Supported interview scheduling and HR documentation.; l","Senior HR Executive; PeopleSphere; Apr 2021 to Present; 67 months; Senior HR Executive; PeopleSphere; Managed end-to-end recruitment, interview coordination and onboarding.; Maintained HR metrics and supported employee relations activities.
+HR Executive; TalentWorks; Jun 2019 to Mar 2021; 22 months; HR Executive; TalentWorks; Handled HRMS updates, employee records and recruitment coordination.
+HR Assistant; CoreStaff; Jul 2018 to May 2019; 11 months; CoreStaff; Supported interview scheduling and HR documentation.","People Sphere Bengaluru; Apr 2021 to Present; 66 months; People Sphere Bengaluru, Karnataka; Managed end to end recruitment, interview coordination and onboarding.; Maintained HR metrics and supported employee relations activities.
+Talent Works Bengaluru; Jun 2019 to Mar 2021; 22 months; Talent Works Bengaluru, Karnataka; Handled HRMS updates, employee records and recruitment coordination.
+l; Jul 2018 to May 2019; 11 months; Core Staff Bengaluru, Karnataka; Supported interview scheduling and HR documentation.; l","Senior HR Executive; PeopleSphere; Apr 2021 to Present; 67 months; Senior HR Executive; PeopleSphere; Managed end-to-end recruitment, interview coordination and onboarding.; Maintained HR metrics and supported employee relations activities.
+HR Executive; TalentWorks; Jun 2019 to Mar 2021; 22 months; HR Executive; TalentWorks; Handled HRMS updates, employee records and recruitment coordination.
+HR Assistant; CoreStaff; Jul 2018 to May 2019; 11 months; CoreStaff; Supported interview scheduling and HR documentation.",
+ATS score,CAN_2325AD0B18CE,Final score,Decreased,,,84.69,84.42,,,Job: JOB_0E2E9FA9C79D; Weights changed: No; Component scores: skill: 88.89 -> 91.11; experience: 82.78 -> 78.89; education: 76.0 -> 76.0; semantic: 83.48 -> 83.56
+ATS score,CAN_79F428525AFE,Final score,Increased,,,64.81,67.27,,,Job: JOB_0E2E9FA9C79D; Weights changed: No; Component scores: skill: 55.56 -> 64.44; experience: 61.11 -> 57.22; education: 76.0 -> 76.0; semantic: 83.32 -> 83.63
+ATS score,CAN_E3036E1C2BDA,Final score,Increased,,,61.61,75.19,,,Job: JOB_0E2E9FA9C79D; Weights changed: No; Component scores: skill: 55.56 -> 64.44; experience: 52.78 -> 82.22; education: 76.0 -> 76.0; semantic: 79.79 -> 85.72
+ATS score,CAN_410B14422E90,Final score,Increased,,,56.00,60.94,,,Job: JOB_57C5EC85A717; Weights changed: No; Component scores: skill: 44.44 -> 55.56; experience: 52.78 -> 52.78; education: 76.0 -> 76.0; semantic: 83.81 -> 83.37
+ATS score,CAN_81791789C6AA,Final score,Decreased,,,80.15,76.82,,,Job: JOB_57C5EC85A717; Weights changed: No; Component scores: skill: 77.78 -> 82.22; experience: 82.78 -> 64.92; education: 76.0 -> 76.0; semantic: 84.81 -> 84.99
+ATS score,CAN_C5D1338F49C1,Final score,Decreased,,,93.00,87.62,,,Job: JOB_57C5EC85A717; Weights changed: No; Component scores: skill: 100.0 -> 100.0; experience: 91.67 -> 73.81; education: 76.0 -> 76.0; semantic: 86.0 -> 85.83
+ATS score,CAN_CB63A04EDA0B,Final score,Increased,,,80.40,81.97,,,Job: JOB_57C5EC85A717; Weights changed: No; Component scores: skill: 77.78 -> 91.11; experience: 82.78 -> 67.76; education: 76.0 -> 76.0; semantic: 86.44 -> 86.92
+ATS score,CAN_1CA3DA4F0062,Final score,Decreased,,,64.40,62.98,,,Job: JOB_6EC0B8C25121; Weights changed: Yes; Component scores: skill: 44.44 -> 55.56; experience: 54.58 -> 52.78; education: 76.0 -> 76.0; semantic: 86.62 -> 86.62
+ATS score,CAN_572F92BAB63C,Final score,Increased,,,78.90,84.30,,,Job: JOB_6EC0B8C25121; Weights changed: Yes; Component scores: skill: 77.78 -> 91.11; experience: 74.17 -> 76.81; education: 76.0 -> 76.0; semantic: 86.21 -> 86.08
+ATS score,CAN_5DB428DE94C1,Final score,Decreased,,,60.04,58.23,,,Job: JOB_6EC0B8C25121; Weights changed: Yes; Component scores: skill: 33.33 -> 46.67; experience: 50.14 -> 48.33; education: 76.0 -> 76.0; semantic: 87.4 -> 87.32
+ATS score,CAN_7B72257C5D85,Final score,Increased,,,49.44,67.61,,,Job: JOB_6EC0B8C25121; Weights changed: Yes; Component scores: skill: 55.56 -> 64.44; experience: 59.03 -> 57.22; education: 0.0 -> 76.0; semantic: 84.55 -> 85.33
+ATS score,CAN_4CFB167D7487,Final score,Increased,,,87.04,95.16,,,Job: JOB_BF2FEFE4A4A3; Weights changed: No; Component scores: skill: 85.71 -> 100.0; experience: 94.28 -> 100.0; education: 76.0 -> 76.0; semantic: 83.91 -> 83.72
+ATS score,CAN_5441F5865D9B,Final score,Increased,,,28.81,37.30,,,Job: JOB_BF2FEFE4A4A3; Weights changed: No; Component scores: skill: 0.0 -> 20.0; experience: 35.0 -> 35.0; education: 76.0 -> 76.0; semantic: 71.39 -> 67.99
+ATS score,CAN_B67DE2B9BADB,Final score,Increased,,,37.77,52.06,,,Job: JOB_BF2FEFE4A4A3; Weights changed: No; Component scores: skill: 14.29 -> 42.86; experience: 40.72 -> 46.43; education: 76.0 -> 76.0; semantic: 76.8 -> 74.98
+ATS score,CAN_CB63A04EDA0B,Final score,Increased,,,78.55,88.23,,,Job: JOB_BF2FEFE4A4A3; Weights changed: No; Component scores: skill: 71.43 -> 88.57; experience: 88.57 -> 94.28; education: 76.0 -> 76.0; semantic: 81.63 -> 83.24

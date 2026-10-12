@@ -1,103 +1,236 @@
-import pdfplumber
+from __future__ import annotations
+
+import logging
+import re
+import time
+from pathlib import Path
+from typing import BinaryIO
 
 
-def read_pdf(file):
+logger = logging.getLogger(__name__)
 
-    text = ""
 
-    with pdfplumber.open(file) as pdf:
+try:
+    import pymupdf
 
-        for page_number, page in enumerate(pdf.pages, start=1):
+except ImportError:
 
-            print("\n========================================")
-            print(f"PDF PAGE {page_number} DIAGNOSTIC")
-            print("========================================")
+    try:
+        import fitz as pymupdf
 
-            # -------------------------------------------------
-            # Extract all words with coordinates
-            # -------------------------------------------------
-            words = page.extract_words(
-                x_tolerance=2,
-                y_tolerance=2,
-                keep_blank_chars=False,
-                use_text_flow=False
+    except ImportError:
+        pymupdf = None
+
+
+_WORD_PATTERN = re.compile(
+    r"\b[\w.+#/-]+\b"
+)
+
+
+def read_pdf(
+    file: str | Path | BinaryIO,
+    debug: bool = False,
+) -> str:
+
+    if pymupdf is None:
+        raise ImportError(
+            "PyMuPDF is required for PDF extraction. "
+            "Install it using: pip install pymupdf"
+        )
+
+    total_start = time.perf_counter() if debug else 0.0
+
+    document = None
+
+    try:
+
+        # ====================================================
+        # OPEN PDF
+        # ====================================================
+
+        open_start = time.perf_counter() if debug else 0.0
+
+        if isinstance(file, (str, Path)):
+
+            document = pymupdf.open(str(file))
+
+        else:
+
+            try:
+                file.seek(0)
+            except Exception:
+                pass
+
+            pdf_bytes = file.read()
+
+            if not pdf_bytes:
+                return ""
+
+            document = pymupdf.open(
+                stream=pdf_bytes,
+                filetype="pdf",
             )
-            
-            print("\n========== WORDS BY VERTICAL POSITION ==========")
 
-            for word in sorted(words, key=lambda w: (w["top"], w["x0"])):
-                print(
-                    f"top={word['top']:7.1f} "
-                    f"x0={word['x0']:7.1f} "
-                    f"x1={word['x1']:7.1f} "
-                    f"text={word['text']!r}"
-                )
+        open_time = (
+            time.perf_counter() - open_start
+            if debug
+            else 0.0
+        )
 
-            print(f"Total words extracted: {len(words)}")
+        # ====================================================
+        # PAGE TEXT EXTRACTION
+        # ====================================================
 
-            # -------------------------------------------------
-            # Print every extracted word
-            # -------------------------------------------------
-            for word in words:
-                print(
-                    f"text={word['text']!r} "
-                    f"x0={word['x0']:.1f} "
-                    f"x1={word['x1']:.1f} "
-                    f"top={word['top']:.1f} "
-                    f"bottom={word['bottom']:.1f}"
-                )
+        extraction_start = (
+            time.perf_counter()
+            if debug
+            else 0.0
+        )
 
-            # -------------------------------------------------
-            # Search specifically for Skills-related words
-            # -------------------------------------------------
-            print("\n========== SKILL KEYWORD SEARCH ==========")
+        text_parts: list[str] = []
 
-            skill_keywords = {
-                "skills",
-                "skill",
-                "java",
-                "spring",
-                "boot",
-                "sql",
-                "mysql",
-                "html",
-                "css",
-                "git",
-            }
+        page_times: list[float] = []
 
-            found = []
+        for page_number, page in enumerate(
+            document,
+            start=1,
+        ):
 
-            for word in words:
-
-                word_text = word["text"].strip().lower()
-
-                if word_text in skill_keywords:
-                    found.append(word)
-
-            if found:
-                print("FOUND SKILL-RELATED TEXT:")
-
-                for word in found:
-                    print(
-                        f"{word['text']!r} "
-                        f"x0={word['x0']:.1f} "
-                        f"top={word['top']:.1f}"
-                    )
-
-            else:
-                print("❌ No skill-related words found")
-
-            # -------------------------------------------------
-            # Existing normal extraction
-            # -------------------------------------------------
-            page_text = page.extract_text(
-                x_tolerance=2,
-                y_tolerance=2
+            page_start = (
+                time.perf_counter()
+                if debug
+                else 0.0
             )
+
+            page_text = page.get_text("text") or ""
+
+            if debug:
+                page_time = (
+                    time.perf_counter() - page_start
+                )
+                page_times.append(page_time)
 
             if page_text:
-                text += page_text + "\n"
+                text_parts.append(page_text)
 
-    return text
+            if debug:
+                print(
+                    f"[PDF PAGE] "
+                    f"page={page_number:<3} "
+                    f"time={page_time:.6f}s "
+                    f"chars={len(page_text)}"
+                )
+
+        extraction_time = (
+            time.perf_counter() - extraction_start
+            if debug
+            else 0.0
+        )
+
+        # ====================================================
+        # TEXT JOIN
+        # ====================================================
+
+        join_start = time.perf_counter() if debug else 0.0
+
+        text = "\n".join(text_parts)
+
+        join_time = (
+            time.perf_counter() - join_start
+            if debug
+            else 0.0
+        )
+
+        # ====================================================
+        # OCR DETECTION
+        # ====================================================
+
+        if debug:
+            ocr_start = time.perf_counter()
+            ocr_required = not bool(text.strip())
+            ocr_detection_time = (
+                time.perf_counter() - ocr_start
+            )
+
+        # ====================================================
+        # TOTAL
+        # ====================================================
+
+        total_time = (
+            time.perf_counter() - total_start
+            if debug
+            else 0.0
+        )
+
+        # ====================================================
+        # PERFORMANCE REPORT
+        # ====================================================
+
+        if debug:
+
+            print()
+            print("=" * 70)
+            print("PYMUPDF PDF READER PERFORMANCE")
+            print("=" * 70)
+
+            print(f"Pages                  : {len(document)}")
+            print(f"Characters             : {len(text)}")
+            print(f"Words                  : {_count_words(text)}")
+            print(f"OCR required           : {ocr_required}")
+            print()
+            print(f"PDF open               : {open_time:.6f} s")
+            print(f"Page extraction        : {extraction_time:.6f} s")
+            print(f"Text join              : {join_time:.6f} s")
+            print(f"OCR detection          : {ocr_detection_time:.6f} s")
+            print()
+            print(
+                f"Total read_pdf         : {total_time:.6f} s"
+            )
+
+            if page_times:
+
+                print()
+                print("Per-page extraction:")
+
+                for index, page_time in enumerate(
+                    page_times,
+                    start=1,
+                ):
+                    print(
+                        f"  Page {index:<3}: "
+                        f"{page_time:.6f} s"
+                    )
+
+            print("=" * 70)
+
+        return text
+
+    except Exception as exc:
+
+        logger.exception(
+            "PyMuPDF PDF extraction failed: %s",
+            exc,
+        )
+
+        raise RuntimeError(
+            f"Failed to extract PDF text: {exc}"
+        ) from exc
+
+    finally:
+
+        if document is not None:
+
+            try:
+                document.close()
+            except Exception:
+                pass
 
 
+def _count_words(text: str) -> int:
+
+    if not isinstance(text, str):
+        return 0
+
+    return len(
+        _WORD_PATTERN.findall(text)
+    )

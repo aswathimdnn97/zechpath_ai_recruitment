@@ -1,0 +1,627 @@
+{
+  "candidate_id": "CAN_1CA3DA4F0062",
+  "masked_profile": {
+    "candidate_id": "CAN_1CA3DA4F0062",
+    "skills": [
+      {
+        "source_section": "summary",
+        "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Prepared Excel reports for recruitment activity.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Recruitment",
+            "source_skill": "Recruitment"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Recruitment",
+        "skill_id": "HR005",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+            "source_skill": "Resume Screening"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Candidate Screening",
+            "source_skill": "Candidate Screening"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "original_skill": "Resume Screening",
+        "resolved_from": "Resume Screening",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "Resume Screening"
+        ],
+        "skill": "Candidate Screening",
+        "skill_id": "HR007",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+            "source_skill": "Interview Coordination"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Interview Coordination",
+            "source_skill": "Interview Coordination"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "skill": "Interview Coordination",
+        "skill_id": "HR010",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+            "source_skill": "HRMS"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Screened resumes, scheduled interviews and updated candidate records in HRMS.",
+            "source_skill": "HRMS"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "HRMS",
+            "source_skill": "HRMS"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "HRMS",
+        "skill_id": "HR029",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Intern - PeopleBridge",
+            "source_skill": "hr"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skill": "hr",
+        "resolved_from": "hr",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "hr"
+        ],
+        "skill": "Human Resources",
+        "skill_id": "HR001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Prepared Excel reports for recruitment activity.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Prepared Excel reports for recruitment activity.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "excel",
+            "source_skill": "excel"
+          }
+        ],
+        "source_sections": [
+          "experience",
+          "skills"
+        ],
+        "original_skill": "excel",
+        "resolved_from": "excel",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "excel"
+        ],
+        "skill": "Microsoft Excel",
+        "skill_id": "HR035",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "Communication",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "Communication",
+            "source_skill": "Communication"
+          }
+        ],
+        "skill": "Communication",
+        "skill_id": "HR069",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "ats",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "ats",
+            "source_skill": "ats"
+          }
+        ],
+        "original_skill": "ats",
+        "resolved_from": "ats",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "ats"
+        ],
+        "skill": "Applicant Tracking System",
+        "skill_id": "HR017",
+        "matched_by": "exact"
+      }
+    ],
+    "education": [
+      {
+        "degree_type": "Master of Business Administration",
+        "field_of_study": "Human Resources",
+        "institution": null,
+        "university": "MG University",
+        "board": null,
+        "graduation_year": "2026"
+      },
+      {
+        "degree_type": "Bachelor of Commerce",
+        "field_of_study": "Commerce",
+        "institution": null,
+        "university": "MG University",
+        "board": null,
+        "graduation_year": "2024"
+      }
+    ],
+    "experience": [
+      {
+        "title": {
+          "title_id": null,
+          "title": "HR Intern",
+          "category": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "company": {
+          "company_id": null,
+          "company": "PeopleBridge",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jan 2026",
+          "end_date": "Apr 2026"
+        },
+        "total_experience": {
+          "total_months": 4,
+          "total_years": 0.3
+        },
+        "location": "Ernakulam, Kerala",
+        "employment_type": {
+          "type_id": "EMP003",
+          "employment_type": "Internship",
+          "matched_by": "keyword",
+          "confidence": 100
+        },
+        "department": {
+          "department_id": "DEP004",
+          "department": "Human Resources",
+          "matched_by": "keyword",
+          "confidence": 50
+        },
+        "description": [
+          "Screened resumes, scheduled interviews and updated candidate records in HRMS.",
+          "Prepared Excel reports for recruitment activity."
+        ]
+      }
+    ],
+    "projects": [],
+    "certifications": [
+      {
+        "certification_name": "Professional Certification",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      },
+      {
+        "certification_name": "Industry Skills Program",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      },
+      {
+        "certification_name": "Advanced Workplace Training",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      }
+    ],
+    "metadata": {
+      "parser_version": "1.0",
+      "created_at": "2026-10-09T06:49:52.645477+00:00"
+    }
+  },
+  "bias_report": {
+    "bias_detected": false,
+    "risk_level": "none",
+    "indicator_count": 0,
+    "indicators": [],
+    "status": "clear"
+  },
+  "original_profile": {
+    "candidate_id": "CAN_1CA3DA4F0062",
+    "personal_information": {
+      "name": "ANJALI K",
+      "email": "anjali.k@example.com",
+      "phone": null,
+      "location": "I Ernakulam, Kerala",
+      "linkedin": null,
+      "github": null,
+      "portfolio": null
+    },
+    "skills": [
+      {
+        "source_section": "summary",
+        "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Prepared Excel reports for recruitment activity.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Recruitment",
+            "source_skill": "Recruitment"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Recruitment",
+        "skill_id": "HR005",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+            "source_skill": "Resume Screening"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Candidate Screening",
+            "source_skill": "Candidate Screening"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "original_skill": "Resume Screening",
+        "resolved_from": "Resume Screening",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "Resume Screening"
+        ],
+        "skill": "Candidate Screening",
+        "skill_id": "HR007",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+            "source_skill": "Interview Coordination"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Interview Coordination",
+            "source_skill": "Interview Coordination"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "skill": "Interview Coordination",
+        "skill_id": "HR010",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+            "source_skill": "HRMS"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Screened resumes, scheduled interviews and updated candidate records in HRMS.",
+            "source_skill": "HRMS"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "HRMS",
+            "source_skill": "HRMS"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "HRMS",
+        "skill_id": "HR029",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR graduate seeking an entry-level HR Executive role. Internship experience includes resume screening, interview coordination, HRMS updates and recruitment reporting.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Intern - PeopleBridge",
+            "source_skill": "hr"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skill": "hr",
+        "resolved_from": "hr",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "hr"
+        ],
+        "skill": "Human Resources",
+        "skill_id": "HR001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Prepared Excel reports for recruitment activity.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Prepared Excel reports for recruitment activity.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "excel",
+            "source_skill": "excel"
+          }
+        ],
+        "source_sections": [
+          "experience",
+          "skills"
+        ],
+        "original_skill": "excel",
+        "resolved_from": "excel",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "excel"
+        ],
+        "skill": "Microsoft Excel",
+        "skill_id": "HR035",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "Communication",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "Communication",
+            "source_skill": "Communication"
+          }
+        ],
+        "skill": "Communication",
+        "skill_id": "HR069",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "ats",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "ats",
+            "source_skill": "ats"
+          }
+        ],
+        "original_skill": "ats",
+        "resolved_from": "ats",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "ats"
+        ],
+        "skill": "Applicant Tracking System",
+        "skill_id": "HR017",
+        "matched_by": "exact"
+      }
+    ],
+    "education": [
+      {
+        "degree_type": "Master of Business Administration",
+        "field_of_study": "Human Resources",
+        "institution": null,
+        "university": "MG University",
+        "board": null,
+        "graduation_year": "2026"
+      },
+      {
+        "degree_type": "Bachelor of Commerce",
+        "field_of_study": "Commerce",
+        "institution": null,
+        "university": "MG University",
+        "board": null,
+        "graduation_year": "2024"
+      }
+    ],
+    "experience": [
+      {
+        "title": {
+          "title_id": null,
+          "title": "HR Intern",
+          "category": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "company": {
+          "company_id": null,
+          "company": "PeopleBridge",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jan 2026",
+          "end_date": "Apr 2026"
+        },
+        "total_experience": {
+          "total_months": 4,
+          "total_years": 0.3
+        },
+        "location": "Ernakulam, Kerala",
+        "employment_type": {
+          "type_id": "EMP003",
+          "employment_type": "Internship",
+          "matched_by": "keyword",
+          "confidence": 100
+        },
+        "department": {
+          "department_id": "DEP004",
+          "department": "Human Resources",
+          "matched_by": "keyword",
+          "confidence": 50
+        },
+        "description": [
+          "Screened resumes, scheduled interviews and updated candidate records in HRMS.",
+          "Prepared Excel reports for recruitment activity."
+        ]
+      }
+    ],
+    "projects": [],
+    "certifications": [
+      {
+        "certification_name": "Professional Certification",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      },
+      {
+        "certification_name": "Industry Skills Program",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      },
+      {
+        "certification_name": "Advanced Workplace Training",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      }
+    ],
+    "metadata": {
+      "parser_version": "1.0",
+      "created_at": "2026-10-09T06:49:52.645477+00:00"
+    }
+  }
+}

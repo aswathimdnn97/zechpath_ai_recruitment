@@ -21,12 +21,17 @@ DATE_PATTERN = re.compile(
         (?:jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)
         [a-z]*\s+\d{4}
         |
-        (?:19|20)\d{2}\s*[-–—]\s*(?:present|current|(19|20)\d{2})
+        (?:19|20)\d{2}\s*[-–—]\s*
+        (?:present|current|(19|20)\d{2})
     )
     $
     """,
     re.IGNORECASE | re.VERBOSE,
 )
+
+WHITESPACE_PATTERN = re.compile(r"[ \t]+")
+
+DUPLICATE_SPACING_PATTERN = re.compile(r"\s+")
 
 # Common resume section headings.
 DEFAULT_HEADINGS = {
@@ -71,27 +76,23 @@ DEFAULT_HEADINGS = {
 # Basic helpers
 # ============================================================
 
+
 def _normalize_line(line: str) -> str:
     """
     Normalize whitespace without destroying useful content.
     """
-
     if not line:
         return ""
 
-    # Normalize tabs.
+    # Normalize tabs and non-breaking spaces.
     line = line.replace("\t", " ")
-
-    # Normalize non-breaking spaces.
     line = line.replace("\u00a0", " ")
 
     # Normalize different dash characters.
     line = line.replace("–", "-").replace("—", "-")
 
-    # Collapse repeated whitespace.
-    line = re.sub(r"[ \t]+", " ", line)
-
-    return line.strip()
+    # Collapse repeated spaces using the compiled pattern.
+    return WHITESPACE_PATTERN.sub(" ", line).strip()
 
 
 def _is_heading(line: str, heading_set: set[str]) -> bool:
@@ -186,11 +187,7 @@ def _previous_line_requires_continuation(line: str) -> bool:
 
 
 def _remove_duplicate_spacing(line: str) -> str:
-    """
-    Final whitespace cleanup.
-    """
-
-    return re.sub(r"\s+", " ", line).strip()
+    return DUPLICATE_SPACING_PATTERN.sub(" ", line).strip()
 
 
 # ============================================================
@@ -203,42 +200,84 @@ def _should_merge(
     heading_set: set[str],
 ) -> bool:
     """
-    Decide conservatively whether `current` is a continuation
-    of `previous`.
+    Decide whether `current` is a wrapped continuation of `previous`.
 
-    The function intentionally prefers NOT merging when uncertain.
-    This prevents corruption of skills, companies, dates, titles,
-    and other resume entities.
+    The function is conservative:
+    - headings are never merged
+    - bullets are protected
+    - standalone dates are protected
+    - short entity-like lines are protected
+    - lowercase continuation lines can be merged when they clearly
+      look like wrapped prose
     """
 
     if not previous or not current:
         return False
 
+    # --------------------------------------------------------
     # Never merge headings.
+    # --------------------------------------------------------
+
     if _is_heading(current, heading_set):
         return False
 
-    # Never merge bullet lines into non-bullet content.
+    # --------------------------------------------------------
+    # Never merge bullet lines here.
+    # Bullet handling is done separately.
+    # --------------------------------------------------------
+
     if _is_bullet(current):
         return False
 
-    # Standalone dates should remain independent.
+    # --------------------------------------------------------
+    # Standalone dates remain independent.
+    # --------------------------------------------------------
+
     if _is_date_line(current):
         return False
 
-    # If the previous line clearly indicates an unfinished sentence,
-    # merging is usually safe.
+    # --------------------------------------------------------
+    # If previous line clearly ends with punctuation that
+    # indicates continuation, merging is safe.
+    # --------------------------------------------------------
+
     if _previous_line_requires_continuation(previous):
         return True
 
-    # Lowercase continuation is useful, but only when the current
-    # line does not look like a short entity.
-    if _looks_like_sentence_start(current):
-        if not _is_short_entity_like_line(current):
-            return True
+    # --------------------------------------------------------
+    # Lowercase beginning strongly indicates a wrapped line.
+    #
+    # Example:
+    #
+    # Worked on ZechPath AI
+    # recruitment system using python
+    #
+    # -> Worked on ZechPath AI recruitment system using python
+    # --------------------------------------------------------
 
-    # If the previous line is very short and entity-like, don't
-    # attach another line to it.
+    if current[0].islower():
+
+        # Very short lowercase entities should remain separate.
+        words = current.split()
+
+        if len(words) <= 2:
+            return False
+
+        return True
+
+    # --------------------------------------------------------
+    # If previous line is clearly an entity, don't attach
+    # another line to it.
+    #
+    # Examples:
+    #
+    # Python
+    # Django
+    #
+    # ABC Technologies
+    # Kochi
+    # --------------------------------------------------------
+
     if _is_short_entity_like_line(previous):
         return False
 

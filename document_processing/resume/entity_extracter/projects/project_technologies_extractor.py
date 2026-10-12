@@ -2,30 +2,44 @@ import re
 
 
 # ============================================================
-# Patterns
+# TECHNOLOGY LABEL
 # ============================================================
 
 TECHNOLOGY_LABEL_PATTERN = re.compile(
     r"""
     ^
     (?:
-        technologies?
-        |tech\s*stack
-        |technology\s*stack
-        |tools
-        |technologies\s*used
-        |tools\s*used
-        |built\s*with
-        |developed\s*using
+        technolog(?:y|ies)(?:\s+used)?
+        |tech(?:nology)?\s*stack
+        |tools?(?:\s*(?:&|and)\s*technologies?)?(?:\s+used)?
+        |languages?(?:\s*(?:&|and)\s*frameworks?)?
+        |frameworks?(?:\s+and\s+libraries)?
+        |built\s+(?:with|using)
+        |developed\s+using
         |using
     )
-    \s*[:\-]?\s*
+    (?:\s*[:\-–—]\s*|\s+)
     (.+)
     $
     """,
     re.IGNORECASE | re.VERBOSE,
 )
 
+PROJECT_NARRATIVE_START_PATTERN = re.compile(
+    r"\s+(?=(?:"
+    r"built|developed|designed|implemented|created|engineered|"
+    r"architected|led|added|integrated|deployed|managed|automated|"
+    r"established|delivered|tested|used|worked|improved|maintained|"
+    r"configured|supported|provided|created|"
+    r"the\s+project|this\s+project|the\s+application|the\s+system"
+    r")\b)",
+    re.IGNORECASE,
+)
+
+
+# ============================================================
+# URL
+# ============================================================
 
 URL_PATTERN = re.compile(
     r"""
@@ -46,81 +60,100 @@ URL_PATTERN = re.compile(
 
 
 # ============================================================
-# Technology separators
+# TECHNOLOGY SEPARATOR
 # ============================================================
 
 TECH_SEPARATOR_PATTERN = re.compile(
-    r"\s*(?:,|\||;|•)\s*"
+    r"\s*(?:,|\||;|•|&|\band\b)\s*",
+    re.IGNORECASE,
 )
 
 
 # ============================================================
-# Common technology prefixes
-# ============================================================
-
-TECH_PREFIXES = (
-    "technologies:",
-    "technology:",
-    "tech stack:",
-    "technology stack:",
-    "tools:",
-    "technologies used:",
-    "tools used:",
-    "built with:",
-    "developed using:",
-    "using:",
-)
-
-
-# ============================================================
-# Helpers
+# CLEAN LINE
 # ============================================================
 
 def clean_line(line):
-    """
-    Clean a single resume line.
-    """
 
     if not line:
         return ""
 
-    line = line.strip()
+    line = str(line).strip()
 
-    # Remove bullets
-    line = re.sub(r"^[•●▪◦*-]\s*", "", line)
+    line = re.sub(
+        r"^[•●▪◦*\-]\s*",
+        "",
+        line,
+    )
 
-    # Normalize whitespace
-    line = re.sub(r"\s+", " ", line)
+    line = re.sub(
+        r"\s+",
+        " ",
+        line,
+    )
 
     return line.strip()
 
 
+# ============================================================
+# TECHNOLOGY LINE
+# ============================================================
+
 def is_technology_line(line):
-    """
-    Check whether a line explicitly contains
-    technology information.
-    """
 
-    return bool(TECHNOLOGY_LABEL_PATTERN.match(line))
+    if not line:
+        return False
 
+    return bool(
+        TECHNOLOGY_LABEL_PATTERN.match(line)
+    )
+
+
+# ============================================================
+# EXTRACT TECHNOLOGY TEXT
+# ============================================================
 
 def extract_technology_text(line):
-    """
-    Extract the text after a technology label.
-    """
 
     match = TECHNOLOGY_LABEL_PATTERN.match(line)
 
     if not match:
         return None
 
-    return match.group(1).strip()
+    technology_text = match.group(1).strip()
+    narrative_boundary = PROJECT_NARRATIVE_START_PATTERN.search(
+        technology_text
+    )
 
+    if narrative_boundary:
+        technology_text = technology_text[:narrative_boundary.start()]
+
+    return technology_text.strip(" .;")
+
+
+def extract_project_narrative_from_technology_line(line):
+    match = TECHNOLOGY_LABEL_PATTERN.match(line)
+
+    if not match:
+        return None
+
+    technology_text = match.group(1).strip()
+    narrative_boundary = PROJECT_NARRATIVE_START_PATTERN.search(
+        technology_text
+    )
+
+    if not narrative_boundary:
+        return None
+
+    narrative = technology_text[narrative_boundary.start():].strip()
+    return narrative or None
+
+
+# ============================================================
+# SPLIT TECHNOLOGIES
+# ============================================================
 
 def split_technologies(text):
-    """
-    Split a technology string into individual technologies.
-    """
 
     if not text:
         return []
@@ -128,7 +161,6 @@ def split_technologies(text):
     # Remove URLs
     text = URL_PATTERN.sub("", text)
 
-    # Normalize common separators
     parts = TECH_SEPARATOR_PATTERN.split(text)
 
     technologies = []
@@ -145,60 +177,56 @@ def split_technologies(text):
     return technologies
 
 
+# ============================================================
+# CLEAN TECHNOLOGY
+# ============================================================
+
 def clean_technology(technology):
-    """
-    Clean an individual technology name.
-    """
+
+    if not technology:
+        return ""
 
     technology = technology.strip()
 
-    # Remove surrounding punctuation
-    technology = technology.strip(":-,;|")
+    technology = technology.strip(
+        ":-,;|"
+    )
 
-    # Normalize whitespace
-    technology = re.sub(r"\s+", " ", technology)
+    technology = re.sub(
+        r"\s+",
+        " ",
+        technology,
+    )
 
     return technology.strip()
 
 
 # ============================================================
-# Main Extractor
+# EXTRACT PROJECT TECHNOLOGIES
 # ============================================================
 
 def extract_project_technologies(block):
-    """
-    Extract technologies from an individual project block.
-
-    Parameters
-    ----------
-    block : list[str] | str
-        Individual project block.
-
-    Returns
-    -------
-    list[str]
-        Extracted technologies.
-    """
 
     if not block:
         return []
 
-    # --------------------------------------------------------
-    # Support string input
-    # --------------------------------------------------------
-
     if isinstance(block, str):
+
         lines = block.splitlines()
-    else:
+
+    elif isinstance(block, list):
+
         lines = block
+
+    else:
+        return []
 
     technologies = []
 
-    # --------------------------------------------------------
-    # Extract explicit technology lines
-    # --------------------------------------------------------
-
     for raw_line in lines:
+
+        if not isinstance(raw_line, str):
+            continue
 
         line = clean_line(raw_line)
 
@@ -213,41 +241,40 @@ def extract_project_technologies(block):
         if not technology_text:
             continue
 
-        extracted = split_technologies(technology_text)
+        extracted = split_technologies(
+            technology_text
+        )
 
         for technology in extracted:
 
-            technology = clean_technology(technology)
+            technology = clean_technology(
+                technology
+            )
 
             if technology:
-                technologies.append(technology)
+                technologies.append(
+                    technology
+                )
 
     # --------------------------------------------------------
     # Remove duplicates while preserving order
     # --------------------------------------------------------
 
     unique_technologies = []
+
     seen = set()
 
     for technology in technologies:
 
         key = technology.lower()
 
-        if key not in seen:
-            seen.add(key)
-            unique_technologies.append(technology)
+        if key in seen:
+            continue
+
+        seen.add(key)
+
+        unique_technologies.append(
+            technology
+        )
 
     return unique_technologies
-
-block = [
-    "AI Resume Screening System",
-    "Developed an AI-based resume screening platform.",
-    "Technologies: Python, FastAPI, PostgreSQL, Sentence Transformers",
-    "Tech Stack: React | Node.js | Express | MongoDB",
-   " Tools: Docker; Kubernetes; AWS; Git",
-    "GitHub: https://github.com/example/project"
-]
-
-result = extract_project_technologies(block)
-
-print(result)

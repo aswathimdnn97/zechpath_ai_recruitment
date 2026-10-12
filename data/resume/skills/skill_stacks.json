@@ -74,7 +74,7 @@
     "NumPy",
     "Pandas",
     "Matplotlib",
-    "Scikit-learn",
+    "scikit-learn",
     "TensorFlow"
   ],
 

@@ -1,0 +1,644 @@
+{
+    "candidate_id": "CAN_2325AD0B18CE",
+    "masked_profile": {
+        "candidate_id": "CAN_2325AD0B18CE",
+        "skills": [
+            {
+                "skill_id": "HR003",
+                "skill": "HR Operations",
+                "category": "HR",
+                "subcategory": "HR Operations",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                "sources": [
+                    "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                    "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations.",
+                    "HR Operations"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR005",
+                "skill": "Recruitment",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                "sources": [
+                    "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                    "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations.",
+                    "Recruitment"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR006",
+                "skill": "Talent Acquisition",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                "sources": [
+                    "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                    "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations."
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR029",
+                "skill": "HRMS",
+                "category": "HR",
+                "subcategory": "HR Technology",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                "sources": [
+                    "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                    "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations.",
+                    "HRMS"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR042",
+                "skill": "Employee Relations",
+                "category": "HR",
+                "subcategory": "Employee Relations",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                "sources": [
+                    "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                    "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations."
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR078",
+                "skill": "Payroll",
+                "category": "HR",
+                "subcategory": "HR Operations",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                "sources": [
+                    "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                    "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations.",
+                    "Payroll"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR001",
+                "skill": "Human Resources",
+                "category": "HR",
+                "subcategory": "HR Fundamentals",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                "sources": [
+                    "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                    "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations."
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR035",
+                "skill": "Microsoft Excel",
+                "category": "HR",
+                "subcategory": "HR Tools",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                "sources": [
+                    "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                    "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations.",
+                    "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                    "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations.",
+                    "MS Excel"
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR019",
+                "skill": "Employee Onboarding",
+                "category": "HR",
+                "subcategory": "Employee Lifecycle",
+                "matched_by": "fuzzy",
+                "confidence": 90,
+                "source_section": "experience",
+                "source_text": "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations.",
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR022",
+                "skill": "Employee Records Management",
+                "category": "HR",
+                "subcategory": "HR Administration",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations.",
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR063",
+                "skill": "HR Reporting",
+                "category": "HR",
+                "subcategory": "HR Analytics",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations.",
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR069",
+                "skill": "Communication",
+                "category": "HR",
+                "subcategory": "Soft Skills",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "skills",
+                "source_text": "Communication",
+                "extraction_method": "skills_section"
+            },
+            {
+                "skill_id": "HR017",
+                "skill": "Applicant Tracking System",
+                "category": "HR",
+                "subcategory": "Recruitment Tools",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "skills",
+                "source_text": "ATS",
+                "extraction_method": "skills_section"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Master of Business Administration",
+                "field_of_study": "Human Resources",
+                "institution": null,
+                "university": null,
+                "board": null,
+                "graduation_year": "2018"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": null,
+                    "title": "Senior HR Manager",
+                    "category": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "People Works Technologies",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jan 2020",
+                    "end_date": "Present"
+                },
+                "total_experience": {
+                    "total_months": 81,
+                    "total_years": 6.8
+                },
+                "location": "Bengaluru, Karnataka",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP004",
+                    "department": "Human Resources",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "description": [
+                    "Managed recruitment and talent acquisition activities.",
+                    "Coordinated payroll and employee relations processes.",
+                    "Maintained HRMS records and HR reports using MS Excel."
+                ]
+            },
+            {
+                "title": null,
+                "company": null,
+                "duration": {
+                    "start_date": "Jun 2018",
+                    "end_date": "Dec 2019"
+                },
+                "total_experience": {
+                    "total_months": 19,
+                    "total_years": 1.6
+                },
+                "location": "Bengaluru, Karnataka",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP004",
+                    "department": "Human Resources",
+                    "matched_by": "keyword",
+                    "confidence": 75
+                },
+                "description": [
+                    "Supported onboarding, employee documentation and HR operations."
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-09-24T19:28:19.637594+00:00"
+        }
+    },
+    "bias_report": {
+        "bias_detected": false,
+        "risk_level": "none",
+        "indicator_count": 0,
+        "indicators": [],
+        "status": "clear"
+    },
+    "original_profile": {
+        "candidate_id": "CAN_2325AD0B18CE",
+        "personal_information": {
+            "name": "DIVYA MENON",
+            "email": "divya.m@example.com",
+            "phone": null,
+            "location": "Bengaluru, Karnataka",
+            "linkedin": null,
+            "github": null,
+            "portfolio": null
+        },
+        "skills": [
+            {
+                "skill_id": "HR003",
+                "skill": "HR Operations",
+                "category": "HR",
+                "subcategory": "HR Operations",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                "sources": [
+                    "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                    "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations.",
+                    "HR Operations"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR005",
+                "skill": "Recruitment",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                "sources": [
+                    "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                    "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations.",
+                    "Recruitment"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR006",
+                "skill": "Talent Acquisition",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                "sources": [
+                    "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                    "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations."
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR029",
+                "skill": "HRMS",
+                "category": "HR",
+                "subcategory": "HR Technology",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                "sources": [
+                    "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                    "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations.",
+                    "HRMS"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR042",
+                "skill": "Employee Relations",
+                "category": "HR",
+                "subcategory": "Employee Relations",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                "sources": [
+                    "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                    "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations."
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR078",
+                "skill": "Payroll",
+                "category": "HR",
+                "subcategory": "HR Operations",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                "sources": [
+                    "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                    "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations.",
+                    "Payroll"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR001",
+                "skill": "Human Resources",
+                "category": "HR",
+                "subcategory": "HR Fundamentals",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                "sources": [
+                    "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                    "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations."
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR035",
+                "skill": "Microsoft Excel",
+                "category": "HR",
+                "subcategory": "HR Tools",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                "sources": [
+                    "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                    "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations.",
+                    "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+                    "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations.",
+                    "MS Excel"
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR019",
+                "skill": "Employee Onboarding",
+                "category": "HR",
+                "subcategory": "Employee Lifecycle",
+                "matched_by": "fuzzy",
+                "confidence": 90,
+                "source_section": "experience",
+                "source_text": "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations.",
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR022",
+                "skill": "Employee Records Management",
+                "category": "HR",
+                "subcategory": "HR Administration",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations.",
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR063",
+                "skill": "HR Reporting",
+                "category": "HR",
+                "subcategory": "HR Analytics",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "Senior HR Manager - People Works Technologies Jan 2020 - Present Bengaluru, Karnataka Managed recruitment and talent acquisition activities. Coordinated payroll and employee relations processes. Maintained HRMS records and HR reports using MS Excel. HR Executive - Talent Core Solutions Jun 2018 - Dec 2019 Bengaluru, Karnataka Supported onboarding, employee documentation and HR operations.",
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR069",
+                "skill": "Communication",
+                "category": "HR",
+                "subcategory": "Soft Skills",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "skills",
+                "source_text": "Communication",
+                "extraction_method": "skills_section"
+            },
+            {
+                "skill_id": "HR017",
+                "skill": "Applicant Tracking System",
+                "category": "HR",
+                "subcategory": "Recruitment Tools",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "skills",
+                "source_text": "ATS",
+                "extraction_method": "skills_section"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Master of Business Administration",
+                "field_of_study": "Human Resources",
+                "institution": null,
+                "university": null,
+                "board": null,
+                "graduation_year": "2018"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": null,
+                    "title": "Senior HR Manager",
+                    "category": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "People Works Technologies",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jan 2020",
+                    "end_date": "Present"
+                },
+                "total_experience": {
+                    "total_months": 81,
+                    "total_years": 6.8
+                },
+                "location": "Bengaluru, Karnataka",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP004",
+                    "department": "Human Resources",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "description": [
+                    "Managed recruitment and talent acquisition activities.",
+                    "Coordinated payroll and employee relations processes.",
+                    "Maintained HRMS records and HR reports using MS Excel."
+                ]
+            },
+            {
+                "title": null,
+                "company": null,
+                "duration": {
+                    "start_date": "Jun 2018",
+                    "end_date": "Dec 2019"
+                },
+                "total_experience": {
+                    "total_months": 19,
+                    "total_years": 1.6
+                },
+                "location": "Bengaluru, Karnataka",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP004",
+                    "department": "Human Resources",
+                    "matched_by": "keyword",
+                    "confidence": 75
+                },
+                "description": [
+                    "Supported onboarding, employee documentation and HR operations."
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-09-24T19:28:19.637594+00:00"
+        }
+    },
+    "resume_hash": "5595f73d098a1258cafb314efcad7737324811f6388a52fcc84e466a198a71da"
+}

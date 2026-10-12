@@ -9,7 +9,7 @@ def test_resolve_cse():
         "CSE"
     )
 
-    assert result == "Computer Science"
+    assert result == "Computer Science and Engineering"
 
 
 def test_resolve_cs():

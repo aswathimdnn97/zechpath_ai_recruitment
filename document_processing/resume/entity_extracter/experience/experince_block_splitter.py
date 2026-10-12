@@ -1,39 +1,52 @@
+"""
+experience_block_splitter.py
+
+Responsibilities
+----------------
+1. Split experience section into logical experience blocks.
+2. Preserve title/company/location/date lines.
+3. Keep description/responsibility lines inside the correct block.
+4. Support:
+       Title - Company
+       Company - Location
+       Company | Location | Dates
+       Title | Company | Dates
+       Company
+       Location
+       Dates
+5. Do not split a block merely because a description line
+   contains a dash.
+"""
+
 import re
 
 
-DATE_PATTERN = re.compile(
-    r"""
-    (?:
-        Jan|Feb|Mar|Apr|May|Jun|
-        Jul|Aug|Sep|Oct|Nov|Dec
-    )
-    \s+
-    \d{4}
-    |
-    \d{4}
-    """,
-    re.IGNORECASE | re.VERBOSE,
+# ============================================================
+# DATE PATTERNS
+# ============================================================
+
+MONTH_PATTERN = (
+    r"(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|"
+    r"Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|"
+    r"Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)"
 )
 
+DATE_TOKEN_PATTERN = (
+    rf"(?:"
+    rf"{MONTH_PATTERN}\s+\d{{4}}"
+    rf"|"
+    rf"\d{{4}}"
+    rf")"
+)
 
 DATE_RANGE_PATTERN = re.compile(
-    r"""
-    (?:
-        (?:Jan|Feb|Mar|Apr|May|Jun|
-        Jul|Aug|Sep|Oct|Nov|Dec)
-        \s+\d{4}
-        |
-        \d{4}
-    )
+    rf"""
+    {DATE_TOKEN_PATTERN}
     \s*
-    [-–—]
+    [-–—\uFFFD]
     \s*
     (?:
-        (?:Jan|Feb|Mar|Apr|May|Jun|
-        Jul|Aug|Sep|Oct|Nov|Dec)
-        \s+\d{4}
-        |
-        \d{4}
+        {DATE_TOKEN_PATTERN}
         |
         Present
         |
@@ -44,12 +57,13 @@ DATE_RANGE_PATTERN = re.compile(
 )
 
 
-def is_experience_start(line):
-    """
-    Determine whether a line looks like the beginning
-    of an experience record.
+# ============================================================
+# DATE HELPERS
+# ============================================================
 
-    This is intentionally conservative.
+def is_date_line(line):
+    """
+    Return True if the line contains a date range.
     """
 
     if not isinstance(line, str):
@@ -60,48 +74,156 @@ def is_experience_start(line):
     if not line:
         return False
 
-    # A date range is a strong experience signal.
-    if DATE_RANGE_PATTERN.search(line):
-        return True
-
-    return False
+    return bool(
+        DATE_RANGE_PATTERN.search(line)
+    )
 
 
 def has_date(lines):
-    """Return True if any line in lines contains a date range."""
+    """
+    Return True if any line contains an experience date range.
+    """
 
     if not lines:
         return False
 
-    return any(DATE_RANGE_PATTERN.search(line) for line in lines if isinstance(line, str))
+    return any(
+        is_date_line(line)
+        for line in lines
+        if isinstance(line, str)
+    )
+
+
+# Backward compatibility
+def is_experience_start(line):
+    """
+    Determine whether a line is a strong experience boundary.
+
+    A date range is treated as the strongest signal.
+    """
+
+    return is_date_line(line)
+
+
+# ============================================================
+# TITLE DETECTION
+# ============================================================
+
+TITLE_KEYWORDS = {
+    "developer",
+    "engineer",
+    "programmer",
+    "analyst",
+    "manager",
+    "consultant",
+    "architect",
+    "specialist",
+    "scientist",
+    "designer",
+    "administrator",
+    "administrator",
+    "intern",
+    "trainee",
+    "lead",
+    "senior",
+    "junior",
+    "associate",
+    "director",
+    "officer",
+    "executive",
+    "assistant",
+    "developer",
+}
 
 
 def is_title_line(line):
-    """Heuristic to detect title lines like 'Senior X — Company' or 'Title - Company'."""
+    """
+    Detect a title/company line.
+
+    Examples:
+        Python Developer - CodeNest Technologies
+        Senior Developer — ABC Technologies
+
+    This function intentionally does NOT classify:
+
+        CodeNest Technologies - Kochi, Kerala
+
+    as a title line because the right side looks like a location.
+    """
 
     if not isinstance(line, str):
         return False
 
-    # common separators between title and company
-    if "—" in line or "–" in line or " - " in line or "—" in line:
+    text = line.strip()
 
-        # require at least two alpha segments around the separator
-        parts = re.split(r"[—–-]+", line)
+    if not text:
+        return False
 
-        if len(parts) >= 2:
-            left, right = parts[0].strip(), parts[1].strip()
+    separators = [
+        " - ",
+        " – ",
+        " — ",
+        " | ",
+    ]
 
-            if left and right and re.search(r"[A-Za-z]", left) and re.search(r"[A-Za-z]", right):
-                return True
+    for separator in separators:
+
+        if separator not in text:
+            continue
+
+        parts = [
+            part.strip()
+            for part in text.split(
+                separator,
+                1
+            )
+        ]
+
+        if len(parts) != 2:
+            continue
+
+        left, right = parts
+
+        if not left or not right:
+            continue
+
+        left_lower = left.lower()
+
+        # A title normally contains one of these words.
+        if any(
+            keyword in left_lower.split()
+            or keyword in left_lower
+            for keyword in TITLE_KEYWORDS
+        ):
+            return True
+
+        right_lower = right.lower()
+        if (
+            any(
+                keyword in right_lower.split()
+                or keyword in right_lower
+                for keyword in TITLE_KEYWORDS
+            )
+            and not any(
+                keyword in left_lower.split()
+                or keyword in left_lower
+                for keyword in TITLE_KEYWORDS
+            )
+        ):
+            return True
 
     return False
 
 
+# ============================================================
+# NORMALIZATION
+# ============================================================
+
 def normalize_lines(lines):
     """
-    Convert experience input into a simple list of strings.
+    Convert experience input into a flat list of strings.
 
-    Handles both:
+    Supports:
 
         ["line1", "line2"]
 
@@ -116,11 +238,8 @@ def normalize_lines(lines):
     if not lines:
         return []
 
-    # --------------------------------------------------------
-    # Already a string
-    # --------------------------------------------------------
-
     if isinstance(lines, str):
+
         return [
             line.strip()
             for line in lines.splitlines()
@@ -134,58 +253,66 @@ def normalize_lines(lines):
 
     for item in lines:
 
-        # ----------------------------------------------------
-        # Normal line
-        # ----------------------------------------------------
-
         if isinstance(item, str):
 
-            item = item.strip()
+            line = item.strip()
 
-            if item:
-                normalized.append(item)
-
-        # ----------------------------------------------------
-        # Existing block
-        # ----------------------------------------------------
+            if line:
+                normalized.append(line)
 
         elif isinstance(item, list):
 
-            for line in item:
+            for sub_item in item:
 
                 if not isinstance(
-                    line,
+                    sub_item,
                     str
                 ):
                     continue
 
-                line = line.strip()
+                line = sub_item.strip()
 
                 if line:
-                    normalized.append(
-                        line
-                    )
+                    normalized.append(line)
 
     return normalized
 
 
+# ============================================================
+# EXPERIENCE BLOCK SPLITTER
+# ============================================================
+
 def split_experience_blocks(lines):
     """
-    Split experience lines into logical experience blocks.
+    Split experience section into logical experience blocks.
 
-    Input:
-        list[str]
+    Important behavior
+    -------------------
+    A date range starts a new experience only when the current
+    block already contains a date.
 
-    or:
-        list[list[str]]
+    This allows:
 
-    Output:
-        list[list[str]]
+        Python Developer
+        CodeNest Technologies - Kochi, Kerala
+        Jan 2024 - Jun 2024
+
+    to remain one block.
+
+    It also allows:
+
+        CodeNest Technologies - Kochi, Kerala
+        Jan 2024 - Jun 2024
+        description...
+
+        BluePeak Digital Labs - Calicut, Kerala
+        Jul 2023 - Dec 2023
+        description...
+
+    to become two blocks.
     """
 
-    lines = normalize_lines(
-        lines
-    )
+    lines = normalize_lines(lines)
 
     if not lines:
         return []
@@ -197,41 +324,111 @@ def split_experience_blocks(lines):
     for line in lines:
 
         # ----------------------------------------------------
-        # Date line handling
+        # Date line
         # ----------------------------------------------------
-        if is_experience_start(line):
 
-            # If current block already contains a date, this signals a new experience
-            if current_block and has_date(current_block):
-                blocks.append(current_block)
+        if is_date_line(line):
+
+            if (
+                current_block
+                and has_date(current_block)
+            ):
+                blocks.append(
+                    current_block
+                )
+
                 current_block = []
 
-            # Otherwise, just append the date to the current block so title+date stay together
             current_block.append(line)
+
             continue
 
         # ----------------------------------------------------
-        # Title line handling
-        # If we detect a title and the current block already has a date,
-        # then this is the start of a new experience block (title precedes its date).
+        # Title line
+        #
+        # A title line appearing after an already completed
+        # date-containing block is a strong new-record signal.
         # ----------------------------------------------------
-        if is_title_line(line) and current_block and has_date(current_block):
-            blocks.append(current_block)
-            current_block = [line]
+
+        if (
+            is_title_line(line)
+            and current_block
+            and has_date(current_block)
+        ):
+
+            blocks.append(
+                current_block
+            )
+
+            current_block = [
+                line
+            ]
+
             continue
 
         # ----------------------------------------------------
-        # Default: append line to current block
+        # Normal continuation
         # ----------------------------------------------------
+
         current_block.append(line)
 
     # --------------------------------------------------------
-    # Add final block
+    # Final block
     # --------------------------------------------------------
 
     if current_block:
+
         blocks.append(
             current_block
         )
 
     return blocks
+
+
+# ============================================================
+# TESTING
+# ============================================================
+
+if __name__ == "__main__":
+
+    experience = [
+
+        "Python Developer",
+
+        "CodeNest Technologies - Kochi, Kerala",
+
+        "Jan 2024 - Jun 2024",
+
+        "Developed FastAPI endpoints for candidate workflows.",
+
+        "Designed PostgreSQL tables.",
+
+        "Built Pydantic request and response schemas.",
+
+        "Wrote pytest cases.",
+
+        "Used Git and pull requests for source control.",
+
+        "BluePeak Digital Labs - Calicut, Kerala",
+
+        "Jul 2023 - Dec 2023",
+
+        "Implemented Django modules.",
+
+    ]
+
+    blocks = split_experience_blocks(
+        experience
+    )
+
+    for index, block in enumerate(
+        blocks,
+        start=1
+    ):
+
+        print(
+            f"\n========== BLOCK {index} =========="
+        )
+
+        for line in block:
+            print(line)

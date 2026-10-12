@@ -1,0 +1,675 @@
+{
+  "candidate_id": "CAN_81791789C6AA",
+  "masked_profile": {
+    "candidate_id": "CAN_81791789C6AA",
+    "skills": [
+      {
+        "source_section": "summary",
+        "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Senior Python Developer - SoftLabs",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Python Developer - WebCore",
+            "source_skill": "Python"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "Python",
+        "skill_id": "TECH001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in",
+            "source_skill": "rest apis"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Designed backend services and REST APIs for enterprise applications.",
+            "source_skill": "rest apis"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skill": "rest apis",
+        "resolved_from": "rest apis",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "rest apis"
+        ],
+        "skill": "REST API",
+        "skill_id": "TECH025",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in",
+            "source_skill": "apis"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Designed backend services and REST APIs for enterprise applications.",
+            "source_skill": "apis"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skill": "apis",
+        "resolved_from": "apis",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "apis"
+        ],
+        "skill": "API",
+        "skill_id": "TECH087",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "FastAPI, Django, PostgreSQL and Docker.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "FastAPI, Django, PostgreSQL and Docker.",
+            "source_skill": "Django"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Built Django applications and PostgreSQL integrations.",
+            "source_skill": "Django"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "Django",
+        "skill_id": "TECH012",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "FastAPI, Django, PostgreSQL and Docker.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "FastAPI, Django, PostgreSQL and Docker.",
+            "source_skill": "FastAPI"
+          }
+        ],
+        "source_sections": [
+          "summary"
+        ],
+        "skill": "FastAPI",
+        "skill_id": "TECH014",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "FastAPI, Django, PostgreSQL and Docker.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "FastAPI, Django, PostgreSQL and Docker.",
+            "source_skill": "PostgreSQL"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Worked with PostgreSQL, Docker and AWS environments.",
+            "source_skill": "PostgreSQL"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Built Django applications and PostgreSQL integrations.",
+            "source_skill": "PostgreSQL"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "PostgreSQL",
+        "skill_id": "TECH018",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "FastAPI, Django, PostgreSQL and Docker.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "FastAPI, Django, PostgreSQL and Docker.",
+            "source_skill": "Docker"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Worked with PostgreSQL, Docker and AWS environments.",
+            "source_skill": "Docker"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "Docker",
+        "skill_id": "TECH021",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Worked with PostgreSQL, Docker and AWS environments.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Worked with PostgreSQL, Docker and AWS environments.",
+            "source_skill": "AWS"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "skill": "AWS",
+        "skill_id": "TECH027",
+        "matched_by": "exact"
+      }
+    ],
+    "education": [
+      {
+        "degree_type": "Bachelor of Technology",
+        "field_of_study": "Computer Science and Engineering",
+        "institution": null,
+        "university": "VTU",
+        "board": null,
+        "graduation_year": "2020"
+      }
+    ],
+    "experience": [
+      {
+        "title": {
+          "title_id": "JOB002",
+          "title": "Python Developer",
+          "category": "Software Development",
+          "matched_by": "fuzzy",
+          "confidence": 95
+        },
+        "company": {
+          "company_id": null,
+          "company": "SoftLabs",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jan 2022",
+          "end_date": "Present"
+        },
+        "total_experience": {
+          "total_months": 58,
+          "total_years": 4.8
+        },
+        "location": "Bengaluru",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP001",
+          "department": "Software Development",
+          "matched_by": "keyword",
+          "confidence": 100
+        },
+        "description": [
+          "Designed backend services and REST APIs for enterprise applications.",
+          "Worked with PostgreSQL, Docker and AWS environments."
+        ]
+      },
+      {
+        "title": {
+          "title_id": "JOB002",
+          "title": "Python Developer",
+          "category": "Software Development",
+          "matched_by": "exact",
+          "confidence": 100
+        },
+        "company": {
+          "company_id": null,
+          "company": "WebCore",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jun 2020",
+          "end_date": "Dec 2021"
+        },
+        "total_experience": {
+          "total_months": 19,
+          "total_years": 1.6
+        },
+        "location": "Bengaluru",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP001",
+          "department": "Software Development",
+          "matched_by": "keyword",
+          "confidence": 50
+        },
+        "description": [
+          "Built Django applications and PostgreSQL integrations."
+        ]
+      }
+    ],
+    "projects": [],
+    "certifications": [
+      {
+        "certification_name": "Python Domain Certification",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      },
+      {
+        "certification_name": "Professional Development Program",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      },
+      {
+        "certification_name": "Workplace Communication",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      }
+    ],
+    "metadata": {
+      "parser_version": "1.0",
+      "created_at": "2026-10-09T06:49:51.734973+00:00"
+    }
+  },
+  "bias_report": {
+    "bias_detected": false,
+    "risk_level": "none",
+    "indicator_count": 0,
+    "indicators": [],
+    "status": "clear"
+  },
+  "original_profile": {
+    "candidate_id": "CAN_81791789C6AA",
+    "personal_information": {
+      "name": "ARUN B",
+      "email": "arun.b@example.com",
+      "phone": null,
+      "location": "FastAPI, Django, PostgreSQL and Docker.",
+      "linkedin": null,
+      "github": null,
+      "portfolio": null
+    },
+    "skills": [
+      {
+        "source_section": "summary",
+        "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Senior Python Developer - SoftLabs",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Python Developer - WebCore",
+            "source_skill": "Python"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "Python",
+        "skill_id": "TECH001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in",
+            "source_skill": "rest apis"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Designed backend services and REST APIs for enterprise applications.",
+            "source_skill": "rest apis"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skill": "rest apis",
+        "resolved_from": "rest apis",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "rest apis"
+        ],
+        "skill": "REST API",
+        "skill_id": "TECH025",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in",
+            "source_skill": "apis"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Designed backend services and REST APIs for enterprise applications.",
+            "source_skill": "apis"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skill": "apis",
+        "resolved_from": "apis",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "apis"
+        ],
+        "skill": "API",
+        "skill_id": "TECH087",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "FastAPI, Django, PostgreSQL and Docker.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "FastAPI, Django, PostgreSQL and Docker.",
+            "source_skill": "Django"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Built Django applications and PostgreSQL integrations.",
+            "source_skill": "Django"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "Django",
+        "skill_id": "TECH012",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "FastAPI, Django, PostgreSQL and Docker.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "FastAPI, Django, PostgreSQL and Docker.",
+            "source_skill": "FastAPI"
+          }
+        ],
+        "source_sections": [
+          "summary"
+        ],
+        "skill": "FastAPI",
+        "skill_id": "TECH014",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "FastAPI, Django, PostgreSQL and Docker.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "FastAPI, Django, PostgreSQL and Docker.",
+            "source_skill": "PostgreSQL"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Worked with PostgreSQL, Docker and AWS environments.",
+            "source_skill": "PostgreSQL"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Built Django applications and PostgreSQL integrations.",
+            "source_skill": "PostgreSQL"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "PostgreSQL",
+        "skill_id": "TECH018",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "FastAPI, Django, PostgreSQL and Docker.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "FastAPI, Django, PostgreSQL and Docker.",
+            "source_skill": "Docker"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Worked with PostgreSQL, Docker and AWS environments.",
+            "source_skill": "Docker"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "Docker",
+        "skill_id": "TECH021",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Worked with PostgreSQL, Docker and AWS environments.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Worked with PostgreSQL, Docker and AWS environments.",
+            "source_skill": "AWS"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "skill": "AWS",
+        "skill_id": "TECH027",
+        "matched_by": "exact"
+      }
+    ],
+    "education": [
+      {
+        "degree_type": "Bachelor of Technology",
+        "field_of_study": "Computer Science and Engineering",
+        "institution": null,
+        "university": "VTU",
+        "board": null,
+        "graduation_year": "2020"
+      }
+    ],
+    "experience": [
+      {
+        "title": {
+          "title_id": "JOB002",
+          "title": "Python Developer",
+          "category": "Software Development",
+          "matched_by": "fuzzy",
+          "confidence": 95
+        },
+        "company": {
+          "company_id": null,
+          "company": "SoftLabs",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jan 2022",
+          "end_date": "Present"
+        },
+        "total_experience": {
+          "total_months": 58,
+          "total_years": 4.8
+        },
+        "location": "Bengaluru",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP001",
+          "department": "Software Development",
+          "matched_by": "keyword",
+          "confidence": 100
+        },
+        "description": [
+          "Designed backend services and REST APIs for enterprise applications.",
+          "Worked with PostgreSQL, Docker and AWS environments."
+        ]
+      },
+      {
+        "title": {
+          "title_id": "JOB002",
+          "title": "Python Developer",
+          "category": "Software Development",
+          "matched_by": "exact",
+          "confidence": 100
+        },
+        "company": {
+          "company_id": null,
+          "company": "WebCore",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jun 2020",
+          "end_date": "Dec 2021"
+        },
+        "total_experience": {
+          "total_months": 19,
+          "total_years": 1.6
+        },
+        "location": "Bengaluru",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP001",
+          "department": "Software Development",
+          "matched_by": "keyword",
+          "confidence": 50
+        },
+        "description": [
+          "Built Django applications and PostgreSQL integrations."
+        ]
+      }
+    ],
+    "projects": [],
+    "certifications": [
+      {
+        "certification_name": "Python Domain Certification",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      },
+      {
+        "certification_name": "Professional Development Program",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      },
+      {
+        "certification_name": "Workplace Communication",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      }
+    ],
+    "metadata": {
+      "parser_version": "1.0",
+      "created_at": "2026-10-09T06:49:51.734973+00:00"
+    }
+  }
+}

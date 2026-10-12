@@ -1,0 +1,242 @@
+{
+  "candidate_id": "CAN_5DB428DE94C1",
+  "candidate_score": {
+    "final_score": 60.04,
+    "status": "calculated",
+    "job_title": "HR Executive - Fresher",
+    "role_category": "entry_level",
+    "weight_source": "role_category",
+    "weights": {
+      "skill": 0.35,
+      "experience": 0.15,
+      "education": 0.25,
+      "semantic": 0.25
+    },
+    "component_scores": {
+      "skill": {
+        "score": 33.33,
+        "status": "calculated",
+        "weight": 0.35,
+        "weight_percentage": 35.0
+      },
+      "experience": {
+        "score": 50.14,
+        "status": "calculated",
+        "weight": 0.15,
+        "weight_percentage": 15.0
+      },
+      "education": {
+        "score": 76.0,
+        "status": "calculated",
+        "weight": 0.25,
+        "weight_percentage": 25.0
+      },
+      "semantic": {
+        "score": 87.4,
+        "status": "calculated",
+        "weight": 0.25,
+        "weight_percentage": 25.0
+      }
+    },
+    "contributions": {
+      "skill": {
+        "score": 33.33,
+        "weight": 0.35,
+        "weight_percentage": 35.0,
+        "contribution": 11.67
+      },
+      "experience": {
+        "score": 50.14,
+        "weight": 0.15,
+        "weight_percentage": 15.0,
+        "contribution": 7.52
+      },
+      "education": {
+        "score": 76.0,
+        "weight": 0.25,
+        "weight_percentage": 25.0,
+        "contribution": 19.0
+      },
+      "semantic": {
+        "score": 87.4,
+        "weight": 0.25,
+        "weight_percentage": 25.0,
+        "contribution": 21.85
+      }
+    },
+    "missing_components": [],
+    "available_weight": 1.0,
+    "explanation": [
+      "Skill score 33.33 with 35% weight contributed 11.67 points.",
+      "Experience score 50.14 with 15% weight contributed 7.52 points.",
+      "Education score 76.00 with 25% weight contributed 19.00 points.",
+      "Semantic score 87.40 with 25% weight contributed 21.85 points."
+    ]
+  },
+  "component_scores": {
+    "skill": {
+      "score": 33.33,
+      "weight": 0.4,
+      "weight_percentage": 40.0,
+      "candidate_skills": [
+        "Communication",
+        "Recruitment",
+        "Microsoft Excel",
+        "Employee Records Management",
+        "Candidate Screening",
+        "Interview Scheduling",
+        "Human Resources",
+        "Microsoft Office"
+      ],
+      "required_skills": [
+        "Recruitment",
+        "Talent Acquisition",
+        "Employee Relations",
+        "HR Operations",
+        "Payroll",
+        "MS",
+        "Excel",
+        "HRMS",
+        "Communication"
+      ],
+      "preferred_skills": [],
+      "required": {
+        "score": 33.33,
+        "weight": 0.8,
+        "weight_percentage": 80.0,
+        "contribution": 26.66,
+        "total_skills": 9,
+        "matched_skills": 3,
+        "match_percentage": 33.33,
+        "exact_matches": [
+          "Recruitment",
+          "Communication"
+        ],
+        "relationship_matches": [],
+        "fuzzy_matches": [],
+        "semantic_matches": [
+          {
+            "candidate_skill": "Microsoft Excel",
+            "required_skill": "Excel",
+            "similarity": 0.9659,
+            "matched": true
+          }
+        ],
+        "related_skill_context": [],
+        "missing_skills": [
+          "Talent Acquisition",
+          "Employee Relations",
+          "HR Operations",
+          "Payroll",
+          "MS",
+          "HRMS"
+        ]
+      },
+      "preferred": {
+        "score": 0.0,
+        "weight": 0.2,
+        "weight_percentage": 20.0,
+        "contribution": 0.0,
+        "total_skills": 0,
+        "matched_skills": 0,
+        "match_percentage": 0.0,
+        "exact_matches": [],
+        "relationship_matches": [],
+        "fuzzy_matches": [],
+        "semantic_matches": [],
+        "related_skill_context": [],
+        "missing_skills": []
+      }
+    },
+    "experience": {
+      "score": 50.14,
+      "years_score": 100.0,
+      "role_relevance_score": 25.0,
+      "technology_relevance_score": 22.22,
+      "candidate_years": 0.67,
+      "required_minimum_years": 0.0,
+      "preferred_maximum_years": 1.0,
+      "candidate_roles": [
+        "HR Assistant Trainee"
+      ],
+      "target_job_title": "HR Executive - Fresher",
+      "experience_skills": [],
+      "candidate_skills": [
+        "Communication",
+        "Recruitment",
+        "Microsoft Excel",
+        "Employee Records Management",
+        "Candidate Screening",
+        "Interview Scheduling",
+        "Human Resources",
+        "Microsoft Office"
+      ],
+      "required_skills": [
+        "Recruitment",
+        "Talent Acquisition",
+        "Employee Relations",
+        "HR Operations",
+        "Payroll",
+        "MS",
+        "Excel",
+        "HRMS",
+        "Communication"
+      ],
+      "status": "calculated"
+    },
+    "education": {
+      "score": 76.0,
+      "degree_score": 100.0,
+      "field_score": 40.0,
+      "candidate_education": [
+        {
+          "degree_type": "Bachelor of Commerce",
+          "field_of_study": "Finance",
+          "institution": null,
+          "university": null,
+          "board": null,
+          "graduation_year": "2025"
+        }
+      ],
+      "best_matching_education": {
+        "degree_score": 100.0,
+        "field_score": 40.0,
+        "score": 76.0,
+        "degree_type": "Bachelor of Commerce",
+        "field_of_study": "Finance",
+        "institution": null,
+        "graduation_year": "2025"
+      },
+      "required_education": [
+        "Degree in HR, Business Administration, Commerce or equivalent preferred."
+      ],
+      "status": "calculated"
+    },
+    "semantic": {
+      "score": 87.4,
+      "similarity": 0.748,
+      "status": "calculated"
+    }
+  },
+  "metadata": {
+    "job_title": "HR Executive - Fresher",
+    "required_skills_count": 9,
+    "preferred_skills_count": 0,
+    "candidate_skills_count": 8,
+    "candidate_years": 0.67,
+    "candidate_roles": [
+      "HR Assistant Trainee"
+    ],
+    "candidate_education_count": 1,
+    "jd_experience_count": 1,
+    "jd_education_count": 1
+  },
+  "bias_mitigation": {
+    "personal_attributes_masked": true,
+    "candidate_id_preserved": true
+  },
+  "candidate_name": "KEERTHANA R",
+  "jd_id": "HRExecutiveFresher",
+  "job_id": "JOB_6EC0B8C25121",
+  "jd_file": "HRExecutiveFresher.pdf"
+}

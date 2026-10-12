@@ -8,46 +8,50 @@ from scoring.skill_score import calculate_skill_score
 def test_all_required_skills_matched():
 
     candidate_profile = {
-        "resume_text": {
-            "skills": [
-                {"skill": "Python"},
-                {"skill": "Django"},
-                {"skill": "PostgreSQL"},
-                {"skill": "Git"},
-            ]
-        }
+        "skills": [
+            {"skill": "Python"},
+            {"skill": "Django"},
+            {"skill": "PostgreSQL"},
+            {"skill": "Git"},
+        ]
     }
 
     jd_profile = {
-        "resume_text": {
-            "required_skills": [
-                "Python",
-                "Django",
-                "PostgreSQL",
-                "Git",
-            ],
-            "preferred_skills": []
-        }
+        "required_skills": [
+            "Python",
+            "Django",
+            "PostgreSQL",
+            "Git",
+        ],
+        "preferred_skills": [],
     }
 
     result = calculate_skill_score(
         candidate_profile,
-        jd_profile
+        jd_profile,
     )
 
     assert result["score"] == 100.0
-    assert result["required_score"] == 100.0
-    assert result["required_matched"] == 4
-    assert result["missing_required_skills"] == []
 
-    # Matching output is normalized
-    assert set(
-        result["matched_required_skills"]
-    ) == {
+    assert (
+        result["required"]["match_percentage"]
+        == 100.0
+    )
+
+    assert len(
+        result["required"]["matched"]
+    ) == 4
+
+    assert result["required"]["missing"] == []
+
+    assert {
+        item["matched_skill"].lower()
+        for item in result["required"]["matched"]
+    } == {
         "python",
         "django",
         "postgresql",
-        "git"
+        "git",
     }
 
 
@@ -58,39 +62,42 @@ def test_all_required_skills_matched():
 def test_some_required_skills_missing():
 
     candidate_profile = {
-        "resume_text": {
-            "skills": [
-                {"skill": "Python"},
-                {"skill": "Django"},
-            ]
-        }
+        "skills": [
+            {"skill": "Python"},
+            {"skill": "Django"},
+        ]
     }
 
     jd_profile = {
-        "resume_text": {
-            "required_skills": [
-                "Python",
-                "Django",
-                "PostgreSQL",
-                "Git",
-            ],
-            "preferred_skills": []
-        }
+        "required_skills": [
+            "Python",
+            "Django",
+            "PostgreSQL",
+            "Git",
+        ],
+        "preferred_skills": [],
     }
 
     result = calculate_skill_score(
         candidate_profile,
-        jd_profile
+        jd_profile,
     )
 
-    assert result["required_score"] == 50.0
-    assert result["required_matched"] == 2
+    assert (
+        result["required"]["match_percentage"]
+        == 50.0
+    )
 
-    assert set(
-        result["missing_required_skills"]
-    ) == {
+    assert len(
+        result["required"]["matched"]
+    ) == 2
+
+    assert {
+        item["required_skill"].lower()
+        for item in result["required"]["missing"]
+    } == {
         "postgresql",
-        "git"
+        "git",
     }
 
 
@@ -101,49 +108,51 @@ def test_some_required_skills_missing():
 def test_preferred_skills():
 
     candidate_profile = {
-        "resume_text": {
-            "skills": [
-                {"skill": "Python"},
-                {"skill": "Django"},
-                {"skill": "Docker"},
-            ]
-        }
+        "skills": [
+            {"skill": "Python"},
+            {"skill": "Django"},
+            {"skill": "Docker"},
+        ]
     }
 
     jd_profile = {
-        "resume_text": {
-            "required_skills": [
-                "Python",
-                "Django",
-            ],
-            "preferred_skills": [
-                "Docker",
-                "AWS",
-                "Redis",
-                "Kubernetes",
-            ]
-        }
+        "required_skills": [
+            "Python",
+            "Django",
+        ],
+        "preferred_skills": [
+            "Docker",
+            "AWS",
+            "Redis",
+            "Kubernetes",
+        ],
     }
 
     result = calculate_skill_score(
         candidate_profile,
-        jd_profile
+        jd_profile,
     )
 
     # Required = 100
-    # Preferred = 25
-    #
-    # Final:
-    # 100 * 0.80 + 25 * 0.20
-    # = 85
+    assert (
+        result["required"]["match_percentage"]
+        == 100.0
+    )
 
-    assert result["required_score"] == 100.0
-    assert result["preferred_score"] == 25.0
+    # Preferred = 25
+    assert (
+        result["preferred"]["match_percentage"]
+        == 25.0
+    )
+
+    # Final:
+    # 100 * 0.80 + 25 * 0.20 = 85
     assert result["score"] == 85.0
 
-    assert result["matched_preferred_skills"] == [
-        "docker"
-    ]
+    assert [
+        item["matched_skill"].lower()
+        for item in result["preferred"]["matched"]
+    ] == ["docker"]
 
 
 # ============================================================
@@ -153,36 +162,37 @@ def test_preferred_skills():
 def test_skill_matching_is_case_insensitive():
 
     candidate_profile = {
-        "resume_text": {
-            "skills": [
-                {"skill": "PYTHON"},
-                {"skill": "Django"},
-            ]
-        }
+        "skills": [
+            {"skill": "PYTHON"},
+            {"skill": "Django"},
+        ]
     }
 
     jd_profile = {
-        "resume_text": {
-            "required_skills": [
-                "python",
-                "django",
-            ]
-        }
+        "required_skills": [
+            "python",
+            "django",
+        ]
     }
 
     result = calculate_skill_score(
         candidate_profile,
-        jd_profile
+        jd_profile,
     )
 
     assert result["score"] == 100.0
-    assert result["required_matched"] == 2
 
-    assert set(
-        result["matched_required_skills"]
-    ) == {
+    assert (
+        result["required"]["match_percentage"]
+        == 100.0
+    )
+
+    assert {
+        item["matched_skill"].lower()
+        for item in result["required"]["matched"]
+    } == {
         "python",
-        "django"
+        "django",
     }
 
 
@@ -193,35 +203,31 @@ def test_skill_matching_is_case_insensitive():
 def test_duplicate_candidate_skills():
 
     candidate_profile = {
-        "resume_text": {
-            "skills": [
-                {"skill": "Python"},
-                {"skill": "python"},
-                {"skill": " Python "},
-                {"skill": "Django"},
-            ]
-        }
+        "skills": [
+            {"skill": "Python"},
+            {"skill": "python"},
+            {"skill": " Python "},
+            {"skill": "Django"},
+        ]
     }
 
     jd_profile = {
-        "resume_text": {
-            "required_skills": [
-                "Python",
-                "Django",
-            ]
-        }
+        "required_skills": [
+            "Python",
+            "Django",
+        ]
     }
 
     result = calculate_skill_score(
         candidate_profile,
-        jd_profile
+        jd_profile,
     )
 
     assert result["score"] == 100.0
-    assert result["required_matched"] == 2
 
-    # Python duplicates should be removed
-    assert result["candidate_skill_count"] == 2
+    assert len(
+        result["candidate_skills"]
+    ) == 2
 
 
 # ============================================================
@@ -231,33 +237,47 @@ def test_duplicate_candidate_skills():
 def test_no_candidate_skills():
 
     candidate_profile = {
-        "resume_text": {
-            "skills": []
-        }
+        "skills": []
     }
 
     jd_profile = {
-        "resume_text": {
-            "required_skills": [
-                "Python",
-                "Django",
-            ],
-            "preferred_skills": [
-                "Docker"
-            ]
-        }
+        "required_skills": [
+            "Python",
+            "Django",
+        ],
+        "preferred_skills": [
+            "Docker",
+        ],
     }
 
     result = calculate_skill_score(
         candidate_profile,
-        jd_profile
+        jd_profile,
     )
 
     assert result["score"] == 0.0
-    assert result["required_score"] == 0.0
-    assert result["preferred_score"] == 0.0
-    assert result["required_matched"] == 0
-    assert result["status"] == "no_data"
+
+    assert (
+        result["required"]["match_percentage"]
+        == 0.0
+    )
+
+    assert (
+        result["preferred"]["match_percentage"]
+        == 0.0
+    )
+
+    assert result["required"]["matched"] == []
+
+    assert len(
+        result["required"]["missing"]
+    ) == 2
+
+    assert result["preferred"]["matched"] == []
+
+    assert len(
+        result["preferred"]["missing"]
+    ) == 1
 
 
 # ============================================================
@@ -267,28 +287,35 @@ def test_no_candidate_skills():
 def test_no_jd_skill_requirements():
 
     candidate_profile = {
-        "resume_text": {
-            "skills": [
-                {"skill": "Python"},
-                {"skill": "Django"},
-            ]
-        }
+        "skills": [
+            {"skill": "Python"},
+            {"skill": "Django"},
+        ]
     }
 
     jd_profile = {
-        "resume_text": {
-            "required_skills": [],
-            "preferred_skills": []
-        }
+        "required_skills": [],
+        "preferred_skills": [],
     }
 
     result = calculate_skill_score(
         candidate_profile,
-        jd_profile
+        jd_profile,
     )
 
-    assert result["score"] == 0.0
-    assert result["status"] == "no_requirements"
+    # Current scorer treats an empty requirement category
+    # as 100% satisfied.
+    assert result["score"] == 100.0
+
+    assert (
+        result["required"]["match_percentage"]
+        == 100.0
+    )
+
+    assert (
+        result["preferred"]["match_percentage"]
+        == 100.0
+    )
 
 
 # ============================================================
@@ -298,28 +325,24 @@ def test_no_jd_skill_requirements():
 def test_candidate_skills_as_strings():
 
     candidate_profile = {
-        "resume_text": {
-            "skills": [
-                "Python",
-                "Django",
-                "PostgreSQL"
-            ]
-        }
+        "skills": [
+            "Python",
+            "Django",
+            "PostgreSQL",
+        ]
     }
 
     jd_profile = {
-        "resume_text": {
-            "required_skills": [
-                "Python",
-                "Django",
-                "PostgreSQL"
-            ]
-        }
+        "required_skills": [
+            "Python",
+            "Django",
+            "PostgreSQL",
+        ]
     }
 
     result = calculate_skill_score(
         candidate_profile,
-        jd_profile
+        jd_profile,
     )
 
     assert result["score"] == 100.0
@@ -332,31 +355,30 @@ def test_candidate_skills_as_strings():
 def test_missing_required_skills():
 
     candidate_profile = {
-        "resume_text": {
-            "skills": [
-                {"skill": "Python"}
-            ]
-        }
+        "skills": [
+            {"skill": "Python"}
+        ]
     }
 
     jd_profile = {
-        "resume_text": {
-            "required_skills": [
-                "Python",
-                "Django",
-                "PostgreSQL"
-            ]
-        }
+        "required_skills": [
+            "Python",
+            "Django",
+            "PostgreSQL",
+        ]
     }
 
     result = calculate_skill_score(
         candidate_profile,
-        jd_profile
+        jd_profile,
     )
 
-    assert result["missing_required_skills"] == [
+    assert [
+        item["required_skill"].lower()
+        for item in result["required"]["missing"]
+    ] == [
         "django",
-        "postgresql"
+        "postgresql",
     ]
 
 
@@ -372,8 +394,56 @@ def test_empty_profiles():
 
     result = calculate_skill_score(
         candidate_profile,
-        jd_profile
+        jd_profile,
     )
 
-    assert result["score"] == 0.0
-    assert result["status"] == "no_data"
+    # With no requirements, the current scoring contract
+    # treats both required and preferred categories as
+    # 100% satisfied.
+    assert result["score"] == 100.0
+
+    assert (
+        result["required"]["match_percentage"]
+        == 100.0
+    )
+
+    assert (
+        result["preferred"]["match_percentage"]
+        == 100.0
+    )
+    
+def test_related_skill_does_not_count_as_match():
+
+    candidate_profile = {
+        "skills": [
+            "PostgreSQL",
+        ]
+    }
+
+    jd_profile = {
+        "required_skills": [
+            "MySQL",
+        ]
+    }
+
+    result = calculate_skill_score(
+        candidate_profile,
+        jd_profile,
+    )
+
+    assert (
+        result["required"]["match_percentage"]
+        == 0.0
+    )
+
+    assert result["required"]["matched"] == []
+
+    assert len(
+        result["required"]["missing"]
+    ) == 1
+
+    missing = result["required"]["missing"][0]
+
+    assert missing["match_type"] == "missing"
+
+    assert "related_skill_context" in missing

@@ -1,12 +1,210 @@
-from typing import Any, Dict
-
-from scoring.weight_config import get_weights
-from scoring.scoring_normalizer import normalize_percentage
+from typing import Any, Dict, Optional
 
 
-# ============================================================
-# Score Generator
-# ============================================================
+# Score-generator-specific default weights.
+#
+# These are intentionally separate from the ATS orchestration weights.
+# The ATS engine passes the individual component results here, and this
+# module owns how those components are combined.
+DEFAULT_WEIGHTS = {
+    "skill": 0.45,
+    "experience": 0.30,
+    "education": 0.10,
+    "semantic": 0.15,
+}
+
+
+ROLE_WEIGHT_PROFILES = {
+    "backend": {
+        "skill": 0.45,
+        "experience": 0.30,
+        "education": 0.10,
+        "semantic": 0.15,
+    },
+    "frontend": {
+        "skill": 0.45,
+        "experience": 0.25,
+        "education": 0.10,
+        "semantic": 0.20,
+    },
+    "data_ml": {
+        "skill": 0.40,
+        "experience": 0.25,
+        "education": 0.15,
+        "semantic": 0.20,
+    },
+    "general": {
+    "skill": 0.40,
+    "experience": 0.30,
+    "education": 0.10,
+    "semantic": 0.20,
+    },
+}
+
+
+def _normalise_job_title(job_title: Any) -> str:
+    """Return a normalized job title for role classification."""
+    if not isinstance(job_title, str):
+        return ""
+
+    return " ".join(job_title.lower().strip().split())
+
+
+
+def _detect_role_category(job_title: Any) -> str:
+    """
+    Classify the job title into the scoring role category.
+    """
+
+    title = _normalise_job_title(job_title)
+
+    if not title:
+        return "general"
+
+    backend_terms = (
+        "backend",
+        "back-end",
+        "back end",
+        "python developer",
+        "python engineer",
+        "django developer",
+        "fastapi developer",
+        "flask developer",
+        "node.js developer",
+        "nodejs developer",
+        "java developer",
+        "java engineer",
+        "spring boot",
+        "php developer",
+        ".net developer",
+        "dotnet developer",
+        "api developer",
+        "server side",
+        "server-side",
+    )
+
+    if any(term in title for term in backend_terms):
+        return "backend"
+
+    frontend_terms = (
+        "frontend",
+        "front-end",
+        "front end",
+        "react developer",
+        "react engineer",
+        "angular developer",
+        "vue developer",
+        "javascript developer",
+        "typescript developer",
+        "ui developer",
+        "web ui",
+    )
+
+    if any(term in title for term in frontend_terms):
+        return "frontend"
+
+    data_ml_terms = (
+        "data scientist",
+        "data science",
+        "machine learning",
+        "machine-learning",
+        "ml engineer",
+        "ml developer",
+        "ai engineer",
+        "artificial intelligence",
+        "data analyst",
+        "data engineer",
+    )
+
+    if any(term in title for term in data_ml_terms):
+        return "data_ml"
+
+    return "general"
+
+def _weights(
+    custom: Optional[Dict[str, float]] = None,
+    role_category: str = "general",
+) -> Dict[str, float]:
+
+    weights = ROLE_WEIGHT_PROFILES.get(
+        role_category,
+        ROLE_WEIGHT_PROFILES["general"],
+    ).copy()
+
+    if custom:
+        for key in weights:
+            if key not in custom:
+                continue
+
+            try:
+                value = float(custom[key])
+            except (TypeError, ValueError):
+                continue
+
+            if value >= 0:
+                weights[key] = value
+
+    return weights
+
+
+def _get_score(result: Any) -> Optional[float]:
+    """Safely extract a numeric component score."""
+    if not isinstance(result, dict):
+        return None
+
+    score = result.get("score")
+
+    if score is None:
+        return None
+
+    try:
+        return float(score)
+    except (TypeError, ValueError):
+        return None
+
+
+def _build_explanation(
+    component_scores: Dict[str, Dict[str, Any]],
+    available: list,
+    missing_components: list,
+    final_score: Optional[float],
+) -> list:
+    """
+    Build a list of human-readable component explanations.
+    """
+
+    explanation = []
+
+    for name in available:
+        component = component_scores.get(name, {})
+
+        score = component.get("score")
+        weight_percentage = component.get(
+            "weight_percentage"
+        )
+
+        if score is None:
+            continue
+
+        explanation.append(
+            f"{name.capitalize()} score: "
+            f"{score:.2f} "
+            f"({weight_percentage:.2f}% weight)"
+        )
+
+    if missing_components:
+        explanation.append(
+            "Missing components: "
+            + ", ".join(missing_components)
+        )
+
+    if not explanation:
+        explanation.append(
+            "No scoring components were available."
+        )
+
+    return explanation
+
 
 def generate_candidate_score(
     skill_result: Dict[str, Any],
@@ -14,401 +212,156 @@ def generate_candidate_score(
     education_result: Dict[str, Any],
     semantic_result: Dict[str, Any],
     job_title: str = "",
-    custom_weights: Dict[str, float] = None,
+    custom_weights: Optional[Dict[str, float]] = None,
 ) -> Dict[str, Any]:
     """
-    Generate the final ATS candidate score.
+    Generate the final candidate score from the four scoring components.
 
-    Individual scorers:
-        - Skill
-        - Experience
-        - Education
-        - Semantic
-
-    Dynamic weights are obtained from weight_config.py.
-
-    Important:
-        This function is the single source of truth for
-        component weights in the final scoring response.
+    The individual scorers remain responsible for calculating their
+    own scores. This module only combines those scores.
     """
 
-    # ========================================================
-    # Get dynamic weights
-    # ========================================================
+    role_category = _detect_role_category(job_title)
 
-    weight_config = get_weights(
-        job_title=job_title,
-        custom_weights=custom_weights,
+    w = _weights(
+        custom=custom_weights,
+        role_category=role_category,
     )
 
-    weights = weight_config["weights"]
-
-    # ========================================================
-    # Extract individual scores
-    # ========================================================
-
-    component_results = {
+    results = {
         "skill": skill_result,
         "experience": experience_result,
         "education": education_result,
         "semantic": semantic_result,
     }
 
-    # ========================================================
-    # Calculate weighted contributions
-    # ========================================================
+    component_scores: Dict[str, Dict[str, Any]] = {}
+    contributions: Dict[str, Dict[str, Any]] = {}
 
-    contributions = {}
+    available = []
 
-    available_components = []
+    for name, result in results.items():
+        score = _get_score(result)
 
-    missing_components = []
-
-    for component, result in component_results.items():
-
-        # ----------------------------------------------------
-        # Safety check
-        # ----------------------------------------------------
-
-        if not isinstance(result, dict):
-            missing_components.append(component)
-            continue
-
-        score = result.get("score")
-
-        # ----------------------------------------------------
-        # Missing score
-        # ----------------------------------------------------
-
-        if score is None:
-
-            missing_components.append(
-                component
-            )
-
-            continue
-
-        # ----------------------------------------------------
-        # Normalize score
-        # ----------------------------------------------------
-
-        score = normalize_percentage(
-            score
-        )
-
-        # ----------------------------------------------------
-        # Get configured weight
-        # ----------------------------------------------------
-
-        weight = weights.get(
-            component,
-            0.0
-        )
-
-        # ----------------------------------------------------
-        # Calculate contribution
-        # ----------------------------------------------------
-
-        contribution = (
-            score * weight
-        )
-
-        contributions[component] = {
-            "score": round(
-                score,
-                2
+        component_scores[name] = {
+            "score": (
+                None
+                if score is None
+                else round(score, 2)
             ),
-
-            "weight": round(
-                weight,
-                4
-            ),
-
-            "weight_percentage": round(
-                weight * 100,
-                2
-            ),
-
-            "contribution": round(
-                contribution,
-                2
-            ),
+            "weight": round(w[name], 4),
+            "weight_percentage": round(w[name] * 100, 2),
         }
 
-        available_components.append(
-            component
-        )
+        if score is not None:
+            available.append(name)
 
-    # ========================================================
-    # Handle complete missing data
-    # ========================================================
-
-    if not available_components:
-
-        return {
-            "final_score": None,
-
-            "status": "no_data",
-
-            "job_title": job_title,
-
-            "role_category":
-                weight_config["role_category"],
-
-            "weight_source":
-                weight_config["source"],
-
-            "weights": {
-                key: round(
-                    value,
-                    4
-                )
-                for key, value in weights.items()
-            },
-
-            "component_scores": {},
-
-            "contributions": {},
-
-            "missing_components":
-                missing_components,
-
-            "available_weight": 0.0,
-
-            "explanation":
-                "No scoring components contain usable data.",
-        }
-
-    # ========================================================
-    # Calculate available weight
-    # ========================================================
-
-    available_weight = sum(
-        weights.get(
-            component,
-            0.0
-        )
-        for component in available_components
-    )
-
-    # ========================================================
-    # Calculate weighted score
-    # ========================================================
-
-    weighted_score = sum(
-        contributions[component][
-            "contribution"
-        ]
-        for component in available_components
-    )
-
-    # ========================================================
-    # Normalize against available weights
-    # ========================================================
-
-    final_score = (
-        weighted_score / available_weight
-    ) if available_weight > 0 else 0.0
-
-    # ========================================================
-    # Build component score output
-    #
-    # IMPORTANT:
-    #
-    # Weight and status are now generated here rather than
-    # copied from individual scorers.
-    #
-    # Therefore:
-    #
-    # candidate_score.weights.skill
-    # component_scores.skill.weight
-    # contributions.skill.weight
-    #
-    # all use the same configured value.
-    # ========================================================
-
-    component_scores = {}
-
-    for component, result in component_results.items():
-
-        if not isinstance(
-            result,
-            dict
-        ):
-            component_scores[component] = {
-                "score": None,
-                "status": "unavailable",
-                "weight": round(
-                    weights.get(
-                        component,
-                        0.0
-                    ),
-                    4
-                ),
-                "weight_percentage": round(
-                    weights.get(
-                        component,
-                        0.0
-                    ) * 100,
-                    2
+            contributions[name] = {
+                "score": round(score, 2),
+                "weight": round(w[name], 4),
+                "weight_percentage": round(w[name] * 100, 2),
+                "contribution": round(
+                    score * w[name],
+                    2,
                 ),
             }
 
-            continue
+    missing_components = [
+        name
+        for name in results
+        if name not in available
+    ]
 
-        score = result.get(
-            "score"
+    if not available:
+        final = None
+    else:
+        available_weight = sum(
+            w[name]
+            for name in available
         )
 
-        configured_weight = weights.get(
-            component,
-            0.0
-        )
-
-        # ----------------------------------------------------
-        # Determine status
-        # ----------------------------------------------------
-
-        if score is None:
-
-            status = "unavailable"
-
-        else:
-
-            # A valid score was calculated.
-            status = "calculated"
-
-        component_scores[component] = {
-            "score": (
-                round(
-                    float(score),
-                    2
+        # When data is missing, redistribute the available weights so
+        # that the available components still form a complete score.
+        #
+        # Example:
+        # skill     = 45%
+        # experience = 30%
+        # semantic   = 15%
+        # education missing
+        #
+        # available total = 90%
+        #
+        # The available scores are normalized against that 90%.
+        if missing_components and available_weight > 0:
+            final = round(
+                sum(
+                    float(results[name]["score"]) * w[name]
+                    for name in available
                 )
-                if score is not None
-                else None
-            ),
-
-            "status": status,
-
-            "weight": round(
-                configured_weight,
-                4
-            ),
-
-            "weight_percentage": round(
-                configured_weight * 100,
-                2
-            ),
-        }
-
-    # ========================================================
-    # Build explanation
-    # ========================================================
-
-    explanation_parts = []
-
-    for component in available_components:
-
-        contribution = contributions[
-            component
-        ]
-
-        explanation_parts.append(
-            f"{component.title()} score "
-            f"{contribution['score']:.2f} "
-            f"with "
-            f"{contribution['weight_percentage']:.0f}% "
-            f"weight contributed "
-            f"{contribution['contribution']:.2f} points."
-        )
-
-    # ========================================================
-    # Missing component explanation
-    # ========================================================
-
-    if missing_components:
-
-        explanation_parts.append(
-            "Missing components: "
-            + ", ".join(
-                missing_components
+                / available_weight,
+                2,
             )
-            + ". Available component weights "
-              "were normalized."
-        )
+        else:
+            final = round(
+                sum(
+                    float(results[name]["score"]) * w[name]
+                    for name in available
+                ),
+                2,
+            )
 
-    # ========================================================
-    # Final result
-    # ========================================================
+    available_weight = sum(
+        w[name]
+        for name in available
+    )
+
+    if custom_weights:
+        weight_source = "custom"
+    else:
+        weight_source = "role_category"
+        
+
+    explanation = _build_explanation(
+        component_scores=component_scores,
+        available=available,
+        missing_components=missing_components,
+        final_score=final,
+    )
 
     return {
-
-        "final_score": round(
-            final_score,
-            2
-        ),
+        "final_score": final,
 
         "status": (
-            "partial_data"
-            if missing_components
-            else "calculated"
+            "calculated"
+            if len(available) == 4
+            else (
+                "partial_data"
+                if available
+                else "no_data"
+            )
         ),
 
         "job_title": job_title,
 
-        "role_category":
-            weight_config["role_category"],
-
-        "weight_source":
-            weight_config["source"],
-
-        # ----------------------------------------------------
-        # Configured weights
-        # ----------------------------------------------------
-
         "weights": {
-            key: round(
-                value,
-                4
-            )
-            for key, value in weights.items()
+            key: round(value, 4)
+            for key, value in w.items()
         },
 
-        # ----------------------------------------------------
-        # Component scores
-        # ----------------------------------------------------
+        "component_scores": component_scores,
 
-        "component_scores":
-            component_scores,
+        "contributions": contributions,
 
-        # ----------------------------------------------------
-        # Weighted contributions
-        # ----------------------------------------------------
+        "missing_components": missing_components,
 
-        "contributions":
-            contributions,
+        "available_weight": round(
+            available_weight,
+            4,
+        ),
 
-        # ----------------------------------------------------
-        # Missing components
-        # ----------------------------------------------------
+        "weight_source": weight_source,
 
-        "missing_components":
-            missing_components,
+        "role_category": role_category,
 
-        # ----------------------------------------------------
-        # Available weight
-        # ----------------------------------------------------
-
-        "available_weight":
-            round(
-                available_weight,
-                4
-            ),
-
-        # ----------------------------------------------------
-        # Explanation
-        # ----------------------------------------------------
-
-        "explanation":
-            explanation_parts,
+        "explanation": explanation,
     }

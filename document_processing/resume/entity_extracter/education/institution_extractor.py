@@ -3,23 +3,25 @@ institution_extractor.py
 
 Responsibilities
 ----------------
-1. Extract institution / college / school names.
-2. Use university_extractor.py for university detection.
+1. Extract college / institute / school names.
+2. Delegate university detection to university_extractor.py.
 3. Extract education boards.
-4. Remove degree, qualification and date noise.
-5. Avoid classifying university names as institutions.
-6. Support university aliases through the external
-   university_dictionary.json.
-7. Ensure university content is removed BEFORE institution
-   extraction.
+4. Remove degree / qualification / date / field-of-study noise.
+5. Avoid returning university names as institutions.
+6. Support university aliases through university_dictionary.json.
+7. Remove university content BEFORE institution extraction.
+8. Correctly handle mixed education lines.
 
-Important
----------
-University aliases and university data must NOT be hard-coded
-in this file.
+Examples
+--------
+B.Tech in Computer Science and Engineering - Kerala Institute of Technology
+    -> Kerala Institute of Technology
 
-University detection is delegated to:
-    university_extractor.py
+Higher Secondary - Computer Science - Government Higher Secondary School
+    -> Government Higher Secondary School
+
+Kerala Institute of Technology (2020 - 2024)
+    -> Kerala Institute of Technology
 """
 
 import re
@@ -35,7 +37,6 @@ from document_processing.resume.entity_extracter.education.university_extractor 
 # ============================================================
 
 BOARD_PATTERNS = [
-
     r"central board of secondary education",
     r"\bcbse\b",
     r"state board",
@@ -44,28 +45,23 @@ BOARD_PATTERNS = [
     r"council for the indian school certificate examinations",
     r"\bicse\b",
     r"\bisc\b",
-
 ]
 
 
 # ============================================================
-# QUALIFICATION / EXAMINATION PREFIXES
+# QUALIFICATION PREFIXES
 # ============================================================
 
 QUALIFICATION_PREFIX_PATTERNS = [
-
-    r"all india senior school certificate exam",
-    r"all india senior school certificate examination",
+    r"\ball india senior school certificate\s+exam(?:ination)?\b",
+    r"\bsenior school certificate\s+exam(?:ination)?\b",
     r"all india secondary school examination",
-    r"senior school certificate exam",
-    r"senior school certificate examination",
     r"secondary school examination",
     r"higher secondary examination",
     r"higher secondary certificate",
     r"senior secondary examination",
     r"intermediate examination",
     r"intermediate certificate",
-
 ]
 
 
@@ -74,57 +70,71 @@ QUALIFICATION_PREFIX_PATTERNS = [
 # ============================================================
 
 DEGREE_PATTERNS = [
+    # Full names
+    r"\bbachelor\s+of\s+technology\b",
+    r"\bbachelor\s+of\s+engineering\b",
+    r"\bmaster\s+of\s+technology\b",
+    r"\bmaster\s+of\s+engineering\b",
+    r"\bbachelor\s+of\s+computer\s+applications\b",
+    r"\bmaster\s+of\s+computer\s+applications\b",
+    r"\bbachelor\s+of\s+science\b",
+    r"\bmaster\s+of\s+science\b",
+    r"\bbachelor\s+of\s+arts\b",
+    r"\bmaster\s+of\s+arts\b",
+    r"\bbachelor\s+of\s+commerce\b",
+    r"\bmaster\s+of\s+commerce\b",
+    r"\bbachelor\s+of\s+business\s+administration\b",
+    r"\bmaster\s+of\s+business\s+administration\b",
+    r"\bbachelor\s+of\s+pharmacy\b",
+    r"\bmaster\s+of\s+pharmacy\b",
+    r"\bbachelor\s+of\s+architecture\b",
+    r"\bbachelor\s+of\s+design\b",
+    r"\bbachelor\s+of\s+fine\s+arts\b",
+    r"\bbachelor\s+of\s+laws\b",
+    r"\bbachelor\s+of\s+social\s+work\b",
+    r"\bbachelor\s+of\s+physiotherapy\b",
+    r"\bbachelor\s+of\s+hotel\s+management\b",
+    r"\bdoctor\s+of\s+philosophy\b",
+    r"\bassociate\s+degree\b",
 
-    # Full degree names
-    r"\bbachelor of technology\b",
-    r"\bbachelor of engineering\b",
-    r"\bmaster of technology\b",
-    r"\bmaster of engineering\b",
-    r"\bmaster of computer applications\b",
-    r"\bbachelor of computer applications\b",
-    r"\bbachelor of science\b",
-    r"\bmaster of science\b",
-    r"\bbachelor of arts\b",
-    r"\bmaster of arts\b",
-    r"\bbachelor of commerce\b",
-    r"\bmaster of commerce\b",
-
-    # B.Tech / B.E / M.Tech / M.E
-    r"\bb\.?\s*tech\b",
+    # Abbreviations
+    r"\bb\.?\s*tech\.?\b",
     r"\bb\.?\s*e\.?\b",
-    r"\bm\.?\s*tech\b",
+    r"\bm\.?\s*tech\.?\b",
     r"\bm\.?\s*e\.?\b",
-
-    # BCA / MCA
     r"\bb\.?\s*c\.?\s*a\.?\b",
     r"\bm\.?\s*c\.?\s*a\.?\b",
-
-    # BSc / MSc
     r"\bb\.?\s*sc\.?\b",
     r"\bm\.?\s*sc\.?\b",
-
-    # MBA / BBA
-    r"\bb\.?\s*b\.?\s*a\.?\b",
-    r"\bm\.?\s*b\.?\s*a\.?\b",
-
-    # BCom / MCom
     r"\bb\.?\s*com\.?\b",
     r"\bm\.?\s*com\.?\b",
-
+    r"\bb\.?\s*b\.?\s*a\.?\b",
+    r"\bm\.?\s*b\.?\s*a\.?\b",
+    r"\bb\.?\s*a\.?\b",
+    r"\bm\.?\s*a\.?\b",
+    r"\bb\.?\s*pharm\.?\b",
+    r"\bm\.?\s*pharm\.?\b",
+    r"\bb\.?\s*arch\.?\b",
+    r"\bb\.?\s*des\.?\b",
+    r"\bb\.?\s*f\.?\s*a\.?\b",
+    r"\bl\.?\s*l\.?\s*b\.?\b",
+    r"\bm\.?\s*b\.?\s*b\.?\s*s\.?\b",
+    r"\bb\.?\s*d\.?\s*s\.?\b",
+    r"\bb\.?\s*p\.?\s*t\.?\b",
+    r"\bp\.?\s*h\.?\s*d\.?\b",
+    r"\bcopa\b",
 ]
 
+COMPILED_DEGREE_PATTERNS = tuple(
+    re.compile(pattern, re.IGNORECASE)
+    for pattern in DEGREE_PATTERNS
+)
 
 # ============================================================
 # INSTITUTION KEYWORDS
-#
-# These identify colleges / institutes / schools.
-#
-# IMPORTANT:
-# "university" is intentionally NOT here.
 # ============================================================
 
 INSTITUTION_KEYWORDS = [
-
     "college",
     "institute",
     "institution",
@@ -133,82 +143,199 @@ INSTITUTION_KEYWORDS = [
     "vidyalaya",
     "polytechnic",
     "training institute",
-
 ]
 
 
 # ============================================================
-# UNIVERSITY WORDING
-#
-# This is NOT a university dictionary.
-#
-# These generic terms are only used as a safety filter so that
-# an unrecognized university line is not returned as an
-# institution.
-#
-# Actual university aliases are handled by
-# university_extractor.py.
+# GENERIC UNIVERSITY WORDING
 # ============================================================
 
 UNIVERSITY_WORDING = [
-
     "university",
     "universit",
     "technological university",
     "technical university",
     "deemed university",
     "open university",
-
 ]
 
 
 # ============================================================
-# BASIC CLEANING
+# FIELD-OF-STUDY NOISE
+# ============================================================
+
+FIELD_OF_STUDY_PATTERNS = [
+    r"computer\s+science(?:\s+and\s+engineering)?",
+    r"computer\s+science",
+    r"information\s+technology",
+    r"information\s+systems",
+    r"computer\s+applications?",
+    r"software\s+engineering",
+    r"electronics?\s+and\s+communication(?:\s+engineering)?",
+    r"electronics?\s+communication(?:\s+engineering)?",
+    r"electrical\s+engineering",
+    r"mechanical\s+engineering",
+    r"civil\s+engineering",
+    r"chemical\s+engineering",
+    r"communication\s+engineering",
+    r"business\s+administration",
+    r"business\s+management",
+    r"commerce",
+    r"physics",
+    r"chemistry",
+    r"mathematics",
+    r"biology",
+    r"microbiology",
+    r"biotechnology",
+]
+
+COMPILED_QUALIFICATION_PREFIX_PATTERNS = tuple(
+    re.compile(pattern, re.IGNORECASE)
+    for pattern in QUALIFICATION_PREFIX_PATTERNS
+)
+COMPILED_BOARD_PATTERNS = tuple(
+    re.compile(pattern)
+    for pattern in BOARD_PATTERNS
+)
+COMPILED_FIELD_OF_STUDY_PATTERNS = tuple(
+    re.compile(pattern, re.IGNORECASE)
+    for pattern in FIELD_OF_STUDY_PATTERNS
+)
+EDUCATION_YEAR_RANGE_PATTERN = re.compile(
+    r"""
+    \(?\s*
+    (?:19|20)\d{2}
+    \s*[-–—]
+    \s*
+    (?:
+        (?:19|20)\d{2}
+        |
+        present
+    )
+    \s*\)?
+    """,
+    re.IGNORECASE | re.VERBOSE,
+)
+PARENTHESIZED_YEAR_PATTERN = re.compile(
+    r"\(\s*(?:19|20)\d{2}\s*\)",
+    re.IGNORECASE,
+)
+INCOMPLETE_PARENTHESIZED_YEAR_PATTERN = re.compile(
+    r"\(\s*(?:19|20)\d{2}\b",
+    re.IGNORECASE,
+)
+STANDALONE_YEAR_PATTERN = re.compile(
+    r"\b(?:19|20)\d{2}\b",
+    re.IGNORECASE,
+)
+EMPTY_PARENTHESES_PATTERN = re.compile(r"\(\s*\)")
+LEADING_IN_PATTERN = re.compile(r"^\s*in\s+", re.IGNORECASE)
+MIXED_LINE_SEPARATOR_PATTERN = re.compile(r"\s*[-–—|]\s*")
+
+# ============================================================
+# NORMALIZATION
 # ============================================================
 
 def normalize_spaces(text):
-    """
-    Normalize whitespace and non-breaking spaces.
-    """
-
     if not text:
         return ""
 
-    text = text.replace(
-        "\xa0",
-        " "
-    )
-
-    text = re.sub(
-        r"\s+",
-        " ",
-        text
-    )
+    text = text.replace("\xa0", " ")
+    text = re.sub(r"\s+", " ", text)
 
     return text.strip()
 
 
 def normalize_commas(text):
-    """
-    Normalize comma spacing.
-    """
-
     if not text:
         return ""
 
     text = re.sub(
         r"\s*,\s*",
         ", ",
-        text
+        text,
     )
 
     text = re.sub(
         r",\s*,+",
         ", ",
-        text
+        text,
     )
 
     return text.strip()
+
+
+# ============================================================
+# EDUCATION YEAR DETECTION
+# ============================================================
+
+def contains_education_year(text):
+    """
+    Detect education years.
+
+    Supports:
+        2020
+        (2020
+        (2020)
+        2020-2024
+        2020 - 2024
+        2020–2024
+        2020 - Present
+        2024
+    """
+
+    if not text:
+        return False
+
+    return bool(
+        re.search(
+            r"""
+            (?:
+                \b(?:19|20)\d{2}\b
+            )
+            |
+            (?:
+                \(?\s*(?:19|20)\d{2}
+                \s*[-–—]
+                \s*(?:
+                    (?:19|20)\d{2}
+                    |
+                    present
+                )
+                \s*\)?
+            )
+            """,
+            text,
+            flags=re.IGNORECASE | re.VERBOSE,
+        )
+    )
+
+
+# ============================================================
+# REMOVE EDUCATION YEARS
+# ============================================================
+
+def remove_education_years(text):
+    """
+    Remove years and education date ranges.
+    """
+
+    if not text:
+        return ""
+
+    # Date range first.
+    text = EDUCATION_YEAR_RANGE_PATTERN.sub("", text)
+
+    # Parenthesized single year.
+    text = PARENTHESIZED_YEAR_PATTERN.sub("", text)
+
+    # Incomplete parenthesized year such as "(2020".
+    text = INCOMPLETE_PARENTHESIZED_YEAR_PATTERN.sub("", text)
+
+    # Standalone year.
+    text = STANDALONE_YEAR_PATTERN.sub("", text)
+
+    return normalize_spaces(text)
 
 
 # ============================================================
@@ -217,51 +344,10 @@ def normalize_commas(text):
 
 def remove_dates(text):
     """
-    Remove education date ranges.
-
-    Examples
-    --------
-    2012-2016
-    2011–2012
-    2022 - Present
+    Backward-compatible alias.
     """
 
-    if not text:
-        return ""
-
-    # --------------------------------------------------------
-    # Date range with two years
-    # --------------------------------------------------------
-
-    text = re.sub(
-        r"\b(?:19|20)\d{2}\s*[-–—]\s*(?:19|20)?\d{2}\b",
-        "",
-        text,
-        flags=re.IGNORECASE,
-    )
-
-    # --------------------------------------------------------
-    # Date range ending with Present
-    # --------------------------------------------------------
-
-    text = re.sub(
-        r"\b(?:19|20)\d{2}\s*[-–—]\s*present\b",
-        "",
-        text,
-        flags=re.IGNORECASE,
-    )
-
-    # --------------------------------------------------------
-    # Single year at beginning
-    # --------------------------------------------------------
-
-    text = re.sub(
-        r"^\s*(?:19|20)\d{2}\s*[,|:-]?\s*",
-        "",
-        text,
-    )
-
-    return text
+    return remove_education_years(text)
 
 
 # ============================================================
@@ -269,97 +355,30 @@ def remove_dates(text):
 # ============================================================
 
 def remove_degree(text):
-    """
-    Remove degree names and abbreviations.
-    """
-
     if not text:
         return ""
 
-    # --------------------------------------------------------
-    # Remove degree names / abbreviations
-    # --------------------------------------------------------
+    for pattern in COMPILED_DEGREE_PATTERNS:
+        text = pattern.sub("", text)
 
-    for pattern in DEGREE_PATTERNS:
+    # Remove empty parentheses.
+    text = EMPTY_PARENTHESES_PATTERN.sub("", text)
 
-        text = re.sub(
-            pattern,
-            "",
-            text,
-            flags=re.IGNORECASE,
-        )
-
-    # --------------------------------------------------------
-    # Remove degree abbreviations inside parentheses
-    #
-    # Examples:
-    #   (B.E)
-    #   (B.Tech)
-    #   (M.E)
-    #   (M.Tech)
-    #   (BCA)
-    #   (MCA)
-    #   (BSc)
-    #   (MSc)
-    #   (BCom)
-    #   (MCom)
-    # --------------------------------------------------------
-
-    text = re.sub(
-        r"\(\s*"
-        r"(?:"
-        r"B\.?\s*E\.?|"
-        r"B\.?\s*Tech\.?|"
-        r"M\.?\s*E\.?|"
-        r"M\.?\s*Tech\.?|"
-        r"B\.?\s*C\.?\s*A\.?|"
-        r"M\.?\s*C\.?\s*A\.?|"
-        r"B\.?\s*Sc\.?|"
-        r"M\.?\s*Sc\.?|"
-        r"B\.?\s*Com\.?|"
-        r"M\.?\s*Com\.?"
-        r")"
-        r"\s*\)",
-        "",
-        text,
-        flags=re.IGNORECASE,
-    )
-
-    # --------------------------------------------------------
-    # Remove empty parentheses
-    # --------------------------------------------------------
-
-    text = re.sub(
-        r"\(\s*\)",
-        "",
-        text,
-    )
-
-    return text
+    return normalize_spaces(text)
 
 
 # ============================================================
-# REMOVE QUALIFICATION / EXAMINATION PREFIX
+# REMOVE QUALIFICATION
 # ============================================================
 
 def remove_qualification_prefix(text):
-    """
-    Remove school examination names.
-    """
-
     if not text:
         return ""
 
-    for pattern in QUALIFICATION_PREFIX_PATTERNS:
+    for pattern in COMPILED_QUALIFICATION_PREFIX_PATTERNS:
+        text = pattern.sub("", text)
 
-        text = re.sub(
-            pattern,
-            "",
-            text,
-            flags=re.IGNORECASE,
-        )
-
-    return text
+    return normalize_spaces(text)
 
 
 # ============================================================
@@ -367,127 +386,68 @@ def remove_qualification_prefix(text):
 # ============================================================
 
 def remove_leading_noise(text):
-    """
-    Remove punctuation left after cleaning.
-    """
-
     if not text:
         return ""
 
     text = re.sub(
-        r"^[\s,|:;()\-\–—]+",
+        r"^[\s,|:;()\-–—]+",
         "",
         text,
     )
 
     text = re.sub(
-        r"[\s,|:;()\-\–—]+$",
+        r"[\s,|:;()\-–—]+$",
         "",
         text,
     )
 
-    return text
+    return text.strip()
 
 
 # ============================================================
-# BOARD DETECTION
+# BOARD
 # ============================================================
 
 def is_board(text):
-    """
-    Check whether text represents an education board.
-    """
-
     if not text:
         return False
 
     lower = text.lower()
 
-    return any(
-        re.search(
-            pattern,
-            lower,
-        )
-        for pattern in BOARD_PATTERNS
-    )
+    return any(pattern.search(lower) for pattern in COMPILED_BOARD_PATTERNS)
 
-
-# ============================================================
-# BOARD CLEANING
-# ============================================================
 
 def clean_board_name(text):
-    """
-    Clean board text.
-    """
-
     if not text:
         return None
 
-    board = normalize_spaces(
-        text
-    )
-
-    board = remove_leading_noise(
-        board
-    )
-
-    board = normalize_commas(
-        board
-    )
-
-    board = remove_leading_noise(
-        board
-    )
+    board = normalize_spaces(text)
+    board = normalize_commas(board)
+    board = remove_leading_noise(board)
 
     board = board.strip(
         " ,.;:-()"
     )
 
-    if not board:
-        return None
+    return board or None
 
-    return board
-
-
-# ============================================================
-# EXTRACT BOARD
-# ============================================================
 
 def extract_board(block):
-    """
-    Extract board name from education block.
-    """
-
     if not block:
         return None
 
     for line in block:
-
-        if not isinstance(line, str):
-            continue
-
-        if is_board(line):
-
-            return clean_board_name(
-                line
-            )
+        if isinstance(line, str) and is_board(line):
+            return clean_board_name(line)
 
     return None
 
 
 # ============================================================
-# INSTITUTION KEYWORD CHECK
+# INSTITUTION KEYWORD
 # ============================================================
 
 def contains_institution_keyword(text):
-    """
-    Check whether a line looks like a college,
-    institute, school, academy, etc.
-
-    University is intentionally excluded.
-    """
-
     if not text:
         return False
 
@@ -499,27 +459,7 @@ def contains_institution_keyword(text):
     )
 
 
-# ============================================================
-# GENERIC UNIVERSITY WORDING CHECK
-# ============================================================
-
 def contains_university_wording(text):
-    """
-    Safety check for generic university wording.
-
-    This does NOT identify aliases.
-
-    University aliases are handled by
-    university_extractor.py.
-
-    This function only prevents text such as:
-
-        Visvesvaraya Technological University
-
-    from being returned as an institution if, for some reason,
-    it was not present in the external university dictionary.
-    """
-
     if not text:
         return False
 
@@ -532,12 +472,15 @@ def contains_university_wording(text):
 
 
 # ============================================================
-# DEGREE LINE DETECTION
+# DEGREE LINE
 # ============================================================
 
 def is_degree_line(text):
     """
-    Determine whether a line contains degree information.
+    Detect actual degree / qualification content.
+
+    IMPORTANT:
+    A year alone is NOT considered a degree line.
     """
 
     if not text:
@@ -545,27 +488,125 @@ def is_degree_line(text):
 
     lower = text.lower()
 
-    # --------------------------------------------------------
-    # Year
-    # --------------------------------------------------------
+    if any(pattern.search(lower) for pattern in COMPILED_DEGREE_PATTERNS):
+        return True
 
-    if re.search(
-        r"\b(?:19|20)\d{2}\b",
-        lower,
+    if any(
+        pattern.search(lower)
+        for pattern in COMPILED_QUALIFICATION_PREFIX_PATTERNS
     ):
         return True
 
+    return False
+
+
+# ============================================================
+# FIELD OF STUDY
+# ============================================================
+
+def remove_field_of_study(text):
+    """
+    Remove common field-of-study phrases.
+
+    This is intentionally conservative. It is primarily used
+    after the institution-bearing portion has been identified.
+    """
+
+    if not text:
+        return ""
+
+    result = text
+
+    for pattern in COMPILED_FIELD_OF_STUDY_PATTERNS:
+        result = pattern.sub("", result)
+
+    return normalize_spaces(result)
+
+
+# ============================================================
+# EXTRACT INSTITUTION FROM MIXED LINE
+# ============================================================
+
+def extract_institution_from_mixed_line(text):
+    """
+    Extract the institution-bearing portion from a mixed line.
+
+    Examples
+    --------
+    B.Tech in Computer Science and Engineering - Kerala Institute of Technology
+        -> Kerala Institute of Technology
+
+    Higher Secondary - Computer Science - Government Higher Secondary School
+        -> Government Higher Secondary School
+
+    ABC College - B.Tech
+        -> ABC College
+    """
+
+    if not text:
+        return None
+
+    text = normalize_spaces(text)
+
     # --------------------------------------------------------
-    # Degree pattern
+    # Prefer explicit hyphen / dash-separated segments.
     # --------------------------------------------------------
 
-    return any(
-        re.search(
-            pattern,
-            lower,
-        )
-        for pattern in DEGREE_PATTERNS
-    )
+    parts = MIXED_LINE_SEPARATOR_PATTERN.split(text)
+
+    cleaned_parts = []
+
+    for part in parts:
+
+        part = normalize_spaces(part)
+
+        if not part:
+            continue
+
+        if is_board(part):
+            continue
+
+        if contains_university_wording(part):
+            continue
+
+        part = remove_education_years(part)
+        part = remove_qualification_prefix(part)
+        part = remove_degree(part)
+
+        # "in Computer Science and Engineering"
+        # should not become an institution.
+        part = LEADING_IN_PATTERN.sub("", part)
+
+        part = remove_field_of_study(part)
+
+        part = remove_leading_noise(part)
+        part = normalize_spaces(part)
+
+        if not part:
+            continue
+
+        cleaned_parts.append(part)
+
+    if not cleaned_parts:
+        return None
+
+    # --------------------------------------------------------
+    # Strongest signal: explicit institution keyword.
+    # Search from right to left because institutions commonly
+    # appear after degree / field information.
+    # --------------------------------------------------------
+
+    for part in reversed(cleaned_parts):
+
+        if contains_institution_keyword(part):
+            return part
+
+    # --------------------------------------------------------
+    # If no explicit keyword exists, use the last meaningful
+    # segment.
+    # --------------------------------------------------------
+
+    return cleaned_parts[-1]
 
 
 # ============================================================
@@ -574,141 +615,81 @@ def is_degree_line(text):
 
 def clean_institution_name(institution):
     """
-    Clean institution text.
-
-    University content should already have been removed before
-    this function is called.
+    Clean institution text without returning degree,
+    field-of-study or education-year noise.
     """
 
     if not institution:
         return None
 
-    institution = normalize_spaces(
-        institution
-    )
+    institution = normalize_spaces(institution)
 
     # --------------------------------------------------------
-    # Remove pipe and anything after it
+    # Pipe-separated content.
     # --------------------------------------------------------
 
     if "|" in institution:
+        institution = institution.split("|")[0].strip()
 
-        institution = (
+    # --------------------------------------------------------
+    # If mixed with dash-separated education information,
+    # identify the actual institution-bearing segment first.
+    # --------------------------------------------------------
+
+    if re.search(
+        r"\s*[-–—]\s*",
+        institution,
+    ):
+        mixed = extract_institution_from_mixed_line(
             institution
-            .split("|")[0]
-            .strip()
         )
 
-    # --------------------------------------------------------
-    # Handle separators
-    #
-    # Example:
-    #
-    # B.Tech — ABC College
-    #
-    # ABC College — B.Tech
-    # --------------------------------------------------------
-
-    parts = re.split(
-        r"\s*[-–—~]+\s*",
-        institution
-    )
-
-    if len(parts) > 1:
-
-        valid_parts = []
-
-        for part in parts:
-
-            part = normalize_spaces(
-                part
-            )
-
-            if not part:
-                continue
-
-            if is_board(part):
-                continue
-
-            if is_degree_line(part):
-                continue
-
-            if contains_university_wording(part):
-                continue
-
-            valid_parts.append(
-                part
-            )
-
-        if valid_parts:
-
-            # ------------------------------------------------
-            # Prefer the part explicitly containing an
-            # institution keyword.
-            # ------------------------------------------------
-
-            for part in valid_parts:
-
-                if contains_institution_keyword(
-                    part
-                ):
-                    institution = part
-                    break
-
-            else:
-
-                institution = valid_parts[-1]
+        if mixed:
+            institution = mixed
 
     # --------------------------------------------------------
-    # Remove dates
+    # Remove years.
     # --------------------------------------------------------
 
-    institution = remove_dates(
+    institution = remove_education_years(
         institution
     )
 
     # --------------------------------------------------------
-    # Remove qualification
+    # Remove qualification / degree.
     # --------------------------------------------------------
 
     institution = remove_qualification_prefix(
         institution
     )
 
-    # --------------------------------------------------------
-    # Remove degree
-    # --------------------------------------------------------
-
     institution = remove_degree(
         institution
     )
 
     # --------------------------------------------------------
-    # Remove "in" when used as a degree connector
-    #
-    # Example:
-    #
-    # B.Tech in ABC College
+    # Remove leading "in".
     # --------------------------------------------------------
 
-    institution = re.sub(
-        r"\s+in\s+",
-        " ",
-        institution,
-        flags=re.IGNORECASE,
-    )
+    institution = LEADING_IN_PATTERN.sub("", institution)
 
     # --------------------------------------------------------
-    # Remove leading noise
+    # Remove obvious field-of-study prefix.
     # --------------------------------------------------------
 
-    institution = remove_leading_noise(
+    institution = remove_field_of_study(
         institution
     )
 
     # --------------------------------------------------------
-    # Normalize commas
+    # Remove residual year brackets / punctuation.
     # --------------------------------------------------------
+
+    institution = EMPTY_PARENTHESES_PATTERN.sub("", institution)
+
+    institution = remove_leading_noise(
+        institution
+    )
 
     institution = normalize_commas(
         institution
@@ -732,18 +713,12 @@ def clean_institution_name(institution):
 # REMOVE RECOGNIZED UNIVERSITY FROM BLOCK
 # ============================================================
 
-# ============================================================
-# REMOVE RECOGNIZED UNIVERSITY
-# ============================================================
-
 def _remove_recognized_university_from_block(
     block,
-    university_result
+    university_result,
 ):
     """
-    Remove the recognized university from its original line.
-
-    The rest of the education block is preserved.
+    Remove only the detected university from its matching line.
     """
 
     if not block:
@@ -754,146 +729,110 @@ def _remove_recognized_university_from_block(
     university_line_index = None
 
     if university_result:
-
-        university_line_index = (
-            university_result.get(
-                "line_index"
-            )
+        university_line_index = university_result.get(
+            "line_index"
         )
 
     for index, line in enumerate(block):
 
-        if not isinstance(
-            line,
-            str
-        ):
+        if not isinstance(line, str):
             continue
 
-        line = normalize_spaces(
-            line
-        )
+        line = normalize_spaces(line)
 
         if not line:
             continue
-
-        # ----------------------------------------------------
-        # Remove university only from the matched line.
-        # ----------------------------------------------------
 
         if (
             university_line_index is not None
             and index == university_line_index
         ):
-
             line = remove_university_content(
                 line,
-                university_result
+                university_result,
             )
 
-            line = normalize_spaces(
-                line
-            )
+            line = normalize_spaces(line)
 
         if line:
-            cleaned_block.append(
-                line
-            )
+            cleaned_block.append(line)
 
     return cleaned_block
 
 
 # ============================================================
-# FIND INSTITUTION CANDIDATES
+# FIND EXPLICIT INSTITUTION CANDIDATES
 # ============================================================
+
 
 def find_institution_candidates(
     block,
     university_result=None,
 ):
     """
-    Find possible college / institute / school lines.
+    Find explicit institution candidates.
 
-    University content is removed BEFORE candidate detection.
-
-    Parameters
-    ----------
-    block:
-        Education block.
-
-    university_result:
-        Result returned by
-        university_extractor.extract_university().
+    Remove the recognized university before institution
+    extraction. Ignore qualification-only lines, but retain
+    mixed lines when they contain an actual institution.
     """
-
     candidates = []
 
     if not block:
         return candidates
 
-    # --------------------------------------------------------
-    # First remove recognized university content.
-    # --------------------------------------------------------
-
-    working_block = (
-        _remove_recognized_university_from_block(
-            block,
-            university_result,
-        )
+    working_block = _remove_recognized_university_from_block(
+        block,
+        university_result,
     )
 
-    # --------------------------------------------------------
-    # Candidate detection.
-    # --------------------------------------------------------
-
     for line in working_block:
-
         if not isinstance(line, str):
             continue
 
-        line = normalize_spaces(
-            line
-        )
+        line = normalize_spaces(line)
 
         if not line:
             continue
 
-        # ----------------------------------------------------
-        # Never classify board as institution.
-        # ----------------------------------------------------
-
         if is_board(line):
             continue
-
-        # ----------------------------------------------------
-        # Never classify generic university wording as
-        # institution.
-        # ----------------------------------------------------
 
         if contains_university_wording(line):
             continue
 
-        # ----------------------------------------------------
-        # Ignore degree lines.
-        # ----------------------------------------------------
+        candidate = line
 
+        # Qualification and degree lines may also contain words
+        # such as "school". Extract the institution-bearing part
+        # before accepting them as candidates.
         if is_degree_line(line):
+            candidate = extract_institution_from_mixed_line(line)
+
+            if not candidate:
+                continue
+
+            candidate = normalize_spaces(candidate)
+
+        if not candidate:
             continue
 
-        # ----------------------------------------------------
-        # Institution keyword.
-        # ----------------------------------------------------
+        if is_board(candidate):
+            continue
 
-        if contains_institution_keyword(line):
+        if contains_university_wording(candidate):
+            continue
 
-            candidates.append(
-                line
-            )
+        if is_degree_line(candidate):
+            continue
+
+        if contains_institution_keyword(candidate):
+            candidates.append(candidate)
 
     return candidates
 
-
 # ============================================================
-# FIND FALLBACK INSTITUTION CANDIDATES
+# FALLBACK CANDIDATES
 # ============================================================
 
 def find_fallback_institution_candidates(
@@ -901,10 +840,7 @@ def find_fallback_institution_candidates(
     university_result=None,
 ):
     """
-    Find institution candidates when the institution does not
-    contain an explicit keyword such as "College" or "Institute".
-
-    University content is removed first.
+    Find institution candidates without explicit keywords.
     """
 
     candidates = []
@@ -924,44 +860,24 @@ def find_fallback_institution_candidates(
         if not isinstance(line, str):
             continue
 
-        cleaned = clean_institution_name(
-            line
-        )
+        cleaned = clean_institution_name(line)
 
         if not cleaned:
             continue
 
-        # ----------------------------------------------------
-        # Board
-        # ----------------------------------------------------
-
         if is_board(cleaned):
             continue
 
-        # ----------------------------------------------------
-        # Generic university wording
-        # ----------------------------------------------------
-
-        if contains_university_wording(
-            cleaned
-        ):
+        if contains_university_wording(cleaned):
             continue
-
-        # ----------------------------------------------------
-        # Degree
-        # ----------------------------------------------------
 
         if is_degree_line(cleaned):
             continue
 
+        # Avoid field-of-study-only lines.
         lower = cleaned.lower()
 
-        # ----------------------------------------------------
-        # Ignore obvious field-of-study lines.
-        # ----------------------------------------------------
-
         field_noise = [
-
             "computer science",
             "engineering",
             "information technology",
@@ -975,52 +891,29 @@ def find_fallback_institution_candidates(
             "cgpa",
             "marks obtained",
             "percentage",
-
         ]
 
         if any(
-            word in lower
+            word == lower
+            or lower.startswith(word)
             for word in field_noise
         ):
             continue
 
-        # ----------------------------------------------------
-        # Comma-containing lines are useful fallback
-        # candidates.
-        #
-        # Example:
-        #
-        # XYZ College, Kerala, India
-        # ABC Institute, Bangalore
-        # ----------------------------------------------------
-
+        # Comma-containing lines are useful fallbacks.
         if "," in cleaned:
-
-            candidates.append(
-                cleaned
-            )
+            candidates.append(cleaned)
 
     return candidates
 
 
 # ============================================================
-# EXTRACT UNIVERSITY FROM BLOCK
-# ============================================================
-
-# ============================================================
-# EXTRACT UNIVERSITY FROM BLOCK
+# UNIVERSITY
 # ============================================================
 
 def extract_university_from_block(block):
     """
-    Detect university from an education block.
-
-    The actual university detection is delegated to
-    university_extractor.py.
-
-    Returns the complete detection result so that the
-    institution extractor can remove the university
-    before institution detection.
+    Detect university from the education block.
     """
 
     if not block:
@@ -1028,35 +921,57 @@ def extract_university_from_block(block):
 
     for line_index, line in enumerate(block):
 
-        if not isinstance(
-            line,
-            str
-        ):
+        if not isinstance(line, str):
             continue
 
-        line = normalize_spaces(
-            line
-        )
+        line = normalize_spaces(line)
 
         if not line:
             continue
 
-        # IMPORTANT:
-        # This calls the imported university extractor.
-        #
-        # It does NOT call the local extract_university()
-        # function below.
-
-        result = extract_university_alias(
-            line
-        )
+        result = extract_university_alias(line)
 
         if not result:
             continue
 
-        result["line_index"] = (
-            line_index
-        )
+        matched_end = result.get("end")
+
+        if isinstance(matched_end, int):
+
+            remainder = line[matched_end:].strip()
+
+            remainder = remainder.lstrip(
+                " ,;:-–—|"
+            ).strip()
+
+            remainder = remainder.rstrip(
+                ".,;:"
+            ).strip()
+
+            degree_start = None
+            for pattern in DEGREE_PATTERNS:
+                match = re.search(
+                    pattern,
+                    remainder,
+                    flags=re.IGNORECASE,
+                )
+                if match and (
+                    degree_start is None
+                    or match.start() < degree_start
+                ):
+                    degree_start = match.start()
+
+            if degree_start is not None:
+                remainder = remainder[:degree_start].rstrip(
+                    " ,;:-–—|."
+                )
+
+            if remainder:
+                result["value"] = (
+                    f"{result['value']}, {remainder}"
+                )
+
+        result["line_index"] = line_index
 
         return result
 
@@ -1064,93 +979,52 @@ def extract_university_from_block(block):
 
 
 # ============================================================
-# BACKWARD-COMPATIBLE UNIVERSITY VALUE
+# BACKWARD COMPATIBLE UNIVERSITY VALUE
 # ============================================================
 
 def extract_university(
     block,
-    institution=None
+    institution=None,
 ):
-    """
-    Return only the university value.
-
-    This function is retained for backward compatibility.
-
-    Example
-    -------
-    [
-        "B.E. Information Technology",
-        "Anna University",
-        "2016"
-    ]
-
-    returns:
-
-        "Anna University"
-    """
-
-    result = extract_university_from_block(
-        block
-    )
+    result = extract_university_from_block(block)
 
     if not result:
         return None
 
-    return result.get(
-        "value"
-    )
-    
+    return result.get("value")
+
+
 # ============================================================
 # EXTRACT INSTITUTION
 # ============================================================
 
 def extract_institution(
     block,
-    university_result=None
+    university_result=None,
 ):
     """
     Extract college / institute / school.
 
-    University detection is performed first.
-
-    The detected university is removed before institution
-    detection.
-
-    Unknown universities are also protected because the
-    university extractor can detect them using generic
-    patterns.
+    University detection happens first and the detected
+    university is removed before institution extraction.
     """
 
     if not block:
         return None
 
-    # --------------------------------------------------------
-    # STEP 1
-    # Detect university only if caller didn't already provide it.
-    # --------------------------------------------------------
-
     if university_result is None:
-
         university_result = (
-            extract_university_from_block(
-                block
-            )
+            extract_university_from_block(block)
         )
 
     # --------------------------------------------------------
-    # STEP 2
-    # Remove university from block.
+    # Explicit institution candidates.
     # --------------------------------------------------------
 
     candidates = find_institution_candidates(
         block,
-        university_result
+        university_result,
     )
-
-    # --------------------------------------------------------
-    # STEP 3
-    # Explicit institution candidates.
-    # --------------------------------------------------------
 
     for candidate in candidates:
 
@@ -1164,25 +1038,35 @@ def extract_institution(
         if is_board(cleaned):
             continue
 
-        if contains_university_wording(
-            cleaned
-        ):
+        if contains_university_wording(cleaned):
             continue
 
         if is_degree_line(cleaned):
             continue
 
+        # Do not return field-only content.
+        if (
+            cleaned.lower()
+            in {
+                "computer science",
+                "computer science and engineering",
+                "information technology",
+                "engineering",
+                "computer applications",
+            }
+        ):
+            continue
+
         return cleaned
 
     # --------------------------------------------------------
-    # STEP 4
-    # Fallback institution candidates.
+    # Fallback candidates.
     # --------------------------------------------------------
 
     fallback_candidates = (
         find_fallback_institution_candidates(
             block,
-            university_result
+            university_result,
         )
     )
 
@@ -1198,9 +1082,7 @@ def extract_institution(
         if is_board(cleaned):
             continue
 
-        if contains_university_wording(
-            cleaned
-        ):
+        if contains_university_wording(cleaned):
             continue
 
         if is_degree_line(cleaned):
@@ -1212,21 +1094,17 @@ def extract_institution(
 
 
 # ============================================================
-# EXTRACT ALL EDUCATION INSTITUTION ENTITIES
+# ALL EDUCATION ENTITIES
 # ============================================================
 
 def extract_education_institutions(block):
     """
     Extract university, institution and board.
 
-    University is detected FIRST.
-
-    The exact same university detection result is then
-    passed to institution extraction.
+    University is detected exactly once.
     """
 
     if not block:
-
         return {
             "university": None,
             "institution": None,
@@ -1238,50 +1116,35 @@ def extract_education_institutions(block):
     # --------------------------------------------------------
 
     university_result = (
-        extract_university_from_block(
-            block
-        )
+        extract_university_from_block(block)
     )
 
     university = None
 
     if university_result:
-
-        university = (
-            university_result.get(
-                "value"
-            )
+        university = university_result.get(
+            "value"
         )
 
     # --------------------------------------------------------
     # INSTITUTION SECOND
-    #
-    # IMPORTANT:
-    # Pass the already detected result.
-    # Do NOT detect university again.
     # --------------------------------------------------------
 
     institution = extract_institution(
         block,
-        university_result
+        university_result,
     )
 
     # --------------------------------------------------------
     # BOARD
     # --------------------------------------------------------
 
-    board = extract_board(
-        block
-    )
+    board = extract_board(block)
 
     return {
-
         "university": university,
-
         "institution": institution,
-
         "board": board,
-
     }
 
 
@@ -1293,19 +1156,15 @@ if __name__ == "__main__":
 
     test_blocks = [
 
-        # ----------------------------------------------------
-        # 1. University abbreviation only
-        # ----------------------------------------------------
-
         [
-            "B.Tech Electronics Communication Engineering",
-            "KTU",
-            "2022 - 2026",
+            "B.Tech in Computer Science and Engineering - Kerala Institute of Technology (2020 - 2024)",
+            "Computer Science and Engineering",
         ],
 
-        # ----------------------------------------------------
-        # 2. College + University
-        # ----------------------------------------------------
+        [
+            "Higher Secondary - Computer Science - Government Higher Secondary School (2018 - 2020)",
+            "Central Board of Secondary Education",
+        ],
 
         [
             "B.Tech Computer Science and Engineering",
@@ -1314,29 +1173,17 @@ if __name__ == "__main__":
             "2022 - 2026",
         ],
 
-        # ----------------------------------------------------
-        # 3. University full name
-        # ----------------------------------------------------
-
         [
             "B.Tech Computer Science",
             "Visvesvaraya Technological University",
             "2017 - 2021",
         ],
 
-        # ----------------------------------------------------
-        # 4. Institution only
-        # ----------------------------------------------------
-
         [
             "Bachelor of Engineering",
             "P.E.S Institute of Technology",
             "2012 - 2016",
         ],
-
-        # ----------------------------------------------------
-        # 5. School
-        # ----------------------------------------------------
 
         [
             "All India Senior School Certificate Exam",
@@ -1345,23 +1192,11 @@ if __name__ == "__main__":
             "2011 - 2012",
         ],
 
-        # ----------------------------------------------------
-        # 6. MIXED LINE
-        #
-        # University + degree
-        # ----------------------------------------------------
-
         [
             "VTU - B.Tech",
             "Computer Science and Engineering",
             "2019",
         ],
-
-        # ----------------------------------------------------
-        # 7. MIXED LINE
-        #
-        # Degree + university
-        # ----------------------------------------------------
 
         [
             "B.Tech - VTU",
@@ -1369,33 +1204,14 @@ if __name__ == "__main__":
             "2019",
         ],
 
-        # ----------------------------------------------------
-        # 8. MIXED LINE
-        #
-        # Institution + university
-        # ----------------------------------------------------
-
         [
-            "ABC College - VTU",
-            "B.Tech Computer Science",
-            "2019",
-        ],
-
-        # ----------------------------------------------------
-        # 9. MIXED LINE
-        #
-        # University + institution + degree
-        # ----------------------------------------------------
-
-        [
-            "VTU - XYZ College - B.Tech",
+            "ABC College - VTU - B.Tech",
             "Computer Science Engineering",
             "2019",
         ],
-
     ]
 
-    for i, block in enumerate(
+    for index, block in enumerate(
         test_blocks,
         start=1,
     ):
@@ -1405,7 +1221,7 @@ if __name__ == "__main__":
         )
 
         print(
-            f"\n========== BLOCK {i} =========="
+            f"\n========== BLOCK {index} =========="
         )
 
         print(

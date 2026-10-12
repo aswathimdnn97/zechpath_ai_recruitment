@@ -1,14 +1,17 @@
 {
-    "Computer Science and Engineering": [
-        "CSE",
-        "CS",
-        "Computer Science",
-        "Computer Science and Engineering",
-        "Computer Science Engineering",
-        "Computer Science & Engineering",
-        "CS Engineering",
-        "Computing Science"
-    ],
+    "Computer Science": [
+    "CS",
+    "Computer Science"
+],
+
+"Computer Science and Engineering": [
+    "CSE",
+    "Computer Science and Engineering",
+    "Computer Science Engineering",
+    "Computer Science & Engineering",
+    "CS Engineering",
+    "Computing Science"
+],
 
     "Information Technology": [
         "IT",

@@ -1,4 +1,6 @@
+
 #!/usr/bin/env python3
+
 """Test script for the skill cleaner"""
 
 from document_processing.common.skill_cleaner import clean_skills

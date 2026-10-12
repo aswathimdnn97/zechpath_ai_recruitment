@@ -1,0 +1,250 @@
+{
+    "candidate_id": "CAN_B67DE2B9BADB",
+    "masked_profile": {
+        "candidate_id": "CAN_B67DE2B9BADB",
+        "skills": [
+            {
+                "skill_id": "TECH001",
+                "skill": "Python",
+                "category": "Technical",
+                "subcategory": "Programming Language",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "Recent engineering graduate with a strong foundation in Python, SQL and web development. Built academic applications and practiced object-oriented programming and database integration.",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Python SQL MySQL JavaScript HTML CSS Git"
+                    }
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH016A",
+                "skill": "SQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "Recent engineering graduate with a strong foundation in Python, SQL and web development. Built academic applications and practiced object-oriented programming and database integration.",
+                "sources": [
+                    "Recent engineering graduate with a strong foundation in Python, SQL and web development. Built academic applications and practiced object-oriented programming and database integration.",
+                    "Software Trainee - Learn Code Institute Aug 2025 - Mar 2026 Thiruvananthapuram, Kerala Created Python applications using OOP principles. Prepared SQL queries and documented application workflows."
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "SOFT001",
+                "skill": "Communication",
+                "category": "Soft Skill",
+                "subcategory": "Interpersonal",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "education",
+                "source_text": "B.Tech - Electronics Communication Engineering 2026 KTU",
+                "extraction_method": "master_dictionary"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Bachelor of Technology",
+                "field_of_study": "Electronics Communication Engineering 2026",
+                "institution": "KTU",
+                "university": null,
+                "board": null,
+                "graduation_year": "2026"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": null,
+                    "title": "Software Trainee",
+                    "category": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Learn Code Institute",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Aug 2025",
+                    "end_date": "Mar 2026"
+                },
+                "total_experience": {
+                    "total_months": 8,
+                    "total_years": 0.7
+                },
+                "location": "Thiruvananthapuram, Kerala",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 50
+                },
+                "description": [
+                    "Prepared SQL queries and documented application workflows."
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-09-03T17:38:31.676758+00:00"
+        }
+    },
+    "bias_report": {
+        "bias_detected": false,
+        "risk_level": "none",
+        "indicator_count": 0,
+        "indicators": [],
+        "status": "clear"
+    },
+    "original_profile": {
+        "candidate_id": "CAN_B67DE2B9BADB",
+        "personal_information": {
+            "name": "RAHUL MENON",
+            "email": "rahul.m@example.com",
+            "phone": null,
+            "location": "Thiruvananthapuram, Kerala",
+            "linkedin": null,
+            "github": null,
+            "portfolio": null
+        },
+        "skills": [
+            {
+                "skill_id": "TECH001",
+                "skill": "Python",
+                "category": "Technical",
+                "subcategory": "Programming Language",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "Recent engineering graduate with a strong foundation in Python, SQL and web development. Built academic applications and practiced object-oriented programming and database integration.",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Python SQL MySQL JavaScript HTML CSS Git"
+                    }
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH016A",
+                "skill": "SQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "Recent engineering graduate with a strong foundation in Python, SQL and web development. Built academic applications and practiced object-oriented programming and database integration.",
+                "sources": [
+                    "Recent engineering graduate with a strong foundation in Python, SQL and web development. Built academic applications and practiced object-oriented programming and database integration.",
+                    "Software Trainee - Learn Code Institute Aug 2025 - Mar 2026 Thiruvananthapuram, Kerala Created Python applications using OOP principles. Prepared SQL queries and documented application workflows."
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "SOFT001",
+                "skill": "Communication",
+                "category": "Soft Skill",
+                "subcategory": "Interpersonal",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "education",
+                "source_text": "B.Tech - Electronics Communication Engineering 2026 KTU",
+                "extraction_method": "master_dictionary"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Bachelor of Technology",
+                "field_of_study": "Electronics Communication Engineering 2026",
+                "institution": "KTU",
+                "university": null,
+                "board": null,
+                "graduation_year": "2026"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": null,
+                    "title": "Software Trainee",
+                    "category": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Learn Code Institute",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Aug 2025",
+                    "end_date": "Mar 2026"
+                },
+                "total_experience": {
+                    "total_months": 8,
+                    "total_years": 0.7
+                },
+                "location": "Thiruvananthapuram, Kerala",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 50
+                },
+                "description": [
+                    "Prepared SQL queries and documented application workflows."
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-09-03T17:38:31.676758+00:00"
+        }
+    },
+    "resume_hash": "979969e0aca709719c67f01c9ffd344bfb50944b447542b5a61fd13e9fb7b9df"
+}

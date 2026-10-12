@@ -1,0 +1,749 @@
+{
+  "candidate_id": "CAN_7B72257C5D85",
+  "masked_profile": {
+    "candidate_id": "CAN_7B72257C5D85",
+    "skills": [
+      {
+        "source_section": "summary",
+        "source_text": "Recent graduate with internship exposure to recruitment coordination, HR operations and employee documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Recent graduate with internship exposure to recruitment coordination, HR operations and employee documentation.",
+            "source_skill": "HR Operations"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "HR Operations",
+            "source_skill": "HR Operations"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "skill": "HR Operations",
+        "skill_id": "HR003",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Recent graduate with internship exposure to recruitment coordination, HR operations and employee documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Recent graduate with internship exposure to recruitment coordination, HR operations and employee documentation.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Supported recruitment screening and interview scheduling.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Recruitment",
+            "source_skill": "Recruitment"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Recruitment",
+        "skill_id": "HR005",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Recent graduate with internship exposure to recruitment coordination, HR operations and employee documentation.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Recent graduate with internship exposure to recruitment coordination, HR operations and employee documentation.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "summary",
+            "source_text": "Comfortable with MS Excel and HR communication.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Intern - PeopleFirst Services",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Intern",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Maintained employee records and HR documentation.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Used MS Excel for basic HR reports.",
+            "source_skill": "hr"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skill": "hr",
+        "resolved_from": "hr",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "hr"
+        ],
+        "skill": "Human Resources",
+        "skill_id": "HR001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Recent graduate with internship exposure to recruitment coordination, HR operations and employee documentation.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Recent graduate with internship exposure to recruitment coordination, HR operations and employee documentation.",
+            "source_skill": "employee documentation"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Employee Records",
+            "source_skill": "Employee Records"
+          }
+        ],
+        "original_skill": "employee documentation",
+        "resolved_from": "employee documentation",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "employee documentation",
+          "Employee Records"
+        ],
+        "skill": "Employee Records Management",
+        "skill_id": "HR022",
+        "matched_by": "exact",
+        "source_sections": [
+          "summary",
+          "skills"
+        ]
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Comfortable with MS Excel and HR communication.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Comfortable with MS Excel and HR communication.",
+            "source_skill": "Communication"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Communication",
+            "source_skill": "Communication"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "skill": "Communication",
+        "skill_id": "HR069",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Comfortable with MS Excel and HR communication.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Comfortable with MS Excel and HR communication.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Used MS Excel for basic HR reports.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "summary",
+            "source_text": "Comfortable with MS Excel and HR communication.",
+            "source_skill": "ms excel"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Used MS Excel for basic HR reports.",
+            "source_skill": "ms excel"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "ms excel",
+            "source_skill": "ms excel"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "original_skill": "excel",
+        "resolved_from": "excel",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "excel",
+          "ms excel"
+        ],
+        "skill": "Microsoft Excel",
+        "skill_id": "HR035",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Supported recruitment screening and interview scheduling.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Supported recruitment screening and interview scheduling.",
+            "source_skill": "Interview Scheduling"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "skill": "Interview Scheduling",
+        "skill_id": "HR011",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Maintained employee records and HR documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Maintained employee records and HR documentation.",
+            "source_skill": "HR Documentation"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "skill": "HR Documentation",
+        "skill_id": "HR023",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Used MS Excel for basic HR reports.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Used MS Excel for basic HR reports.",
+            "source_skill": "hr reports"
+          }
+        ],
+        "original_skill": "hr reports",
+        "resolved_from": "hr reports",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "hr reports"
+        ],
+        "skill": "HR Reporting",
+        "skill_id": "HR063",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "Talent Acquisition",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "Talent Acquisition",
+            "source_skill": "Talent Acquisition"
+          }
+        ],
+        "skill": "Talent Acquisition",
+        "skill_id": "HR006",
+        "matched_by": "exact"
+      }
+    ],
+    "education": [
+      {
+        "degree_type": "Bachelor of Business Administration",
+        "field_of_study": "Human Resources",
+        "institution": null,
+        "university": null,
+        "board": null,
+        "graduation_year": "2026"
+      }
+    ],
+    "experience": [
+      {
+        "title": {
+          "title_id": null,
+          "title": "HR Intern",
+          "category": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "company": {
+          "company_id": null,
+          "company": "PeopleFirst Services",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jan 2026",
+          "end_date": "Jun 2026"
+        },
+        "total_experience": {
+          "total_months": 6,
+          "total_years": 0.5
+        },
+        "location": "Kochi, Kerala",
+        "employment_type": {
+          "type_id": "EMP003",
+          "employment_type": "Internship",
+          "matched_by": "keyword",
+          "confidence": 100
+        },
+        "department": {
+          "department_id": "DEP004",
+          "department": "Human Resources",
+          "matched_by": "keyword",
+          "confidence": 75
+        },
+        "description": [
+          "Supported recruitment screening and interview scheduling.",
+          "Maintained employee records and HR documentation.",
+          "Used MS Excel for basic HR reports."
+        ]
+      }
+    ],
+    "projects": [],
+    "certifications": [
+      {
+        "certification_name": "HR Operations Domain Certification",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      },
+      {
+        "certification_name": "Professional Development Program",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      },
+      {
+        "certification_name": "Workplace Communication",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      }
+    ],
+    "metadata": {
+      "parser_version": "1.0",
+      "created_at": "2026-10-09T06:49:52.812006+00:00"
+    }
+  },
+  "bias_report": {
+    "bias_detected": false,
+    "risk_level": "none",
+    "indicator_count": 0,
+    "indicators": [],
+    "status": "clear"
+  },
+  "original_profile": {
+    "candidate_id": "CAN_7B72257C5D85",
+    "personal_information": {
+      "name": "MEERA S",
+      "email": "meera.s@example.com",
+      "phone": null,
+      "location": "Kochi, Kerala",
+      "linkedin": null,
+      "github": null,
+      "portfolio": null
+    },
+    "skills": [
+      {
+        "source_section": "summary",
+        "source_text": "Recent graduate with internship exposure to recruitment coordination, HR operations and employee documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Recent graduate with internship exposure to recruitment coordination, HR operations and employee documentation.",
+            "source_skill": "HR Operations"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "HR Operations",
+            "source_skill": "HR Operations"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "skill": "HR Operations",
+        "skill_id": "HR003",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Recent graduate with internship exposure to recruitment coordination, HR operations and employee documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Recent graduate with internship exposure to recruitment coordination, HR operations and employee documentation.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Supported recruitment screening and interview scheduling.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Recruitment",
+            "source_skill": "Recruitment"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Recruitment",
+        "skill_id": "HR005",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Recent graduate with internship exposure to recruitment coordination, HR operations and employee documentation.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Recent graduate with internship exposure to recruitment coordination, HR operations and employee documentation.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "summary",
+            "source_text": "Comfortable with MS Excel and HR communication.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Intern - PeopleFirst Services",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Intern",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Maintained employee records and HR documentation.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Used MS Excel for basic HR reports.",
+            "source_skill": "hr"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skill": "hr",
+        "resolved_from": "hr",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "hr"
+        ],
+        "skill": "Human Resources",
+        "skill_id": "HR001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Recent graduate with internship exposure to recruitment coordination, HR operations and employee documentation.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Recent graduate with internship exposure to recruitment coordination, HR operations and employee documentation.",
+            "source_skill": "employee documentation"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Employee Records",
+            "source_skill": "Employee Records"
+          }
+        ],
+        "original_skill": "employee documentation",
+        "resolved_from": "employee documentation",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "employee documentation",
+          "Employee Records"
+        ],
+        "skill": "Employee Records Management",
+        "skill_id": "HR022",
+        "matched_by": "exact",
+        "source_sections": [
+          "summary",
+          "skills"
+        ]
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Comfortable with MS Excel and HR communication.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Comfortable with MS Excel and HR communication.",
+            "source_skill": "Communication"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Communication",
+            "source_skill": "Communication"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "skill": "Communication",
+        "skill_id": "HR069",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Comfortable with MS Excel and HR communication.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Comfortable with MS Excel and HR communication.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Used MS Excel for basic HR reports.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "summary",
+            "source_text": "Comfortable with MS Excel and HR communication.",
+            "source_skill": "ms excel"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Used MS Excel for basic HR reports.",
+            "source_skill": "ms excel"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "ms excel",
+            "source_skill": "ms excel"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "original_skill": "excel",
+        "resolved_from": "excel",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "excel",
+          "ms excel"
+        ],
+        "skill": "Microsoft Excel",
+        "skill_id": "HR035",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Supported recruitment screening and interview scheduling.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Supported recruitment screening and interview scheduling.",
+            "source_skill": "Interview Scheduling"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "skill": "Interview Scheduling",
+        "skill_id": "HR011",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Maintained employee records and HR documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Maintained employee records and HR documentation.",
+            "source_skill": "HR Documentation"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "skill": "HR Documentation",
+        "skill_id": "HR023",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Used MS Excel for basic HR reports.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Used MS Excel for basic HR reports.",
+            "source_skill": "hr reports"
+          }
+        ],
+        "original_skill": "hr reports",
+        "resolved_from": "hr reports",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "hr reports"
+        ],
+        "skill": "HR Reporting",
+        "skill_id": "HR063",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "Talent Acquisition",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "Talent Acquisition",
+            "source_skill": "Talent Acquisition"
+          }
+        ],
+        "skill": "Talent Acquisition",
+        "skill_id": "HR006",
+        "matched_by": "exact"
+      }
+    ],
+    "education": [
+      {
+        "degree_type": "Bachelor of Business Administration",
+        "field_of_study": "Human Resources",
+        "institution": null,
+        "university": null,
+        "board": null,
+        "graduation_year": "2026"
+      }
+    ],
+    "experience": [
+      {
+        "title": {
+          "title_id": null,
+          "title": "HR Intern",
+          "category": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "company": {
+          "company_id": null,
+          "company": "PeopleFirst Services",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jan 2026",
+          "end_date": "Jun 2026"
+        },
+        "total_experience": {
+          "total_months": 6,
+          "total_years": 0.5
+        },
+        "location": "Kochi, Kerala",
+        "employment_type": {
+          "type_id": "EMP003",
+          "employment_type": "Internship",
+          "matched_by": "keyword",
+          "confidence": 100
+        },
+        "department": {
+          "department_id": "DEP004",
+          "department": "Human Resources",
+          "matched_by": "keyword",
+          "confidence": 75
+        },
+        "description": [
+          "Supported recruitment screening and interview scheduling.",
+          "Maintained employee records and HR documentation.",
+          "Used MS Excel for basic HR reports."
+        ]
+      }
+    ],
+    "projects": [],
+    "certifications": [
+      {
+        "certification_name": "HR Operations Domain Certification",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      },
+      {
+        "certification_name": "Professional Development Program",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      },
+      {
+        "certification_name": "Workplace Communication",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      }
+    ],
+    "metadata": {
+      "parser_version": "1.0",
+      "created_at": "2026-10-09T06:49:52.812006+00:00"
+    }
+  }
+}

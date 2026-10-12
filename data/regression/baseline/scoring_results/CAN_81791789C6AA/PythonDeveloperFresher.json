@@ -1,0 +1,233 @@
+{
+  "candidate_id": "CAN_81791789C6AA",
+  "candidate_score": {
+    "final_score": 73.25,
+    "status": "calculated",
+    "job_title": "Python Developer",
+    "role_category": "backend",
+    "weight_source": "role_category",
+    "weights": {
+      "skill": 0.45,
+      "experience": 0.3,
+      "education": 0.1,
+      "semantic": 0.15
+    },
+    "component_scores": {
+      "skill": {
+        "score": 62.5,
+        "status": "calculated",
+        "weight": 0.45,
+        "weight_percentage": 45.0
+      },
+      "experience": {
+        "score": 85.0,
+        "status": "calculated",
+        "weight": 0.3,
+        "weight_percentage": 30.0
+      },
+      "education": {
+        "score": 76.0,
+        "status": "calculated",
+        "weight": 0.1,
+        "weight_percentage": 10.0
+      },
+      "semantic": {
+        "score": 80.22,
+        "status": "calculated",
+        "weight": 0.15,
+        "weight_percentage": 15.0
+      }
+    },
+    "contributions": {
+      "skill": {
+        "score": 62.5,
+        "weight": 0.45,
+        "weight_percentage": 45.0,
+        "contribution": 28.12
+      },
+      "experience": {
+        "score": 85.0,
+        "weight": 0.3,
+        "weight_percentage": 30.0,
+        "contribution": 25.5
+      },
+      "education": {
+        "score": 76.0,
+        "weight": 0.1,
+        "weight_percentage": 10.0,
+        "contribution": 7.6
+      },
+      "semantic": {
+        "score": 80.22,
+        "weight": 0.15,
+        "weight_percentage": 15.0,
+        "contribution": 12.03
+      }
+    },
+    "missing_components": [],
+    "available_weight": 1.0,
+    "explanation": [
+      "Skill score 62.50 with 45% weight contributed 28.12 points.",
+      "Experience score 85.00 with 30% weight contributed 25.50 points.",
+      "Education score 76.00 with 10% weight contributed 7.60 points.",
+      "Semantic score 80.22 with 15% weight contributed 12.03 points."
+    ]
+  },
+  "component_scores": {
+    "skill": {
+      "score": 62.5,
+      "weight": 0.4,
+      "weight_percentage": 40.0,
+      "candidate_skills": [
+        "Python",
+        "Django",
+        "PostgreSQL",
+        "Docker",
+        "FastAPI",
+        "REST API",
+        "AWS",
+        "Communication"
+      ],
+      "required_skills": [
+        "Python",
+        "Django",
+        "FastAPI",
+        "REST API",
+        "PostgreSQL",
+        "Git",
+        "API",
+        "Testing"
+      ],
+      "preferred_skills": [],
+      "required": {
+        "score": 62.5,
+        "weight": 0.8,
+        "weight_percentage": 80.0,
+        "contribution": 50.0,
+        "total_skills": 8,
+        "matched_skills": 5,
+        "match_percentage": 62.5,
+        "exact_matches": [
+          "Python",
+          "Django",
+          "FastAPI",
+          "REST API",
+          "PostgreSQL"
+        ],
+        "relationship_matches": [],
+        "fuzzy_matches": [],
+        "semantic_matches": [],
+        "related_skill_context": [],
+        "missing_skills": [
+          "Git",
+          "API",
+          "Testing"
+        ]
+      },
+      "preferred": {
+        "score": 0.0,
+        "weight": 0.2,
+        "weight_percentage": 20.0,
+        "contribution": 0.0,
+        "total_skills": 0,
+        "matched_skills": 0,
+        "match_percentage": 0.0,
+        "exact_matches": [],
+        "relationship_matches": [],
+        "fuzzy_matches": [],
+        "semantic_matches": [],
+        "related_skill_context": [],
+        "missing_skills": []
+      }
+    },
+    "experience": {
+      "score": 85.0,
+      "years_score": 100.0,
+      "role_relevance_score": 100.0,
+      "technology_relevance_score": 62.5,
+      "candidate_years": 6.33,
+      "required_minimum_years": 0.0,
+      "preferred_maximum_years": 1.0,
+      "candidate_roles": [
+        "Python Developer"
+      ],
+      "target_job_title": "Python Developer",
+      "experience_skills": [],
+      "candidate_skills": [
+        "Python",
+        "Django",
+        "PostgreSQL",
+        "Docker",
+        "FastAPI",
+        "REST API",
+        "AWS",
+        "Communication"
+      ],
+      "required_skills": [
+        "Python",
+        "Django",
+        "FastAPI",
+        "REST API",
+        "PostgreSQL",
+        "Git",
+        "API",
+        "Testing"
+      ],
+      "status": "calculated"
+    },
+    "education": {
+      "score": 76.0,
+      "degree_score": 100.0,
+      "field_score": 40.0,
+      "candidate_education": [
+        {
+          "degree_type": "Bachelor of Technology",
+          "field_of_study": "Computer Science and Engineering",
+          "institution": null,
+          "university": null,
+          "board": null,
+          "graduation_year": "2020"
+        }
+      ],
+      "best_matching_education": {
+        "degree_score": 100.0,
+        "field_score": 40.0,
+        "score": 76.0,
+        "degree_type": "Bachelor of Technology",
+        "field_of_study": "Computer Science and Engineering",
+        "institution": null,
+        "graduation_year": "2020"
+      },
+      "required_education": [
+        "B.Tech / B.E. / equivalent technical degree preferred."
+      ],
+      "status": "calculated"
+    },
+    "semantic": {
+      "score": 80.22,
+      "similarity": 0.6043,
+      "status": "calculated"
+    }
+  },
+  "metadata": {
+    "job_title": "Python Developer",
+    "required_skills_count": 8,
+    "preferred_skills_count": 0,
+    "candidate_skills_count": 8,
+    "candidate_years": 6.33,
+    "candidate_roles": [
+      "Python Developer"
+    ],
+    "candidate_education_count": 1,
+    "jd_experience_count": 1,
+    "jd_education_count": 1
+  },
+  "bias_mitigation": {
+    "personal_attributes_masked": true,
+    "candidate_id_preserved": true
+  },
+  "candidate_name": "ARUN B",
+  "jd_id": "PythonDeveloperFresher",
+  "job_id": "JOB_FC922CB631D1",
+  "jd_file": "PythonDeveloperFresher.pdf"
+}

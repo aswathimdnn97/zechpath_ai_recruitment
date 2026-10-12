@@ -15,6 +15,7 @@ No validation is performed here.
 import json
 import re
 from pathlib import Path
+from functools import lru_cache
 
 # ----------------------------------------------------
 # Project Root
@@ -38,147 +39,223 @@ COMPANY_FILE = (
 # Load Companies
 # ----------------------------------------------------
 
+@lru_cache(maxsize=1)
 def load_companies():
-
+    """Load the company dictionary once per process."""
     with open(COMPANY_FILE, "r", encoding="utf-8") as file:
         return json.load(file)
-
 
 # ----------------------------------------------------
 # Remove Date
 # ----------------------------------------------------
 
-def remove_date(text):
-    """
-    Removes trailing date information.
+import re
 
-    Example
-    -------
-    Software Engineer Jan 2022 - Present
+MONTH_PATTERN = (
+    r"(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|"
+    r"May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|"
+    r"Sep(?:t(?:ember)?)?|Oct(?:ober)?|"
+    r"Nov(?:ember)?|Dec(?:ember)?)"
+)
 
-    becomes
+DATE_TOKEN = rf"(?:{MONTH_PATTERN}\.?\s+)?(?:19|20)\d{{2}}"
 
-    Software Engineer
-    """
-
-    pattern = (
-        r"\s*"
-        r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)"
-        r".*"
+DATE_RANGE_PATTERN = re.compile(
+    rf"""
+    \b
+    (?:
+        {MONTH_PATTERN}\.?\s+(?:19|20)\d{{2}}
+        |
+        (?:19|20)\d{{2}}
     )
+    \s*
+    (?:-|–|—|to)\s*
+    (?:
+        {MONTH_PATTERN}\.?\s+(?:19|20)\d{{2}}
+        |
+        (?:19|20)\d{{2}}
+        |
+        present|current|now
+    )
+    \b
+    """,
+    re.IGNORECASE | re.VERBOSE,
+)
 
-    return re.sub(
-        pattern,
-        "",
-        text,
-        flags=re.IGNORECASE
-    ).strip()
+SINGLE_DATE_PATTERN = re.compile(
+    rf"\b{DATE_TOKEN}\b",
+    re.IGNORECASE,
+)
 
+
+def remove_date(text: str) -> str:
+    """Remove a date or date range and the text following it."""
+    if not text:
+        return ""
+
+    match = DATE_RANGE_PATTERN.search(text)
+
+    if match:
+        return text[:match.start()].strip(" \t-–—|,;:")
+
+    match = SINGLE_DATE_PATTERN.search(text)
+
+    if match:
+        return text[:match.start()].strip(" \t-–—|,;:")
+
+    return text.strip()
 
 # ----------------------------------------------------
 # Description Detection
 # ----------------------------------------------------
 
-def is_description(text):
+# Strong signals that a line describes work rather than a job title.
+DESCRIPTION_START_PATTERN = re.compile(
+    r"""
+    ^\s*(?:[-•*]\s*)?
+    (?:
+        developed|prepared|worked|was\s+responsible|
+        implemented|created|designed|maintained|
+        improved|enhanced|built|collaborated|
+        partnered|communicated|assessed|troubleshot|
+        contributed|explored|presented|wrote|
+        documented|tested|delivered|performed|
+        completed|handled|supported|executed|
+        updated|coordinated|assisted|utilized|
+        responsible\s+for|experience\s+in
+    )
+    \b
+    """,
+    re.IGNORECASE | re.VERBOSE,
+)
 
-    keywords = [
+DESCRIPTION_VERB_PATTERN = re.compile(
+    r"\b(?:developed|implemented|maintained|improved|"
+    r"tested|documented|delivered|troubleshot|"
+    r"collaborated|contributed|executed|supported)\b",
+    re.IGNORECASE,
+)
 
-        "developed",
-        "prepared",
-        "worked",
-        "responsible",
-        "implemented",
-        "created",
-        "designed",
-        "using",
-        "maintained",
-        "improved",
-        "enhanced",
-        "built",
-        "collaborated",
-        "collaborate",
-        "collaboration",
-        "partnered",
-        "communicate",
-        "assess",
-        "troubleshoot",
-        "contributed",
-        "explored",
-        "presented",
-        "wrote",
-        "documented",
-        "managed",
-        "tested",
-        "led",
-        "leading",
-        "delivered",
-        "building",
-        "designed",
-        "performed",
-        "completed",
-        "handled",
-        "supported",
-        "executed",
-        "updated"
+TITLE_TOKENS = {
+    "developer",
+    "engineer",
+    "programmer",
+    "analyst",
+    "manager",
+    "consultant",
+    "architect",
+    "specialist",
+    "scientist",
+    "intern",
+    "trainee",
+    "lead",
+    "executive",
+    "assistant",
+    "designer",
+    "tester",
+    "test",
+    "owner",
+    "administrator",
+    "admin",
+    "officer",
+    "coordinator",
+    "technician",
+    "accountant",
+    "recruiter",
+    "director",
+    "president",
+    "founder",
+    "researcher",
+    "instructor",
+    "teacher",
+    "support",
+    "associate",
+    "principal",
+    "supervisor",
+    "architect",
+    "product",
+    "qa",
+    "devops",
+    "freelancer",
+}
 
-    ]
 
-    text = text.lower()
+def is_description(text: str) -> bool:
+    """Return True when a line has strong description-like signals."""
+    if not isinstance(text, str):
+        return False
 
-    if len(text.split()) >= 5 and text.rstrip().endswith((".", ";", ":")):
+    text = text.strip()
+
+    if not text:
+        return False
+
+    # Clear action-oriented description at the start of a line.
+    if DESCRIPTION_START_PATTERN.search(text):
         return True
 
-    return any(
-        word in text
-        for word in keywords
-    )
+    words = text.split()
+
+    # Long, sentence-like lines are unlikely to be job titles.
+    if len(words) >= 8 and text.endswith((".", ";")):
+        return True
+
+    # Avoid rejecting a short title just because it contains a verb.
+    # Look for several words plus a work-description verb.
+    if len(words) >= 7 and DESCRIPTION_VERB_PATTERN.search(text):
+        return True
+
+    return False
 
 
-def looks_like_title_text(text):
-    """Heuristic to classify a text as a likely role/title."""
+def looks_like_title_text(text: str) -> bool:
+    """Check whether text contains a recognized role-related token."""
+    if not isinstance(text, str):
+        return False
 
-    lower = text.lower()
-    title_tokens = [
-        "developer",
-        "engineer",
-        "analyst",
-        "manager",
-        "consultant",
-        "architect",
-        "specialist",
-        "scientist",
-        "intern",
-        "trainee",
-        "lead",
-        "assistant",
-        "designer",
-    ]
+    words = {
+        token.lower()
+        for token in re.findall(r"[A-Za-z0-9+#.]+", text)
+    }
 
-    return any(token in lower for token in title_tokens)
+    return bool(words & TITLE_TOKENS)
 
 
-def split_title_company(line):
-    """Strip company names from title-company patterns like 'Backend Trainee - Code Nest Academy'."""
 
+def split_title_company(line: str):
+    """Extract a likely title from a title-company line."""
     if not isinstance(line, str):
-        return line
+        return ""
 
     text = line.strip()
+
     if not text:
+        return ""
+
+    # Split only once so separators inside the company name are less likely
+    # to create multiple fragments.
+    match = re.search(r"\s*(\||–|—|-)\s*", text)
+
+    if not match:
         return text
 
-    for separator in [" - ", " – ", " — ", " | "]:
-        if separator not in text:
-            continue
+    left = text[:match.start()].strip()
+    right = text[match.end():].strip()
 
-        left, right = [part.strip() for part in text.split(separator, 1)]
-        if not left or not right:
-            continue
+    if not left or not right:
+        return text
 
-        if looks_like_title_text(left) and not looks_like_title_text(right):
-            return left
+    left_is_title = looks_like_title_text(left)
+    right_is_title = looks_like_title_text(right)
 
-    return line
+    if left_is_title and not right_is_title:
+        return left
+
+    if right_is_title and not left_is_title:
+        return right
+
+    # Ambiguous lines are left unchanged for downstream checks.
+    return text
 
 
 def looks_like_location(text):
@@ -234,6 +311,7 @@ def looks_like_company(text):
         "intern",
         "trainee",
         "lead",
+        "executive",
         "designer",
     ]
 
@@ -279,50 +357,65 @@ def extract_titles(experience_block):
     seen = set()
 
     for line in experience_block:
+        if not isinstance(line, str):
+            continue
 
         line = line.strip()
 
         if not line:
             continue
 
-        # Split title-company lines before checking whether the full line looks
-        # like a company, since the company portion may contain title-like words.
-        line = split_title_company(line)
-        if not line:
-            continue
-
-        # Skip description lines
-        if is_description(line):
-            continue
-
-        # Skip company-like lines that should not be job titles
-        if looks_like_company(line):
-            continue
-
-        # Skip city/state lines that are not roles
-        if looks_like_location(line):
-            continue
-
-        # Remove dates
+        # Remove dates before title/company classification.
         line = remove_date(line)
 
         if not line:
             continue
 
-        lower = line.lower()
+        # Separate likely title-company combinations.
+        line = split_title_company(line)
 
-        # Skip if exactly a company
+        if not line:
+            continue
+
+        # Ignore work-description lines.
+        if is_description(line):
+            continue
+
+        # Ignore company-like lines.
+        if looks_like_company(line):
+            continue
+
+        # Ignore location-only lines.
+        if looks_like_location(line):
+            continue
+
+        lower = line.casefold()
+
+        # Ignore exact company dictionary matches.
         if lower in company_lookup:
             continue
 
-        # Skip if location-like
+        # Ignore likely location/address lines.
         if "," in line and len(line.split()) > 2:
             continue
 
         if lower not in seen:
-
             seen.add(lower)
-
             titles.append(line)
 
     return titles
+
+test_cases = [
+    ["Python Developer", "CodeNest Technologies - Kochi, Kerala",
+     "Jan 2024 - Jun 2024"],
+    ["QA Tester - Acme Labs", "Tested APIs and documented defects."],
+    ["Product Owner | Example Systems", "Jan 2022 - Present"],
+    ["Developed APIs for internal applications."],
+    ["Software Engineer Jan 2022 - Present"],
+    ["ABC Technologies - Kochi, Kerala"],
+]
+
+for index, block in enumerate(test_cases, start=1):
+    print(f"\nTest {index}")
+    print("Input:", block)
+    print("Extracted titles:", extract_titles(block))

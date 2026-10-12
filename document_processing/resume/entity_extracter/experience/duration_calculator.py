@@ -17,13 +17,13 @@ import re
 DATE_PATTERNS = [
 
     # Jan 2022 - Present
-    r"(?P<start>(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)[a-z]*\.?\s+\d{4})\s*[-–]\s*(?P<end>Present|Current|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)[a-z]*\.?\s+\d{4})",
+    r"(?P<start>(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)[a-z]*\.?\s+\d{4})\s*[-–—\uFFFD]\s*(?P<end>Present|Current|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)[a-z]*\.?\s+\d{4})",
 
     # 02/2020 - 11/2022
-    r"(?P<start>\d{1,2}/\d{4})\s*[-–]\s*(?P<end>\d{1,2}/\d{4}|Present|Current)",
+    r"(?P<start>\d{1,2}/\d{4})\s*[-–—\uFFFD]\s*(?P<end>\d{1,2}/\d{4}|Present|Current)",
 
     # 2021 - 2023
-    r"(?P<start>\d{4})\s*[-–]\s*(?P<end>\d{4}|Present|Current)"
+    r"(?P<start>\d{4})\s*[-–—\uFFFD]\s*(?P<end>\d{4}|Present|Current)"
 ]
 
 

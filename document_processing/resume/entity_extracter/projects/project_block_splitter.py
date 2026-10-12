@@ -1,32 +1,84 @@
 import re
 
+from document_processing.resume.entity_extracter.projects.project_technologies_extractor import (
+    is_technology_line,
+)
+
 
 # ============================================================
-# Patterns
+# PROJECT LABEL
 # ============================================================
 
 PROJECT_LABEL_PATTERN = re.compile(
-    r"^\s*project(?:\s*name)?\s*[:\-]\s*(.+)$",
+    r"^\s*project(?:\s*name)?\s*[:\-]\s*(.+?)\s*$",
     re.IGNORECASE,
 )
 
 
 # ============================================================
-# Helpers
+# METADATA LABELS
+# ============================================================
+
+METADATA_LABEL_PATTERN = re.compile(
+    r"^\s*(?:"
+    r"technologies?"
+    r"|tech\s+stack"
+    r"|technology\s+stack"
+    r"|tools"
+    r"|technologies\s+used"
+    r"|tools\s+used"
+    r"|built\s+with"
+    r"|developed\s+using"
+    r"|using"
+    r"|github"
+    r"|gitlab"
+    r"|bitbucket"
+    r"|repository"
+    r"|repo"
+    r"|demo"
+    r"|live"
+    r"|website"
+    r"|url"
+    r"|link"
+    r"|role"
+    r"|responsibilities"
+    r")\s*:",
+    re.IGNORECASE,
+)
+
+
+# ============================================================
+# URL
+# ============================================================
+
+URL_PATTERN = re.compile(
+    r"(?:"
+    r"https?://"
+    r"|www\."
+    r"|github\.com/"
+    r"|gitlab\.com/"
+    r"|bitbucket\.org/"
+    r")",
+    re.IGNORECASE,
+)
+
+
+# ============================================================
+# CLEAN LINE
 # ============================================================
 
 def clean_line(line):
-    """
-    Clean a single resume line.
-    """
-
     if not line:
         return ""
 
-    line = line.strip()
+    line = str(line).strip()
 
-    # Remove common bullet characters
-    line = re.sub(r"^[•●▪◦*-]\s*", "", line)
+    # Remove bullet characters
+    line = re.sub(
+        r"^[•●▪◦*\-]\s*",
+        "",
+        line,
+    )
 
     # Normalize whitespace
     line = re.sub(r"\s+", " ", line)
@@ -34,19 +86,20 @@ def clean_line(line):
     return line.strip()
 
 
-def is_project_label(line):
-    """
-    Check whether a line explicitly identifies a project.
-    """
+# ============================================================
+# PROJECT LABEL
+# ============================================================
 
-    return bool(PROJECT_LABEL_PATTERN.match(line))
+def is_project_label(line):
+    if not line:
+        return False
+
+    return bool(
+        PROJECT_LABEL_PATTERN.match(line)
+    )
 
 
 def extract_project_name_from_label(line):
-    """
-    Extract project name from an explicit project label.
-    """
-
     match = PROJECT_LABEL_PATTERN.match(line)
 
     if not match:
@@ -55,32 +108,62 @@ def extract_project_name_from_label(line):
     return match.group(1).strip()
 
 
-def looks_like_project_title(line):
-    """
-    Heuristic to identify a project title.
+# ============================================================
+# METADATA
+# ============================================================
 
-    Project titles are generally short and don't look like
-    normal descriptive sentences.
-    """
-
+def is_metadata_line(line):
     if not line:
         return False
 
-    # Too long → probably description
-    if len(line) > 80:
+    return bool(
+        METADATA_LABEL_PATTERN.match(line)
+    )
+
+
+# ============================================================
+# URL LINE
+# ============================================================
+
+def is_url_line(line):
+    if not line:
         return False
 
-    # Description-like sentence
-    if line.endswith((".", "!", "?")):
+    return bool(
+        URL_PATTERN.search(line)
+    )
+
+
+# ============================================================
+# PROJECT TITLE HEURISTIC
+# ============================================================
+
+def looks_like_project_title(line):
+    if not line:
+        return False
+
+    if is_metadata_line(line):
+        return False
+
+    if is_url_line(line):
+        return False
+
+    if is_project_label(line):
+        return False
+
+    # Too long to reasonably be a project title
+    if len(line) > 80:
         return False
 
     words = line.split()
 
-    # Very long text is unlikely to be a title
     if len(words) > 10:
         return False
 
-    # Common description starters
+    # Sentence-like lines are usually descriptions
+    if line.endswith((".", "!", "?")):
+        return False
+
     description_starters = (
         "built ",
         "developed ",
@@ -92,6 +175,10 @@ def looks_like_project_title(line):
         "using ",
         "used ",
         "responsible ",
+        "managed ",
+        "integrated ",
+        "deployed ",
+        "added ",
         "implemented ",
     )
 
@@ -102,35 +189,16 @@ def looks_like_project_title(line):
 
 
 # ============================================================
-# Main splitter
+# SPLIT PROJECT BLOCKS
 # ============================================================
 
 def split_project_blocks(section):
-    """
-    Split a PROJECTS section into individual project blocks.
-
-    Supports:
-
-        list[str]
-
-    and:
-
-        list[list[str]]
-
-    Parameters
-    ----------
-    section : list[str] | list[list[str]] | str
-
-    Returns
-    -------
-    list[list[str]]
-    """
 
     if not section:
         return []
 
     # --------------------------------------------------------
-    # Convert input into a flat list of lines
+    # Convert input to lines
     # --------------------------------------------------------
 
     if isinstance(section, str):
@@ -139,26 +207,15 @@ def split_project_blocks(section):
 
     elif isinstance(section, list):
 
-        # Handle nested list:
-        #
-        # [
-        #     [
-        #         "Project 1",
-        #         "...",
-        #         "Project 2"
-        #     ]
-        # ]
-        #
-        if all(isinstance(item, list) for item in section):
+        raw_lines = []
 
-            raw_lines = []
+        for item in section:
 
-            for group in section:
-                raw_lines.extend(group)
+            if isinstance(item, list):
+                raw_lines.extend(item)
 
-        else:
-
-            raw_lines = section
+            elif isinstance(item, str):
+                raw_lines.append(item)
 
     else:
         return []
@@ -183,7 +240,7 @@ def split_project_blocks(section):
         return []
 
     # --------------------------------------------------------
-    # Split projects
+    # Build blocks
     # --------------------------------------------------------
 
     blocks = []
@@ -191,12 +248,13 @@ def split_project_blocks(section):
 
     for line in lines:
 
-        # ----------------------------------------------------
-        # Explicit Project: label
-        # ----------------------------------------------------
+        # ====================================================
+        # EXPLICIT PROJECT LABEL
+        # ====================================================
 
         if is_project_label(line):
 
+            # Save previous project only if it has content
             if current_block:
                 blocks.append(current_block)
 
@@ -209,30 +267,60 @@ def split_project_blocks(section):
 
             continue
 
-        # ----------------------------------------------------
-        # Detect a new project title
-        # ----------------------------------------------------
+        # ====================================================
+        # METADATA
+        #
+        # IMPORTANT:
+        # Metadata belongs to the current project.
+        # It must NEVER start a new project.
+        # ====================================================
+
+        if (
+            is_metadata_line(line)
+            or is_technology_line(line)
+            or is_url_line(line)
+        ):
+
+            current_block.append(line)
+            continue
+
+        # ====================================================
+        # POSSIBLE NEW PROJECT TITLE
+        # ====================================================
 
         if (
             current_block
-            and looks_like_project_title(line)
             and len(current_block) >= 2
+            and looks_like_project_title(line)
         ):
+
             blocks.append(current_block)
+
             current_block = [line]
+
             continue
 
-        # ----------------------------------------------------
-        # Normal content
-        # ----------------------------------------------------
+        # ====================================================
+        # NORMAL DESCRIPTION LINE
+        # ====================================================
 
         current_block.append(line)
 
     # --------------------------------------------------------
-    # Add final block
+    # Final block
     # --------------------------------------------------------
 
     if current_block:
         blocks.append(current_block)
+
+    # --------------------------------------------------------
+    # Remove empty blocks
+    # --------------------------------------------------------
+
+    blocks = [
+        block
+        for block in blocks
+        if block
+    ]
 
     return blocks

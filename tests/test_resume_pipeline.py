@@ -4,6 +4,9 @@ from document_processing.common.cleaner import clean_text
 from document_processing.resume.resume_normalizer import normalize_text
 from document_processing.common.handling_layout import fix_layout
 from document_processing.resume.entity_extracter.experience.company_extractor import extract_companies
+from document_processing.resume.entity_extracter.experience.duration_calculator import extract_duration
+from document_processing.resume.entity_extracter.experience.experince_block_splitter import split_experience_blocks
+from document_processing.resume.entity_extracter.experience.location_extractor import extract_location
 from document_processing.resume.entity_extracter.experience.title_extractor import extract_titles
 from document_processing.resume.entity_extracter.education.field_of_study_extractor import extract_field_of_study
 from document_processing.resume.entity_extracter.certifications.certification_pipeline import certification_pipeline
@@ -12,7 +15,7 @@ from document_processing.resume.entity_extracter.skill.master_skill_validator im
 
 file="data/resume/pdf/spzqwjxjttgn.pdf"
 def test_resume_pipeline():
-    file="data/resume/pdf/spzqwjxjttgn.pdf"
+    file="data/resumes/RES_2E715359D71F.pdf"
     
     raw_text=read_pdf(file)
     
@@ -101,6 +104,34 @@ def test_city_state_is_not_treated_as_title():
     titles = extract_titles(experience_block)
 
     assert titles == ["Backend Trainee"]
+
+
+def test_inline_company_title_and_full_month_dates_split_experiences():
+    lines = [
+        "Zecser Business LLP, Kochi | Data Science Engineer Intern July 2026 \u2013 present",
+        "Working on data science and Python-based projects as part of an internship.",
+        "Sorice Solutions Private Limited, Palarivattom | Java Developer Trainee July 2022 \uFFFD July 2023",
+    ]
+
+    blocks = split_experience_blocks(lines)
+
+    assert len(blocks) == 2
+    assert [extract_titles(block)[0] for block in blocks] == [
+        "Data Science Engineer Intern",
+        "Java Developer Trainee",
+    ]
+    assert [extract_companies(block)[0] for block in blocks] == [
+        "Zecser Business LLP",
+        "Sorice Solutions Private Limited",
+    ]
+    assert [extract_location(block) for block in blocks] == [
+        "Kochi",
+        "Palarivattom",
+    ]
+    assert [extract_duration(block) for block in blocks] == [
+        {"start_date": "July 2026", "end_date": "present"},
+        {"start_date": "July 2022", "end_date": "July 2023"},
+    ]
 
 
 def test_description_sentence_is_not_treated_as_title_in_date_parser():
@@ -207,6 +238,44 @@ def test_certificate_heading_is_detected_as_section():
     assert sections["certifications"]
 
 
+def test_professional_certification_entry_is_not_treated_as_a_heading():
+    from document_processing.resume.resume_normalizer import normalize_text
+    from document_processing.resume.section_detector import detect_sections
+
+    text = (
+        "Certificate\n"
+        "Professional Certification\n"
+        "Completed\n"
+        "Industry Skills Program\n"
+        "Completed\n"
+        "Advanced Workplace Training\n"
+        "Completed"
+    )
+
+    sections = detect_sections(normalize_text(text))
+    certifications = certification_pipeline(sections["certifications"])
+
+    assert [
+        certification["certification_name"]
+        for certification in certifications
+    ] == [
+        "Professional Certification",
+        "Industry Skills Program",
+        "Advanced Workplace Training",
+    ]
+
+    standalone_heading = detect_sections(
+        normalize_text(
+            "Professional Certification\n"
+            "AWS Certified Solutions Architect"
+        )
+    )
+
+    assert standalone_heading["certifications"] == [
+        ["AWS Certified Solutions Architect"]
+    ]
+
+
 def test_inline_certificate_line_with_completed_markers_is_split():
     certificate_lines = [
         "Certificate Python / Domain Certification Completed Professional Development Program Completed Workplace Communication Completed"
@@ -246,15 +315,15 @@ def test_location_is_excluded_from_description():
 
 
 def test_ktu_university_is_extracted():
-    from document_processing.resume.entity_extracter.education.institution_extractor import extract_institution
-    
+    from document_processing.resume.entity_extracter.education.institution_extractor import extract_university
+
     education_block = [
         "Bachelor of Technology in Computer Science",
         "KTU",
         "2024"
     ]
-    
-    institution = extract_institution(education_block)
-    
-    assert institution == "KTU"
+
+    university = extract_university(education_block)
+
+    assert university == "KTU"
     

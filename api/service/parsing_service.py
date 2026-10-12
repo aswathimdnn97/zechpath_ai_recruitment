@@ -37,6 +37,15 @@ CANDIDATE_STORAGE_DIR = (
     / "candidate_profile"
 )
 
+# testing pymupdf
+# CANDIDATE_STORAGE_DIR = (
+#     BASE_DIR
+#     / "data"
+#     / "performance"
+#     / "pymupdf_test"
+#     / "candidate_profile"
+# )
+
 
 # ============================================================
 # PARSE RESUME BY ID
@@ -322,7 +331,7 @@ def parse_resume_by_id(
 
     try:
         with candidate_file.open(
-            "w",
+            "x",
             encoding="utf-8",
         ) as file:
             json.dump(

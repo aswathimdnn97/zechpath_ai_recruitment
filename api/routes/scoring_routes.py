@@ -8,6 +8,7 @@ from api.service.job_service import (
 )
 
 from api.service.recruitment_job_service import (
+    resolve_recruitment_job_id,
     validate_recruitment_job,
 )
 
@@ -66,7 +67,7 @@ def score_candidate(
     # ========================================================
 
     jd_id = request.jd_id.strip()
-    job_id = request.job_id.strip()
+    job_id = (request.job_id or "").strip()
 
     # ========================================================
     # 2. VALIDATE JD ID
@@ -82,12 +83,6 @@ def score_candidate(
     # 3. VALIDATE RECRUITMENT JOB ID
     # ========================================================
 
-    if not job_id:
-        raise ScoringError(
-            message="job_id is required.",
-            status_code=422,
-        )
-
     # ========================================================
     # 4. VALIDATE RECRUITMENT JOB
     #
@@ -99,6 +94,11 @@ def score_candidate(
     # ========================================================
 
     try:
+
+        job_id = resolve_recruitment_job_id(
+            job_id=job_id,
+            jd_id=jd_id,
+        )
 
         validate_recruitment_job(
             job_id=job_id,
@@ -213,7 +213,7 @@ def score_candidate(
 def get_candidate_score(
     candidate_id: str,
     jd_id: str,
-    job_id: str,
+    job_id: str = "",
 ):
     """
     Return the saved scoring result for:
@@ -243,19 +243,18 @@ def get_candidate_score(
     # 2. VALIDATE RECRUITMENT JOB ID
     # ========================================================
 
-    job_id = job_id.strip()
-
-    if not job_id:
-        raise ScoringError(
-            message="job_id is required.",
-            status_code=422,
-        )
+    job_id = (job_id or "").strip()
 
     # ========================================================
     # 3. VALIDATE RECRUITMENT JOB
     # ========================================================
 
     try:
+
+        job_id = resolve_recruitment_job_id(
+            job_id=job_id,
+            jd_id=jd_id,
+        )
 
         validate_recruitment_job(
             job_id=job_id,

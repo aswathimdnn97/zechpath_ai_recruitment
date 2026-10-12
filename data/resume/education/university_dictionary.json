@@ -23,6 +23,23 @@
         "MG University",
         "MGU"
       ]
+    },
+    {
+      "canonical_name": "Anna University",
+      "aliases": [
+        "Anna University",
+        "AU"
+      ]
+    },
+    {
+      "canonical_name": "APJ Abdul Kalam Technological University",
+      "aliases": [
+        "APJ Abdul Kalam Technological University",
+        "APJ Abdul Kalam Technological University (KTU)",
+        "KTU",
+        "K.T.U.",
+        "APJAKTU"
+      ]
     }
   ]
 }

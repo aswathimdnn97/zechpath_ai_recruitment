@@ -2,46 +2,49 @@
 stack_resolver.py
 
 Responsibilities
------------------
-1. Keep the original detected skill.
-2. Expand known technology stacks.
-3. Validate expanded skills against the master skill dictionary.
-4. Preserve master skill metadata.
-5. Preserve source evidence.
-6. Prevent duplicate skills.
-7. Support case-insensitive stack matching.
+----------------
+1. Expand validated technology stacks.
+2. Add only skills that exist in the master dictionary.
+3. Preserve source/evidence metadata from the parent stack.
+4. Prevent duplicate skills.
+5. Never perform spelling correction.
+6. Never perform synonym resolution.
+7. Never perform fuzzy matching.
 
 Pipeline position
 -----------------
-master_skill_validator.py
+Spelling Resolver
         ↓
-stack_resolver.py
+Synonym Resolver
         ↓
-final candidate skills
+Master Skill Validator
+        ↓
+Stack Resolver
 """
+
+from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any
 
 
 # ============================================================
-# PROJECT ROOT
+# CONFIGURATION
 # ============================================================
 
-PROJECT_ROOT = Path(__file__).resolve().parents[4]
+BASE_DIR = Path(__file__).resolve().parents[4]
 
-
-STACK_FILE = (
-    PROJECT_ROOT
+STACK_DICTIONARY_PATH = (
+    BASE_DIR
     / "data"
     / "resume"
     / "skills"
     / "skill_stacks.json"
 )
 
-
-MASTER_SKILL_FILE = (
-    PROJECT_ROOT
+MASTER_SKILL_DICTIONARY_PATH = (
+    BASE_DIR
     / "data"
     / "resume"
     / "skills"
@@ -50,544 +53,634 @@ MASTER_SKILL_FILE = (
 
 
 # ============================================================
-# LOAD SKILL STACKS
+# JSON LOADER
 # ============================================================
 
-def load_skill_stacks():
-    """
-    Load technology stack definitions.
+def _load_json(path: Path) -> Any:
 
-    Example:
+    if not path.exists():
+        raise FileNotFoundError(
+            f"Required skill file not found: {path}"
+        )
 
-        {
-            "MERN": [
-                "MongoDB",
-                "Express",
-                "React",
-                "Node.js"
-            ]
-        }
+    with path.open("r", encoding="utf-8") as file:
+        return json.load(file)
 
-    Returns
-    -------
-    dict
-    """
 
-    if not STACK_FILE.exists():
-        return {}
+STACK_DICTIONARY = _load_json(
+    STACK_DICTIONARY_PATH
+)
 
-    with open(
-        STACK_FILE,
-        "r",
-        encoding="utf-8"
-    ) as file:
-
-        data = json.load(file)
-
-    if not isinstance(data, dict):
-        return {}
-
-    return data
+MASTER_SKILL_DICTIONARY = _load_json(
+    MASTER_SKILL_DICTIONARY_PATH
+)
 
 
 # ============================================================
-# LOAD MASTER SKILLS
+# NORMALIZATION
 # ============================================================
 
-def load_master_skills():
-    """
-    Load active skills from the master skill dictionary.
-
-    Returns
-    -------
-    list[dict]
-    """
-
-    if not MASTER_SKILL_FILE.exists():
-        return []
-
-    with open(
-        MASTER_SKILL_FILE,
-        "r",
-        encoding="utf-8"
-    ) as file:
-
-        data = json.load(file)
-
-    if not isinstance(data, list):
-        return []
-
-    return [
-        skill
-        for skill in data
-        if isinstance(skill, dict)
-        and skill.get("status") == "active"
-        and skill.get("skill_id")
-        and skill.get("name")
-    ]
-
-
-# ============================================================
-# NORMALIZE TEXT
-# ============================================================
-
-def _normalize(value):
-    """
-    Normalize a skill name for comparison.
-    """
+def _normalize(value: Any) -> str:
 
     if value is None:
         return ""
 
-    return " ".join(
-        str(value)
-        .strip()
-        .lower()
-        .split()
-    )
+    return str(value).strip().lower()
 
 
 # ============================================================
-# BUILD STACK MAP
+# MASTER SKILL LOADING
 # ============================================================
 
-def _build_stack_map(stack_dictionary):
+def _extract_master_skills(
+    data: Any,
+) -> list[dict[str, Any]]:
+
+    if isinstance(data, list):
+        raw_skills = data
+
+    elif isinstance(data, dict):
+        raw_skills = data.get("skills", [])
+
+    else:
+        raw_skills = []
+
+    result = []
+
+    for item in raw_skills:
+
+        if isinstance(item, str):
+
+            name = item.strip()
+
+            if name:
+                result.append(
+                    {
+                        "name": name,
+                        "skill_id": None,
+                    }
+                )
+
+            continue
+
+        if not isinstance(item, dict):
+            continue
+
+        name = (
+            item.get("name")
+            or item.get("skill")
+            or item.get("canonical_name")
+        )
+
+        if not name:
+            continue
+
+        result.append(
+            {
+                **item,
+                "name": str(name).strip(),
+            }
+        )
+
+    return result
+
+
+MASTER_SKILLS = _extract_master_skills(
+    MASTER_SKILL_DICTIONARY
+)
+
+
+MASTER_BY_NAME: dict[str, dict[str, Any]] = {
+    _normalize(skill["name"]): skill
+    for skill in MASTER_SKILLS
+}
+
+
+# ============================================================
+# STACK LOADING
+# ============================================================
+
+def _extract_stack_mapping(
+    data: Any,
+) -> dict[str, list[str]]:
     """
-    Build case-insensitive stack lookup.
+    Supports common stack dictionary formats.
 
     Example:
 
-        {
-            "mern": [
-                "MongoDB",
-                "Express",
-                "React",
-                "Node.js"
-            ]
+    {
+        "MERN": [
+            "MongoDB",
+            "Express",
+            "React",
+            "Node.js"
+        ]
+    }
+
+    or:
+
+    {
+        "stacks": {
+            "MERN": [...]
         }
+    }
     """
 
-    stack_map = {}
+    if isinstance(data, dict):
 
-    for stack_name, stack_skills in stack_dictionary.items():
+        if isinstance(data.get("stacks"), dict):
+            data = data["stacks"]
 
-        normalized_stack = _normalize(
-            stack_name
-        )
+        mapping: dict[str, list[str]] = {}
 
-        if not normalized_stack:
-            continue
+        for stack_name, children in data.items():
 
-        if not isinstance(
-            stack_skills,
-            list
-        ):
-            continue
+            if not isinstance(stack_name, str):
+                continue
 
-        stack_map[
-            normalized_stack
-        ] = stack_skills
+            if not isinstance(children, list):
+                continue
 
-    return stack_map
+            normalized_children = [
+                str(child).strip()
+                for child in children
+                if str(child).strip()
+            ]
+
+            mapping[
+                _normalize(stack_name)
+            ] = normalized_children
+
+        return mapping
+
+    return {}
+
+
+STACK_MAP = _extract_stack_mapping(
+    STACK_DICTIONARY
+)
 
 
 # ============================================================
-# BUILD MASTER SKILL LOOKUP
+# SOURCE HELPERS
 # ============================================================
 
-def _build_master_skill_lookup(master_skills):
-    """
-    Build:
+def _source_key(source: Any) -> str:
 
-        normalized skill name
-            ↓
-        master skill object
-    """
+    if isinstance(source, dict):
 
-    lookup = {}
+        return "|".join(
+            [
+                str(source.get("source_section", "")).strip(),
+                str(source.get("source_text", "")).strip(),
+                str(source.get("source_skill", "")).strip(),
+            ]
+        ).lower()
 
-    for skill in master_skills:
+    return str(source).strip().lower()
 
-        name = skill.get("name")
 
-        normalized_name = _normalize(
-            name
-        )
+def _merge_sources(
+    existing: list[Any] | None,
+    incoming: list[Any] | None,
+) -> list[Any]:
 
-        if not normalized_name:
+    merged = []
+    seen = set()
+
+    for source in (existing or []) + (incoming or []):
+
+        key = _source_key(source)
+
+        if not key or key in seen:
             continue
 
-        lookup[
-            normalized_name
-        ] = skill
+        seen.add(key)
+        merged.append(source)
 
-    return lookup
+    return merged
 
 
 # ============================================================
-# BUILD EXPANDED SKILL OBJECT
+# METADATA HELPERS
+# ============================================================
+
+def _copy_parent_metadata(
+    parent: dict[str, Any],
+) -> dict[str, Any]:
+
+    excluded = {
+        "skill",
+        "name",
+        "canonical_name",
+        "skill_id",
+        "matched_by",
+        "match_score",
+    }
+
+    metadata = {}
+
+    for key, value in parent.items():
+
+        if key in excluded:
+            continue
+
+        metadata[key] = value
+
+    return metadata
+
+
+# ============================================================
+# BUILD EXPANDED SKILL
 # ============================================================
 
 def _build_expanded_skill(
-    master_skill,
-    source_skill,
-    source_section,
-    confidence
-):
-    """
-    Build a normal ATS skill object for a skill
-    produced by stack expansion.
-    """
+    parent: dict[str, Any],
+    child_master: dict[str, Any],
+) -> dict[str, Any]:
 
-    return {
+    parent_skill = (
+        parent.get("skill")
+        or parent.get("name")
+        or ""
+    )
 
-        "skill_id":
-            master_skill.get(
-                "skill_id"
-            ),
+    result = _copy_parent_metadata(parent)
 
-        "skill":
-            master_skill.get(
-                "name"
-            ),
+    result["skill"] = child_master["name"]
 
-        "category":
-            master_skill.get(
-                "category",
-                "Unknown"
-            ),
+    if child_master.get("skill_id") is not None:
+        result["skill_id"] = child_master[
+            "skill_id"
+        ]
 
-        "subcategory":
-            master_skill.get(
-                "subcategory",
-                "Unknown"
-            ),
+    result["matched_by"] = "stack"
 
-        "matched_by":
-            "stack",
+    result["source_skill"] = parent_skill
 
-        "confidence":
-            confidence,
+    result["stack_source"] = parent_skill
 
-        "source_section":
-            source_section,
+    # --------------------------------------------------------
+    # Preserve source section
+    # --------------------------------------------------------
 
-        "source_skill":
-            source_skill
-    }
+    if not result.get("source_section"):
+
+        source_sections = result.get(
+            "source_sections"
+        )
+
+        if isinstance(source_sections, list):
+            if source_sections:
+                result["source_section"] = (
+                    source_sections[0]
+                )
+
+    # --------------------------------------------------------
+    # Preserve source evidence
+    # --------------------------------------------------------
+
+    sources = result.get("sources", [])
+
+    if not sources:
+
+        source_section = result.get(
+            "source_section"
+        )
+
+        source_text = result.get(
+            "source_text"
+        )
+
+        if source_section or source_text:
+
+            sources = [
+                {
+                    "source_section": source_section,
+                    "source_text": source_text,
+                    "source_skill": parent_skill,
+                }
+            ]
+
+    else:
+
+        copied_sources = []
+
+        for source in sources:
+
+            if isinstance(source, dict):
+
+                copied = dict(source)
+
+                # For stack expansion, explicitly record
+                # the parent stack as the source skill.
+                if not copied.get("source_skill"):
+                    copied["source_skill"] = parent_skill
+
+                copied_sources.append(copied)
+
+            else:
+
+                copied_sources.append(
+                    {
+                        "source_section": result.get(
+                            "source_section"
+                        ),
+                        "source_text": result.get(
+                            "source_text"
+                        ),
+                        "source_skill": parent_skill,
+                    }
+                )
+
+        sources = copied_sources
+
+    result["sources"] = sources
+
+    # --------------------------------------------------------
+    # Preserve source sections
+    # --------------------------------------------------------
+
+    sections = result.get(
+        "source_sections",
+        [],
+    )
+
+    if isinstance(sections, str):
+        sections = [sections]
+
+    if not isinstance(sections, list):
+        sections = []
+
+    if result.get("source_section"):
+        sections.append(
+            result["source_section"]
+        )
+
+    result["source_sections"] = list(
+        dict.fromkeys(
+            str(section).strip()
+            for section in sections
+            if str(section).strip()
+        )
+    )
+
+    return result
 
 
 # ============================================================
-# EXPAND SKILL STACKS
+# MERGE DUPLICATES
 # ============================================================
 
-def expand_skill_stacks(validated_skills):
-    """
-    Expand technology stack names into individual
-    master-dictionary skills.
-
-    The original stack is always preserved.
-
-    Example
-    -------
-
-    Input:
-
-        [
-            {
-                "skill_id": "TECH100",
-                "skill": "MERN",
-                "category": "Technical",
-                "subcategory": "Full Stack",
-                "matched_by": "exact",
-                "confidence": 100,
-                "source_section": "projects"
-            }
-        ]
-
-    Output:
-
-        [
-            {
-                "skill_id": "TECH100",
-                "skill": "MERN",
-                ...
-            },
-            {
-                "skill_id": "TECH101",
-                "skill": "MongoDB",
-                "matched_by": "stack",
-                "source_skill": "MERN",
-                ...
-            },
-            ...
-        ]
-
-    Parameters
-    ----------
-    validated_skills : list[dict]
-
-    Returns
-    -------
-    list[dict]
-    """
-
-    if not isinstance(
-        validated_skills,
-        list
-    ):
-        return []
-
-    if not validated_skills:
-        return []
+def _merge_metadata(
+    existing: dict[str, Any],
+    incoming: dict[str, Any],
+) -> None:
 
     # --------------------------------------------------------
-    # Load dictionaries
+    # Sources
     # --------------------------------------------------------
 
-    stack_dictionary = load_skill_stacks()
-
-    master_skills = load_master_skills()
-
-    # --------------------------------------------------------
-    # Build lookups
-    # --------------------------------------------------------
-
-    stack_map = _build_stack_map(
-        stack_dictionary
+    existing["sources"] = _merge_sources(
+        existing.get("sources"),
+        incoming.get("sources"),
     )
 
-    master_lookup = _build_master_skill_lookup(
-        master_skills
+    # --------------------------------------------------------
+    # Source sections
+    # --------------------------------------------------------
+
+    sections = []
+
+    for candidate in (existing, incoming):
+
+        value = candidate.get(
+            "source_sections",
+            [],
+        )
+
+        if isinstance(value, str):
+            value = [value]
+
+        if isinstance(value, list):
+            sections.extend(value)
+
+        section = candidate.get(
+            "source_section"
+        )
+
+        if section:
+            sections.append(section)
+
+    existing["source_sections"] = list(
+        dict.fromkeys(
+            str(section).strip()
+            for section in sections
+            if str(section).strip()
+        )
     )
+
+    # --------------------------------------------------------
+    # Source skills
+    # --------------------------------------------------------
+
+    source_skills = []
+
+    for candidate in (existing, incoming):
+
+        value = candidate.get(
+            "source_skills",
+            [],
+        )
+
+        if isinstance(value, str):
+            value = [value]
+
+        if isinstance(value, list):
+            source_skills.extend(value)
+
+        source_skill = candidate.get(
+            "source_skill"
+        )
+
+        if source_skill:
+            source_skills.append(
+                source_skill
+            )
+
+    existing["source_skills"] = list(
+        dict.fromkeys(
+            str(skill).strip()
+            for skill in source_skills
+            if str(skill).strip()
+        )
+    )
+
+    if existing["source_skills"]:
+        existing["source_skill"] = (
+            existing["source_skills"][0]
+        )
+
+    # --------------------------------------------------------
+    # Preserve source text
+    # --------------------------------------------------------
+
+    if not existing.get("source_text"):
+        existing["source_text"] = incoming.get(
+            "source_text"
+        )
+
+
+# ============================================================
+# RESOLVE STACK FOR ONE SKILL
+# ============================================================
+
+def _expand_skill(
+    candidate: dict[str, Any],
+) -> list[dict[str, Any]]:
+
+    skill_name = (
+        candidate.get("skill")
+        or candidate.get("name")
+        or ""
+    )
+
+    if not skill_name:
+        return []
+
+    children = STACK_MAP.get(
+        _normalize(skill_name)
+    )
+
+    if not children:
+        return []
 
     expanded = []
 
-    # Prevent duplicate master skills
-    seen_skill_ids = set()
+    for child_name in children:
 
-    # Also protect against duplicate names
-    seen_skill_names = set()
+        child_master = MASTER_BY_NAME.get(
+            _normalize(child_name)
+        )
 
-    # ========================================================
-    # PROCESS VALIDATED SKILLS
-    # ========================================================
-
-    for skill_object in validated_skills:
-
-        if not isinstance(
-            skill_object,
-            dict
-        ):
+        # Never emit a stack child that does not exist
+        # in the master dictionary.
+        if child_master is None:
             continue
 
-        skill_name = skill_object.get(
-            "skill"
-        )
-
-        if not skill_name:
-            continue
-
-        skill_name = str(
-            skill_name
-        ).strip()
-
-        if not skill_name:
-            continue
-
-        normalized_skill = _normalize(
-            skill_name
-        )
-
-        # ----------------------------------------------------
-        # Source information
-        # ----------------------------------------------------
-
-        source_section = (
-            skill_object.get(
-                "source_section",
-                "unknown"
+        expanded.append(
+            _build_expanded_skill(
+                candidate,
+                child_master,
             )
         )
-
-        confidence = (
-            skill_object.get(
-                "confidence",
-                0
-            )
-        )
-
-        # ====================================================
-        # 1. KEEP ORIGINAL SKILL
-        # ====================================================
-
-        skill_id = skill_object.get(
-            "skill_id"
-        )
-
-        if skill_id:
-
-            if skill_id not in seen_skill_ids:
-
-                expanded.append(
-                    skill_object
-                )
-
-                seen_skill_ids.add(
-                    skill_id
-                )
-
-                seen_skill_names.add(
-                    normalized_skill
-                )
-
-        else:
-
-            # ------------------------------------------------
-            # Fallback for a skill without ID.
-            # ------------------------------------------------
-
-            if normalized_skill not in seen_skill_names:
-
-                expanded.append(
-                    skill_object
-                )
-
-                seen_skill_names.add(
-                    normalized_skill
-                )
-
-        # ====================================================
-        # 2. CHECK WHETHER IT IS A STACK
-        # ====================================================
-
-        stack_skills = stack_map.get(
-            normalized_skill,
-            []
-        )
-
-        if not stack_skills:
-            continue
-
-        # ====================================================
-        # 3. EXPAND STACK
-        # ====================================================
-
-        for stack_skill in stack_skills:
-
-            if not stack_skill:
-                continue
-
-            stack_skill = str(
-                stack_skill
-            ).strip()
-
-            if not stack_skill:
-                continue
-
-            normalized_stack_skill = _normalize(
-                stack_skill
-            )
-
-            # ------------------------------------------------
-            # Prevent duplicate
-            # ------------------------------------------------
-
-            if (
-                normalized_stack_skill
-                in seen_skill_names
-            ):
-                continue
-
-            # ------------------------------------------------
-            # Find expanded skill in master dictionary
-            # ------------------------------------------------
-
-            master_skill = master_lookup.get(
-                normalized_stack_skill
-            )
-
-            # ------------------------------------------------
-            # IMPORTANT:
-            #
-            # Do not add unknown stack skills.
-            #
-            # The master dictionary remains the
-            # single source of truth.
-            # ------------------------------------------------
-
-            if not master_skill:
-                continue
-
-            expanded_skill = _build_expanded_skill(
-                master_skill=master_skill,
-                source_skill=skill_name,
-                source_section=source_section,
-                confidence=confidence
-            )
-
-            expanded.append(
-                expanded_skill
-            )
-
-            # ------------------------------------------------
-            # Track duplicates
-            # ------------------------------------------------
-
-            expanded_skill_id = (
-                master_skill.get(
-                    "skill_id"
-                )
-            )
-
-            if expanded_skill_id:
-                seen_skill_ids.add(
-                    expanded_skill_id
-                )
-
-            seen_skill_names.add(
-                normalized_stack_skill
-            )
 
     return expanded
 
 
 # ============================================================
-# TEST
+# RESOLVE ALL STACKS
 # ============================================================
 
-if __name__ == "__main__":
+def resolve_stacks(
+    candidates: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """
+    Expand validated technology stacks.
 
-    validated = [
+    The original stack remains in the result.
+    Expanded child skills are added when valid.
+    """
 
-        {
-            "skill_id": "TECH100",
-            "skill": "MERN",
-            "category": "Technical",
-            "subcategory": "Full Stack",
-            "matched_by": "exact",
-            "confidence": 100,
-            "source_section": "projects"
-        },
+    if not candidates:
+        return []
 
-        {
-            "skill_id": "TECH001",
-            "skill": "Python",
-            "category": "Technical",
-            "subcategory": "Programming Language",
-            "matched_by": "exact",
-            "confidence": 100,
-            "source_section": "experience"
-        }
-    ]
+    result: dict[str, dict[str, Any]] = {}
 
-    result = expand_skill_stacks(
-        validated
-    )
+    # --------------------------------------------------------
+    # Keep all original validated skills.
+    # --------------------------------------------------------
 
-    print(
-        "\n========== EXPANDED SKILLS ==========\n"
-    )
+    for candidate in candidates:
 
-    for skill in result:
-        print(skill)
+        if not isinstance(candidate, dict):
+            continue
+
+        skill_name = (
+            candidate.get("skill")
+            or candidate.get("name")
+            or ""
+        )
+
+        if not skill_name:
+            continue
+
+        key = _normalize(skill_name)
+
+        if key not in result:
+            result[key] = dict(candidate)
+        else:
+            _merge_metadata(
+                result[key],
+                candidate,
+            )
+
+    # --------------------------------------------------------
+    # Expand stacks.
+    # --------------------------------------------------------
+
+    for candidate in candidates:
+
+        if not isinstance(candidate, dict):
+            continue
+
+        expanded_skills = _expand_skill(
+            candidate
+        )
+
+        for expanded in expanded_skills:
+
+            skill_name = expanded.get(
+                "skill"
+            )
+
+            if not skill_name:
+                continue
+
+            key = _normalize(skill_name)
+
+            if key not in result:
+                result[key] = expanded
+                continue
+
+            # If skill already exists directly,
+            # merge stack evidence into it.
+            _merge_metadata(
+                result[key],
+                expanded,
+            )
+
+            # Preserve that the skill was also
+            # discovered through a stack.
+            matched_by = result[key].get(
+                "matched_by"
+            )
+
+            if matched_by == "exact":
+                result[key]["matched_by"] = (
+                    "exact+stack"
+                )
+
+            elif matched_by == "fuzzy":
+                result[key]["matched_by"] = (
+                    "fuzzy+stack"
+                )
+
+    return list(result.values())
+
+
+# ============================================================
+# BACKWARD-COMPATIBLE ALIAS
+# ============================================================
+
+expand_skill_stacks = resolve_stacks

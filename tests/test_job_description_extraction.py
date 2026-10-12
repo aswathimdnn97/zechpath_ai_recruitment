@@ -39,7 +39,7 @@ def test_skill_cleaner_splits_unpunctuated_technology_pairs():
     assert "Python" in skills
     assert "FastAPI" in skills
     assert "Django" in skills
-    assert "REST APIs" in skills
+    assert "REST API" in skills
     assert "PostgreSQL" in skills
     assert "MySQL" in skills
     assert "Git" in skills

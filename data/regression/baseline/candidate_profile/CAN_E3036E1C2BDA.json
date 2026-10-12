@@ -1,0 +1,658 @@
+{
+    "candidate_id": "CAN_E3036E1C2BDA",
+    "masked_profile": {
+        "candidate_id": "CAN_E3036E1C2BDA",
+        "skills": [
+            {
+                "skill_id": "HR003",
+                "skill": "HR Operations",
+                "category": "HR",
+                "subcategory": "HR Operations",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring. l",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR005",
+                "skill": "Recruitment",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring. l",
+                "sources": [
+                    "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring. l",
+                    "Apr 2021 - Present Senior HR Executive People Sphere Bengaluru, Karnataka Managed end to end recruitment, interview coordination and onboarding. Maintained HR metrics and supported employee relations activities. Jun 2019 - Mar 2021 HR Executive Talent Works Bengaluru, Karnataka Handled HRMS updates, employee records and recruitment coordination. Jul 2018 - May 2019 HR Assistant Core Staff Bengaluru, Karnataka Supported interview scheduling and HR documentation. l",
+                    "Recruitment"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR029",
+                "skill": "HRMS",
+                "category": "HR",
+                "subcategory": "HR Technology",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring. l",
+                "sources": [
+                    "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring. l",
+                    "Apr 2021 - Present Senior HR Executive People Sphere Bengaluru, Karnataka Managed end to end recruitment, interview coordination and onboarding. Maintained HR metrics and supported employee relations activities. Jun 2019 - Mar 2021 HR Executive Talent Works Bengaluru, Karnataka Handled HRMS updates, employee records and recruitment coordination. Jul 2018 - May 2019 HR Assistant Core Staff Bengaluru, Karnataka Supported interview scheduling and HR documentation. l",
+                    "HRMS"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR042",
+                "skill": "Employee Relations",
+                "category": "HR",
+                "subcategory": "Employee Relations",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring. l",
+                "sources": [
+                    "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring. l",
+                    "Apr 2021 - Present Senior HR Executive People Sphere Bengaluru, Karnataka Managed end to end recruitment, interview coordination and onboarding. Maintained HR metrics and supported employee relations activities. Jun 2019 - Mar 2021 HR Executive Talent Works Bengaluru, Karnataka Handled HRMS updates, employee records and recruitment coordination. Jul 2018 - May 2019 HR Assistant Core Staff Bengaluru, Karnataka Supported interview scheduling and HR documentation. l",
+                    "Employee Relations"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR001",
+                "skill": "Human Resources",
+                "category": "HR",
+                "subcategory": "HR Fundamentals",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring. l",
+                "sources": [
+                    "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring. l",
+                    "Apr 2021 - Present Senior HR Executive People Sphere Bengaluru, Karnataka Managed end to end recruitment, interview coordination and onboarding. Maintained HR metrics and supported employee relations activities. Jun 2019 - Mar 2021 HR Executive Talent Works Bengaluru, Karnataka Handled HRMS updates, employee records and recruitment coordination. Jul 2018 - May 2019 HR Assistant Core Staff Bengaluru, Karnataka Supported interview scheduling and HR documentation. l"
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR010",
+                "skill": "Interview Coordination",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_sections": [
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "Apr 2021 - Present Senior HR Executive People Sphere Bengaluru, Karnataka Managed end to end recruitment, interview coordination and onboarding. Maintained HR metrics and supported employee relations activities. Jun 2019 - Mar 2021 HR Executive Talent Works Bengaluru, Karnataka Handled HRMS updates, employee records and recruitment coordination. Jul 2018 - May 2019 HR Assistant Core Staff Bengaluru, Karnataka Supported interview scheduling and HR documentation. l",
+                "sources": [
+                    "Apr 2021 - Present Senior HR Executive People Sphere Bengaluru, Karnataka Managed end to end recruitment, interview coordination and onboarding. Maintained HR metrics and supported employee relations activities. Jun 2019 - Mar 2021 HR Executive Talent Works Bengaluru, Karnataka Handled HRMS updates, employee records and recruitment coordination. Jul 2018 - May 2019 HR Assistant Core Staff Bengaluru, Karnataka Supported interview scheduling and HR documentation. l",
+                    "Interview Coordination"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR011",
+                "skill": "Interview Scheduling",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "Apr 2021 - Present Senior HR Executive People Sphere Bengaluru, Karnataka Managed end to end recruitment, interview coordination and onboarding. Maintained HR metrics and supported employee relations activities. Jun 2019 - Mar 2021 HR Executive Talent Works Bengaluru, Karnataka Handled HRMS updates, employee records and recruitment coordination. Jul 2018 - May 2019 HR Assistant Core Staff Bengaluru, Karnataka Supported interview scheduling and HR documentation. l",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR023",
+                "skill": "HR Documentation",
+                "category": "HR",
+                "subcategory": "HR Administration",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "Apr 2021 - Present Senior HR Executive People Sphere Bengaluru, Karnataka Managed end to end recruitment, interview coordination and onboarding. Maintained HR metrics and supported employee relations activities. Jun 2019 - Mar 2021 HR Executive Talent Works Bengaluru, Karnataka Handled HRMS updates, employee records and recruitment coordination. Jul 2018 - May 2019 HR Assistant Core Staff Bengaluru, Karnataka Supported interview scheduling and HR documentation. l",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR064",
+                "skill": "HR Metrics",
+                "category": "HR",
+                "subcategory": "HR Analytics",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "Apr 2021 - Present Senior HR Executive People Sphere Bengaluru, Karnataka Managed end to end recruitment, interview coordination and onboarding. Maintained HR metrics and supported employee relations activities. Jun 2019 - Mar 2021 HR Executive Talent Works Bengaluru, Karnataka Handled HRMS updates, employee records and recruitment coordination. Jul 2018 - May 2019 HR Assistant Core Staff Bengaluru, Karnataka Supported interview scheduling and HR documentation. l",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR019",
+                "skill": "Employee Onboarding",
+                "category": "HR",
+                "subcategory": "Employee Lifecycle",
+                "matched_by": "fuzzy",
+                "confidence": 90,
+                "source_section": "experience",
+                "source_text": "Apr 2021 - Present Senior HR Executive People Sphere Bengaluru, Karnataka Managed end to end recruitment, interview coordination and onboarding. Maintained HR metrics and supported employee relations activities. Jun 2019 - Mar 2021 HR Executive Talent Works Bengaluru, Karnataka Handled HRMS updates, employee records and recruitment coordination. Jul 2018 - May 2019 HR Assistant Core Staff Bengaluru, Karnataka Supported interview scheduling and HR documentation. l",
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR007",
+                "skill": "Candidate Screening",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "skills",
+                "source_text": "Candidate Screening",
+                "extraction_method": "skills_section"
+            },
+            {
+                "skill_id": "HR035",
+                "skill": "Microsoft Excel",
+                "category": "HR",
+                "subcategory": "HR Tools",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "skills",
+                "source_text": "Excel",
+                "extraction_method": "skills_section"
+            },
+            {
+                "skill_id": "TECH008",
+                "skill": "Angular",
+                "category": "Technical",
+                "subcategory": "Frontend Framework",
+                "matched_by": "fuzzy",
+                "confidence": 90,
+                "source_section": "skills",
+                "source_text": "l",
+                "extraction_method": "skills_section"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Master of Business Administration",
+                "field_of_study": "Human Resources",
+                "institution": null,
+                "university": "Bangalore University",
+                "board": null,
+                "graduation_year": "2018"
+            }
+        ],
+        "experience": [
+            {
+                "title": null,
+                "company": {
+                    "company_id": null,
+                    "company": "People Sphere Bengaluru",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Apr 2021",
+                    "end_date": "Present"
+                },
+                "total_experience": {
+                    "total_months": 66,
+                    "total_years": 5.5
+                },
+                "location": "People Sphere Bengaluru, Karnataka",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP004",
+                    "department": "Human Resources",
+                    "matched_by": "keyword",
+                    "confidence": 75
+                },
+                "description": [
+                    "People Sphere Bengaluru, Karnataka",
+                    "Managed end to end recruitment, interview coordination and onboarding.",
+                    "Maintained HR metrics and supported employee relations activities."
+                ]
+            },
+            {
+                "title": null,
+                "company": {
+                    "company_id": null,
+                    "company": "Talent Works Bengaluru",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jun 2019",
+                    "end_date": "Mar 2021"
+                },
+                "total_experience": {
+                    "total_months": 22,
+                    "total_years": 1.8
+                },
+                "location": "Talent Works Bengaluru, Karnataka",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP004",
+                    "department": "Human Resources",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "description": [
+                    "Talent Works Bengaluru, Karnataka",
+                    "Handled HRMS updates, employee records and recruitment coordination."
+                ]
+            },
+            {
+                "title": {
+                    "title_id": null,
+                    "title": "l",
+                    "category": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "company": null,
+                "duration": {
+                    "start_date": "Jul 2018",
+                    "end_date": "May 2019"
+                },
+                "total_experience": {
+                    "total_months": 11,
+                    "total_years": 0.9
+                },
+                "location": "Core Staff Bengaluru, Karnataka",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP003",
+                    "department": "IT Support",
+                    "matched_by": "keyword",
+                    "confidence": 25
+                },
+                "description": [
+                    "Core Staff Bengaluru, Karnataka",
+                    "Supported interview scheduling and HR documentation.",
+                    "l"
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-09-24T19:18:24.059040+00:00"
+        }
+    },
+    "bias_report": {
+        "bias_detected": false,
+        "risk_level": "none",
+        "indicator_count": 0,
+        "indicators": [],
+        "status": "clear"
+    },
+    "original_profile": {
+        "candidate_id": "CAN_E3036E1C2BDA",
+        "personal_information": {
+            "name": "PRIYA MENON",
+            "email": "priya.m@example.com",
+            "phone": null,
+            "location": "Phone: 91 88XXXXXX63 Location: Bengaluru, Karnataka",
+            "linkedin": null,
+            "github": null,
+            "portfolio": null
+        },
+        "skills": [
+            {
+                "skill_id": "HR003",
+                "skill": "HR Operations",
+                "category": "HR",
+                "subcategory": "HR Operations",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring. l",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR005",
+                "skill": "Recruitment",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring. l",
+                "sources": [
+                    "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring. l",
+                    "Apr 2021 - Present Senior HR Executive People Sphere Bengaluru, Karnataka Managed end to end recruitment, interview coordination and onboarding. Maintained HR metrics and supported employee relations activities. Jun 2019 - Mar 2021 HR Executive Talent Works Bengaluru, Karnataka Handled HRMS updates, employee records and recruitment coordination. Jul 2018 - May 2019 HR Assistant Core Staff Bengaluru, Karnataka Supported interview scheduling and HR documentation. l",
+                    "Recruitment"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR029",
+                "skill": "HRMS",
+                "category": "HR",
+                "subcategory": "HR Technology",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring. l",
+                "sources": [
+                    "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring. l",
+                    "Apr 2021 - Present Senior HR Executive People Sphere Bengaluru, Karnataka Managed end to end recruitment, interview coordination and onboarding. Maintained HR metrics and supported employee relations activities. Jun 2019 - Mar 2021 HR Executive Talent Works Bengaluru, Karnataka Handled HRMS updates, employee records and recruitment coordination. Jul 2018 - May 2019 HR Assistant Core Staff Bengaluru, Karnataka Supported interview scheduling and HR documentation. l",
+                    "HRMS"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR042",
+                "skill": "Employee Relations",
+                "category": "HR",
+                "subcategory": "Employee Relations",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring. l",
+                "sources": [
+                    "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring. l",
+                    "Apr 2021 - Present Senior HR Executive People Sphere Bengaluru, Karnataka Managed end to end recruitment, interview coordination and onboarding. Maintained HR metrics and supported employee relations activities. Jun 2019 - Mar 2021 HR Executive Talent Works Bengaluru, Karnataka Handled HRMS updates, employee records and recruitment coordination. Jul 2018 - May 2019 HR Assistant Core Staff Bengaluru, Karnataka Supported interview scheduling and HR documentation. l",
+                    "Employee Relations"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR001",
+                "skill": "Human Resources",
+                "category": "HR",
+                "subcategory": "HR Fundamentals",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring. l",
+                "sources": [
+                    "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring. l",
+                    "Apr 2021 - Present Senior HR Executive People Sphere Bengaluru, Karnataka Managed end to end recruitment, interview coordination and onboarding. Maintained HR metrics and supported employee relations activities. Jun 2019 - Mar 2021 HR Executive Talent Works Bengaluru, Karnataka Handled HRMS updates, employee records and recruitment coordination. Jul 2018 - May 2019 HR Assistant Core Staff Bengaluru, Karnataka Supported interview scheduling and HR documentation. l"
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR010",
+                "skill": "Interview Coordination",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_sections": [
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "Apr 2021 - Present Senior HR Executive People Sphere Bengaluru, Karnataka Managed end to end recruitment, interview coordination and onboarding. Maintained HR metrics and supported employee relations activities. Jun 2019 - Mar 2021 HR Executive Talent Works Bengaluru, Karnataka Handled HRMS updates, employee records and recruitment coordination. Jul 2018 - May 2019 HR Assistant Core Staff Bengaluru, Karnataka Supported interview scheduling and HR documentation. l",
+                "sources": [
+                    "Apr 2021 - Present Senior HR Executive People Sphere Bengaluru, Karnataka Managed end to end recruitment, interview coordination and onboarding. Maintained HR metrics and supported employee relations activities. Jun 2019 - Mar 2021 HR Executive Talent Works Bengaluru, Karnataka Handled HRMS updates, employee records and recruitment coordination. Jul 2018 - May 2019 HR Assistant Core Staff Bengaluru, Karnataka Supported interview scheduling and HR documentation. l",
+                    "Interview Coordination"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR011",
+                "skill": "Interview Scheduling",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "Apr 2021 - Present Senior HR Executive People Sphere Bengaluru, Karnataka Managed end to end recruitment, interview coordination and onboarding. Maintained HR metrics and supported employee relations activities. Jun 2019 - Mar 2021 HR Executive Talent Works Bengaluru, Karnataka Handled HRMS updates, employee records and recruitment coordination. Jul 2018 - May 2019 HR Assistant Core Staff Bengaluru, Karnataka Supported interview scheduling and HR documentation. l",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR023",
+                "skill": "HR Documentation",
+                "category": "HR",
+                "subcategory": "HR Administration",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "Apr 2021 - Present Senior HR Executive People Sphere Bengaluru, Karnataka Managed end to end recruitment, interview coordination and onboarding. Maintained HR metrics and supported employee relations activities. Jun 2019 - Mar 2021 HR Executive Talent Works Bengaluru, Karnataka Handled HRMS updates, employee records and recruitment coordination. Jul 2018 - May 2019 HR Assistant Core Staff Bengaluru, Karnataka Supported interview scheduling and HR documentation. l",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR064",
+                "skill": "HR Metrics",
+                "category": "HR",
+                "subcategory": "HR Analytics",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "Apr 2021 - Present Senior HR Executive People Sphere Bengaluru, Karnataka Managed end to end recruitment, interview coordination and onboarding. Maintained HR metrics and supported employee relations activities. Jun 2019 - Mar 2021 HR Executive Talent Works Bengaluru, Karnataka Handled HRMS updates, employee records and recruitment coordination. Jul 2018 - May 2019 HR Assistant Core Staff Bengaluru, Karnataka Supported interview scheduling and HR documentation. l",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR019",
+                "skill": "Employee Onboarding",
+                "category": "HR",
+                "subcategory": "Employee Lifecycle",
+                "matched_by": "fuzzy",
+                "confidence": 90,
+                "source_section": "experience",
+                "source_text": "Apr 2021 - Present Senior HR Executive People Sphere Bengaluru, Karnataka Managed end to end recruitment, interview coordination and onboarding. Maintained HR metrics and supported employee relations activities. Jun 2019 - Mar 2021 HR Executive Talent Works Bengaluru, Karnataka Handled HRMS updates, employee records and recruitment coordination. Jul 2018 - May 2019 HR Assistant Core Staff Bengaluru, Karnataka Supported interview scheduling and HR documentation. l",
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR007",
+                "skill": "Candidate Screening",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "skills",
+                "source_text": "Candidate Screening",
+                "extraction_method": "skills_section"
+            },
+            {
+                "skill_id": "HR035",
+                "skill": "Microsoft Excel",
+                "category": "HR",
+                "subcategory": "HR Tools",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "skills",
+                "source_text": "Excel",
+                "extraction_method": "skills_section"
+            },
+            {
+                "skill_id": "TECH008",
+                "skill": "Angular",
+                "category": "Technical",
+                "subcategory": "Frontend Framework",
+                "matched_by": "fuzzy",
+                "confidence": 90,
+                "source_section": "skills",
+                "source_text": "l",
+                "extraction_method": "skills_section"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Master of Business Administration",
+                "field_of_study": "Human Resources",
+                "institution": null,
+                "university": "Bangalore University",
+                "board": null,
+                "graduation_year": "2018"
+            }
+        ],
+        "experience": [
+            {
+                "title": null,
+                "company": {
+                    "company_id": null,
+                    "company": "People Sphere Bengaluru",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Apr 2021",
+                    "end_date": "Present"
+                },
+                "total_experience": {
+                    "total_months": 66,
+                    "total_years": 5.5
+                },
+                "location": "People Sphere Bengaluru, Karnataka",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP004",
+                    "department": "Human Resources",
+                    "matched_by": "keyword",
+                    "confidence": 75
+                },
+                "description": [
+                    "People Sphere Bengaluru, Karnataka",
+                    "Managed end to end recruitment, interview coordination and onboarding.",
+                    "Maintained HR metrics and supported employee relations activities."
+                ]
+            },
+            {
+                "title": null,
+                "company": {
+                    "company_id": null,
+                    "company": "Talent Works Bengaluru",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jun 2019",
+                    "end_date": "Mar 2021"
+                },
+                "total_experience": {
+                    "total_months": 22,
+                    "total_years": 1.8
+                },
+                "location": "Talent Works Bengaluru, Karnataka",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP004",
+                    "department": "Human Resources",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "description": [
+                    "Talent Works Bengaluru, Karnataka",
+                    "Handled HRMS updates, employee records and recruitment coordination."
+                ]
+            },
+            {
+                "title": {
+                    "title_id": null,
+                    "title": "l",
+                    "category": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "company": null,
+                "duration": {
+                    "start_date": "Jul 2018",
+                    "end_date": "May 2019"
+                },
+                "total_experience": {
+                    "total_months": 11,
+                    "total_years": 0.9
+                },
+                "location": "Core Staff Bengaluru, Karnataka",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP003",
+                    "department": "IT Support",
+                    "matched_by": "keyword",
+                    "confidence": 25
+                },
+                "description": [
+                    "Core Staff Bengaluru, Karnataka",
+                    "Supported interview scheduling and HR documentation.",
+                    "l"
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-09-24T19:18:24.059040+00:00"
+        }
+    },
+    "resume_hash": "a1f7059ad307ec33367df0453fdbf90ae8f47c5d1aceb8af26ff9234c3273bcd"
+}

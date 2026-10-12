@@ -1,0 +1,1606 @@
+{
+    "candidate_id": "CAN_F5EE41964D2A",
+    "masked_profile": {
+        "candidate_id": "CAN_F5EE41964D2A",
+        "skills": [
+            {
+                "source_section": "summary",
+                "source_text": "Entry-level Python backend developer with hands-on experience building REST APIs and data-driven web applications.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Entry-level Python backend developer with hands-on experience building REST APIs and data-driven web applications.",
+                        "source_skill": "Python"
+                    },
+                    {
+                        "source_section": "summary",
+                        "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                        "source_skill": "Python"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "Python",
+                        "source_skill": "Python"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Python Backend Developer Intern",
+                        "source_skill": "Python"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Python, FastAPI, PostgreSQL, Pydantic, pytest",
+                        "source_skill": "Python"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills",
+                    "experience",
+                    "projects"
+                ],
+                "skill": "Python",
+                "skill_id": "TECH001",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Entry-level Python backend developer with hands-on experience building REST APIs and data-driven web applications.",
+                "extraction_method": "alias",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Entry-level Python backend developer with hands-on experience building REST APIs and data-driven web applications.",
+                        "source_skill": "rest apis"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "REST APIs",
+                        "source_skill": "REST APIs"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Built Pydantic request and response schemas with validation for REST API payloads.",
+                        "source_skill": "REST API"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Inventory Management REST API",
+                        "source_skill": "REST API"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills",
+                    "experience",
+                    "projects"
+                ],
+                "original_skill": "rest apis",
+                "resolved_from": "rest apis",
+                "resolution_method": "synonym",
+                "original_skills": [
+                    "rest apis"
+                ],
+                "skill": "REST API",
+                "skill_id": "TECH025",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Entry-level Python backend developer with hands-on experience building REST APIs and data-driven web applications.",
+                "extraction_method": "alias",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Entry-level Python backend developer with hands-on experience building REST APIs and data-driven web applications.",
+                        "source_skill": "apis"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Tested APIs with Postman and documented common request and response examples.",
+                        "source_skill": "apis"
+                    },
+                    {
+                        "source_section": "summary",
+                        "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                        "source_skill": "API"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Built Pydantic request and response schemas with validation for REST API payloads.",
+                        "source_skill": "API"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Recruitment ATS API",
+                        "source_skill": "API"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Separated API, service and persistence responsibilities to keep the codebase easier to test.",
+                        "source_skill": "API"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Inventory Management REST API",
+                        "source_skill": "API"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "projects"
+                ],
+                "original_skill": "apis",
+                "resolved_from": "apis",
+                "resolution_method": "synonym",
+                "original_skills": [
+                    "apis"
+                ],
+                "skill": "API",
+                "skill_id": "TECH087",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                        "source_skill": "Django"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "Django",
+                        "source_skill": "Django"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Implemented Django modules for student registration and administrative dashboards.",
+                        "source_skill": "Django"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Django REST Framework, PostgreSQL, Docker",
+                        "source_skill": "Django"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Django, SQLite, HTML, CSS",
+                        "source_skill": "Django"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills",
+                    "experience",
+                    "projects"
+                ],
+                "skill": "Django",
+                "skill_id": "TECH012",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                        "source_skill": "FastAPI"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "FastAPI",
+                        "source_skill": "FastAPI"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Developed FastAPI endpoints for candidate, job-description and application workflows.",
+                        "source_skill": "FastAPI"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Python, FastAPI, PostgreSQL, Pydantic, pytest",
+                        "source_skill": "FastAPI"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills",
+                    "experience",
+                    "projects"
+                ],
+                "skill": "FastAPI",
+                "skill_id": "TECH014",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                        "source_skill": "SQL"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "SQL",
+                        "source_skill": "SQL"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Designed PostgreSQL tables and SQL queries for candidate profiles and scoring results.",
+                        "source_skill": "SQL"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Designed PostgreSQL tables and SQL queries for candidate profiles and scoring results.",
+                        "source_skill": "sql queries"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "SQLite",
+                        "source_skill": "SQLite"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "SQLAlchemy",
+                        "source_skill": "SQLAlchemy"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills",
+                    "experience"
+                ],
+                "original_skills": [
+                    "sql queries",
+                    "SQLite",
+                    "SQLAlchemy"
+                ],
+                "original_skill": "sql queries",
+                "skill": "SQL",
+                "skill_id": "TECH016A",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                        "source_skill": "PostgreSQL"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "PostgreSQL",
+                        "source_skill": "PostgreSQL"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Designed PostgreSQL tables and SQL queries for candidate profiles and scoring results.",
+                        "source_skill": "PostgreSQL"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Python, FastAPI, PostgreSQL, Pydantic, pytest",
+                        "source_skill": "PostgreSQL"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Django REST Framework, PostgreSQL, Docker",
+                        "source_skill": "PostgreSQL"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills",
+                    "experience",
+                    "projects"
+                ],
+                "skill": "PostgreSQL",
+                "skill_id": "TECH018",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                        "source_skill": "Git"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "Git",
+                        "source_skill": "Git"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Used Git and pull requests for source control, code review and release preparation.",
+                        "source_skill": "Git"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Used Git branches and pull requests to track feature changes and review backend modifications.",
+                        "source_skill": "Git"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills",
+                    "experience",
+                    "projects"
+                ],
+                "skill": "Git",
+                "skill_id": "TECH023",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                        "source_skill": "Pytest"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "Pytest",
+                        "source_skill": "Pytest"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Wrote pytest cases for authentication, validation, CRUD operations and error handling.",
+                        "source_skill": "Pytest"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Python, FastAPI, PostgreSQL, Pydantic, pytest",
+                        "source_skill": "Pytest"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills",
+                    "experience",
+                    "projects"
+                ],
+                "skill": "Pytest",
+                "skill_id": "TECH053",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "JavaScript",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "JavaScript",
+                        "source_skill": "JavaScript"
+                    }
+                ],
+                "skill": "JavaScript",
+                "skill_id": "TECH003",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "Django REST Framework",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Django REST Framework",
+                        "source_skill": "Django REST Framework"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Django REST Framework, PostgreSQL, Docker",
+                        "source_skill": "Django REST Framework"
+                    }
+                ],
+                "source_sections": [
+                    "skills",
+                    "projects"
+                ],
+                "skill": "Django REST Framework",
+                "skill_id": "TECH041",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "MySQL",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "MySQL",
+                        "source_skill": "MySQL"
+                    }
+                ],
+                "skill": "MySQL",
+                "skill_id": "TECH017",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "Pandas",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Pandas",
+                        "source_skill": "Pandas"
+                    }
+                ],
+                "skill": "Pandas",
+                "skill_id": "TECH045",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "NumPy",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "NumPy",
+                        "source_skill": "NumPy"
+                    }
+                ],
+                "skill": "NumPy",
+                "skill_id": "TECH048",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "API Testing",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "API Testing",
+                        "source_skill": "API Testing"
+                    }
+                ],
+                "skill": "API Testing",
+                "skill_id": "TECH061",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "GitHub",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "GitHub",
+                        "source_skill": "GitHub"
+                    }
+                ],
+                "skill": "GitHub",
+                "skill_id": "TECH024",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "Docker",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Docker",
+                        "source_skill": "Docker"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Django REST Framework, PostgreSQL, Docker",
+                        "source_skill": "Docker"
+                    }
+                ],
+                "source_sections": [
+                    "skills",
+                    "projects"
+                ],
+                "skill": "Docker",
+                "skill_id": "TECH021",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "Postman",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Postman",
+                        "source_skill": "Postman"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Tested APIs with Postman and documented common request and response examples.",
+                        "source_skill": "Postman"
+                    }
+                ],
+                "source_sections": [
+                    "skills",
+                    "experience"
+                ],
+                "skill": "Postman",
+                "skill_id": "TECH039",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "VS Code",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "VS Code",
+                        "source_skill": "VS Code"
+                    }
+                ],
+                "skill": "VS Code",
+                "skill_id": "TECH051",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "projects",
+                "source_text": "Recruitment ATS API",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "projects",
+                        "source_text": "Recruitment ATS API",
+                        "source_skill": "Recruitment"
+                    }
+                ],
+                "source_sections": [
+                    "projects"
+                ],
+                "skill": "Recruitment",
+                "skill_id": "HR005",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "projects",
+                "source_text": "Recruitment ATS API",
+                "extraction_method": "alias",
+                "sources": [
+                    {
+                        "source_section": "projects",
+                        "source_text": "Recruitment ATS API",
+                        "source_skill": "ats"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Built an ATS backend that accepts resumes, extracts structured candidate profiles, evaluates job-relevant skills and produces explainable scoring results.",
+                        "source_skill": "ats"
+                    }
+                ],
+                "source_sections": [
+                    "projects"
+                ],
+                "original_skill": "ats",
+                "resolved_from": "ats",
+                "resolution_method": "synonym",
+                "original_skills": [
+                    "ats"
+                ],
+                "skill": "Applicant Tracking System",
+                "skill_id": "HR017",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "projects",
+                "source_text": "Technology: Django, SQLite, HTML, CSS",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Django, SQLite, HTML, CSS",
+                        "source_skill": "HTML"
+                    }
+                ],
+                "source_sections": [
+                    "projects"
+                ],
+                "skill": "HTML",
+                "skill_id": "TECH005",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "projects",
+                "source_text": "Technology: Django, SQLite, HTML, CSS",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Django, SQLite, HTML, CSS",
+                        "source_skill": "CSS"
+                    }
+                ],
+                "source_sections": [
+                    "projects"
+                ],
+                "skill": "CSS",
+                "skill_id": "TECH006",
+                "matched_by": "exact"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Bachelor of Technology",
+                "field_of_study": "Computer Science and Engineering",
+                "institution": "Kerala Institute of Technology",
+                "university": null,
+                "board": null,
+                "graduation_year": "2024"
+            },
+            {
+                "degree_type": "Higher Secondary",
+                "field_of_study": "Computer Science",
+                "institution": "Government Higher Secondary School",
+                "university": null,
+                "board": null,
+                "graduation_year": "2020"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": "JOB002",
+                    "title": "Python Developer",
+                    "category": "Software Development",
+                    "matched_by": "fuzzy",
+                    "confidence": 86
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Python Backend Developer Intern",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jan 2024",
+                    "end_date": "Jun 2024"
+                },
+                "total_experience": {
+                    "total_months": 6,
+                    "total_years": 0.5
+                },
+                "location": "Kochi, Kerala",
+                "employment_type": {
+                    "type_id": "EMP003",
+                    "employment_type": "Internship",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "description": [
+                    "Developed FastAPI endpoints for candidate, job-description and application workflows.",
+                    "Designed PostgreSQL tables and SQL queries for candidate profiles and scoring results.",
+                    "Built Pydantic request and response schemas with validation for REST API payloads.",
+                    "Wrote pytest cases for authentication, validation, CRUD operations and error handling.",
+                    "Used Git and pull requests for source control, code review and release preparation."
+                ]
+            },
+            {
+                "title": null,
+                "company": {
+                    "company_id": null,
+                    "company": "Tested APIs with Postman and documented common request and response examples.",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jul 2023",
+                    "end_date": "Dec 2023"
+                },
+                "total_experience": {
+                    "total_months": 6,
+                    "total_years": 0.5
+                },
+                "location": "Calicut, Kerala",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 25
+                },
+                "description": [
+                    "Implemented Django modules for student registration and administrative dashboards.",
+                    "Created reusable service functions for database operations and input validation.",
+                    "Tested APIs with Postman and documented common request and response examples.",
+                    "Investigated defects involving form validation, database constraints and JSON responses."
+                ]
+            }
+        ],
+        "projects": [
+            {
+                "project_name": "Recruitment ATS API",
+                "description": "Technology: Python, FastAPI, PostgreSQL, Pydantic, pytest Built an ATS backend that accepts resumes, extracts structured candidate profiles, evaluates job-relevant skills and produces explainable scoring results. Designed request and response models with explicit validation and useful error messages. Separated API, service and persistence responsibilities to keep the codebase easier to test. Added automated tests for successful requests, invalid input, missing records and database failures. Used Git branches and pull requests to track feature changes and review backend modifications.",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "Inventory Management REST API",
+                "description": "Technology: Django REST Framework, PostgreSQL, Docker Created CRUD endpoints for products, suppliers and stock movements with serializer validation, pagination and role-aware access checks. Designed request and response models with explicit validation and useful error messages. Separated API, service and persistence responsibilities to keep the codebase easier to test. Added automated tests for successful requests, invalid input, missing records and database failures. Used Git branches and pull requests to track feature changes and review backend modifications.",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "Student Registration Portal",
+                "description": "Technology: Django, SQLite, HTML, CSS Developed a small registration application with server-side validation, database persistence and a simple administrative listing page. Designed request and response models with explicit validation and useful error messages. Separated API, service and persistence responsibilities to keep the codebase easier to test. Added automated tests for successful requests, invalid input, missing records and database failures. Used Git branches and pull requests to track feature changes and review backend modifications.",
+                "technologies": [],
+                "url": null
+            }
+        ],
+        "certifications": [
+            {
+                "certification_name": "Python Programming Fundamentals - SkillForge Academy",
+                "issuing_organization": null,
+                "issue_date": "2024",
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "REST API Development with FastAPI - DevPath Learning",
+                "issuing_organization": null,
+                "issue_date": "2024",
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "SQL and PostgreSQL Essentials - OpenLearn Labs",
+                "issuing_organization": null,
+                "issue_date": "2023",
+                "expiration_date": null,
+                "credential_id": null
+            }
+        ],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-10-05T14:42:44.608917+00:00"
+        }
+    },
+    "bias_report": {
+        "bias_detected": false,
+        "risk_level": "none",
+        "indicator_count": 0,
+        "indicators": [],
+        "status": "clear"
+    },
+    "original_profile": {
+        "candidate_id": "CAN_F5EE41964D2A",
+        "personal_information": {
+            "name": "Arjun Menon",
+            "email": "arjun.menon.synthetic@example.com",
+            "phone": "91 90000 12345",
+            "location": "Kozhikode, Kerala",
+            "linkedin": "linkedin.com/in/arjun-menon-dev",
+            "github": "github.com/arjun-menon-dev",
+            "portfolio": null
+        },
+        "skills": [
+            {
+                "source_section": "summary",
+                "source_text": "Entry-level Python backend developer with hands-on experience building REST APIs and data-driven web applications.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Entry-level Python backend developer with hands-on experience building REST APIs and data-driven web applications.",
+                        "source_skill": "Python"
+                    },
+                    {
+                        "source_section": "summary",
+                        "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                        "source_skill": "Python"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "Python",
+                        "source_skill": "Python"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Python Backend Developer Intern",
+                        "source_skill": "Python"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Python, FastAPI, PostgreSQL, Pydantic, pytest",
+                        "source_skill": "Python"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills",
+                    "experience",
+                    "projects"
+                ],
+                "skill": "Python",
+                "skill_id": "TECH001",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Entry-level Python backend developer with hands-on experience building REST APIs and data-driven web applications.",
+                "extraction_method": "alias",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Entry-level Python backend developer with hands-on experience building REST APIs and data-driven web applications.",
+                        "source_skill": "rest apis"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "REST APIs",
+                        "source_skill": "REST APIs"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Built Pydantic request and response schemas with validation for REST API payloads.",
+                        "source_skill": "REST API"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Inventory Management REST API",
+                        "source_skill": "REST API"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills",
+                    "experience",
+                    "projects"
+                ],
+                "original_skill": "rest apis",
+                "resolved_from": "rest apis",
+                "resolution_method": "synonym",
+                "original_skills": [
+                    "rest apis"
+                ],
+                "skill": "REST API",
+                "skill_id": "TECH025",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Entry-level Python backend developer with hands-on experience building REST APIs and data-driven web applications.",
+                "extraction_method": "alias",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Entry-level Python backend developer with hands-on experience building REST APIs and data-driven web applications.",
+                        "source_skill": "apis"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Tested APIs with Postman and documented common request and response examples.",
+                        "source_skill": "apis"
+                    },
+                    {
+                        "source_section": "summary",
+                        "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                        "source_skill": "API"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Built Pydantic request and response schemas with validation for REST API payloads.",
+                        "source_skill": "API"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Recruitment ATS API",
+                        "source_skill": "API"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Separated API, service and persistence responsibilities to keep the codebase easier to test.",
+                        "source_skill": "API"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Inventory Management REST API",
+                        "source_skill": "API"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "projects"
+                ],
+                "original_skill": "apis",
+                "resolved_from": "apis",
+                "resolution_method": "synonym",
+                "original_skills": [
+                    "apis"
+                ],
+                "skill": "API",
+                "skill_id": "TECH087",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                        "source_skill": "Django"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "Django",
+                        "source_skill": "Django"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Implemented Django modules for student registration and administrative dashboards.",
+                        "source_skill": "Django"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Django REST Framework, PostgreSQL, Docker",
+                        "source_skill": "Django"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Django, SQLite, HTML, CSS",
+                        "source_skill": "Django"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills",
+                    "experience",
+                    "projects"
+                ],
+                "skill": "Django",
+                "skill_id": "TECH012",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                        "source_skill": "FastAPI"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "FastAPI",
+                        "source_skill": "FastAPI"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Developed FastAPI endpoints for candidate, job-description and application workflows.",
+                        "source_skill": "FastAPI"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Python, FastAPI, PostgreSQL, Pydantic, pytest",
+                        "source_skill": "FastAPI"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills",
+                    "experience",
+                    "projects"
+                ],
+                "skill": "FastAPI",
+                "skill_id": "TECH014",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                        "source_skill": "SQL"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "SQL",
+                        "source_skill": "SQL"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Designed PostgreSQL tables and SQL queries for candidate profiles and scoring results.",
+                        "source_skill": "SQL"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Designed PostgreSQL tables and SQL queries for candidate profiles and scoring results.",
+                        "source_skill": "sql queries"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "SQLite",
+                        "source_skill": "SQLite"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "SQLAlchemy",
+                        "source_skill": "SQLAlchemy"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills",
+                    "experience"
+                ],
+                "original_skills": [
+                    "sql queries",
+                    "SQLite",
+                    "SQLAlchemy"
+                ],
+                "original_skill": "sql queries",
+                "skill": "SQL",
+                "skill_id": "TECH016A",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                        "source_skill": "PostgreSQL"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "PostgreSQL",
+                        "source_skill": "PostgreSQL"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Designed PostgreSQL tables and SQL queries for candidate profiles and scoring results.",
+                        "source_skill": "PostgreSQL"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Python, FastAPI, PostgreSQL, Pydantic, pytest",
+                        "source_skill": "PostgreSQL"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Django REST Framework, PostgreSQL, Docker",
+                        "source_skill": "PostgreSQL"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills",
+                    "experience",
+                    "projects"
+                ],
+                "skill": "PostgreSQL",
+                "skill_id": "TECH018",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                        "source_skill": "Git"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "Git",
+                        "source_skill": "Git"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Used Git and pull requests for source control, code review and release preparation.",
+                        "source_skill": "Git"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Used Git branches and pull requests to track feature changes and review backend modifications.",
+                        "source_skill": "Git"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills",
+                    "experience",
+                    "projects"
+                ],
+                "skill": "Git",
+                "skill_id": "TECH023",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Comfortable with Python, FastAPI, Django, PostgreSQL, SQL, Git, Pydantic, SQLAlchemy and pytest. Interested in reliable API design, clean data models, automated testing and maintainable backend services.",
+                        "source_skill": "Pytest"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "Pytest",
+                        "source_skill": "Pytest"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Wrote pytest cases for authentication, validation, CRUD operations and error handling.",
+                        "source_skill": "Pytest"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Python, FastAPI, PostgreSQL, Pydantic, pytest",
+                        "source_skill": "Pytest"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills",
+                    "experience",
+                    "projects"
+                ],
+                "skill": "Pytest",
+                "skill_id": "TECH053",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "JavaScript",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "JavaScript",
+                        "source_skill": "JavaScript"
+                    }
+                ],
+                "skill": "JavaScript",
+                "skill_id": "TECH003",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "Django REST Framework",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Django REST Framework",
+                        "source_skill": "Django REST Framework"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Django REST Framework, PostgreSQL, Docker",
+                        "source_skill": "Django REST Framework"
+                    }
+                ],
+                "source_sections": [
+                    "skills",
+                    "projects"
+                ],
+                "skill": "Django REST Framework",
+                "skill_id": "TECH041",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "MySQL",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "MySQL",
+                        "source_skill": "MySQL"
+                    }
+                ],
+                "skill": "MySQL",
+                "skill_id": "TECH017",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "Pandas",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Pandas",
+                        "source_skill": "Pandas"
+                    }
+                ],
+                "skill": "Pandas",
+                "skill_id": "TECH045",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "NumPy",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "NumPy",
+                        "source_skill": "NumPy"
+                    }
+                ],
+                "skill": "NumPy",
+                "skill_id": "TECH048",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "API Testing",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "API Testing",
+                        "source_skill": "API Testing"
+                    }
+                ],
+                "skill": "API Testing",
+                "skill_id": "TECH061",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "GitHub",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "GitHub",
+                        "source_skill": "GitHub"
+                    }
+                ],
+                "skill": "GitHub",
+                "skill_id": "TECH024",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "Docker",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Docker",
+                        "source_skill": "Docker"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Django REST Framework, PostgreSQL, Docker",
+                        "source_skill": "Docker"
+                    }
+                ],
+                "source_sections": [
+                    "skills",
+                    "projects"
+                ],
+                "skill": "Docker",
+                "skill_id": "TECH021",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "Postman",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Postman",
+                        "source_skill": "Postman"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Tested APIs with Postman and documented common request and response examples.",
+                        "source_skill": "Postman"
+                    }
+                ],
+                "source_sections": [
+                    "skills",
+                    "experience"
+                ],
+                "skill": "Postman",
+                "skill_id": "TECH039",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "VS Code",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "VS Code",
+                        "source_skill": "VS Code"
+                    }
+                ],
+                "skill": "VS Code",
+                "skill_id": "TECH051",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "projects",
+                "source_text": "Recruitment ATS API",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "projects",
+                        "source_text": "Recruitment ATS API",
+                        "source_skill": "Recruitment"
+                    }
+                ],
+                "source_sections": [
+                    "projects"
+                ],
+                "skill": "Recruitment",
+                "skill_id": "HR005",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "projects",
+                "source_text": "Recruitment ATS API",
+                "extraction_method": "alias",
+                "sources": [
+                    {
+                        "source_section": "projects",
+                        "source_text": "Recruitment ATS API",
+                        "source_skill": "ats"
+                    },
+                    {
+                        "source_section": "projects",
+                        "source_text": "Built an ATS backend that accepts resumes, extracts structured candidate profiles, evaluates job-relevant skills and produces explainable scoring results.",
+                        "source_skill": "ats"
+                    }
+                ],
+                "source_sections": [
+                    "projects"
+                ],
+                "original_skill": "ats",
+                "resolved_from": "ats",
+                "resolution_method": "synonym",
+                "original_skills": [
+                    "ats"
+                ],
+                "skill": "Applicant Tracking System",
+                "skill_id": "HR017",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "projects",
+                "source_text": "Technology: Django, SQLite, HTML, CSS",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Django, SQLite, HTML, CSS",
+                        "source_skill": "HTML"
+                    }
+                ],
+                "source_sections": [
+                    "projects"
+                ],
+                "skill": "HTML",
+                "skill_id": "TECH005",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "projects",
+                "source_text": "Technology: Django, SQLite, HTML, CSS",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "projects",
+                        "source_text": "Technology: Django, SQLite, HTML, CSS",
+                        "source_skill": "CSS"
+                    }
+                ],
+                "source_sections": [
+                    "projects"
+                ],
+                "skill": "CSS",
+                "skill_id": "TECH006",
+                "matched_by": "exact"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Bachelor of Technology",
+                "field_of_study": "Computer Science and Engineering",
+                "institution": "Kerala Institute of Technology",
+                "university": null,
+                "board": null,
+                "graduation_year": "2024"
+            },
+            {
+                "degree_type": "Higher Secondary",
+                "field_of_study": "Computer Science",
+                "institution": "Government Higher Secondary School",
+                "university": null,
+                "board": null,
+                "graduation_year": "2020"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": "JOB002",
+                    "title": "Python Developer",
+                    "category": "Software Development",
+                    "matched_by": "fuzzy",
+                    "confidence": 86
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Python Backend Developer Intern",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jan 2024",
+                    "end_date": "Jun 2024"
+                },
+                "total_experience": {
+                    "total_months": 6,
+                    "total_years": 0.5
+                },
+                "location": "Kochi, Kerala",
+                "employment_type": {
+                    "type_id": "EMP003",
+                    "employment_type": "Internship",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "description": [
+                    "Developed FastAPI endpoints for candidate, job-description and application workflows.",
+                    "Designed PostgreSQL tables and SQL queries for candidate profiles and scoring results.",
+                    "Built Pydantic request and response schemas with validation for REST API payloads.",
+                    "Wrote pytest cases for authentication, validation, CRUD operations and error handling.",
+                    "Used Git and pull requests for source control, code review and release preparation."
+                ]
+            },
+            {
+                "title": null,
+                "company": {
+                    "company_id": null,
+                    "company": "Tested APIs with Postman and documented common request and response examples.",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jul 2023",
+                    "end_date": "Dec 2023"
+                },
+                "total_experience": {
+                    "total_months": 6,
+                    "total_years": 0.5
+                },
+                "location": "Calicut, Kerala",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 25
+                },
+                "description": [
+                    "Implemented Django modules for student registration and administrative dashboards.",
+                    "Created reusable service functions for database operations and input validation.",
+                    "Tested APIs with Postman and documented common request and response examples.",
+                    "Investigated defects involving form validation, database constraints and JSON responses."
+                ]
+            }
+        ],
+        "projects": [
+            {
+                "project_name": "Recruitment ATS API",
+                "description": "Technology: Python, FastAPI, PostgreSQL, Pydantic, pytest Built an ATS backend that accepts resumes, extracts structured candidate profiles, evaluates job-relevant skills and produces explainable scoring results. Designed request and response models with explicit validation and useful error messages. Separated API, service and persistence responsibilities to keep the codebase easier to test. Added automated tests for successful requests, invalid input, missing records and database failures. Used Git branches and pull requests to track feature changes and review backend modifications.",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "Inventory Management REST API",
+                "description": "Technology: Django REST Framework, PostgreSQL, Docker Created CRUD endpoints for products, suppliers and stock movements with serializer validation, pagination and role-aware access checks. Designed request and response models with explicit validation and useful error messages. Separated API, service and persistence responsibilities to keep the codebase easier to test. Added automated tests for successful requests, invalid input, missing records and database failures. Used Git branches and pull requests to track feature changes and review backend modifications.",
+                "technologies": [],
+                "url": null
+            },
+            {
+                "project_name": "Student Registration Portal",
+                "description": "Technology: Django, SQLite, HTML, CSS Developed a small registration application with server-side validation, database persistence and a simple administrative listing page. Designed request and response models with explicit validation and useful error messages. Separated API, service and persistence responsibilities to keep the codebase easier to test. Added automated tests for successful requests, invalid input, missing records and database failures. Used Git branches and pull requests to track feature changes and review backend modifications.",
+                "technologies": [],
+                "url": null
+            }
+        ],
+        "certifications": [
+            {
+                "certification_name": "Python Programming Fundamentals - SkillForge Academy",
+                "issuing_organization": null,
+                "issue_date": "2024",
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "REST API Development with FastAPI - DevPath Learning",
+                "issuing_organization": null,
+                "issue_date": "2024",
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "SQL and PostgreSQL Essentials - OpenLearn Labs",
+                "issuing_organization": null,
+                "issue_date": "2023",
+                "expiration_date": null,
+                "credential_id": null
+            }
+        ],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-10-05T14:42:44.608917+00:00"
+        }
+    },
+    "resume_hash": "628a3cbfe84854c4b2a8d727ce9d170f6df633b2eb5a0fca3a44a2b104162676"
+}

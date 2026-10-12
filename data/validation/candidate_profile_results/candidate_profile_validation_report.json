@@ -1,0 +1,472 @@
+{
+  "validation_directory": "C:\\Users\\user\\Documents\\zechpath_ai_recruitment\\zechpath_ai_recruitment\\data\\validation\\edge_case_resumes",
+  "expected_resumes": [
+    "bullet_heavy.pdf",
+    "image_resume.pdf",
+    "multi_page.pdf",
+    "table_resume.pdf",
+    "two_column.pdf"
+  ],
+  "total": 5,
+  "passed": 4,
+  "failed": 1,
+  "results": [
+    {
+      "resume": "bullet_heavy.pdf",
+      "path": "C:\\Users\\user\\Documents\\zechpath_ai_recruitment\\zechpath_ai_recruitment\\data\\validation\\edge_case_resumes\\bullet_heavy.pdf",
+      "status": "PASS",
+      "pipeline_success": true,
+      "candidate_id": "CAN_5F6AF218B133",
+      "validation": {
+        "structure": {
+          "passed": true,
+          "missing_sections": [],
+          "empty_sections": [],
+          "section_counts": {
+            "personal_information": 7,
+            "education": 2,
+            "experience": 2,
+            "skills": 17,
+            "projects": 1,
+            "certifications": 3
+          }
+        },
+        "personal_information": {
+          "passed": true,
+          "exists": true,
+          "checks": {
+            "section_is_dict": true
+          },
+          "found_fields": [
+            "name",
+            "email",
+            "phone",
+            "location",
+            "linkedin",
+            "github"
+          ]
+        },
+        "education": {
+          "passed": true,
+          "count": 2,
+          "invalid_items": []
+        },
+        "skills": {
+          "passed": true,
+          "count": 17,
+          "duplicates": [],
+          "invalid_items": [],
+          "skills": [
+            "Python",
+            "FastAPI",
+            "API",
+            "Django",
+            "PostgreSQL",
+            "Pytest",
+            "Git",
+            "GitHub",
+            "Postman",
+            "SQL",
+            "Docker",
+            "REST API",
+            "Recruitment",
+            "Applicant Tracking System",
+            "Django REST Framework",
+            "HTML",
+            "CSS"
+          ]
+        },
+        "experience": {
+          "passed": true,
+          "count": 2,
+          "invalid_items": []
+        },
+        "projects": {
+          "passed": true,
+          "count": 1,
+          "invalid_items": [],
+          "duplicate_names": [],
+          "projects": [
+            "Recruitment ATS API - FastAPI, PostgreSQL, Pydantic, pytest."
+          ]
+        },
+        "certifications": {
+          "passed": true,
+          "count": 3,
+          "invalid_items": [],
+          "present": true
+        },
+        "project_metadata": {
+          "passed": true,
+          "issues": []
+        },
+        "cross_section_integrity": {
+          "passed": true,
+          "issues": []
+        }
+      },
+      "profile_summary": {
+        "personal_information": 7,
+        "education": 2,
+        "experience": 2,
+        "skills": 17,
+        "projects": 1,
+        "certifications": 3
+      },
+      "error": null,
+      "failed_checks": []
+    },
+    {
+      "resume": "image_resume.pdf",
+      "path": "C:\\Users\\user\\Documents\\zechpath_ai_recruitment\\zechpath_ai_recruitment\\data\\validation\\edge_case_resumes\\image_resume.pdf",
+      "status": "FAIL",
+      "pipeline_success": false,
+      "candidate_id": null,
+      "validation": {},
+      "profile_summary": {},
+      "error": "ValueError: Could not extract text from resume: C:\\Users\\user\\Documents\\zechpath_ai_recruitment\\zechpath_ai_recruitment\\data\\validation\\edge_case_resumes\\image_resume.pdf"
+    },
+    {
+      "resume": "multi_page.pdf",
+      "path": "C:\\Users\\user\\Documents\\zechpath_ai_recruitment\\zechpath_ai_recruitment\\data\\validation\\edge_case_resumes\\multi_page.pdf",
+      "status": "PASS",
+      "pipeline_success": true,
+      "candidate_id": "CAN_DC9A6967673E",
+      "validation": {
+        "structure": {
+          "passed": true,
+          "missing_sections": [],
+          "empty_sections": [],
+          "section_counts": {
+            "personal_information": 7,
+            "education": 2,
+            "experience": 2,
+            "skills": 23,
+            "projects": 3,
+            "certifications": 3
+          }
+        },
+        "personal_information": {
+          "passed": true,
+          "exists": true,
+          "checks": {
+            "section_is_dict": true
+          },
+          "found_fields": [
+            "name",
+            "email",
+            "phone",
+            "location",
+            "linkedin",
+            "github"
+          ]
+        },
+        "education": {
+          "passed": true,
+          "count": 2,
+          "invalid_items": []
+        },
+        "skills": {
+          "passed": true,
+          "count": 23,
+          "duplicates": [],
+          "invalid_items": [],
+          "skills": [
+            "Python",
+            "REST API",
+            "API",
+            "Django",
+            "FastAPI",
+            "SQL",
+            "PostgreSQL",
+            "Git",
+            "Pytest",
+            "JavaScript",
+            "Django REST Framework",
+            "MySQL",
+            "Pandas",
+            "NumPy",
+            "API Testing",
+            "GitHub",
+            "Docker",
+            "Postman",
+            "VS Code",
+            "Recruitment",
+            "Applicant Tracking System",
+            "HTML",
+            "CSS"
+          ]
+        },
+        "experience": {
+          "passed": true,
+          "count": 2,
+          "invalid_items": []
+        },
+        "projects": {
+          "passed": true,
+          "count": 3,
+          "invalid_items": [],
+          "duplicate_names": [],
+          "projects": [
+            "Recruitment ATS API",
+            "Inventory Management REST API",
+            "Student Registration Portal"
+          ]
+        },
+        "certifications": {
+          "passed": true,
+          "count": 3,
+          "invalid_items": [],
+          "present": true
+        },
+        "project_metadata": {
+          "passed": true,
+          "issues": []
+        },
+        "cross_section_integrity": {
+          "passed": true,
+          "issues": []
+        }
+      },
+      "profile_summary": {
+        "personal_information": 7,
+        "education": 2,
+        "experience": 2,
+        "skills": 23,
+        "projects": 3,
+        "certifications": 3
+      },
+      "error": null,
+      "failed_checks": []
+    },
+    {
+      "resume": "table_resume.pdf",
+      "path": "C:\\Users\\user\\Documents\\zechpath_ai_recruitment\\zechpath_ai_recruitment\\data\\validation\\edge_case_resumes\\table_resume.pdf",
+      "status": "PASS",
+      "pipeline_success": true,
+      "candidate_id": "CAN_749D51A2B381",
+      "validation": {
+        "structure": {
+          "passed": true,
+          "missing_sections": [],
+          "empty_sections": [],
+          "section_counts": {
+            "personal_information": 7,
+            "education": 2,
+            "experience": 1,
+            "skills": 23,
+            "projects": 5,
+            "certifications": 4
+          }
+        },
+        "personal_information": {
+          "passed": true,
+          "exists": true,
+          "checks": {
+            "section_is_dict": true
+          },
+          "found_fields": [
+            "name",
+            "email",
+            "phone",
+            "location",
+            "linkedin",
+            "github"
+          ]
+        },
+        "education": {
+          "passed": true,
+          "count": 2,
+          "invalid_items": []
+        },
+        "skills": {
+          "passed": true,
+          "count": 23,
+          "duplicates": [],
+          "invalid_items": [],
+          "skills": [
+            "Python",
+            "Django",
+            "FastAPI",
+            "SQL",
+            "PostgreSQL",
+            "Git",
+            "Pytest",
+            "API",
+            "REST API",
+            "JavaScript",
+            "Django REST Framework",
+            "MySQL",
+            "Pandas",
+            "NumPy",
+            "API Testing",
+            "GitHub",
+            "Docker",
+            "Postman",
+            "VS Code",
+            "Recruitment",
+            "Applicant Tracking System",
+            "HTML",
+            "CSS"
+          ]
+        },
+        "experience": {
+          "passed": true,
+          "count": 1,
+          "invalid_items": []
+        },
+        "projects": {
+          "passed": true,
+          "count": 5,
+          "invalid_items": [],
+          "duplicate_names": [],
+          "projects": [
+            "Stack",
+            "Recruitment ATS API",
+            "Inventory Management REST",
+            "Django REST Framework, PostgreSQL, Docker",
+            "Student Registration Portal"
+          ]
+        },
+        "certifications": {
+          "passed": true,
+          "count": 4,
+          "invalid_items": [],
+          "present": true
+        },
+        "project_metadata": {
+          "passed": true,
+          "issues": []
+        },
+        "cross_section_integrity": {
+          "passed": true,
+          "issues": []
+        }
+      },
+      "profile_summary": {
+        "personal_information": 7,
+        "education": 2,
+        "experience": 1,
+        "skills": 23,
+        "projects": 5,
+        "certifications": 4
+      },
+      "error": null,
+      "failed_checks": []
+    },
+    {
+      "resume": "two_column.pdf",
+      "path": "C:\\Users\\user\\Documents\\zechpath_ai_recruitment\\zechpath_ai_recruitment\\data\\validation\\edge_case_resumes\\two_column.pdf",
+      "status": "PASS",
+      "pipeline_success": true,
+      "candidate_id": "CAN_1B996C057134",
+      "validation": {
+        "structure": {
+          "passed": true,
+          "missing_sections": [],
+          "empty_sections": [],
+          "section_counts": {
+            "personal_information": 7,
+            "education": 2,
+            "experience": 2,
+            "skills": 23,
+            "projects": 4,
+            "certifications": 3
+          }
+        },
+        "personal_information": {
+          "passed": true,
+          "exists": true,
+          "checks": {
+            "section_is_dict": true
+          },
+          "found_fields": [
+            "name",
+            "email",
+            "phone",
+            "location",
+            "linkedin",
+            "github"
+          ]
+        },
+        "education": {
+          "passed": true,
+          "count": 2,
+          "invalid_items": []
+        },
+        "skills": {
+          "passed": true,
+          "count": 23,
+          "duplicates": [],
+          "invalid_items": [],
+          "skills": [
+            "Python",
+            "API",
+            "Django",
+            "FastAPI",
+            "SQL",
+            "PostgreSQL",
+            "Git",
+            "Pytest",
+            "JavaScript",
+            "Django REST Framework",
+            "REST API",
+            "MySQL",
+            "Pandas",
+            "NumPy",
+            "API Testing",
+            "GitHub",
+            "Docker",
+            "Postman",
+            "VS Code",
+            "Recruitment",
+            "Applicant Tracking System",
+            "HTML",
+            "CSS"
+          ]
+        },
+        "experience": {
+          "passed": true,
+          "count": 2,
+          "invalid_items": []
+        },
+        "projects": {
+          "passed": true,
+          "count": 4,
+          "invalid_items": [],
+          "duplicate_names": [],
+          "projects": [
+            "Recruitment ATS API",
+            "Inventory Management REST API",
+            "Student Registration Portal",
+            "Synthetic validation resume - no real candidate data"
+          ]
+        },
+        "certifications": {
+          "passed": true,
+          "count": 3,
+          "invalid_items": [],
+          "present": true
+        },
+        "project_metadata": {
+          "passed": true,
+          "issues": []
+        },
+        "cross_section_integrity": {
+          "passed": true,
+          "issues": []
+        }
+      },
+      "profile_summary": {
+        "personal_information": 7,
+        "education": 2,
+        "experience": 2,
+        "skills": 23,
+        "projects": 4,
+        "certifications": 3
+      },
+      "error": null,
+      "failed_checks": []
+    }
+  ]
+}

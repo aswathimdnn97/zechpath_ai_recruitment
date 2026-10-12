@@ -1,0 +1,10 @@
+{
+  "resume": "image_resume.pdf",
+  "path": "C:\\Users\\user\\Documents\\zechpath_ai_recruitment\\zechpath_ai_recruitment\\data\\validation\\edge_case_resumes\\image_resume.pdf",
+  "status": "FAIL",
+  "pipeline_success": false,
+  "candidate_id": null,
+  "validation": {},
+  "profile_summary": {},
+  "error": "ValueError: Could not extract text from resume: C:\\Users\\user\\Documents\\zechpath_ai_recruitment\\zechpath_ai_recruitment\\data\\validation\\edge_case_resumes\\image_resume.pdf"
+}

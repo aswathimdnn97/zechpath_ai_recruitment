@@ -13,25 +13,22 @@ Examples:
         ->
     Machine Learning
 
-    Optimizeprocurementprocessanddemandplanningcycle
+    DjangoRESTFramework
         ->
-    Optimize procurement process and demand planning cycle
+    Django REST Framework
 
 The module is intentionally conservative.
 
-If the system is not confident about a reconstruction,
-the original text is returned unchanged.
-
-This module is generic and can be used for:
-
-    - Summary
-    - Experience
-    - Skills
-    - Education
-    - Certifications
-    - Projects
-    - Other resume sections
+Important design rules:
+    - Do not maintain company-name dictionaries here.
+    - Do not use spelling_dictionary.json here.
+    - Do not use skill_aliases.json here.
+    - Do not use skill_stacks.json here.
+    - Use master_skill_dictionary.json only to identify
+      known canonical multi-word skills.
+    - Unknown CamelCase/company names are preserved.
 """
+
 
 import json
 import re
@@ -42,213 +39,34 @@ from pathlib import Path
 # PATH
 # ============================================================
 
-PROJECT_ROOT = Path(
-    __file__
-).resolve().parents[3]
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
-WORD_DICTIONARY_PATH = (
+MASTER_SKILL_DICTIONARY_PATH = (
     PROJECT_ROOT
     / "data"
     / "resume"
-    / "word_dictionary.json"
+    / "master_skill_dictionary.json"
 )
 
 
 # ============================================================
-# WORD DICTIONARY
+# MASTER SKILL DICTIONARY
 # ============================================================
 
-DEFAULT_WORDS = {
-    # General resume words
-    "a",
-    "about",
-    "academic",
-    "achievement",
-    "achievements",
-    "analysis",
-    "and",
-    "application",
-    "applications",
-    "artificial",
-    "as",
-    "at",
-    "backend",
-    "business",
-    "by",
-    "cloud",
-    "code",
-    "coding",
-    "communication",
-    "computer",
-    "configuration",
-    "consulting",
-    "data",
-    "database",
-    "deep",
-    "degree",
-    "demand",
-    "deployment",
-    "development",
-    "developer",
-    "developing",
-    "digital",
-    "education",
-    "engineering",
-    "engineer",
-    "end",
-    "enterprise",
-    "experience",
-    "experienced",
-    "for",
-    "from",
-    "frontend",
-    "full",
-    "functional",
-    "github",
-    "google",
-    "in",
-    "information",
-    "infrastructure",
-    "integration",
-    "intelligence",
-    "international",
-    "job",
-    "learning",
-    "machine",
-    "maintained",
-    "management",
-    "managing",
-    "marketing",
-    "microsoft",
-    "model",
-    "models",
-    "network",
-    "of",
-    "on",
-    "optimization",
-    "optimize",
-    "organization",
-    "planning",
-    "platform",
-    "process",
-    "processing",
-    "professional",
-    "programming",
-    "project",
-    "projects",
-    "python",
-    "real",
-    "research",
-    "resume",
-    "sales",
-    "science",
-    "scientist",
-    "security",
-    "server",
-    "service",
-    "services",
-    "software",
-    "solution",
-    "solutions",
-    "stack",
-    "technical",
-    "technology",
-    "testing",
-    "the",
-    "to",
-    "tools",
-    "training",
-    "used",
-    "using",
-    "various",
-    "web",
-    "with",
-    "work",
-    "worked",
-    "working",
-    "year",
-    "years",
-
-    # Common technical words
-    "algorithm",
-    "algorithms",
-    "analytics",
-    "azure",
-    "big",
-    "business",
-    "classification",
-    "computer",
-    "computing",
-    "container",
-    "containers",
-    "dashboard",
-    "data",
-    "engineering",
-    "framework",
-    "frameworks",
-    "frontend",
-    "backend",
-    "javascript",
-    "java",
-    "kubernetes",
-    "machine",
-    "micro",
-    "mysql",
-    "mongodb",
-    "node",
-    "python",
-    "react",
-    "sql",
-    "tensorflow",
-    "testing",
-    "typescript",
-
-    # Common action words
-    "built",
-    "created",
-    "designed",
-    "developed",
-    "implemented",
-    "improved",
-    "increased",
-    "managed",
-    "optimized",
-    "reduced",
-    "responsible",
-    "supported",
-}
-
-
-# ============================================================
-# WORD DICTIONARY LOADER
-# ============================================================
-
-def load_word_dictionary():
+def load_master_skill_dictionary():
     """
-    Load additional words from JSON.
+    Load canonical skill names from the master dictionary.
 
-    Supported JSON:
-
-    {
-        "words": [
-            "machine",
-            "learning",
-            "procurement"
-        ]
-    }
-
-    If the JSON file does not exist, the default
-    vocabulary is used.
+    Returns:
+        list[str]
     """
 
-    words = set(DEFAULT_WORDS)
-
-    if not WORD_DICTIONARY_PATH.exists():
-        return words
+    if not MASTER_SKILL_DICTIONARY_PATH.exists():
+        return []
 
     try:
         with open(
-            WORD_DICTIONARY_PATH,
+            MASTER_SKILL_DICTIONARY_PATH,
             "r",
             encoding="utf-8"
         ) as file:
@@ -258,34 +76,113 @@ def load_word_dictionary():
         OSError,
         json.JSONDecodeError
     ):
-        return words
+        return []
 
-    if isinstance(data, dict):
-        values = data.get(
-            "words",
-            []
-        )
+    if not isinstance(data, list):
+        return []
 
-    elif isinstance(data, list):
-        values = data
+    skills = []
 
-    else:
-        return words
+    for item in data:
 
-    for word in values:
-
-        if not isinstance(
-            word,
-            str
-        ):
+        if not isinstance(item, dict):
             continue
 
-        word = word.strip().lower()
+        name = item.get("name")
 
-        if word:
-            words.add(word)
+        if not isinstance(name, str):
+            continue
 
-    return words
+        name = name.strip()
+
+        if name:
+            skills.append(name)
+
+    return skills
+
+
+# ============================================================
+# NORMALIZE SKILL FOR COMPARISON
+# ============================================================
+
+def normalize_skill_for_comparison(value):
+    """
+    Convert a skill into a comparison-safe representation.
+
+    Examples:
+
+        Machine Learning
+            ->
+        machinelearning
+
+        Machine-Learning
+            ->
+        machinelearning
+
+        MachineLearning
+            ->
+        machinelearning
+
+        Django REST Framework
+            ->
+        djangorestframework
+    """
+
+    if not isinstance(value, str):
+        return ""
+
+    return re.sub(
+        r"[^a-z0-9]+",
+        "",
+        value.lower()
+    )
+
+
+# ============================================================
+# BUILD KNOWN COMPOUND SKILL MAP
+# ============================================================
+
+def build_known_compound_skills():
+    """
+    Build:
+
+        normalized compound
+            ->
+        canonical skill
+
+    Example:
+
+        machinelearning
+            ->
+        Machine Learning
+
+        djangorestframework
+            ->
+        Django REST Framework
+    """
+
+    result = {}
+
+    skills = load_master_skill_dictionary()
+
+    for skill in skills:
+
+        normalized = normalize_skill_for_comparison(
+            skill
+        )
+
+        if not normalized:
+            continue
+
+        # Only relevant for skills containing
+        # more than one logical word.
+        #
+        # We still keep compounds such as FastAPI
+        # because they can occur as CamelCase-like
+        # PDF extraction output.
+        result[normalized] = skill
+
+    return result
 
 
 # ============================================================
@@ -293,12 +190,12 @@ def load_word_dictionary():
 # ============================================================
 
 PDF_ARTIFACTS = [
-    r"\[\s*see\s+the\s+certificate\s*\]",
-    r"\[\s*see\s+certificate\s*\]",
-    r"\[\s*view\s+certificate\s*\]",
-    r"\[\s*view\s+credential\s*\]",
-    r"\[\s*visit\s+blog\s+page\s*\]",
-    r"\[\s*visit\s+page\s*\]",
+    r"\[\s*\*see\s+the\s+certificate\s*\*\]",
+    r"\[\s*\*see\s+certificate\s*\*\]",
+    r"\[\s*\*view\s+certificate\s*\*\]",
+    r"\[\s*\*view\s+credential\s*\*\]",
+    r"\[\s*\*visit\s+blog\s+page\s*\*\]",
+    r"\[\s*\*visit\s+page\s*\*\]",
 ]
 
 
@@ -323,69 +220,28 @@ def remove_pdf_artifacts(text):
 
 
 # ============================================================
-# KNOWN COMPOUND WORDS
-# ============================================================
-
-KNOWN_COMPOUND_WORDS = {
-    "javascript",
-    "typescript",
-    "github",
-    "gitlab",
-    "tensorflow",
-    "pytorch",
-    "mongodb",
-    "postgresql",
-    "mysql",
-    "nodejs",
-    "reactjs",
-    "angularjs",
-    "expressjs",
-    "powerbi",
-    "devops",
-    "fullstack",
-    "machinelearning",
-    "deepfake",
-}
-
-
-def is_known_compound(word):
-    """
-    Return True when a word should normally be preserved.
-
-    Example:
-
-        JavaScript
-
-    should not become:
-
-        Java Script
-    """
-
-    return (
-        word.lower()
-        in KNOWN_COMPOUND_WORDS
-    )
-
-
-# ============================================================
-# CAMEL CASE
+# CAMEL CASE COMPONENTS
 # ============================================================
 
 def split_camel_case(text):
     """
-    Split obvious camel-case words.
+    Split CamelCase into components.
 
     Example:
 
         MachineLearning
-
-    becomes:
-
+            ->
         Machine Learning
+
+    This function itself does not decide whether
+    splitting is safe.
+
+    The caller must first verify that the complete
+    token corresponds to a known canonical skill.
     """
 
     if not text:
-        return ""
+        return text
 
     return re.sub(
         r"(?<=[a-z])(?=[A-Z])",
@@ -395,176 +251,89 @@ def split_camel_case(text):
 
 
 # ============================================================
-# WORD SEGMENTATION
+# SAFE KNOWN SKILL RECONSTRUCTION
 # ============================================================
 
-def find_word_split(
-    word,
-    vocabulary
+def reconstruct_known_skill(
+    token,
+    known_compound_skills
 ):
     """
-    Find a safe segmentation for a concatenated word.
+    Reconstruct a token only when the complete token
+    matches a canonical skill in the master dictionary.
 
-    Example:
+    Examples:
 
-        machinelearning
+        MachineLearning
+            ->
+        Machine Learning
 
-    becomes:
+        DjangoRESTFramework
+            ->
+        Django REST Framework
 
-        ["machine", "learning"]
+        CodeNest
+            ->
+        CodeNest
 
-    If no reliable segmentation exists,
-    return None.
+        BluePeak
+            ->
+        BluePeak
     """
 
-    original = word
+    if not token:
+        return token
 
-    clean_word = re.sub(
-        r"[^A-Za-z]",
-        "",
-        word
+    normalized_token = normalize_skill_for_comparison(
+        token
     )
 
-    if not clean_word:
-        return None
+    if not normalized_token:
+        return token
 
-    lower_word = clean_word.lower()
-
-    # --------------------------------------------------------
-    # Already a known word.
-    # --------------------------------------------------------
-
-    if lower_word in vocabulary:
-
-        return None
-
-    # --------------------------------------------------------
-    # Known technical compound.
-    # --------------------------------------------------------
-
-    if is_known_compound(
-        lower_word
-    ):
-        return None
-
-    length = len(
-        lower_word
+    canonical_skill = known_compound_skills.get(
+        normalized_token
     )
 
-    # --------------------------------------------------------
-    # Don't attempt very short words.
-    # --------------------------------------------------------
-
-    if length < 8:
-        return None
-
-    # --------------------------------------------------------
-    # Dynamic programming table.
-    #
-    # best[i] = best segmentation from
-    # beginning up to position i.
-    # --------------------------------------------------------
-
-    best = [None] * (
-        length + 1
-    )
-
-    best[0] = []
-
-    for end in range(
-        1,
-        length + 1
-    ):
-
-        candidates = []
-
-        for start in range(
-            0,
-            end
-        ):
-
-            previous = best[start]
-
-            if previous is None:
-                continue
-
-            part = lower_word[
-                start:end
-            ]
-
-            if part not in vocabulary:
-                continue
-
-            # Avoid extremely short pieces.
-            if len(part) < 2:
-                continue
-
-            candidate = (
-                previous
-                + [part]
-            )
-
-            candidates.append(
-                candidate
-            )
-
-        if candidates:
-
-            # Prefer:
-            # 1. fewer words
-            # 2. longer words
-
-            best[end] = min(
-                candidates,
-                key=lambda item: (
-                    len(item),
-                    -sum(
-                        len(word)
-                        for word in item
-                    )
-                )
-            )
-
-    result = best[length]
-
-    if not result:
-        return None
+    if canonical_skill is None:
+        # Unknown token.
+        #
+        # This is extremely important:
+        # do NOT split it.
+        return token
 
     # --------------------------------------------------------
-    # We need at least two words.
+    # If the token already matches the canonical spelling,
+    # preserve it.
     # --------------------------------------------------------
 
-    if len(result) < 2:
-        return None
+    if token.lower() == canonical_skill.lower():
+        return token
 
     # --------------------------------------------------------
-    # Too many pieces usually means
-    # a bad reconstruction.
+    # If the canonical skill contains multiple words,
+    # return the canonical form.
     # --------------------------------------------------------
 
-    if len(result) > 8:
-        return None
+    if " " in canonical_skill:
+
+        return canonical_skill
 
     # --------------------------------------------------------
-    # Safety check:
-    # don't split a word into tiny pieces.
+    # Single-word canonical skills such as FastAPI,
+    # NumPy, JavaScript, etc. should remain unchanged.
     # --------------------------------------------------------
 
-    for part in result:
-
-        if len(part) < 2:
-            return None
-
-    return result
+    return token
 
 
 # ============================================================
-# RECONSTRUCT ONE TOKEN
+# RECONSTRUCT TOKEN
 # ============================================================
 
 def reconstruct_token(
     token,
-    vocabulary
+    known_compound_skills
 ):
     """
     Reconstruct one whitespace-separated token.
@@ -574,7 +343,7 @@ def reconstruct_token(
         return token
 
     # --------------------------------------------------------
-    # Keep URLs unchanged.
+    # URLs
     # --------------------------------------------------------
 
     if re.match(
@@ -585,14 +354,14 @@ def reconstruct_token(
         return token
 
     # --------------------------------------------------------
-    # Keep email addresses unchanged.
+    # Email addresses
     # --------------------------------------------------------
 
     if "@" in token:
         return token
 
     # --------------------------------------------------------
-    # Keep numbers unchanged.
+    # Numeric tokens
     # --------------------------------------------------------
 
     if re.fullmatch(
@@ -602,7 +371,7 @@ def reconstruct_token(
         return token
 
     # --------------------------------------------------------
-    # Preserve punctuation around the word.
+    # Preserve punctuation around token
     # --------------------------------------------------------
 
     prefix_match = re.match(
@@ -630,59 +399,28 @@ def reconstruct_token(
     start = len(prefix)
 
     end = (
-        len(token)
-        - len(suffix)
+        len(token) - len(suffix)
         if suffix
         else len(token)
     )
 
-    core = token[
-        start:end
-    ]
+    core = token[start:end]
 
     if not core:
         return token
 
     # --------------------------------------------------------
-    # Known compound technical word.
+    # SAFE RECONSTRUCTION
     # --------------------------------------------------------
 
-    if is_known_compound(
-        core
-    ):
-        return token
-
-    # --------------------------------------------------------
-    # First try camel case.
-    # --------------------------------------------------------
-
-    camel_result = split_camel_case(
-        core
-    )
-
-    if camel_result != core:
-
-        return (
-            prefix
-            + camel_result
-            + suffix
-        )
-
-    # --------------------------------------------------------
-    # Then try dictionary segmentation.
-    # --------------------------------------------------------
-
-    split = find_word_split(
+    reconstructed = reconstruct_known_skill(
         core,
-        vocabulary
+        known_compound_skills
     )
-
-    if not split:
-        return token
 
     return (
         prefix
-        + " ".join(split)
+        + reconstructed
         + suffix
     )
 
@@ -693,34 +431,31 @@ def reconstruct_token(
 
 def reconstruct_line(
     line,
-    vocabulary=None
+    known_compound_skills=None
 ):
     """
     Reconstruct one resume line.
+
+    Existing whitespace structure is preserved as much
+    as possible.
     """
 
     if not line:
         return ""
 
-    if vocabulary is None:
-        vocabulary = (
-            load_word_dictionary()
+    if known_compound_skills is None:
+        known_compound_skills = (
+            build_known_compound_skills()
         )
 
     # --------------------------------------------------------
-    # Remove PDF artifacts.
+    # Remove PDF artifacts
     # --------------------------------------------------------
 
-    line = remove_pdf_artifacts(
-        line
-    )
+    line = remove_pdf_artifacts(line)
 
     # --------------------------------------------------------
-    # Process each existing token.
-    #
-    # Existing spaces are preserved.
-    # We only reconstruct tokens where
-    # there is strong evidence.
+    # Process existing tokens.
     # --------------------------------------------------------
 
     tokens = line.split()
@@ -729,13 +464,13 @@ def reconstruct_line(
 
     for token in tokens:
 
-        new_token = reconstruct_token(
+        reconstructed_token = reconstruct_token(
             token,
-            vocabulary
+            known_compound_skills
         )
 
         reconstructed.append(
-            new_token
+            reconstructed_token
         )
 
     # --------------------------------------------------------
@@ -759,24 +494,19 @@ def reconstruct_line(
 # RECONSTRUCT COMPLETE TEXT
 # ============================================================
 
-def reconstruct_text(
-    text,
-    vocabulary=None
-):
+def reconstruct_text(text):
     """
     Reconstruct complete resume text.
 
-    Lines are processed independently so that
-    resume layout is preserved.
+    Each line is processed independently.
     """
 
     if not text:
         return ""
 
-    if vocabulary is None:
-        vocabulary = (
-            load_word_dictionary()
-        )
+    known_compound_skills = (
+        build_known_compound_skills()
+    )
 
     lines = text.splitlines()
 
@@ -786,26 +516,19 @@ def reconstruct_text(
 
         reconstructed = reconstruct_line(
             line,
-            vocabulary
+            known_compound_skills
         )
 
-        result.append(
-            reconstructed
-        )
+        result.append(reconstructed)
 
-    return "\n".join(
-        result
-    )
+    return "\n".join(result)
 
 
 # ============================================================
 # RECONSTRUCT LIST OF LINES
 # ============================================================
 
-def reconstruct_lines(
-    lines,
-    vocabulary=None
-):
+def reconstruct_lines(lines):
     """
     Reconstruct a list of resume lines.
     """
@@ -813,10 +536,9 @@ def reconstruct_lines(
     if not lines:
         return []
 
-    if vocabulary is None:
-        vocabulary = (
-            load_word_dictionary()
-        )
+    known_compound_skills = (
+        build_known_compound_skills()
+    )
 
     result = []
 
@@ -825,7 +547,7 @@ def reconstruct_lines(
         result.append(
             reconstruct_line(
                 line,
-                vocabulary
+                known_compound_skills
             )
         )
 
@@ -838,12 +560,7 @@ def reconstruct_lines(
 
 def text_reconstructor(text):
     """
-    Main public function.
-
-    This is the function that should be called
-    from resume_pipeline.py.
+    Public entry point used by resume_pipeline.py.
     """
 
-    return reconstruct_text(
-        text
-    )
+    return reconstruct_text(text)

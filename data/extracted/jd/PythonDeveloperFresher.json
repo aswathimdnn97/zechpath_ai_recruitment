@@ -1,0 +1,40 @@
+{
+    "job_title": "Python Developer",
+    "company": "TechNova Solutions",
+    "location": "Kochi, Kerala",
+    "employment_type": "Full-time",
+    "salary": "",
+    "availability": "",
+    "job_id": "JOB_6433C8296264",
+    "job_summary": "We are looking for an entry-level Python Developer to build and maintain backend applications and REST APIs.",
+    "responsibilities": [
+        "Develop Python backend services.",
+        "Build and test REST APIs.",
+        "Work with relational databases.",
+        "Use Git for collaborative development.",
+        "TechNova Solutions Job Description",
+        "Page 1 of 1"
+    ],
+    "required_skills": [
+        "Python",
+        "Django",
+        "FastAPI",
+        "REST API",
+        "PostgreSQL",
+        "Git",
+        "API Testing"
+    ],
+    "preferred_skills": [],
+    "education": [
+        "B.Tech / B.E. / equivalent technical degree preferred."
+    ],
+    "soft_skills": [],
+    "experience": [
+        {
+            "minimum_years": 0,
+            "maximum_years": 1,
+            "description": "0-1 year experience, internship or relevant project experience acceptable."
+        }
+    ],
+    "requirements": []
+}

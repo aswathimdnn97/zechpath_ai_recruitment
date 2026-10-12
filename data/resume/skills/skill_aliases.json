@@ -3,8 +3,8 @@
   "python3": "Python",
   "python programming": "Python",
   "py": "Python",
-  "pytest": "pytest",
-  "py test": "pytest",
+  "pytest": "Pytest",
+  "py test": "Pytest",
   "java": "Java",
   "core java": "Java",
   "java se": "Java",
@@ -233,9 +233,9 @@
     "interview coordination": "Interview Coordination",
     "interview scheduling": "Interview Scheduling",
 
-    "employee onboarding": "Onboarding",
-    "new hire onboarding": "Onboarding",
-    "onboarding": "Onboarding",
+    "employee onboarding": "Employee Onboarding",
+    "new hire onboarding": "Employee Onboarding",
+    "onboarding": "Employee Onboarding",
 
     "offboarding": "Employee Offboarding",
     "exit process": "Employee Offboarding",
@@ -359,9 +359,9 @@
     "job advertisement": "Job Posting",
     "job advertising": "Job Posting",
 
-    "candidate sourcing": "Sourcing",
-    "talent sourcing": "Sourcing",
-    "sourcing": "Sourcing",
+   "candidate sourcing": "Candidate Sourcing",
+   "talent sourcing": "Candidate Sourcing",
+   "sourcing": "Candidate Sourcing",
 
     "boolean recruiting": "Boolean Search",
     "boolean search recruiting": "Boolean Search",
@@ -374,9 +374,9 @@
 
     "offer processing": "Offer Management",
     "offer letter management": "Offer Management",
+    "offer letters": "Offer Management",
+    "employment offer": "Offer Management",
 
-    "offer letters": "Offer Letter",
-    "employment offer": "Offer Letter",
 
     "hiring metrics": "Recruitment Metrics",
     "recruitment analytics": "Recruitment Metrics",
@@ -400,7 +400,7 @@
 
     "benefits administration": "Benefits Administration",
     "benefits management": "Benefits Administration",
-    "employee benefits": "Employee Benefits",
+    "employee benefits": "Benefits Administration" ,
 
     "hr reports": "HR Reporting",
     "human resources reporting": "HR Reporting",
@@ -430,8 +430,93 @@
     "stakeholder management": "Stakeholder Management",
 
     "team leadership": "Team Management",
-    "people management": "Team Management"
+    "people management": "Team Management",
 
     
+  "apache": "Apache",
+  "apache http server": "Apache",
+
+  "php": "PHP",
+  "php programming": "PHP",
+
+  "nginx": "Nginx",
+  "nginx web server": "Nginx",
+
+  "api": "API",
+  "apis": "API",
+  "application programming interface": "API",
+
+  "markup": "Markup",
+  "markup language": "Markup",
+
+  "c#": "C#",
+  "c sharp": "C#",
+  "csharp": "C#",
+
+  ".net": ".NET",
+  "dotnet": ".NET",
+  "dot net": ".NET",
+
+  "asp.net": "ASP.NET",
+  "aspnet": "ASP.NET",
+  "asp net": "ASP.NET",
+
+  "hibernate": "Hibernate",
+  "hibernate orm": "Hibernate",
+
+  "matplotlib": "Matplotlib",
+  "mat plot lib": "Matplotlib",
+
+  "pytorch": "PyTorch",
+  "py torch": "PyTorch",
+
+  "jenkins": "Jenkins",
+  "jenkins ci": "Jenkins",
+
+  "terraform": "Terraform",
+  "terraform iac": "Terraform",
+
+  "ansible": "Ansible",
+  "ansible automation": "Ansible",
+
+  "elasticsearch": "Elasticsearch",
+  "elastic search": "Elasticsearch",
+
+  "logstash": "Logstash",
+
+  "kibana": "Kibana",
+
+  "trpc": "tRPC",
+  "t rpc": "tRPC",
+
+  "prisma": "Prisma",
+  "prisma orm": "Prisma",
+
+  "spacy": "spaCy",
+"Spacy": "spaCy",
+"spa cy": "spaCy",
+
+
+    "opencv": "OpenCV",
+    "OpenCV": "OpenCV",
+    "open cv": "OpenCV",
+    "Open CV": "OpenCV",
+    "opencv-python": "OpenCV",
+    "opencv python": "OpenCV",
+    "OpenCV-Python": "OpenCV",
+
+  "object oriented programming": "Object-Oriented Programming",
+  "object-oriented programming": "Object-Oriented Programming",
+  "object oriented programing": "Object-Oriented Programming",
+  "object-oriented programing": "Object-Oriented Programming",
+  "oop": "Object-Oriented Programming",
+  "o.o.p": "Object-Oriented Programming",
+  "object oriented programming (oop)": "Object-Oriented Programming",
+  "object-oriented programming (oop)": "Object-Oriented Programming",
+  "object oriented concepts": "Object-Oriented Programming",
+  "object-oriented concepts": "Object-Oriented Programming",
+  "object oriented design": "Object-Oriented Programming"
+
+
 
 }

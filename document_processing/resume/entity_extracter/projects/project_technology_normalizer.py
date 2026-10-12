@@ -1,9 +1,133 @@
+from document_processing.resume.entity_extracter.skill.spelling_resolver import (
+    resolve_spelling,
+)
 
-from document_processing.resume.entity_extracter.skill.spelling_resolver import resolve_spelling
-from document_processing.resume.entity_extracter.skill.synonym_resolver import resolve_synonyms
-from document_processing.resume.entity_extracter.skill.stack_resolver import expand_skill_stacks
-from document_processing.resume.entity_extracter.skill.master_skill_validator import validate_skills
+from document_processing.resume.entity_extracter.skill.synonym_resolver import (
+    resolve_synonyms,
+)
 
+from document_processing.resume.entity_extracter.skill.master_skill_validator import (
+    validate_skills,
+)
+
+from document_processing.resume.entity_extracter.skill.stack_resolver import (
+    expand_skill_stacks,
+)
+
+
+# ============================================================
+# CLEAN INPUT
+# ============================================================
+
+def _clean_strings(items):
+    """
+    Keep only non-empty technology strings.
+    """
+
+    if not items:
+        return []
+
+    result = []
+
+    for item in items:
+
+        if not isinstance(item, str):
+            continue
+
+        item = item.strip()
+
+        if not item:
+            continue
+
+        result.append(item)
+
+    return result
+
+
+# ============================================================
+# EXTRACT SKILL NAMES
+# ============================================================
+
+def _extract_skill_names(items):
+    """
+    Extract canonical skill names from resolver outputs.
+
+    Supports both:
+
+        {"skill": "Python"}
+
+    and possible alternate dictionary structures.
+    """
+
+    if not items:
+        return []
+
+    result = []
+
+    for item in items:
+
+        if isinstance(item, dict):
+
+            skill = (
+                item.get("skill")
+                or item.get("matched_skill")
+                or item.get("canonical_skill")
+                or item.get("name")
+            )
+
+            if isinstance(skill, str):
+
+                skill = skill.strip()
+
+                if skill:
+                    result.append(skill)
+
+        elif isinstance(item, str):
+
+            item = item.strip()
+
+            if item:
+                result.append(item)
+
+    return result
+
+
+# ============================================================
+# DEDUPLICATION
+# ============================================================
+
+def _deduplicate(items):
+    """
+    Remove duplicate technology names while preserving order.
+    """
+
+    result = []
+    seen = set()
+
+    for item in items:
+
+        if not isinstance(item, str):
+            continue
+
+        item = item.strip()
+
+        if not item:
+            continue
+
+        key = item.lower()
+
+        if key in seen:
+            continue
+
+        seen.add(key)
+        result.append(item)
+
+    return result
+
+
+# ============================================================
+# NORMALIZE PROJECT TECHNOLOGIES
+# ============================================================
 
 def normalize_project_technologies(
     technologies,
@@ -11,134 +135,157 @@ def normalize_project_technologies(
     skill_threshold=90,
 ):
     """
-    Normalize project technologies using the existing
+    Normalize project technologies through the existing
     skill normalization pipeline.
 
-    Parameters
-    ----------
-    technologies : list[str]
-        Raw technologies extracted from a project.
+    Pipeline:
 
-    spelling_threshold : int
-        Threshold used by the spelling resolver.
-
-    skill_threshold : int
-        Threshold used by the master skill validator.
-
-    Returns
-    -------
-    list[str]
-        Normalized canonical technologies.
+        raw technologies
+            ↓
+        spelling resolver
+            ↓
+        synonym resolver
+            ↓
+        master skill validator
+            ↓
+        stack resolver
+            ↓
+        canonical technology names
     """
 
-    if not technologies:
-        return []
+    # --------------------------------------------------------
+    # INPUT
+    # --------------------------------------------------------
 
-    # ========================================================
-    # Step 1: Clean raw input
-    # ========================================================
-
-    cleaned = [
-        technology.strip()
-        for technology in technologies
-        if technology and isinstance(technology, str) and technology.strip()
-    ]
+    cleaned = _clean_strings(technologies)
 
     if not cleaned:
         return []
 
-    # ========================================================
-    # Step 2: Spelling resolution
-    # ========================================================
+    # --------------------------------------------------------
+    # 1. SPELLING RESOLUTION
+    # --------------------------------------------------------
 
     try:
-        normalized = resolve_spelling(
+
+        spelling_resolved = resolve_spelling(
             cleaned,
             threshold=spelling_threshold,
         )
+
     except TypeError:
-        normalized = resolve_spelling(cleaned)
 
-    normalized = [
-        technology.strip()
-        for technology in normalized
-        if technology and isinstance(technology, str) and technology.strip()
-    ]
+        spelling_resolved = resolve_spelling(
+            cleaned
+        )
 
-    # ========================================================
-    # Step 3: Synonym resolution
-    # ========================================================
+    if not spelling_resolved:
+        spelling_resolved = cleaned
+
+    # IMPORTANT:
+    # Keep the dictionary structure.
+    #
+    # Do NOT convert to list[str] here.
+    #
+    # Example:
+    #
+    # [
+    #     {"skill": "Python"},
+    #     {"skill": "FastAPI"}
+    # ]
+
+    # --------------------------------------------------------
+    # 2. SYNONYM RESOLUTION
+    # --------------------------------------------------------
 
     try:
-        synonym_normalized = resolve_synonyms(normalized)
+
+        synonym_resolved = resolve_synonyms(
+            spelling_resolved
+        )
+
     except TypeError:
-        synonym_normalized = normalized
 
-    synonym_normalized = [
-        technology.strip()
-        for technology in synonym_normalized
-        if technology and isinstance(technology, str) and technology.strip()
-    ]
+        synonym_resolved = spelling_resolved
 
-    # ========================================================
-    # Step 4: Master skill validation
-    # ========================================================
+    if not synonym_resolved:
+        synonym_resolved = spelling_resolved
+
+    # --------------------------------------------------------
+    # 3. MASTER SKILL VALIDATION
+    # --------------------------------------------------------
 
     try:
+
         validated = validate_skills(
-            synonym_normalized,
+            synonym_resolved,
             threshold=skill_threshold,
         )
+
     except TypeError:
-        validated = validate_skills(synonym_normalized)
 
-    # ========================================================
-    # Step 5: Expand skill stacks
-    # ========================================================
+        validated = validate_skills(
+            synonym_resolved
+        )
 
-    try:
-        expanded = expand_skill_stacks(validated)
-    except TypeError:
-        expanded = validated
+    # --------------------------------------------------------
+    # 4. STACK EXPANSION
+    # --------------------------------------------------------
 
-    # ========================================================
-    # Step 6: Convert validator output to canonical skill names
-    # ========================================================
+    if validated:
+        try:
 
-    final_technologies = []
-
-    for item in expanded:
-
-        if isinstance(item, dict):
-
-            canonical = (
-                item.get("matched_skill")
-                or item.get("canonical_skill")
-                or item.get("skill")
+            expanded = expand_skill_stacks(
+                validated
             )
 
-            if canonical:
-                final_technologies.append(canonical)
+        except TypeError:
 
-        elif isinstance(item, str):
+            expanded = validated
 
-            final_technologies.append(item)
+        if not expanded:
+            expanded = validated
+    else:
+        expanded = []
 
-    # ========================================================
-    # Step 7: Final duplicate removal
-    # ========================================================
+    # --------------------------------------------------------
+    # 5. EXTRACT FINAL CANONICAL NAMES
+    # --------------------------------------------------------
 
-    result = []
-    seen = set()
+    final_names = _extract_skill_names(
+        expanded
+    )
 
-    for technology in final_technologies:
+    # Project technology lists are explicit resume content, so keep
+    # declared technologies even when the master skill catalog lacks them.
+    for candidate in synonym_resolved:
 
-        key = technology.lower()
+        names = _extract_skill_names(
+            [candidate]
+        )
 
-        if key in seen:
+        if not names:
             continue
 
-        seen.add(key)
-        result.append(technology)
+        try:
+            candidate_validation = validate_skills(
+                [candidate],
+                threshold=skill_threshold,
+            )
+        except TypeError:
+            candidate_validation = validate_skills(
+                [candidate]
+            )
 
-    return result
+        if candidate_validation:
+            continue
+
+        final_names.extend(names)
+
+    # --------------------------------------------------------
+    # 6. DEDUPLICATION
+    # --------------------------------------------------------
+
+    return _deduplicate(
+        final_names
+    )

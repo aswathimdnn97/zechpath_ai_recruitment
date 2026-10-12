@@ -1,41 +1,29 @@
 """
-skill_extractor_from_section.py
+Skill Extraction From Section
 
-Extract skill candidates from normal resume sections.
-
-Used for sections such as:
-
-    summary
-    experience
-    projects
-    certifications
-    education
-    achievements
-    publications
-    activities
-
-This module DOES NOT:
-    - perform fuzzy validation
-    - resolve synonyms
-    - expand stacks
-
-It only discovers candidate skill mentions.
-
-The actual normalization pipeline is handled by:
-
-    spelling_resolver.py
-    synonym_resolver.py
-    master_skill_validator.py
-    stack_resolver.py
+Responsibilities
+----------------
+- Load master skill dictionary
+- Load skill aliases
+- Compile skill regex patterns once
+- Build prefix indexes once
+- Extract skill candidates from resume sections
+- Preserve existing extraction semantics
 """
+
+from __future__ import annotations
 
 import json
 import re
 from pathlib import Path
+from typing import Any
+import time
 
+# ============================================================
+# PATHS
+# ============================================================
 
 PROJECT_ROOT = Path(__file__).resolve().parents[4]
-
 
 MASTER_SKILL_FILE = (
     PROJECT_ROOT
@@ -44,7 +32,6 @@ MASTER_SKILL_FILE = (
     / "skills"
     / "master_skill_dictionary.json"
 )
-
 
 ALIAS_FILE = (
     PROJECT_ROOT
@@ -55,109 +42,101 @@ ALIAS_FILE = (
 )
 
 
-SPELLING_FILE = (
-    PROJECT_ROOT
-    / "data"
-    / "resume"
-    / "skills"
-    / "spelling_dictionary.json"
-)
+# ============================================================
+# JSON LOADER
+# ============================================================
+
+def _load_json(path: Path, default: Any) -> Any:
+    if not path.exists():
+        return default
+
+    try:
+        with path.open("r", encoding="utf-8") as file:
+            return json.load(file)
+
+    except (json.JSONDecodeError, OSError):
+        return default
 
 
 # ============================================================
-# LOAD MASTER SKILLS
+# MASTER SKILLS
 # ============================================================
 
-def load_master_skills():
-    """
-    Load active skills from master dictionary.
-    """
+def load_master_skills() -> list[dict[str, Any]]:
+    data = _load_json(MASTER_SKILL_FILE, [])
 
-    if not MASTER_SKILL_FILE.exists():
-        return []
+    if isinstance(data, list):
+        return [
+            skill
+            for skill in data
+            if (
+                isinstance(skill, dict)
+                and skill.get("status") == "active"
+                and skill.get("name")
+            )
+        ]
 
-    with open(
-        MASTER_SKILL_FILE,
-        "r",
-        encoding="utf-8",
-    ) as file:
+    if isinstance(data, dict):
+        skills = data.get("skills", [])
 
-        data = json.load(file)
+        if isinstance(skills, list):
+            return [
+                skill
+                for skill in skills
+                if (
+                    isinstance(skill, dict)
+                    and skill.get("status", "active") == "active"
+                    and skill.get("name")
+                )
+            ]
 
-    if not isinstance(data, list):
-        return []
-
-    return [
-        skill
-        for skill in data
-        if (
-            isinstance(skill, dict)
-            and skill.get("status") == "active"
-            and skill.get("name")
-        )
-    ]
+    return []
 
 
 # ============================================================
-# LOAD ALIASES
+# ALIASES
 # ============================================================
 
-def load_aliases():
-    """
-    Load skill aliases.
+def load_aliases() -> dict[str, str]:
+    data = _load_json(ALIAS_FILE, {})
 
-    Example:
-
-        Fast API -> FastAPI
-        React JS -> React.js
-    """
-
-    if not ALIAS_FILE.exists():
+    if not isinstance(data, dict):
         return {}
 
-    with open(
-        ALIAS_FILE,
-        "r",
-        encoding="utf-8",
-    ) as file:
+    aliases: dict[str, str] = {}
 
-        data = json.load(file)
+    for alias, canonical in data.items():
 
-    return data if isinstance(data, dict) else {}
+        if not isinstance(alias, str):
+            continue
 
+        if not isinstance(canonical, str):
+            continue
 
-# ============================================================
-# LOAD SPELLING DICTIONARY
-# ============================================================
+        alias = alias.strip()
+        canonical = canonical.strip()
 
-def load_spelling_dictionary():
-    """
-    Load known spelling corrections.
+        if not alias or not canonical:
+            continue
 
-    Example:
+        aliases[alias] = canonical
 
-        javasript -> JavaScript
-    """
-
-    if not SPELLING_FILE.exists():
-        return {}
-
-    with open(
-        SPELLING_FILE,
-        "r",
-        encoding="utf-8",
-    ) as file:
-
-        data = json.load(file)
-
-    return data if isinstance(data, dict) else {}
+    return aliases
 
 
 # ============================================================
-# NORMALIZE FOR LOOKUP
+# LOAD ONCE
 # ============================================================
 
-def _normalize(value):
+MASTER_SKILLS = load_master_skills()
+ALIASES = load_aliases()
+
+
+# ============================================================
+# NORMALIZATION
+# ============================================================
+
+def _normalize(value: Any) -> str:
     if not isinstance(value, str):
         return ""
 
@@ -167,25 +146,11 @@ def _normalize(value):
 
 
 # ============================================================
-# REGEX ESCAPE
+# REGEX BUILDER
 # ============================================================
 
-def _build_pattern(skill_name):
-    """
-    Build a safe regex for a skill name.
-
-    re.escape() is important for:
-
-        C++
-        C#
-        .NET
-        Node.js
-        React.js
-    """
-
-    escaped = re.escape(
-        skill_name.strip()
-    )
+def _build_pattern(skill_name: str) -> re.Pattern[str]:
+    escaped = re.escape(skill_name.strip())
 
     return re.compile(
         rf"(?<!\w){escaped}(?!\w)",
@@ -194,109 +159,352 @@ def _build_pattern(skill_name):
 
 
 # ============================================================
-# FIND SKILL IN TEXT
+# PREFIX BUILDER
 # ============================================================
 
-def _find_skill_mentions(text, candidate):
+def _build_prefix(skill_name: str) -> str:
     """
-    Find a candidate skill in text.
+    Creates a safe literal prefix used only to narrow
+    the candidate regex patterns.
 
-    Returns True/False.
+    Examples
+    --------
+    Python       -> py
+    Java         -> ja
+    JavaScript   -> ja
+    React        -> re
+    Django       -> dj
+    Spring Boot  -> sp
+    Node.js      -> no
+    C++          -> c+
+    C#           -> c#
+    C Sharp      -> c
+
+    The original regex is ALWAYS executed after this
+    filter, so this cannot change the final matching rule.
     """
 
-    if not text or not candidate:
-        return False
+    if not isinstance(skill_name, str):
+        return ""
 
-    pattern = _build_pattern(candidate)
+    skill_name = skill_name.strip()
 
-    return bool(
-        pattern.search(text)
+    if not skill_name:
+        return ""
+
+    first_token = skill_name.split()[0]
+
+    if not first_token:
+        return ""
+
+    if len(first_token) >= 2:
+        return first_token[:2].lower()
+
+    return first_token.lower()
+
+
+# ============================================================
+# MASTER PATTERNS
+# ============================================================
+
+MASTER_SKILL_PATTERNS: list[
+    tuple[dict[str, Any], re.Pattern[str], str]
+] = []
+
+for master_skill in MASTER_SKILLS:
+
+    skill_name = master_skill.get("name")
+
+    if not isinstance(skill_name, str):
+        continue
+
+    skill_name = skill_name.strip()
+
+    if not skill_name:
+        continue
+
+    MASTER_SKILL_PATTERNS.append(
+        (
+            master_skill,
+            _build_pattern(skill_name),
+            _build_prefix(skill_name),
+        )
     )
 
 
 # ============================================================
-# EXTRACT FROM ONE SECTION
+# ALIAS PATTERNS
 # ============================================================
 
-def extract_skills_from_section(
-    section_name,
-    section_block,
-):
-    """
-    Extract candidate skill mentions from one resume section.
+ALIAS_PATTERNS: list[
+    tuple[str, str, re.Pattern[str], str]
+] = []
 
-    Returns structured candidate objects so that the caller
-    knows where the skill came from.
+for alias, canonical in ALIASES.items():
+
+    if not isinstance(alias, str):
+        continue
+
+    if not isinstance(canonical, str):
+        continue
+
+    alias = alias.strip()
+    canonical = canonical.strip()
+
+    if not alias or not canonical:
+        continue
+
+    ALIAS_PATTERNS.append(
+        (
+            alias,
+            canonical,
+            _build_pattern(alias),
+            _build_prefix(alias),
+        )
+    )
+
+
+# ============================================================
+# PREFIX INDEXES
+# ============================================================
+
+MASTER_PATTERN_INDEX: dict[
+    str,
+    list[
+        tuple[dict[str, Any], re.Pattern[str]]
+    ]
+] = {}
+
+for master_skill, pattern, prefix in MASTER_SKILL_PATTERNS:
+
+    MASTER_PATTERN_INDEX.setdefault(
+        prefix,
+        [],
+    ).append(
+        (
+            master_skill,
+            pattern,
+        )
+    )
+
+
+ALIAS_PATTERN_INDEX: dict[
+    str,
+    list[
+        tuple[str, str, re.Pattern[str]]
+    ]
+] = {}
+
+for alias, canonical, pattern, prefix in ALIAS_PATTERNS:
+
+    ALIAS_PATTERN_INDEX.setdefault(
+        prefix,
+        [],
+    ).append(
+        (
+            alias,
+            canonical,
+            pattern,
+        )
+    )
+
+
+# ============================================================
+# DIAGNOSTIC
+# ============================================================
+
+print(
+    f"[SKILL PATTERNS] "
+    f"master={len(MASTER_SKILL_PATTERNS)} "
+    f"aliases={len(ALIAS_PATTERNS)} "
+    f"master_prefixes={len(MASTER_PATTERN_INDEX)} "
+    f"alias_prefixes={len(ALIAS_PATTERN_INDEX)}"
+)
+
+
+# ============================================================
+# MATCHER
+# ============================================================
+
+def _find_skill_mentions(
+    text: str,
+    pattern: re.Pattern[str],
+) -> bool:
+
+    if not text:
+        return False
+
+    return bool(pattern.search(text))
+
+
+# ============================================================
+# SOURCE BUILDER
+# ============================================================
+
+def _build_source(
+    section_name: str,
+    source_text: str,
+    skill: str,
+) -> dict[str, str]:
+
+    return {
+        "source_section": section_name,
+        "source_text": source_text,
+        "source_skill": skill,
+    }
+
+
+def extract_skills_from_section(
+    section_name: str,
+    section_block: Any,
+) -> list[dict[str, Any]]:
     """
+    Extract skills from a single section text/fragment.
+
+    Performance goals
+    ------------------
+    - Avoid unnecessary recursive flattening when section_block
+      is already a string.
+    - Normalize and prepare the text only once.
+    - Use prefix indexes to skip irrelevant patterns.
+    - Preserve existing candidate structure.
+    - Preserve source_section/source_text/source_skill.
+    - Preserve master-dictionary and alias extraction behavior.
+
+    Expected input from _collect_candidates()
+    ------------------------------------------
+        section_block = source_text
+
+    where source_text is already a single flattened string.
+
+    Returns
+    -------
+    list[dict[str, Any]]
+        Extracted skill candidates.
+    """
+
+    # ---------------------------------------------------------
+    # 1. Validate section
+    # ---------------------------------------------------------
 
     if not section_block:
         return []
 
-    # --------------------------------------------------------
-    # Flatten nested section detector output.
-    #
-    # Example:
-    #
-    # [
-    #     [
-    #         "Worked with Python.",
-    #         "Developed APIs using FastAPI."
-    #     ]
-    # ]
-    # --------------------------------------------------------
-
-    text_parts = []
-
-    def flatten(value):
-
-        if isinstance(value, list):
-
-            for item in value:
-                flatten(item)
-
-        elif isinstance(value, str):
-
-            cleaned = value.strip()
-
-            if cleaned:
-                text_parts.append(cleaned)
-
-    flatten(section_block)
-
-    if not text_parts:
+    if not isinstance(section_name, str):
         return []
 
-    text = " ".join(text_parts)
+    section_name = _normalize(section_name)
 
-    candidates = []
+    if not section_name:
+        return []
 
-    seen = set()
+    # ---------------------------------------------------------
+    # 2. Convert section_block into text
+    #
+    # IMPORTANT:
+    # _collect_candidates() normally passes a string here.
+    # Avoid recursive flattening in that common case.
+    # ---------------------------------------------------------
 
-    # ========================================================
-    # MASTER SKILL NAMES
-    # ========================================================
+    if isinstance(section_block, str):
 
-    master_skills = load_master_skills()
+        text = section_block.strip()
 
-    for skill in master_skills:
+        if not text:
+            return []
 
-        skill_name = skill.get("name")
+    else:
+
+        text_parts: list[str] = []
+
+        def flatten(value: Any) -> None:
+
+            if isinstance(value, list):
+
+                for item in value:
+                    flatten(item)
+
+            elif isinstance(value, tuple):
+
+                for item in value:
+                    flatten(item)
+
+            elif isinstance(value, dict):
+
+                for item in value.values():
+                    flatten(item)
+
+            elif isinstance(value, str):
+
+                cleaned = value.strip()
+
+                if cleaned:
+                    text_parts.append(cleaned)
+
+        flatten(section_block)
+
+        if not text_parts:
+            return []
+
+        text = " ".join(text_parts)
+
+    # ---------------------------------------------------------
+    # 3. Lowercase once
+    # ---------------------------------------------------------
+
+    text_lower = text.lower()
+
+    candidates: list[dict[str, Any]] = []
+
+    # ---------------------------------------------------------
+    # 4. Determine which prefixes are actually present
+    #
+    # Instead of creating two sets containing every prefix,
+    # create only boolean lookup information needed by the
+    # pattern loops.
+    # ---------------------------------------------------------
+
+    master_prefixes_present = {
+        prefix
+        for prefix in MASTER_PATTERN_INDEX
+        if prefix and prefix in text_lower
+    }
+
+    alias_prefixes_present = {
+        prefix
+        for prefix in ALIAS_PATTERN_INDEX
+        if prefix and prefix in text_lower
+    }
+
+    # ---------------------------------------------------------
+    # 5. MASTER DICTIONARY
+    # ---------------------------------------------------------
+
+    for master_skill, pattern, prefix in MASTER_SKILL_PATTERNS:
+
+        # Fast rejection.
+        if prefix and prefix not in master_prefixes_present:
+            continue
+
+        skill_name = master_skill.get("name")
+
+        if not isinstance(skill_name, str):
+            continue
+
+        skill_name = skill_name.strip()
 
         if not skill_name:
             continue
 
+        if skill_name.lower() not in text_lower:
+            continue
+
+        # Exact/regex skill validation.
         if not _find_skill_mentions(
             text,
-            skill_name,
+            pattern,
         ):
             continue
-
-        key = _normalize(skill_name)
-
-        if key in seen:
-            continue
-
-        seen.add(key)
 
         candidates.append(
             {
@@ -304,37 +512,34 @@ def extract_skills_from_section(
                 "source_section": section_name,
                 "source_text": text,
                 "extraction_method": "master_dictionary",
+                "sources": [
+                    _build_source(
+                        section_name,
+                        text,
+                        skill_name,
+                    )
+                ],
             }
         )
 
-    # ========================================================
-    # ALIASES
-    # ========================================================
+    # ---------------------------------------------------------
+    # 6. ALIAS DICTIONARY
+    # ---------------------------------------------------------
 
-    aliases = load_aliases()
+    for alias, canonical, pattern, prefix in ALIAS_PATTERNS:
 
-    for alias, canonical in aliases.items():
+        # Fast rejection.
+        if prefix and prefix not in alias_prefixes_present:
+            continue
 
-        if not alias or not canonical:
+        if alias.lower() not in text_lower:
             continue
 
         if not _find_skill_mentions(
             text,
-            alias,
+            pattern,
         ):
             continue
-
-        # Keep the ALIAS as the candidate.
-        #
-        # This allows synonym_resolver.py to perform
-        # canonicalization later.
-
-        key = _normalize(alias)
-
-        if key in seen:
-            continue
-
-        seen.add(key)
 
         candidates.append(
             {
@@ -342,39 +547,13 @@ def extract_skills_from_section(
                 "source_section": section_name,
                 "source_text": text,
                 "extraction_method": "alias",
-            }
-        )
-
-    # ========================================================
-    # SPELLING VARIANTS
-    # ========================================================
-
-    spelling_dictionary = load_spelling_dictionary()
-
-    for wrong, correct in spelling_dictionary.items():
-
-        if not wrong:
-            continue
-
-        if not _find_skill_mentions(
-            text,
-            wrong,
-        ):
-            continue
-
-        key = _normalize(wrong)
-
-        if key in seen:
-            continue
-
-        seen.add(key)
-
-        candidates.append(
-            {
-                "skill": wrong,
-                "source_section": section_name,
-                "source_text": text,
-               "extraction_method": "spelling_dictionary",
+                "sources": [
+                    _build_source(
+                        section_name,
+                        text,
+                        alias,
+                    )
+                ],
             }
         )
 

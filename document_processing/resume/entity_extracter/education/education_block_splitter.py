@@ -9,18 +9,19 @@ Responsibilities
 4. Detect university continuation records.
 5. Preserve line order.
 6. Ignore empty lines.
-7. Keep university continuation separate so that the
-   post-processor can merge it with the preceding degree.
+7. Keep university continuation with the preceding degree.
+8. Keep institution-before-degree records together.
 """
 
 import re
 
 
-DEGREE_KEYWORDS = [
-    # =====================================================
-    # ENGINEERING
-    # =====================================================
+# ============================================================
+# DEGREE KEYWORDS
+# ============================================================
 
+DEGREE_KEYWORDS = [
+    # Engineering
     "b.tech",
     "btech",
     "b.e.",
@@ -28,7 +29,6 @@ DEGREE_KEYWORDS = [
     "be ",
     "bachelor of technology",
     "bachelor of engineering",
-
     "m.tech",
     "mtech",
     "m.e.",
@@ -37,220 +37,153 @@ DEGREE_KEYWORDS = [
     "master of technology",
     "master of engineering",
 
-    # =====================================================
-    # SCIENCE
-    # =====================================================
-
+    # Science
     "b.sc.",
     "b.sc",
     "bsc",
     "bachelor of science",
-
     "m.sc.",
     "m.sc",
     "msc",
     "master of science",
 
-    # =====================================================
-    # COMMERCE
-    # =====================================================
-
+    # Commerce
     "b.com.",
     "b.com",
     "bcom",
     "bachelor of commerce",
-
     "m.com.",
     "m.com",
     "mcom",
     "master of commerce",
 
-    # =====================================================
-    # COMPUTER APPLICATIONS
-    # =====================================================
-
+    # Computer Applications
     "b.c.a.",
     "b.c.a",
     "bca",
     "bachelor of computer applications",
-
     "m.c.a.",
     "m.c.a",
     "mca",
     "master of computer applications",
 
-    # =====================================================
-    # MANAGEMENT
-    # =====================================================
-
+    # Management
     "b.b.a.",
     "b.b.a",
     "bba",
     "bachelor of business administration",
-
     "b.m.s.",
     "b.m.s",
     "bms",
     "bachelor of management studies",
-
     "m.b.a.",
     "m.b.a",
     "mba",
     "master of business administration",
 
-    # =====================================================
-    # ARTS
-    # =====================================================
-
+    # Arts
     "b.a.",
     "b.a",
     "ba ",
     "bachelor of arts",
-
     "m.a.",
     "m.a",
     "ma ",
     "master of arts",
 
-    # =====================================================
-    # PHARMACY
-    # =====================================================
-
+    # Pharmacy
     "b.pharm.",
     "b.pharm",
     "bpharm",
     "bachelor of pharmacy",
-
     "m.pharm.",
     "m.pharm",
     "mpharm",
     "master of pharmacy",
 
-    # =====================================================
-    # ARCHITECTURE / DESIGN
-    # =====================================================
-
+    # Architecture / Design
     "b.arch.",
     "b.arch",
     "barch",
     "bachelor of architecture",
-
     "b.des.",
     "b.des",
     "bdes",
     "bachelor of design",
 
-    # =====================================================
-    # FINE ARTS
-    # =====================================================
-
+    # Fine Arts
     "b.f.a.",
     "b.f.a",
     "bfa",
     "bachelor of fine arts",
 
-    # =====================================================
-    # LAW
-    # =====================================================
-
+    # Law
     "l.l.b.",
     "l.l.b",
     "llb",
     "bachelor of laws",
 
-    # =====================================================
-    # SOCIAL WORK
-    # =====================================================
-
+    # Social Work
     "b.s.w.",
     "b.s.w",
     "bsw",
     "bachelor of social work",
 
-    # =====================================================
-    # LIBRARY SCIENCE
-    # =====================================================
-
+    # Library Science
     "b.l.i.s.",
     "b.l.i.s",
     "blis",
     "bachelor of library and information science",
 
-    # =====================================================
-    # HOTEL MANAGEMENT
-    # =====================================================
-
+    # Hotel Management
     "b.h.m.",
     "b.h.m",
     "bhm",
     "bachelor of hotel management",
 
-    # =====================================================
-    # JOURNALISM / MASS COMMUNICATION
-    # =====================================================
-
+    # Journalism
     "b.j.m.c.",
     "b.j.m.c",
     "bjmc",
     "bachelor of journalism and mass communication",
 
-    # =====================================================
-    # MEDICAL
-    # =====================================================
-
+    # Medical
     "m.b.b.s.",
     "m.b.b.s",
     "mbbs",
     "bachelor of medicine and bachelor of surgery",
-
     "b.d.s.",
     "b.d.s",
     "bds",
     "bachelor of dental surgery",
-
     "b.p.t.",
     "b.p.t",
     "bpt",
     "bachelor of physiotherapy",
 
-    # =====================================================
     # HR
-    # =====================================================
-
     "b.h.r.m.",
     "b.h.r.m",
     "bhrm",
     "bachelor of human resource management",
 
-    # =====================================================
-    # TRAVEL / TOURISM
-    # =====================================================
-
+    # Travel / Tourism
     "b.t.t.m.",
     "b.t.t.m",
     "bttm",
     "bachelor of travel and tourism management",
 
-    # =====================================================
-    # GENERAL
-    # =====================================================
-
+    # General
     "bachelor",
     "master",
 
-    # =====================================================
-    # DOCTORATE
-    # =====================================================
-
+    # Doctorate
     "ph.d.",
     "ph.d",
     "phd",
     "doctor of philosophy",
 
-    # =====================================================
-    # OTHER QUALIFICATIONS
-    # =====================================================
-
+    # Other
     "associate degree",
     "associate",
     "diploma",
@@ -258,9 +191,10 @@ DEGREE_KEYWORDS = [
     "copa",
 ]
 
-# =========================================================
+
+# ============================================================
 # SCHOOL QUALIFICATION KEYWORDS
-# =========================================================
+# ============================================================
 
 SCHOOL_KEYWORDS = [
     "all india senior school certificate",
@@ -283,29 +217,29 @@ SCHOOL_KEYWORDS = [
 ]
 
 
-# =========================================================
+# ============================================================
 # UNIVERSITY KEYWORDS
-# =========================================================
+# ============================================================
 
 UNIVERSITY_KEYWORDS = [
     "university",
     "universit",
     "technological university",
     "technical university",
-    "institute of technology",
     "open university",
     "deemed university",
 ]
 
 
-# =========================================================
+# ============================================================
 # INSTITUTION KEYWORDS
-# =========================================================
+# ============================================================
 
 INSTITUTION_KEYWORDS = [
     "college",
     "institute",
     "institution",
+    "school",
     "academy",
     "vidyalaya",
     "polytechnic",
@@ -313,14 +247,14 @@ INSTITUTION_KEYWORDS = [
 ]
 
 
-# =========================================================
-# HELPER FUNCTIONS
-# =========================================================
+# ============================================================
+# NORMALIZATION
+# ============================================================
 
 def _normalize_line(line):
-    """Normalize whitespace for detection only."""
+    """Normalize whitespace for detection."""
 
-    if not line:
+    if not isinstance(line, str):
         return ""
 
     line = line.replace("\xa0", " ")
@@ -329,9 +263,13 @@ def _normalize_line(line):
     return line.strip()
 
 
+# ============================================================
+# DEGREE DETECTION
+# ============================================================
+
 def is_degree_start(line):
     """
-    Determine whether a line starts a degree record.
+    Determine whether a line contains a degree qualification.
     """
 
     line = _normalize_line(line)
@@ -347,10 +285,13 @@ def is_degree_start(line):
     )
 
 
+# ============================================================
+# SCHOOL DETECTION
+# ============================================================
+
 def is_school_start(line):
     """
-    Determine whether a line starts a school-level
-    education record.
+    Detect school / secondary education qualification.
     """
 
     line = _normalize_line(line)
@@ -358,25 +299,32 @@ def is_school_start(line):
     if not line:
         return False
 
-    lower = line.lower()
+    normalized = re.sub(
+        r"^\s*(?:19|20)\d{2}\s*[-–—]\s*(?:19|20)?\d{2}\s*",
+        "",
+        line,
+        flags=re.IGNORECASE,
+    )
+
+    normalized = normalized.lower()
 
     return any(
-        keyword in lower
+        keyword in normalized
         for keyword in SCHOOL_KEYWORDS
     )
 
 
+# ============================================================
+# UNIVERSITY DETECTION
+# ============================================================
+
 def is_university_continuation(line):
     """
-    Determine whether a line starts a university
-    continuation record.
+    Detect a university continuation line.
 
-    Example:
-
-        Visvesvaraya Technological University,
-        Belgaum, Karnataka, India.
-
-    This is intentionally separate from degree detection.
+    The detailed university detection is handled by
+    university_extractor.py. This function is only used by
+    the education block splitter.
     """
 
     line = _normalize_line(line)
@@ -392,18 +340,11 @@ def is_university_continuation(line):
     )
 
 
+# ============================================================
+# EDUCATION START
+# ============================================================
+
 def is_education_start(line):
-    """
-    Determine whether a line starts any major education
-    record.
-
-    This includes:
-
-        - Degree
-        - School qualification
-        - University continuation
-    """
-
     return (
         is_degree_start(line)
         or is_school_start(line)
@@ -411,16 +352,21 @@ def is_education_start(line):
     )
 
 
+# ============================================================
+# INSTITUTION LINE
+# ============================================================
+
 def is_institution_line(line):
     """
-    Detect a line that appears to be an institution/location
-    entry in an education section.
+    Detect an institution-like line.
     """
+
+    line = _normalize_line(line)
 
     if not line:
         return False
 
-    lower = _normalize_line(line).lower()
+    lower = line.lower()
 
     if is_university_continuation(line):
         return True
@@ -431,16 +377,25 @@ def is_institution_line(line):
     ):
         return True
 
-    if "," in lower and not is_degree_start(line) and not is_school_start(line):
+    # A comma-separated location line is often an institution.
+    if (
+        "," in line
+        and not is_degree_start(line)
+        and not is_school_start(line)
+    ):
         return True
 
     return False
 
 
+# ============================================================
+# INSTITUTION-ONLY BLOCK
+# ============================================================
+
 def current_block_is_institution_only(block):
     """
-    Detect whether the current block is a pending institution
-    record without a degree or school qualification yet.
+    True when block does not yet contain a degree/school
+    qualification.
     """
 
     if not block:
@@ -453,15 +408,21 @@ def current_block_is_institution_only(block):
     )
 
 
+# ============================================================
+# NEXT QUALIFICATION
+# ============================================================
+
 def next_line_is_qualification(lines, index):
     """
-    Look ahead to see whether a later non-empty line
-    represents a qualification.
+    Determine whether the next meaningful line starts a
+    qualification.
     """
 
-    for next_line in lines[index + 1 :]:
+    for next_index in range(index + 1, len(lines)):
 
-        next_line = _normalize_line(next_line)
+        next_line = _normalize_line(
+            lines[next_index]
+        )
 
         if not next_line:
             continue
@@ -474,20 +435,20 @@ def next_line_is_qualification(lines, index):
     return False
 
 
-def is_university_continuation_for_degree(line, current_block):
+# ============================================================
+# UNIVERSITY CONTINUATION FOR DEGREE
+# ============================================================
+
+def is_university_continuation_for_degree(
+    line,
+    current_block,
+):
     """
-    Determine whether a university continuation line should
-    be treated as part of the current degree block.
-
-    A line that contains both degree information and a university
-    name should NOT be treated as a continuation of the previous
-    block; it starts a new degree record.
+    University continuation belongs to an existing degree
+    when the current block already starts with a degree.
     """
 
-    if not line:
-        return False
-
-    if not current_block:
+    if not line or not current_block:
         return False
 
     return (
@@ -497,57 +458,90 @@ def is_university_continuation_for_degree(line, current_block):
     )
 
 
-# =========================================================
+# ============================================================
+# SCHOOL INSTITUTION CONTINUATION
+# ============================================================
+
+def is_institution_continuation_for_school(
+    line,
+    current_block,
+):
+    """
+    Determine whether a school institution line belongs to
+    the current school qualification.
+    """
+
+    if not line or not current_block:
+        return False
+
+    if not is_school_start(current_block[0]):
+        return False
+
+    normalized = _normalize_line(line).lower()
+
+    normalized_without_date = re.sub(
+        r"^\s*(?:19|20)\d{2}\s*[-–—]\s*(?:19|20)?\d{2}\s*",
+        "",
+        normalized,
+    ).strip()
+
+    explicit_school_qualifications = [
+        "all india senior school certificate",
+        "senior school certificate",
+        "all india secondary school examination",
+        "secondary school examination",
+        "secondary examination",
+    ]
+
+    if any(
+        normalized_without_date.startswith(prefix)
+        for prefix in explicit_school_qualifications
+    ):
+        return False
+
+    return any(
+        keyword in normalized
+        for keyword in [
+            "school",
+            "vidyalaya",
+            "college",
+            "institute",
+            "academy",
+            "polytechnic",
+        ]
+    )
+
+
+# ============================================================
 # SPLITTER
-# =========================================================
+# ============================================================
 
 def split_education_blocks(education_section):
     """
-    Split education section into logical blocks.
-
-    Parameters
-    ----------
-    education_section : list[str]
-
-    Returns
-    -------
-    list[list[str]]
+    Split education section into logical education blocks.
     """
 
     if not education_section:
         return []
 
-    # -----------------------------------------------------
-    # Flatten nested list
-    # -----------------------------------------------------
-
+    # Flatten nested lists.
     if (
         isinstance(education_section, list)
         and education_section
-        and isinstance(
-            education_section[0],
-            list
-        )
+        and isinstance(education_section[0], list)
     ):
         flattened = []
 
         for item in education_section:
-
             if isinstance(item, list):
                 flattened.extend(item)
-
             else:
                 flattened.append(item)
 
         education_section = flattened
 
     blocks = []
-
     current_block = []
-
-    # -----------------------------------------------------
-    # Process lines
-    # -----------------------------------------------------
 
     for index, raw_line in enumerate(education_section):
 
@@ -556,55 +550,89 @@ def split_education_blocks(education_section):
         if not line:
             continue
 
-        # -------------------------------------------------
-        # A new logical education record starts here.
-        # -------------------------------------------------
+        # ----------------------------------------------------
+        # Qualification / university start
+        # ----------------------------------------------------
 
         if is_education_start(line):
 
+            # School institution continuation.
+            if is_institution_continuation_for_school(
+                line,
+                current_block,
+            ):
+                current_block.append(line)
+                continue
+
+            # University continuation.
             if is_university_continuation_for_degree(
                 line,
+                current_block,
+            ):
+                current_block.append(line)
+                continue
+
+            # Institution before qualification:
+            #
+            # ABC College
+            # B.Tech Computer Science
+            #
+            # Keep them in the same block.
+            if (
+                current_block_is_institution_only(current_block)
+                and (
+                    is_degree_start(line)
+                    or is_school_start(line)
+                )
+            ):
+                current_block.append(line)
+                continue
+
+            # Otherwise start a new education record.
+            if current_block:
+                blocks.append(current_block)
+
+            current_block = [line]
+            continue
+
+        # ----------------------------------------------------
+        # Institution line
+        # ----------------------------------------------------
+
+        if is_institution_line(line):
+
+            if current_block_is_institution_only(
                 current_block
             ):
                 current_block.append(line)
                 continue
 
-            if current_block_is_institution_only(current_block) and (
-                is_degree_start(line)
-                or is_school_start(line)
-            ):
-                current_block.append(line)
-                continue
-
-            if current_block:
-                blocks.append(
-                    current_block
+            # Institution before next qualification.
+            if (
+                current_block
+                and next_line_is_qualification(
+                    education_section,
+                    index,
                 )
-
-            current_block = [line]
-
-        elif is_institution_line(line) and current_block_is_institution_only(current_block):
-            current_block.append(line)
-
-        elif is_institution_line(line) and next_line_is_qualification(education_section, index):
-            if current_block:
+            ):
                 blocks.append(current_block)
-            current_block = [line]
-
-        else:
-
-            # Continuation line
-            if current_block:
-                current_block.append(line)
-
-            else:
-                # Ignore orphan lines before first education
-                # record rather than creating an invalid block.
+                current_block = [line]
                 continue
 
-    # -----------------------------------------------------
-    # Add final block
-    # -----------------------------------------------------
+            # Otherwise it belongs to current block.
+            if current_block:
+                current_block.append(line)
+            else:
+                current_block = [line]
+
+            continue
+
+        # ----------------------------------------------------
+        # Ordinary continuation
+        # ----------------------------------------------------
+
+        if current_block:
+            current_block.append(line)
 
     if current_block:
         blocks.append(current_block)
@@ -612,52 +640,23 @@ def split_education_blocks(education_section):
     return blocks
 
 
-# =========================================================
-# TESTING
-# =========================================================
+# ============================================================
+# TEST
+# ============================================================
 
 if __name__ == "__main__":
 
     education = [
-
-        "2012-2016 Bachelor of Engineering (B.E), "
-        "P.E.S Institute of Technology, "
-        "Bangalore South Campus, India.",
-
-        "Visvesvaraya Technological University, "
-        "Belgaum, Karnataka, India.",
-
+        "B.Tech in Computer Science and Engineering - Kerala Institute of Technology (2020 - 2024)",
         "Computer Science and Engineering",
-
-        "Aggregate Score : 64.2",
-
-        "2011-2012 All India Senior School Certificate Exam, "
-        "Kendriya Vidyalaya Kalpetta, Kerala, India.",
-
+        "Higher Secondary - Computer Science - Government Higher Secondary School (2018 - 2020)",
         "Central Board of Secondary Education",
-
-        "Marks Obtained - 85.5",
-
-        "2000-2010 All India Secondary School Examination, "
-        "Kendriya Vidyalaya Kalpetta, Kerala, India.",
-
-        "Central Board of Secondary Education",
-
-        "Marks Obtained - 9.4 CGPA",
     ]
 
-    result = split_education_blocks(
-        education
-    )
+    result = split_education_blocks(education)
 
-    for i, block in enumerate(
-        result,
-        start=1
-    ):
-
-        print(
-            f"\nBlock {i}"
-        )
+    for index, block in enumerate(result, start=1):
+        print(f"\nBlock {index}")
 
         for line in block:
-            print(line)
+            print("  ", line)

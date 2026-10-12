@@ -1,0 +1,460 @@
+{
+    "candidate_id": "CAN_410B14422E90",
+    "masked_profile": {
+        "candidate_id": "CAN_410B14422E90",
+        "skills": [
+            {
+                "skill_id": "TECH001",
+                "skill": "Python",
+                "category": "Technical",
+                "subcategory": "Programming Language",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+                "sources": [
+                    "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+                    "Backend Engineer - Enterprise Soft Jan 2020 - Present Kochi, Kerala Developed Python backend services and database integrations. Built APIs using Flask and maintained MySQL databases. Used Docker and Git in team development.",
+                    "Python"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH013",
+                "skill": "Flask",
+                "category": "Technical",
+                "subcategory": "Backend Framework",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+                "sources": [
+                    "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+                    "Backend Engineer - Enterprise Soft Jan 2020 - Present Kochi, Kerala Developed Python backend services and database integrations. Built APIs using Flask and maintained MySQL databases. Used Docker and Git in team development.",
+                    "Flask"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH016A",
+                "skill": "SQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "skills"
+                ],
+                "source_text": "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+                "sources": [
+                    "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+                    "SQL"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH017",
+                "skill": "MySQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+                "sources": [
+                    "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+                    "Backend Engineer - Enterprise Soft Jan 2020 - Present Kochi, Kerala Developed Python backend services and database integrations. Built APIs using Flask and maintained MySQL databases. Used Docker and Git in team development.",
+                    "MySQL"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH021",
+                "skill": "Docker",
+                "category": "Technical",
+                "subcategory": "DevOps",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+                "sources": [
+                    "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+                    "Backend Engineer - Enterprise Soft Jan 2020 - Present Kochi, Kerala Developed Python backend services and database integrations. Built APIs using Flask and maintained MySQL databases. Used Docker and Git in team development.",
+                    "Docker"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH023",
+                "skill": "Git",
+                "category": "Technical",
+                "subcategory": "Version Control",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_sections": [
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "Backend Engineer - Enterprise Soft Jan 2020 - Present Kochi, Kerala Developed Python backend services and database integrations. Built APIs using Flask and maintained MySQL databases. Used Docker and Git in team development.",
+                "sources": [
+                    "Backend Engineer - Enterprise Soft Jan 2020 - Present Kochi, Kerala Developed Python backend services and database integrations. Built APIs using Flask and maintained MySQL databases. Used Docker and Git in team development.",
+                    "Git"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH025",
+                "skill": "REST API",
+                "category": "Technical",
+                "subcategory": "Web Services",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "skills",
+                "source_text": "REST APIs",
+                "extraction_method": "skills_section"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Bachelor of Technology",
+                "field_of_study": "Information Technology",
+                "institution": null,
+                "university": null,
+                "board": null,
+                "graduation_year": "2019"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": null,
+                    "title": "Backend Engineer",
+                    "category": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Enterprise Soft",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jan 2020",
+                    "end_date": "Present"
+                },
+                "total_experience": {
+                    "total_months": 81,
+                    "total_years": 6.8
+                },
+                "location": "Kochi, Kerala",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 75
+                },
+                "description": [
+                    "Developed Python backend services and database integrations.",
+                    "Built APIs using Flask and maintained MySQL databases.",
+                    "Used Docker and Git in team development."
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [
+            {
+                "certification_name": "Professional Certification",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "Industry Skills Program",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "Advanced Workplace Training",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            }
+        ],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-09-24T07:15:09.094447+00:00"
+        }
+    },
+    "bias_report": {
+        "bias_detected": false,
+        "risk_level": "none",
+        "indicator_count": 0,
+        "indicators": [],
+        "status": "clear"
+    },
+    "original_profile": {
+        "candidate_id": "CAN_410B14422E90",
+        "personal_information": {
+            "name": "SNEHA PILLAI",
+            "email": "sneha.p@example.com",
+            "phone": null,
+            "location": "Kochi, Kerala",
+            "linkedin": null,
+            "github": null,
+            "portfolio": null
+        },
+        "skills": [
+            {
+                "skill_id": "TECH001",
+                "skill": "Python",
+                "category": "Technical",
+                "subcategory": "Programming Language",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+                "sources": [
+                    "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+                    "Backend Engineer - Enterprise Soft Jan 2020 - Present Kochi, Kerala Developed Python backend services and database integrations. Built APIs using Flask and maintained MySQL databases. Used Docker and Git in team development.",
+                    "Python"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH013",
+                "skill": "Flask",
+                "category": "Technical",
+                "subcategory": "Backend Framework",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+                "sources": [
+                    "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+                    "Backend Engineer - Enterprise Soft Jan 2020 - Present Kochi, Kerala Developed Python backend services and database integrations. Built APIs using Flask and maintained MySQL databases. Used Docker and Git in team development.",
+                    "Flask"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH016A",
+                "skill": "SQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "skills"
+                ],
+                "source_text": "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+                "sources": [
+                    "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+                    "SQL"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH017",
+                "skill": "MySQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+                "sources": [
+                    "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+                    "Backend Engineer - Enterprise Soft Jan 2020 - Present Kochi, Kerala Developed Python backend services and database integrations. Built APIs using Flask and maintained MySQL databases. Used Docker and Git in team development.",
+                    "MySQL"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH021",
+                "skill": "Docker",
+                "category": "Technical",
+                "subcategory": "DevOps",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+                "sources": [
+                    "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+                    "Backend Engineer - Enterprise Soft Jan 2020 - Present Kochi, Kerala Developed Python backend services and database integrations. Built APIs using Flask and maintained MySQL databases. Used Docker and Git in team development.",
+                    "Docker"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH023",
+                "skill": "Git",
+                "category": "Technical",
+                "subcategory": "Version Control",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_sections": [
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "Backend Engineer - Enterprise Soft Jan 2020 - Present Kochi, Kerala Developed Python backend services and database integrations. Built APIs using Flask and maintained MySQL databases. Used Docker and Git in team development.",
+                "sources": [
+                    "Backend Engineer - Enterprise Soft Jan 2020 - Present Kochi, Kerala Developed Python backend services and database integrations. Built APIs using Flask and maintained MySQL databases. Used Docker and Git in team development.",
+                    "Git"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH025",
+                "skill": "REST API",
+                "category": "Technical",
+                "subcategory": "Web Services",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "skills",
+                "source_text": "REST APIs",
+                "extraction_method": "skills_section"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Bachelor of Technology",
+                "field_of_study": "Information Technology",
+                "institution": null,
+                "university": null,
+                "board": null,
+                "graduation_year": "2019"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": null,
+                    "title": "Backend Engineer",
+                    "category": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Enterprise Soft",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jan 2020",
+                    "end_date": "Present"
+                },
+                "total_experience": {
+                    "total_months": 81,
+                    "total_years": 6.8
+                },
+                "location": "Kochi, Kerala",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 75
+                },
+                "description": [
+                    "Developed Python backend services and database integrations.",
+                    "Built APIs using Flask and maintained MySQL databases.",
+                    "Used Docker and Git in team development."
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [
+            {
+                "certification_name": "Professional Certification",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "Industry Skills Program",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "Advanced Workplace Training",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            }
+        ],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-09-24T07:15:09.094447+00:00"
+        }
+    },
+    "resume_hash": "f50cba3215b641bcf9db9c59d8d36391b750d9863889f2ab0a4d6381ffd2e995"
+}

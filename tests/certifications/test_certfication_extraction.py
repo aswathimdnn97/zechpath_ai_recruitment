@@ -18,6 +18,9 @@ from document_processing.resume.entity_extracter.certifications.certification_da
     extract_certification_date,
 )
 from document_processing.resume.entity_extracter.certifications.creditiel_id_extractor import extract_credential_id
+from document_processing.resume.entity_extracter.certifications.certification_pipeline import (
+    certification_pipeline,
+)
 
 
 
@@ -561,3 +564,106 @@ def test_certification_with_all_metadata():
     assert date_result["expiration_date"] == "March 2027"
 
     assert credential_result == "AWS-123456"
+
+
+def test_multiple_inline_training_certifications_keep_name_issuer_and_dates():
+    lines = [
+        "Java With SpringBoot | ROGERSOFT Technology Private Limited "
+        "May 2022 \u2013 July 2022",
+        "Python Full-Stack Development | ROGERSOFT Technology Private Limited "
+        "May 2026 \u2013 Present",
+    ]
+
+    result = certification_pipeline(lines)
+
+    assert [
+        (
+            item["certification_name"],
+            item["issuing_organization"],
+            item["issue_date"],
+            item["expiration_date"],
+        )
+        for item in result
+    ] == [
+        (
+            "Java With SpringBoot",
+            "ROGERSOFT Technology Private Limited",
+            "May 2022",
+            "July 2022",
+        ),
+        (
+            "Python Full-Stack Development",
+            "ROGERSOFT Technology Private Limited",
+            "May 2026",
+            "Present",
+        ),
+    ]
+
+
+def test_nested_detected_training_section_splits_same_issuer_certifications():
+    section = [[
+        "Java With SpringBoot | ROGERSOFT Technology Private Limited",
+        "May 2022 - July 2022",
+        "Python Full-Stack Development | ROGERSOFT Technology Private Limited",
+        "May 2026 - Present",
+    ]]
+
+    result = certification_pipeline(section)
+
+    assert [
+        (
+            item["certification_name"],
+            item["issuing_organization"],
+            item["issue_date"],
+            item["expiration_date"],
+        )
+        for item in result
+    ] == [
+        (
+            "Java With SpringBoot",
+            "ROGERSOFT Technology Private Limited",
+            "May 2022",
+            "July 2022",
+        ),
+        (
+            "Python Full-Stack Development",
+            "ROGERSOFT Technology Private Limited",
+            "May 2026",
+            "Present",
+        ),
+    ]
+
+
+def test_nested_detected_certification_section_splits_course_issuer_year_lines():
+    section = [[
+        "Python Programming Fundamentals - SkillForge Academy, 2024",
+        "REST API Development with FastAPI - DevPath Learning, 2024",
+        "SQL and PostgreSQL Essentials - OpenLearn Labs, 2023",
+    ]]
+
+    result = certification_pipeline(section)
+
+    assert [
+        (
+            item["certification_name"],
+            item["issuing_organization"],
+            item["issue_date"],
+        )
+        for item in result
+    ] == [
+        (
+            "Python Programming Fundamentals",
+            "SkillForge Academy",
+            "2024",
+        ),
+        (
+            "REST API Development with FastAPI",
+            "DevPath Learning",
+            "2024",
+        ),
+        (
+            "SQL and PostgreSQL Essentials",
+            "OpenLearn Labs",
+            "2023",
+        ),
+    ]

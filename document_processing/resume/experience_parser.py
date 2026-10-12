@@ -91,26 +91,98 @@ def parse_experience_lines(lines):
         title = None
         company = None
 
-        # Prefer short non-sentence lines immediately before the date.
-        candidates = []
-        for line in reversed(preceding):
-            if not _looks_like_title(line):
-                continue
-            cleaned = split_title_company(line)
-            if cleaned and _looks_like_title(cleaned):
-                candidates.append(cleaned)
-            else:
-                candidates.append(line)
+        # ----------------------------------------------------
+        # TITLE / COMPANY
+        # ----------------------------------------------------
+        #
+        # Common resume structure:
+        #
+        #     Job Title
+        #     Company
+        #     Date Range
+        #
+        # Therefore, when title and company are on separate
+        # lines immediately before the date, the last line
+        # is normally the company and the line before it is
+        # normally the title.
+        #
+        # For combined formats such as:
+        #
+        #     Backend Trainee - Code Nest Academy
+        #
+        # split_title_company() separates the title first.
+        # ----------------------------------------------------
 
-        if candidates:
-            title = candidates[0]
+        cleaned_preceding = []
 
-        # Company is usually another nearby non-sentence line.
         for line in preceding:
+
+            if not isinstance(line, str):
+                continue
+
+            if _is_noise(line):
+                continue
+
             cleaned = split_title_company(line)
-            if cleaned != title and _looks_like_title(cleaned):
-                company = cleaned
-                break
+
+            if not cleaned:
+                continue
+
+            cleaned_preceding.append(
+                cleaned.strip()
+            )
+
+        if cleaned_preceding:
+
+            # ------------------------------------------------
+            # Case 1:
+            # Title - Company
+            # ------------------------------------------------
+
+            combined_line = preceding[-1]
+
+            if isinstance(combined_line, str):
+
+                split_title = split_title_company(
+                    combined_line
+                )
+
+                if split_title != combined_line.strip():
+
+                    title = split_title
+
+                    remaining = [
+                        item
+                        for item in cleaned_preceding
+                        if item != title
+                    ]
+
+                    if remaining:
+                        company = remaining[-1]
+
+                else:
+
+                    # ----------------------------------------
+                    # Case 2:
+                    # Separate lines:
+                    #
+                    # Title
+                    # Company
+                    # Date
+                    # ----------------------------------------
+
+                    if len(cleaned_preceding) >= 2:
+
+                        title = cleaned_preceding[-2]
+                        company = cleaned_preceding[-1]
+
+                    else:
+
+                        # Only one preceding line exists.
+                        # Keep it as title because there is
+                        # insufficient evidence to identify a
+                        # separate company.
+                        title = cleaned_preceding[-1]
 
         description = [
             line for line in lines[date_index + 1:next_date]

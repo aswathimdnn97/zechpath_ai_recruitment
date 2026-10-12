@@ -1,0 +1,115 @@
+{
+  "resume": "table_resume.pdf",
+  "path": "C:\\Users\\user\\Documents\\zechpath_ai_recruitment\\zechpath_ai_recruitment\\data\\validation\\edge_case_resumes\\table_resume.pdf",
+  "status": "PASS",
+  "pipeline_success": true,
+  "candidate_id": "CAN_749D51A2B381",
+  "validation": {
+    "structure": {
+      "passed": true,
+      "missing_sections": [],
+      "empty_sections": [],
+      "section_counts": {
+        "personal_information": 7,
+        "education": 2,
+        "experience": 1,
+        "skills": 23,
+        "projects": 5,
+        "certifications": 4
+      }
+    },
+    "personal_information": {
+      "passed": true,
+      "exists": true,
+      "checks": {
+        "section_is_dict": true
+      },
+      "found_fields": [
+        "name",
+        "email",
+        "phone",
+        "location",
+        "linkedin",
+        "github"
+      ]
+    },
+    "education": {
+      "passed": true,
+      "count": 2,
+      "invalid_items": []
+    },
+    "skills": {
+      "passed": true,
+      "count": 23,
+      "duplicates": [],
+      "invalid_items": [],
+      "skills": [
+        "Python",
+        "Django",
+        "FastAPI",
+        "SQL",
+        "PostgreSQL",
+        "Git",
+        "Pytest",
+        "API",
+        "REST API",
+        "JavaScript",
+        "Django REST Framework",
+        "MySQL",
+        "Pandas",
+        "NumPy",
+        "API Testing",
+        "GitHub",
+        "Docker",
+        "Postman",
+        "VS Code",
+        "Recruitment",
+        "Applicant Tracking System",
+        "HTML",
+        "CSS"
+      ]
+    },
+    "experience": {
+      "passed": true,
+      "count": 1,
+      "invalid_items": []
+    },
+    "projects": {
+      "passed": true,
+      "count": 5,
+      "invalid_items": [],
+      "duplicate_names": [],
+      "projects": [
+        "Stack",
+        "Recruitment ATS API",
+        "Inventory Management REST",
+        "Django REST Framework, PostgreSQL, Docker",
+        "Student Registration Portal"
+      ]
+    },
+    "certifications": {
+      "passed": true,
+      "count": 4,
+      "invalid_items": [],
+      "present": true
+    },
+    "project_metadata": {
+      "passed": true,
+      "issues": []
+    },
+    "cross_section_integrity": {
+      "passed": true,
+      "issues": []
+    }
+  },
+  "profile_summary": {
+    "personal_information": 7,
+    "education": 2,
+    "experience": 1,
+    "skills": 23,
+    "projects": 5,
+    "certifications": 4
+  },
+  "error": null,
+  "failed_checks": []
+}

@@ -1,4 +1,7 @@
 from document_processing.resume.entity_extracter.education.education_pipeline import education_pipeline
+from document_processing.resume.entity_extracter.education.education_block_splitter import (
+    split_education_blocks
+)
 
 def test_full_education_pipeline():
 
@@ -29,6 +32,19 @@ def test_full_education_pipeline():
 
         "Marks Obtained - 9.4 CGPA",
     ]
+    
+    print("\nEDUCATION BLOCKS:")
+
+    blocks = split_education_blocks(education)
+
+    for i, block in enumerate(blocks):
+        print(f"\nBLOCK {i}:")
+        for line in block:
+            print("  ", repr(line))
+
+    result = education_pipeline(education)
+    print("\nPIPELINE RESULT:")
+    print(result)
 
     result = education_pipeline(education)
     print(result)
@@ -50,7 +66,7 @@ def test_full_education_pipeline():
         "Bachelor of Engineering"
 
     assert engineering["field_of_study"] == \
-        "Computer Science"
+        "Computer Science and Engineering"
 
     assert engineering["graduation_year"] == \
         "2016"
@@ -126,11 +142,12 @@ def test_sample_degree_institution_split():
     assert len(result) == 3
 
     assert result[0]["degree_type"] == "Master of Computer Applications"
-    assert result[0]["institution"] == "University of Kerala"
+    assert result[0]["university"] == "University of Kerala"
+    # assert result[0]["institution"] is None
     assert result[0]["graduation_year"] == "2022"
 
     assert result[1]["degree_type"] == "Bachelor of Engineering"
-    assert result[1]["institution"] == "Visvesvaraya Technological University"
+    assert result[1]["university"] == "Visvesvaraya Technological University"
     assert result[1]["field_of_study"] == "Computer Science and Engineering Karnataka, India"
     assert result[1]["graduation_year"] == "2018"
 

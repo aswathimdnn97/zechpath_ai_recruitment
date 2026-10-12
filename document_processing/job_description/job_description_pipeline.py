@@ -5,7 +5,7 @@ from document_processing.common.handling_layout import fix_layout
 from document_processing.job_description.heading import JD_HEADINGS
 from document_processing.common.parser import parse_document
 from document_processing.job_description.jd_entity_extractor import extract_entities
-from document_processing.common.json_writer import save_resume
+from document_processing.common.json_writer import save_file
 
 
 
@@ -33,7 +33,7 @@ def job_description_pipeline(file,job_id):
     extracted_entity["job_id"] = job_id
     
     # save extracted entity
-    save_resume(extracted_entity, file)
+    save_file(extracted_entity, file)
     
     
     

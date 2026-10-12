@@ -1,5 +1,10 @@
 import re
 
+from document_processing.resume.entity_extracter.projects.project_technologies_extractor import (
+    extract_project_narrative_from_technology_line,
+    is_technology_line,
+)
+
 
 # ============================================================
 # Patterns
@@ -138,6 +143,16 @@ def extract_project_description(block):
     description_lines = []
 
     for line in cleaned_lines[1:]:
+
+        if is_technology_line(line):
+            narrative = extract_project_narrative_from_technology_line(
+                line
+            )
+
+            if narrative:
+                description_lines.append(narrative)
+
+            continue
 
         # Skip metadata
         if is_metadata_line(line):

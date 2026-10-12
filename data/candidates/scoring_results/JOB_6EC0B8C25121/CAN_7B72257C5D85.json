@@ -1,0 +1,228 @@
+{
+  "candidate_id": "CAN_7B72257C5D85",
+  "candidate_score": {
+    "final_score": 49.44,
+    "status": "calculated",
+    "job_title": "HR Executive - Fresher",
+    "role_category": "entry_level",
+    "weight_source": "role_category",
+    "weights": {
+      "skill": 0.35,
+      "experience": 0.15,
+      "education": 0.25,
+      "semantic": 0.25
+    },
+    "component_scores": {
+      "skill": {
+        "score": 55.56,
+        "status": "calculated",
+        "weight": 0.35,
+        "weight_percentage": 35.0
+      },
+      "experience": {
+        "score": 59.03,
+        "status": "calculated",
+        "weight": 0.15,
+        "weight_percentage": 15.0
+      },
+      "education": {
+        "score": 0.0,
+        "status": "calculated",
+        "weight": 0.25,
+        "weight_percentage": 25.0
+      },
+      "semantic": {
+        "score": 84.55,
+        "status": "calculated",
+        "weight": 0.25,
+        "weight_percentage": 25.0
+      }
+    },
+    "contributions": {
+      "skill": {
+        "score": 55.56,
+        "weight": 0.35,
+        "weight_percentage": 35.0,
+        "contribution": 19.45
+      },
+      "experience": {
+        "score": 59.03,
+        "weight": 0.15,
+        "weight_percentage": 15.0,
+        "contribution": 8.85
+      },
+      "education": {
+        "score": 0.0,
+        "weight": 0.25,
+        "weight_percentage": 25.0,
+        "contribution": 0.0
+      },
+      "semantic": {
+        "score": 84.55,
+        "weight": 0.25,
+        "weight_percentage": 25.0,
+        "contribution": 21.14
+      }
+    },
+    "missing_components": [],
+    "available_weight": 1.0,
+    "explanation": [
+      "Skill score 55.56 with 35% weight contributed 19.45 points.",
+      "Experience score 59.03 with 15% weight contributed 8.85 points.",
+      "Education score 0.00 with 25% weight contributed 0.00 points.",
+      "Semantic score 84.55 with 25% weight contributed 21.14 points."
+    ]
+  },
+  "component_scores": {
+    "skill": {
+      "score": 55.56,
+      "weight": 0.4,
+      "weight_percentage": 40.0,
+      "candidate_skills": [
+        "Communication",
+        "HR Operations",
+        "Recruitment",
+        "Human Resources",
+        "Microsoft Excel",
+        "Employee Records Management",
+        "Interview Scheduling",
+        "HR Documentation",
+        "HR Reporting",
+        "Talent Acquisition"
+      ],
+      "required_skills": [
+        "Recruitment",
+        "Talent Acquisition",
+        "Employee Relations",
+        "HR Operations",
+        "Payroll",
+        "MS",
+        "Excel",
+        "HRMS",
+        "Communication"
+      ],
+      "preferred_skills": [],
+      "required": {
+        "score": 55.56,
+        "weight": 0.8,
+        "weight_percentage": 80.0,
+        "contribution": 44.45,
+        "total_skills": 9,
+        "matched_skills": 5,
+        "match_percentage": 55.56,
+        "exact_matches": [
+          "Recruitment",
+          "Talent Acquisition",
+          "HR Operations",
+          "Communication"
+        ],
+        "relationship_matches": [],
+        "fuzzy_matches": [],
+        "semantic_matches": [
+          {
+            "candidate_skill": "Microsoft Excel",
+            "required_skill": "Excel",
+            "similarity": 0.9659,
+            "matched": true
+          }
+        ],
+        "related_skill_context": [],
+        "missing_skills": [
+          "Employee Relations",
+          "Payroll",
+          "MS",
+          "HRMS"
+        ]
+      },
+      "preferred": {
+        "score": 0.0,
+        "weight": 0.2,
+        "weight_percentage": 20.0,
+        "contribution": 0.0,
+        "total_skills": 0,
+        "matched_skills": 0,
+        "match_percentage": 0.0,
+        "exact_matches": [],
+        "relationship_matches": [],
+        "fuzzy_matches": [],
+        "semantic_matches": [],
+        "related_skill_context": [],
+        "missing_skills": []
+      }
+    },
+    "experience": {
+      "score": 59.03,
+      "years_score": 100.0,
+      "role_relevance_score": 25.0,
+      "technology_relevance_score": 44.44,
+      "candidate_years": 0.5,
+      "required_minimum_years": 0.0,
+      "preferred_maximum_years": 1.0,
+      "candidate_roles": [
+        "HR Intern"
+      ],
+      "target_job_title": "HR Executive - Fresher",
+      "experience_skills": [],
+      "candidate_skills": [
+        "Communication",
+        "HR Operations",
+        "Recruitment",
+        "Human Resources",
+        "Microsoft Excel",
+        "Employee Records Management",
+        "Interview Scheduling",
+        "HR Documentation",
+        "HR Reporting",
+        "Talent Acquisition"
+      ],
+      "required_skills": [
+        "Recruitment",
+        "Talent Acquisition",
+        "Employee Relations",
+        "HR Operations",
+        "Payroll",
+        "MS",
+        "Excel",
+        "HRMS",
+        "Communication"
+      ],
+      "status": "calculated"
+    },
+    "education": {
+      "score": 0.0,
+      "degree_score": 0.0,
+      "field_score": 0.0,
+      "candidate_education": [],
+      "required_education": [
+        "Degree in HR, Business Administration, Commerce or equivalent preferred."
+      ],
+      "status": "no_data"
+    },
+    "semantic": {
+      "score": 84.55,
+      "similarity": 0.691,
+      "status": "calculated"
+    }
+  },
+  "metadata": {
+    "job_title": "HR Executive - Fresher",
+    "required_skills_count": 9,
+    "preferred_skills_count": 0,
+    "candidate_skills_count": 10,
+    "candidate_years": 0.5,
+    "candidate_roles": [
+      "HR Intern"
+    ],
+    "candidate_education_count": 0,
+    "jd_experience_count": 1,
+    "jd_education_count": 1
+  },
+  "bias_mitigation": {
+    "personal_attributes_masked": true,
+    "candidate_id_preserved": true
+  },
+  "candidate_name": "MEERA S",
+  "jd_id": "HRExecutiveFresher",
+  "job_id": "JOB_6EC0B8C25121",
+  "jd_file": "HRExecutiveFresher.pdf"
+}

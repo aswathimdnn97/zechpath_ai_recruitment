@@ -1,0 +1,853 @@
+{
+  "candidate_id": "CAN_C5D1338F49C1",
+  "masked_profile": {
+    "candidate_id": "CAN_C5D1338F49C1",
+    "skills": [
+      {
+        "source_section": "summary",
+        "source_text": "Senior backend developer with 6 years of experience building production Python services and REST APIs.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Senior backend developer with 6 years of experience building production Python services and REST APIs.",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Senior Python Developer - CloudAxis Technologies",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Senior Python Developer",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Python Developer - WebCore Systems",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Python Developer",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Python",
+            "source_skill": "Python"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Python",
+        "skill_id": "TECH001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Senior backend developer with 6 years of experience building production Python services and REST APIs.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Senior backend developer with 6 years of experience building production Python services and REST APIs.",
+            "source_skill": "rest apis"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Designed REST APIs using FastAPI and Django.",
+            "source_skill": "rest apis"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "REST API",
+            "source_skill": "REST API"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "original_skill": "rest apis",
+        "resolved_from": "rest apis",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "rest apis"
+        ],
+        "skill": "REST API",
+        "skill_id": "TECH025",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Senior backend developer with 6 years of experience building production Python services and REST APIs.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Senior backend developer with 6 years of experience building production Python services and REST APIs.",
+            "source_skill": "apis"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Designed REST APIs using FastAPI and Django.",
+            "source_skill": "apis"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Developed backend services and automated API testing.",
+            "source_skill": "API"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skill": "apis",
+        "resolved_from": "apis",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "apis"
+        ],
+        "skill": "API",
+        "skill_id": "TECH087",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Experienced in Django, FastAPI, PostgreSQL, Git and cloud deployment.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Experienced in Django, FastAPI, PostgreSQL, Git and cloud deployment.",
+            "source_skill": "Django"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Designed REST APIs using FastAPI and Django.",
+            "source_skill": "Django"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Django",
+            "source_skill": "Django"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Django",
+        "skill_id": "TECH012",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Experienced in Django, FastAPI, PostgreSQL, Git and cloud deployment.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Experienced in Django, FastAPI, PostgreSQL, Git and cloud deployment.",
+            "source_skill": "FastAPI"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Designed REST APIs using FastAPI and Django.",
+            "source_skill": "FastAPI"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "FastAPI",
+            "source_skill": "FastAPI"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "FastAPI",
+        "skill_id": "TECH014",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Experienced in Django, FastAPI, PostgreSQL, Git and cloud deployment.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Experienced in Django, FastAPI, PostgreSQL, Git and cloud deployment.",
+            "source_skill": "PostgreSQL"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Built PostgreSQL data models and optimized queries.",
+            "source_skill": "PostgreSQL"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "PostgreSQL",
+            "source_skill": "PostgreSQL"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "PostgreSQL",
+        "skill_id": "TECH018",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Experienced in Django, FastAPI, PostgreSQL, Git and cloud deployment.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Experienced in Django, FastAPI, PostgreSQL, Git and cloud deployment.",
+            "source_skill": "Git"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Managed Git workflows and production releases.",
+            "source_skill": "Git"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Git",
+            "source_skill": "Git"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Git",
+        "skill_id": "TECH023",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Developed backend services and automated API testing.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Developed backend services and automated API testing.",
+            "source_skill": "API Testing"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "API Testing",
+            "source_skill": "API Testing"
+          }
+        ],
+        "source_sections": [
+          "experience",
+          "skills"
+        ],
+        "skill": "API Testing",
+        "skill_id": "TECH061",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "Docker",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "Docker",
+            "source_skill": "Docker"
+          }
+        ],
+        "skill": "Docker",
+        "skill_id": "TECH021",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "AWS",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "AWS",
+            "source_skill": "AWS"
+          }
+        ],
+        "skill": "AWS",
+        "skill_id": "TECH027",
+        "matched_by": "exact"
+      }
+    ],
+    "education": [
+      {
+        "degree_type": "Bachelor of Technology",
+        "field_of_study": "Computer Science and Engineering",
+        "institution": null,
+        "university": "KTU",
+        "board": null,
+        "graduation_year": "2020"
+      }
+    ],
+    "experience": [
+      {
+        "title": {
+          "title_id": "JOB002",
+          "title": "Python Developer",
+          "category": "Software Development",
+          "matched_by": "fuzzy",
+          "confidence": 95
+        },
+        "company": {
+          "company_id": null,
+          "company": "CloudAxis Technologies",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jan 2022",
+          "end_date": "Present"
+        },
+        "total_experience": {
+          "total_months": 58,
+          "total_years": 4.8
+        },
+        "location": "Bengaluru",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP001",
+          "department": "Software Development",
+          "matched_by": "keyword",
+          "confidence": 50
+        },
+        "description": [
+          "Designed REST APIs using FastAPI and Django.",
+          "Built PostgreSQL data models and optimized queries.",
+          "Managed Git workflows and production releases."
+        ]
+      },
+      {
+        "title": {
+          "title_id": "JOB002",
+          "title": "Python Developer",
+          "category": "Software Development",
+          "matched_by": "exact",
+          "confidence": 100
+        },
+        "company": {
+          "company_id": null,
+          "company": "WebCore Systems",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jun 2020",
+          "end_date": "Dec 2021"
+        },
+        "total_experience": {
+          "total_months": 19,
+          "total_years": 1.6
+        },
+        "location": "Bengaluru",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP001",
+          "department": "Software Development",
+          "matched_by": "keyword",
+          "confidence": 75
+        },
+        "description": [
+          "Developed backend services and automated API testing."
+        ]
+      }
+    ],
+    "projects": [],
+    "certifications": [
+      {
+        "certification_name": "Python Domain Certification",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      },
+      {
+        "certification_name": "Professional Development Program",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      },
+      {
+        "certification_name": "Workplace Communication",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      }
+    ],
+    "metadata": {
+      "parser_version": "1.0",
+      "created_at": "2026-10-09T06:49:51.350399+00:00"
+    }
+  },
+  "bias_report": {
+    "bias_detected": false,
+    "risk_level": "none",
+    "indicator_count": 0,
+    "indicators": [],
+    "status": "clear"
+  },
+  "original_profile": {
+    "candidate_id": "CAN_C5D1338F49C1",
+    "personal_information": {
+      "name": "ROHIT MENON",
+      "email": "rohit.m@example.com",
+      "phone": null,
+      "location": "Bengaluru, Karnataka",
+      "linkedin": null,
+      "github": null,
+      "portfolio": null
+    },
+    "skills": [
+      {
+        "source_section": "summary",
+        "source_text": "Senior backend developer with 6 years of experience building production Python services and REST APIs.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Senior backend developer with 6 years of experience building production Python services and REST APIs.",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Senior Python Developer - CloudAxis Technologies",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Senior Python Developer",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Python Developer - WebCore Systems",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Python Developer",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Python",
+            "source_skill": "Python"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Python",
+        "skill_id": "TECH001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Senior backend developer with 6 years of experience building production Python services and REST APIs.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Senior backend developer with 6 years of experience building production Python services and REST APIs.",
+            "source_skill": "rest apis"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Designed REST APIs using FastAPI and Django.",
+            "source_skill": "rest apis"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "REST API",
+            "source_skill": "REST API"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "original_skill": "rest apis",
+        "resolved_from": "rest apis",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "rest apis"
+        ],
+        "skill": "REST API",
+        "skill_id": "TECH025",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Senior backend developer with 6 years of experience building production Python services and REST APIs.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Senior backend developer with 6 years of experience building production Python services and REST APIs.",
+            "source_skill": "apis"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Designed REST APIs using FastAPI and Django.",
+            "source_skill": "apis"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Developed backend services and automated API testing.",
+            "source_skill": "API"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skill": "apis",
+        "resolved_from": "apis",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "apis"
+        ],
+        "skill": "API",
+        "skill_id": "TECH087",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Experienced in Django, FastAPI, PostgreSQL, Git and cloud deployment.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Experienced in Django, FastAPI, PostgreSQL, Git and cloud deployment.",
+            "source_skill": "Django"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Designed REST APIs using FastAPI and Django.",
+            "source_skill": "Django"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Django",
+            "source_skill": "Django"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Django",
+        "skill_id": "TECH012",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Experienced in Django, FastAPI, PostgreSQL, Git and cloud deployment.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Experienced in Django, FastAPI, PostgreSQL, Git and cloud deployment.",
+            "source_skill": "FastAPI"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Designed REST APIs using FastAPI and Django.",
+            "source_skill": "FastAPI"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "FastAPI",
+            "source_skill": "FastAPI"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "FastAPI",
+        "skill_id": "TECH014",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Experienced in Django, FastAPI, PostgreSQL, Git and cloud deployment.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Experienced in Django, FastAPI, PostgreSQL, Git and cloud deployment.",
+            "source_skill": "PostgreSQL"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Built PostgreSQL data models and optimized queries.",
+            "source_skill": "PostgreSQL"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "PostgreSQL",
+            "source_skill": "PostgreSQL"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "PostgreSQL",
+        "skill_id": "TECH018",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Experienced in Django, FastAPI, PostgreSQL, Git and cloud deployment.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Experienced in Django, FastAPI, PostgreSQL, Git and cloud deployment.",
+            "source_skill": "Git"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Managed Git workflows and production releases.",
+            "source_skill": "Git"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Git",
+            "source_skill": "Git"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Git",
+        "skill_id": "TECH023",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Developed backend services and automated API testing.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Developed backend services and automated API testing.",
+            "source_skill": "API Testing"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "API Testing",
+            "source_skill": "API Testing"
+          }
+        ],
+        "source_sections": [
+          "experience",
+          "skills"
+        ],
+        "skill": "API Testing",
+        "skill_id": "TECH061",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "Docker",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "Docker",
+            "source_skill": "Docker"
+          }
+        ],
+        "skill": "Docker",
+        "skill_id": "TECH021",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "AWS",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "AWS",
+            "source_skill": "AWS"
+          }
+        ],
+        "skill": "AWS",
+        "skill_id": "TECH027",
+        "matched_by": "exact"
+      }
+    ],
+    "education": [
+      {
+        "degree_type": "Bachelor of Technology",
+        "field_of_study": "Computer Science and Engineering",
+        "institution": null,
+        "university": "KTU",
+        "board": null,
+        "graduation_year": "2020"
+      }
+    ],
+    "experience": [
+      {
+        "title": {
+          "title_id": "JOB002",
+          "title": "Python Developer",
+          "category": "Software Development",
+          "matched_by": "fuzzy",
+          "confidence": 95
+        },
+        "company": {
+          "company_id": null,
+          "company": "CloudAxis Technologies",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jan 2022",
+          "end_date": "Present"
+        },
+        "total_experience": {
+          "total_months": 58,
+          "total_years": 4.8
+        },
+        "location": "Bengaluru",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP001",
+          "department": "Software Development",
+          "matched_by": "keyword",
+          "confidence": 50
+        },
+        "description": [
+          "Designed REST APIs using FastAPI and Django.",
+          "Built PostgreSQL data models and optimized queries.",
+          "Managed Git workflows and production releases."
+        ]
+      },
+      {
+        "title": {
+          "title_id": "JOB002",
+          "title": "Python Developer",
+          "category": "Software Development",
+          "matched_by": "exact",
+          "confidence": 100
+        },
+        "company": {
+          "company_id": null,
+          "company": "WebCore Systems",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jun 2020",
+          "end_date": "Dec 2021"
+        },
+        "total_experience": {
+          "total_months": 19,
+          "total_years": 1.6
+        },
+        "location": "Bengaluru",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP001",
+          "department": "Software Development",
+          "matched_by": "keyword",
+          "confidence": 75
+        },
+        "description": [
+          "Developed backend services and automated API testing."
+        ]
+      }
+    ],
+    "projects": [],
+    "certifications": [
+      {
+        "certification_name": "Python Domain Certification",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      },
+      {
+        "certification_name": "Professional Development Program",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      },
+      {
+        "certification_name": "Workplace Communication",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      }
+    ],
+    "metadata": {
+      "parser_version": "1.0",
+      "created_at": "2026-10-09T06:49:51.350399+00:00"
+    }
+  }
+}

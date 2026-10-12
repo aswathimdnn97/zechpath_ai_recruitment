@@ -1,0 +1,389 @@
+{
+  "candidate_id": "CAN_5441F5865D9B",
+  "masked_profile": {
+    "candidate_id": "CAN_5441F5865D9B",
+    "skills": [
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level software trainee with exposure to Java, Spring Boot and relational databases. Interested in backend",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level software trainee with exposure to Java, Spring Boot and relational databases. Interested in backend",
+            "source_skill": "Java"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Developed basic Java applications.",
+            "source_skill": "Java"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "Java",
+        "skill_id": "TECH002",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level software trainee with exposure to Java, Spring Boot and relational databases. Interested in backend",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level software trainee with exposure to Java, Spring Boot and relational databases. Interested in backend",
+            "source_skill": "Spring"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Practiced Spring Boot concepts and SQL queries.",
+            "source_skill": "Spring"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "Spring",
+        "skill_id": "TECH062",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level software trainee with exposure to Java, Spring Boot and relational databases. Interested in backend",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level software trainee with exposure to Java, Spring Boot and relational databases. Interested in backend",
+            "source_skill": "Spring Boot"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Practiced Spring Boot concepts and SQL queries.",
+            "source_skill": "Spring Boot"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "Spring Boot",
+        "skill_id": "TECH063",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Practiced Spring Boot concepts and SQL queries.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Practiced Spring Boot concepts and SQL queries.",
+            "source_skill": "SQL"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Practiced Spring Boot concepts and SQL queries.",
+            "source_skill": "sql queries"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "original_skills": [
+          "sql queries"
+        ],
+        "original_skill": "sql queries",
+        "skill": "SQL",
+        "skill_id": "TECH016A",
+        "matched_by": "exact"
+      }
+    ],
+    "education": [
+      {
+        "degree_type": "Bachelor of Technology",
+        "field_of_study": "Electronics and Communication Engineering",
+        "institution": null,
+        "university": "KTU",
+        "board": null,
+        "graduation_year": "2025"
+      }
+    ],
+    "experience": [
+      {
+        "title": {
+          "title_id": null,
+          "title": "Software Trainee",
+          "category": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "company": {
+          "company_id": null,
+          "company": "AppWorks Academy",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jan 2026",
+          "end_date": "May 2026"
+        },
+        "total_experience": {
+          "total_months": 5,
+          "total_years": 0.4
+        },
+        "location": "Malappuram, Kerala",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP001",
+          "department": "Software Development",
+          "matched_by": "keyword",
+          "confidence": 50
+        },
+        "description": [
+          "Developed basic Java applications.",
+          "Practiced Spring Boot concepts and SQL queries."
+        ]
+      }
+    ],
+    "projects": [],
+    "certifications": [
+      {
+        "certification_name": "Java Domain Certification",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      },
+      {
+        "certification_name": "Professional Development Program",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      },
+      {
+        "certification_name": "Workplace Communication",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      }
+    ],
+    "metadata": {
+      "parser_version": "1.0",
+      "created_at": "2026-10-09T06:49:51.875908+00:00"
+    }
+  },
+  "bias_report": {
+    "bias_detected": false,
+    "risk_level": "none",
+    "indicator_count": 0,
+    "indicators": [],
+    "status": "clear"
+  },
+  "original_profile": {
+    "candidate_id": "CAN_5441F5865D9B",
+    "personal_information": {
+      "name": "FARHAN AHMED",
+      "email": "farhan.a@example.com",
+      "phone": null,
+      "location": "Malappuram, Kerala",
+      "linkedin": null,
+      "github": null,
+      "portfolio": null
+    },
+    "skills": [
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level software trainee with exposure to Java, Spring Boot and relational databases. Interested in backend",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level software trainee with exposure to Java, Spring Boot and relational databases. Interested in backend",
+            "source_skill": "Java"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Developed basic Java applications.",
+            "source_skill": "Java"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "Java",
+        "skill_id": "TECH002",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level software trainee with exposure to Java, Spring Boot and relational databases. Interested in backend",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level software trainee with exposure to Java, Spring Boot and relational databases. Interested in backend",
+            "source_skill": "Spring"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Practiced Spring Boot concepts and SQL queries.",
+            "source_skill": "Spring"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "Spring",
+        "skill_id": "TECH062",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Entry-level software trainee with exposure to Java, Spring Boot and relational databases. Interested in backend",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Entry-level software trainee with exposure to Java, Spring Boot and relational databases. Interested in backend",
+            "source_skill": "Spring Boot"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Practiced Spring Boot concepts and SQL queries.",
+            "source_skill": "Spring Boot"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "Spring Boot",
+        "skill_id": "TECH063",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Practiced Spring Boot concepts and SQL queries.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Practiced Spring Boot concepts and SQL queries.",
+            "source_skill": "SQL"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Practiced Spring Boot concepts and SQL queries.",
+            "source_skill": "sql queries"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "original_skills": [
+          "sql queries"
+        ],
+        "original_skill": "sql queries",
+        "skill": "SQL",
+        "skill_id": "TECH016A",
+        "matched_by": "exact"
+      }
+    ],
+    "education": [
+      {
+        "degree_type": "Bachelor of Technology",
+        "field_of_study": "Electronics and Communication Engineering",
+        "institution": null,
+        "university": "KTU",
+        "board": null,
+        "graduation_year": "2025"
+      }
+    ],
+    "experience": [
+      {
+        "title": {
+          "title_id": null,
+          "title": "Software Trainee",
+          "category": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "company": {
+          "company_id": null,
+          "company": "AppWorks Academy",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jan 2026",
+          "end_date": "May 2026"
+        },
+        "total_experience": {
+          "total_months": 5,
+          "total_years": 0.4
+        },
+        "location": "Malappuram, Kerala",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP001",
+          "department": "Software Development",
+          "matched_by": "keyword",
+          "confidence": 50
+        },
+        "description": [
+          "Developed basic Java applications.",
+          "Practiced Spring Boot concepts and SQL queries."
+        ]
+      }
+    ],
+    "projects": [],
+    "certifications": [
+      {
+        "certification_name": "Java Domain Certification",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      },
+      {
+        "certification_name": "Professional Development Program",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      },
+      {
+        "certification_name": "Workplace Communication",
+        "issuing_organization": null,
+        "issue_date": null,
+        "expiration_date": null,
+        "credential_id": null
+      }
+    ],
+    "metadata": {
+      "parser_version": "1.0",
+      "created_at": "2026-10-09T06:49:51.875908+00:00"
+    }
+  }
+}

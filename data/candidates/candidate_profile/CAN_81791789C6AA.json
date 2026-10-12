@@ -1,0 +1,568 @@
+{
+    "candidate_id": "CAN_81791789C6AA",
+    "masked_profile": {
+        "candidate_id": "CAN_81791789C6AA",
+        "skills": [
+            {
+                "skill_id": "TECH001",
+                "skill": "Python",
+                "category": "Technical",
+                "subcategory": "Programming Language",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "certifications",
+                    "achievements"
+                ],
+                "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                "sources": [
+                    "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                    "Senior Python Developer - Soft Labs Jan 2022 - Present Bengaluru, Karnataka Designed backend services and REST APIs for enterprise applications. Worked with PostgreSQL, Docker and AWS environments. Python Developer - Web Core Jun 2020 - Dec 2021 Bengaluru, Karnataka Built Django applications and PostgreSQL integrations.",
+                    "Python / Domain Certification Completed Professional Development Program Completed Workplace Communication Completed",
+                    "Backend Reliability Award - 2024 Affiliations Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker. Zechpath ATS Evaluation Resume RES EVAL 013 Fictional test data"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH012",
+                "skill": "Django",
+                "category": "Technical",
+                "subcategory": "Backend Framework",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "achievements"
+                ],
+                "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                "sources": [
+                    "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                    "Senior Python Developer - Soft Labs Jan 2022 - Present Bengaluru, Karnataka Designed backend services and REST APIs for enterprise applications. Worked with PostgreSQL, Docker and AWS environments. Python Developer - Web Core Jun 2020 - Dec 2021 Bengaluru, Karnataka Built Django applications and PostgreSQL integrations.",
+                    "Backend Reliability Award - 2024 Affiliations Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker. Zechpath ATS Evaluation Resume RES EVAL 013 Fictional test data"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH018",
+                "skill": "PostgreSQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "achievements"
+                ],
+                "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                "sources": [
+                    "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                    "Senior Python Developer - Soft Labs Jan 2022 - Present Bengaluru, Karnataka Designed backend services and REST APIs for enterprise applications. Worked with PostgreSQL, Docker and AWS environments. Python Developer - Web Core Jun 2020 - Dec 2021 Bengaluru, Karnataka Built Django applications and PostgreSQL integrations.",
+                    "Backend Reliability Award - 2024 Affiliations Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker. Zechpath ATS Evaluation Resume RES EVAL 013 Fictional test data"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH021",
+                "skill": "Docker",
+                "category": "Technical",
+                "subcategory": "DevOps",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "achievements"
+                ],
+                "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                "sources": [
+                    "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                    "Senior Python Developer - Soft Labs Jan 2022 - Present Bengaluru, Karnataka Designed backend services and REST APIs for enterprise applications. Worked with PostgreSQL, Docker and AWS environments. Python Developer - Web Core Jun 2020 - Dec 2021 Bengaluru, Karnataka Built Django applications and PostgreSQL integrations.",
+                    "Backend Reliability Award - 2024 Affiliations Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker. Zechpath ATS Evaluation Resume RES EVAL 013 Fictional test data"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH014",
+                "skill": "FastAPI",
+                "category": "Technical",
+                "subcategory": "Backend Framework",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "achievements"
+                ],
+                "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                "sources": [
+                    "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                    "Backend Reliability Award - 2024 Affiliations Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker. Zechpath ATS Evaluation Resume RES EVAL 013 Fictional test data"
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "TECH025",
+                "skill": "REST API",
+                "category": "Technical",
+                "subcategory": "Web Services",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "achievements"
+                ],
+                "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                "sources": [
+                    "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                    "Senior Python Developer - Soft Labs Jan 2022 - Present Bengaluru, Karnataka Designed backend services and REST APIs for enterprise applications. Worked with PostgreSQL, Docker and AWS environments. Python Developer - Web Core Jun 2020 - Dec 2021 Bengaluru, Karnataka Built Django applications and PostgreSQL integrations.",
+                    "Backend Reliability Award - 2024 Affiliations Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker. Zechpath ATS Evaluation Resume RES EVAL 013 Fictional test data"
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "TECH027",
+                "skill": "AWS",
+                "category": "Technical",
+                "subcategory": "Cloud",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "Senior Python Developer - Soft Labs Jan 2022 - Present Bengaluru, Karnataka Designed backend services and REST APIs for enterprise applications. Worked with PostgreSQL, Docker and AWS environments. Python Developer - Web Core Jun 2020 - Dec 2021 Bengaluru, Karnataka Built Django applications and PostgreSQL integrations.",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "SOFT001",
+                "skill": "Communication",
+                "category": "Soft Skill",
+                "subcategory": "Interpersonal",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "certifications",
+                "source_text": "Python / Domain Certification Completed Professional Development Program Completed Workplace Communication Completed",
+                "extraction_method": "master_dictionary"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Bachelor of Technology",
+                "field_of_study": "Computer Science and Engineering",
+                "institution": null,
+                "university": null,
+                "board": null,
+                "graduation_year": "2020"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": "JOB002",
+                    "title": "Python Developer",
+                    "category": "Software Development",
+                    "matched_by": "fuzzy",
+                    "confidence": 95
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Soft Labs",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jan 2022",
+                    "end_date": "Present"
+                },
+                "total_experience": {
+                    "total_months": 57,
+                    "total_years": 4.8
+                },
+                "location": "Bengaluru, Karnataka",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "description": [
+                    "Designed backend services and REST APIs for enterprise applications.",
+                    "Worked with PostgreSQL, Docker and AWS environments."
+                ]
+            },
+            {
+                "title": {
+                    "title_id": "JOB002",
+                    "title": "Python Developer",
+                    "category": "Software Development",
+                    "matched_by": "exact",
+                    "confidence": 100
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Web Core",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jun 2020",
+                    "end_date": "Dec 2021"
+                },
+                "total_experience": {
+                    "total_months": 19,
+                    "total_years": 1.6
+                },
+                "location": "Bengaluru, Karnataka",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 50
+                },
+                "description": [
+                    "Built Django applications and PostgreSQL integrations."
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [
+            {
+                "certification_name": "Python / Domain Certification",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "Professional Development Program",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "Workplace Communication",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            }
+        ],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-09-23T15:14:56.938933+00:00"
+        }
+    },
+    "bias_report": {
+        "bias_detected": false,
+        "risk_level": "none",
+        "indicator_count": 0,
+        "indicators": [],
+        "status": "clear"
+    },
+    "original_profile": {
+        "candidate_id": "CAN_81791789C6AA",
+        "personal_information": {
+            "name": "ARUN B",
+            "email": "arun.b@example.com",
+            "phone": null,
+            "location": "Fast API, Django, PostgreSQL and Docker.",
+            "linkedin": null,
+            "github": null,
+            "portfolio": null
+        },
+        "skills": [
+            {
+                "skill_id": "TECH001",
+                "skill": "Python",
+                "category": "Technical",
+                "subcategory": "Programming Language",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "certifications",
+                    "achievements"
+                ],
+                "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                "sources": [
+                    "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                    "Senior Python Developer - Soft Labs Jan 2022 - Present Bengaluru, Karnataka Designed backend services and REST APIs for enterprise applications. Worked with PostgreSQL, Docker and AWS environments. Python Developer - Web Core Jun 2020 - Dec 2021 Bengaluru, Karnataka Built Django applications and PostgreSQL integrations.",
+                    "Python / Domain Certification Completed Professional Development Program Completed Workplace Communication Completed",
+                    "Backend Reliability Award - 2024 Affiliations Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker. Zechpath ATS Evaluation Resume RES EVAL 013 Fictional test data"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH012",
+                "skill": "Django",
+                "category": "Technical",
+                "subcategory": "Backend Framework",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "achievements"
+                ],
+                "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                "sources": [
+                    "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                    "Senior Python Developer - Soft Labs Jan 2022 - Present Bengaluru, Karnataka Designed backend services and REST APIs for enterprise applications. Worked with PostgreSQL, Docker and AWS environments. Python Developer - Web Core Jun 2020 - Dec 2021 Bengaluru, Karnataka Built Django applications and PostgreSQL integrations.",
+                    "Backend Reliability Award - 2024 Affiliations Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker. Zechpath ATS Evaluation Resume RES EVAL 013 Fictional test data"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH018",
+                "skill": "PostgreSQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "achievements"
+                ],
+                "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                "sources": [
+                    "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                    "Senior Python Developer - Soft Labs Jan 2022 - Present Bengaluru, Karnataka Designed backend services and REST APIs for enterprise applications. Worked with PostgreSQL, Docker and AWS environments. Python Developer - Web Core Jun 2020 - Dec 2021 Bengaluru, Karnataka Built Django applications and PostgreSQL integrations.",
+                    "Backend Reliability Award - 2024 Affiliations Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker. Zechpath ATS Evaluation Resume RES EVAL 013 Fictional test data"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH021",
+                "skill": "Docker",
+                "category": "Technical",
+                "subcategory": "DevOps",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "achievements"
+                ],
+                "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                "sources": [
+                    "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                    "Senior Python Developer - Soft Labs Jan 2022 - Present Bengaluru, Karnataka Designed backend services and REST APIs for enterprise applications. Worked with PostgreSQL, Docker and AWS environments. Python Developer - Web Core Jun 2020 - Dec 2021 Bengaluru, Karnataka Built Django applications and PostgreSQL integrations.",
+                    "Backend Reliability Award - 2024 Affiliations Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker. Zechpath ATS Evaluation Resume RES EVAL 013 Fictional test data"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH014",
+                "skill": "FastAPI",
+                "category": "Technical",
+                "subcategory": "Backend Framework",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "achievements"
+                ],
+                "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                "sources": [
+                    "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                    "Backend Reliability Award - 2024 Affiliations Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker. Zechpath ATS Evaluation Resume RES EVAL 013 Fictional test data"
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "TECH025",
+                "skill": "REST API",
+                "category": "Technical",
+                "subcategory": "Web Services",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "achievements"
+                ],
+                "source_text": "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                "sources": [
+                    "Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker.",
+                    "Senior Python Developer - Soft Labs Jan 2022 - Present Bengaluru, Karnataka Designed backend services and REST APIs for enterprise applications. Worked with PostgreSQL, Docker and AWS environments. Python Developer - Web Core Jun 2020 - Dec 2021 Bengaluru, Karnataka Built Django applications and PostgreSQL integrations.",
+                    "Backend Reliability Award - 2024 Affiliations Senior backend developer with 6 years of experience creating Python services and REST APIs. Strong in Fast API, Django, PostgreSQL and Docker. Zechpath ATS Evaluation Resume RES EVAL 013 Fictional test data"
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "TECH027",
+                "skill": "AWS",
+                "category": "Technical",
+                "subcategory": "Cloud",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "Senior Python Developer - Soft Labs Jan 2022 - Present Bengaluru, Karnataka Designed backend services and REST APIs for enterprise applications. Worked with PostgreSQL, Docker and AWS environments. Python Developer - Web Core Jun 2020 - Dec 2021 Bengaluru, Karnataka Built Django applications and PostgreSQL integrations.",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "SOFT001",
+                "skill": "Communication",
+                "category": "Soft Skill",
+                "subcategory": "Interpersonal",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "certifications",
+                "source_text": "Python / Domain Certification Completed Professional Development Program Completed Workplace Communication Completed",
+                "extraction_method": "master_dictionary"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Bachelor of Technology",
+                "field_of_study": "Computer Science and Engineering",
+                "institution": null,
+                "university": null,
+                "board": null,
+                "graduation_year": "2020"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": "JOB002",
+                    "title": "Python Developer",
+                    "category": "Software Development",
+                    "matched_by": "fuzzy",
+                    "confidence": 95
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Soft Labs",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jan 2022",
+                    "end_date": "Present"
+                },
+                "total_experience": {
+                    "total_months": 57,
+                    "total_years": 4.8
+                },
+                "location": "Bengaluru, Karnataka",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "description": [
+                    "Designed backend services and REST APIs for enterprise applications.",
+                    "Worked with PostgreSQL, Docker and AWS environments."
+                ]
+            },
+            {
+                "title": {
+                    "title_id": "JOB002",
+                    "title": "Python Developer",
+                    "category": "Software Development",
+                    "matched_by": "exact",
+                    "confidence": 100
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Web Core",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jun 2020",
+                    "end_date": "Dec 2021"
+                },
+                "total_experience": {
+                    "total_months": 19,
+                    "total_years": 1.6
+                },
+                "location": "Bengaluru, Karnataka",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 50
+                },
+                "description": [
+                    "Built Django applications and PostgreSQL integrations."
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [
+            {
+                "certification_name": "Python / Domain Certification",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "Professional Development Program",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "Workplace Communication",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            }
+        ],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-09-23T15:14:56.938933+00:00"
+        }
+    },
+    "resume_hash": "72b6b48b159ef0c29fd938362bf5385e16ab80064a77e7d125b5e04f21db46f3"
+}

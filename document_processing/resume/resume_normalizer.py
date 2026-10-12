@@ -130,9 +130,40 @@ def normalize_text(text):
             line
         )
 
-        canonical_heading = HEADING_MAP.get(
-            normalized_heading
+        # This phrase is both a valid section heading and a common
+        # generic certification title. Keep it intact so the section
+        # detector can resolve it using the current section context.
+        canonical_heading = (
+            None
+            if normalized_heading == "professional certification"
+            else HEADING_MAP.get(normalized_heading)
         )
+
+        # Some PDF layouts extract the section icon as a single
+        # leading letter (for example, "G Skills"). Only treat it
+        # as noise when the remaining text is a known heading.
+        if canonical_heading is None:
+            prefixed_heading = re.fullmatch(
+                r"[A-Z]\s+(.+)",
+                line,
+                re.IGNORECASE,
+            )
+
+            if prefixed_heading:
+                prefixed_heading_value = (
+                    _normalize_heading_value(
+                        prefixed_heading.group(1)
+                    )
+                )
+                if (
+                    prefixed_heading_value
+                    == "professional certification"
+                ):
+                    line = prefixed_heading.group(1).strip()
+                else:
+                    canonical_heading = HEADING_MAP.get(
+                        prefixed_heading_value
+                    )
 
         if canonical_heading:
             line = canonical_heading

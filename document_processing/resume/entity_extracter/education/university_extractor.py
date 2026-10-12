@@ -6,26 +6,10 @@ Responsibilities
 1. Detect universities using the external dictionary.
 2. Support university aliases.
 3. Detect unknown universities using generic patterns.
-4. Preserve the original university text from the resume.
+4. Preserve the original university text.
 5. Return canonical university name when available.
 6. Never require every university to exist in the dictionary.
 7. Remove only the detected university from a line.
-
-Architecture
-------------
-Dictionary
-    ↓
-Known university / alias
-    ↓
-Canonical name
-
-If dictionary lookup fails:
-    ↓
-Generic university pattern detection
-    ↓
-Unknown university
-    ↓
-canonical_name = None
 """
 
 import json
@@ -38,13 +22,13 @@ from typing import Optional, Dict, Any
 # PROJECT PATH
 # ============================================================
 
-PROJECT_ROOT = Path(__file__).resolve().parents[5]
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
 
 UNIVERSITY_FILE = (
     PROJECT_ROOT
     / "data"
     / "resume"
-    / "universities"
+    / "education"
     / "university_dictionary.json"
 )
 
@@ -57,20 +41,14 @@ def normalize_university_text(text: str) -> str:
     """
     Normalize text for dictionary lookup.
 
-    This does NOT change the original value returned
-    to the caller.
+    The original text is never modified by this function.
     """
 
     if not text:
         return ""
 
     text = text.replace("\xa0", " ")
-
-    text = re.sub(
-        r"\s+",
-        " ",
-        text
-    )
+    text = re.sub(r"\s+", " ", text)
 
     return text.strip().lower()
 
@@ -95,14 +73,14 @@ def _load_university_dictionary():
         with open(
             UNIVERSITY_FILE,
             "r",
-            encoding="utf-8"
+            encoding="utf-8",
         ) as file:
 
             data = json.load(file)
 
     except (
         json.JSONDecodeError,
-        OSError
+        OSError,
     ) as exc:
 
         print(
@@ -112,19 +90,11 @@ def _load_university_dictionary():
 
         return []
 
-    # --------------------------------------------------------
-    # Expected format
-    #
-    # {
-    #     "universities": [...]
-    # }
-    # --------------------------------------------------------
-
     if isinstance(data, dict):
 
         universities = data.get(
             "universities",
-            []
+            [],
         )
 
     elif isinstance(data, list):
@@ -142,7 +112,7 @@ UNIVERSITIES = _load_university_dictionary()
 
 
 # ============================================================
-# BUILD ALIAS LOOKUP
+# ALIAS LOOKUP
 # ============================================================
 
 def _build_alias_lookup():
@@ -151,10 +121,7 @@ def _build_alias_lookup():
 
     for university in UNIVERSITIES:
 
-        if not isinstance(
-            university,
-            dict
-        ):
+        if not isinstance(university, dict):
             continue
 
         canonical_name = university.get(
@@ -166,29 +133,24 @@ def _build_alias_lookup():
 
         aliases = university.get(
             "aliases",
-            []
+            [],
         )
 
-        # ----------------------------------------------------
-        # Also allow canonical name itself.
-        # ----------------------------------------------------
+        if not isinstance(aliases, list):
+            aliases = [aliases]
 
         aliases = list(aliases)
 
-        aliases.append(
-            canonical_name
-        )
+        # Canonical name is also a valid alias.
+        aliases.append(canonical_name)
 
         for alias in aliases:
 
-            if not isinstance(
-                alias,
-                str
-            ):
+            if not isinstance(alias, str):
                 continue
 
-            normalized_alias = normalize_university_text(
-                alias
+            normalized_alias = (
+                normalize_university_text(alias)
             )
 
             if not normalized_alias:
@@ -205,7 +167,7 @@ ALIAS_LOOKUP = _build_alias_lookup()
 
 
 # ============================================================
-# BUILD DICTIONARY REGEX
+# DICTIONARY REGEX
 # ============================================================
 
 def _build_dictionary_pattern():
@@ -217,42 +179,28 @@ def _build_dictionary_pattern():
     if not aliases:
         return None
 
-    # --------------------------------------------------------
     # Longest aliases first.
-    #
-    # Example:
-    #
-    # "Anna University"
-    # before
-    # "Anna"
-    # --------------------------------------------------------
-
     aliases.sort(
         key=len,
-        reverse=True
+        reverse=True,
     )
 
-    escaped_aliases = []
-
-    for alias in aliases:
-
-        escaped_aliases.append(
-            re.escape(alias)
-        )
+    escaped_aliases = [
+        re.escape(alias)
+        for alias in aliases
+    ]
 
     pattern = (
         r"(?<!\w)"
         r"(?:"
-        + "|".join(
-            escaped_aliases
-        )
+        + "|".join(escaped_aliases)
         + r")"
         r"(?!\w)"
     )
 
     return re.compile(
         pattern,
-        flags=re.IGNORECASE
+        flags=re.IGNORECASE,
     )
 
 
@@ -265,52 +213,27 @@ DICTIONARY_PATTERN = (
 # GENERIC UNIVERSITY PATTERNS
 # ============================================================
 
-"""
-These patterns are NOT a university dictionary.
-
-They simply recognize linguistic structures such as:
-
-    Anna University
-    XYZ University
-    University of Kerala
-    Some Technological University
-
-This provides fallback coverage for universities that are
-not present in university_dictionary.json.
-"""
-
 GENERIC_UNIVERSITY_PATTERNS = [
 
-    # --------------------------------------------------------
-    # University of <Name>
-    #
     # University of Kerala
     # University of Delhi
-    # --------------------------------------------------------
-
     re.compile(
         r"\bUniversity\s+of\s+"
         r"[A-Za-z][A-Za-z0-9&.'()-]*"
         r"(?:\s+[A-Za-z][A-Za-z0-9&.'()-]*){0,6}",
-        flags=re.IGNORECASE
+        flags=re.IGNORECASE,
     ),
 
-    # --------------------------------------------------------
-    # <Name> University
-    #
     # Anna University
     # XYZ University
     # Some Technological University
-    # --------------------------------------------------------
-
     re.compile(
         r"\b"
         r"[A-Za-z][A-Za-z0-9&.'()-]*"
         r"(?:\s+[A-Za-z][A-Za-z0-9&.'()-]*){0,7}"
         r"\s+University\b",
-        flags=re.IGNORECASE
+        flags=re.IGNORECASE,
     ),
-
 ]
 
 
@@ -319,7 +242,7 @@ GENERIC_UNIVERSITY_PATTERNS = [
 # ============================================================
 
 def _extract_from_dictionary(
-    text: str
+    text: str,
 ) -> Optional[Dict[str, Any]]:
 
     if not text:
@@ -328,9 +251,7 @@ def _extract_from_dictionary(
     if DICTIONARY_PATTERN is None:
         return None
 
-    match = DICTIONARY_PATTERN.search(
-        text
-    )
+    match = DICTIONARY_PATTERN.search(text)
 
     if not match:
         return None
@@ -346,27 +267,20 @@ def _extract_from_dictionary(
     )
 
     return {
-
         "value": value,
-
-        "canonical_name":
-            canonical_name,
-
+        "canonical_name": canonical_name,
         "source": "dictionary",
-
         "start": match.start(),
-
         "end": match.end(),
-
     }
 
 
 # ============================================================
-# GENERIC UNIVERSITY MATCH
+# GENERIC MATCH
 # ============================================================
 
 def _extract_from_generic_pattern(
-    text: str
+    text: str,
 ) -> Optional[Dict[str, Any]]:
 
     if not text:
@@ -374,9 +288,7 @@ def _extract_from_generic_pattern(
 
     for pattern in GENERIC_UNIVERSITY_PATTERNS:
 
-        match = pattern.search(
-            text
-        )
+        match = pattern.search(text)
 
         if not match:
             continue
@@ -387,28 +299,22 @@ def _extract_from_generic_pattern(
             continue
 
         return {
-
             "value": value,
-
             "canonical_name": None,
-
             "source": "pattern",
-
             "start": match.start(),
-
             "end": match.end(),
-
         }
 
     return None
 
 
 # ============================================================
-# MAIN UNIVERSITY EXTRACTOR
+# MAIN EXTRACTOR
 # ============================================================
 
 def extract_university(
-    text: str
+    text: str,
 ) -> Optional[Dict[str, Any]]:
     """
     Extract a university from one text line.
@@ -416,39 +322,10 @@ def extract_university(
     Strategy
     --------
     1. Dictionary matching.
-    2. Generic university-pattern fallback.
-
-    Unknown universities are still returned.
-
-    Example
-    -------
-    Input:
-        "Anna University"
-
-    Output:
-        {
-            "value": "Anna University",
-            "canonical_name": "Anna University",
-            "source": "dictionary",
-            ...
-        }
-
-    Unknown:
-        "ABC University"
-
-    Output:
-        {
-            "value": "ABC University",
-            "canonical_name": None,
-            "source": "pattern",
-            ...
-        }
+    2. Generic university pattern fallback.
     """
 
-    if not isinstance(
-        text,
-        str
-    ):
+    if not isinstance(text, str):
         return None
 
     text = text.strip()
@@ -456,10 +333,7 @@ def extract_university(
     if not text:
         return None
 
-    # --------------------------------------------------------
-    # FIRST: dictionary
-    # --------------------------------------------------------
-
+    # Dictionary first.
     result = _extract_from_dictionary(
         text
     )
@@ -467,10 +341,7 @@ def extract_university(
     if result:
         return result
 
-    # --------------------------------------------------------
-    # SECOND: generic fallback
-    # --------------------------------------------------------
-
+    # Generic fallback.
     result = _extract_from_generic_pattern(
         text
     )
@@ -487,18 +358,18 @@ def extract_university(
 
 def remove_university_content(
     text: str,
-    university_result: Optional[Dict[str, Any]]
+    university_result: Optional[Dict[str, Any]],
 ) -> str:
     """
-    Remove the detected university from a line.
+    Remove only the detected university from a line.
 
-    Example
-    -------
-    "VTU - B.Tech"
+    Examples
+    --------
+    VTU - B.Tech
+        -> - B.Tech
 
-    becomes:
-
-    "- B.Tech"
+    ABC College - VTU - B.Tech
+        -> ABC College - - B.Tech
     """
 
     if not text:
@@ -527,7 +398,54 @@ def remove_university_content(
     cleaned = re.sub(
         r"\s+",
         " ",
-        cleaned
+        cleaned,
     )
 
-    return cleaned.strip()
+    # Clean separators left around the removed university.
+    cleaned = re.sub(
+        r"\s*[-–—|]\s*[-–—|]\s*",
+        " - ",
+        cleaned,
+    )
+
+    cleaned = cleaned.strip(
+        " -–—|,;"
+    )
+
+    return cleaned
+
+
+# ============================================================
+# TESTING
+# ============================================================
+
+if __name__ == "__main__":
+
+    test_lines = [
+        "APJ Abdul Kalam Technological University",
+        "Visvesvaraya Technological University",
+        "University of Kerala",
+        "ABC University",
+        "VTU - B.Tech",
+        "B.Tech - VTU",
+        "ABC College - VTU - B.Tech",
+    ]
+
+    for line in test_lines:
+
+        result = extract_university(line)
+
+        print("\nINPUT:")
+        print(line)
+
+        print("\nRESULT:")
+        print(result)
+
+        if result:
+            print("\nREMOVED:")
+            print(
+                remove_university_content(
+                    line,
+                    result,
+                )
+            )

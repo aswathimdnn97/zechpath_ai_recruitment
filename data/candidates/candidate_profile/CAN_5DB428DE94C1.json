@@ -1,0 +1,380 @@
+{
+    "candidate_id": "CAN_5DB428DE94C1",
+    "masked_profile": {
+        "candidate_id": "CAN_5DB428DE94C1",
+        "skills": [
+            {
+                "skill_id": "HR069",
+                "skill": "Communication",
+                "category": "HR",
+                "subcategory": "Soft Skills",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "skills"
+                ],
+                "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+                "sources": [
+                    "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+                    "Communication"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR005",
+                "skill": "Recruitment",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "skills"
+                ],
+                "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+                "sources": [
+                    "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+                    "Recruitment"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR035",
+                "skill": "Microsoft Excel",
+                "category": "HR",
+                "subcategory": "HR Tools",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+                "sources": [
+                    "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+                    "HR Assistant Trainee - Talent Bridge Academy Aug 2025 - Mar 2026 HR Assistant Trainee Kozhikode, Kerala Assisted with candidate screening and interview scheduling. Maintained basic employee records. Prepared Excel reports and office documents.",
+                    "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+                    "MS Excel"
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR022",
+                "skill": "Employee Records Management",
+                "category": "HR",
+                "subcategory": "HR Administration",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR007",
+                "skill": "Candidate Screening",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "HR Assistant Trainee - Talent Bridge Academy Aug 2025 - Mar 2026 HR Assistant Trainee Kozhikode, Kerala Assisted with candidate screening and interview scheduling. Maintained basic employee records. Prepared Excel reports and office documents.",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR011",
+                "skill": "Interview Scheduling",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "HR Assistant Trainee - Talent Bridge Academy Aug 2025 - Mar 2026 HR Assistant Trainee Kozhikode, Kerala Assisted with candidate screening and interview scheduling. Maintained basic employee records. Prepared Excel reports and office documents.",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR001",
+                "skill": "Human Resources",
+                "category": "HR",
+                "subcategory": "HR Fundamentals",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "HR Assistant Trainee - Talent Bridge Academy Aug 2025 - Mar 2026 HR Assistant Trainee Kozhikode, Kerala Assisted with candidate screening and interview scheduling. Maintained basic employee records. Prepared Excel reports and office documents.",
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR036",
+                "skill": "Microsoft Office",
+                "category": "HR",
+                "subcategory": "Office Tools",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "skills",
+                "source_text": "MS Office",
+                "extraction_method": "skills_section"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Bachelor of Commerce",
+                "field_of_study": "Finance",
+                "institution": null,
+                "university": null,
+                "board": null,
+                "graduation_year": "2025"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": null,
+                    "title": "HR Assistant Trainee",
+                    "category": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Talent Bridge Academy",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Aug 2025",
+                    "end_date": "Mar 2026"
+                },
+                "total_experience": {
+                    "total_months": 8,
+                    "total_years": 0.7
+                },
+                "location": "HR Assistant Trainee Kozhikode, Kerala",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP004",
+                    "department": "Human Resources",
+                    "matched_by": "keyword",
+                    "confidence": 75
+                },
+                "description": [
+                    "Assisted with candidate screening and interview scheduling.",
+                    "Maintained basic employee records.",
+                    "Prepared Excel reports and office documents."
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-09-24T18:41:39.645881+00:00"
+        }
+    },
+    "bias_report": {
+        "bias_detected": false,
+        "risk_level": "none",
+        "indicator_count": 0,
+        "indicators": [],
+        "status": "clear"
+    },
+    "original_profile": {
+        "candidate_id": "CAN_5DB428DE94C1",
+        "personal_information": {
+            "name": "KEERTHANA R",
+            "email": "keerthana.r@example.com",
+            "phone": null,
+            "location": null,
+            "linkedin": null,
+            "github": null,
+            "portfolio": null
+        },
+        "skills": [
+            {
+                "skill_id": "HR069",
+                "skill": "Communication",
+                "category": "HR",
+                "subcategory": "Soft Skills",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "skills"
+                ],
+                "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+                "sources": [
+                    "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+                    "Communication"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR005",
+                "skill": "Recruitment",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "skills"
+                ],
+                "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+                "sources": [
+                    "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+                    "Recruitment"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR035",
+                "skill": "Microsoft Excel",
+                "category": "HR",
+                "subcategory": "HR Tools",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+                "sources": [
+                    "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+                    "HR Assistant Trainee - Talent Bridge Academy Aug 2025 - Mar 2026 HR Assistant Trainee Kozhikode, Kerala Assisted with candidate screening and interview scheduling. Maintained basic employee records. Prepared Excel reports and office documents.",
+                    "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+                    "MS Excel"
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR022",
+                "skill": "Employee Records Management",
+                "category": "HR",
+                "subcategory": "HR Administration",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR007",
+                "skill": "Candidate Screening",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "HR Assistant Trainee - Talent Bridge Academy Aug 2025 - Mar 2026 HR Assistant Trainee Kozhikode, Kerala Assisted with candidate screening and interview scheduling. Maintained basic employee records. Prepared Excel reports and office documents.",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR011",
+                "skill": "Interview Scheduling",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "HR Assistant Trainee - Talent Bridge Academy Aug 2025 - Mar 2026 HR Assistant Trainee Kozhikode, Kerala Assisted with candidate screening and interview scheduling. Maintained basic employee records. Prepared Excel reports and office documents.",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR001",
+                "skill": "Human Resources",
+                "category": "HR",
+                "subcategory": "HR Fundamentals",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "HR Assistant Trainee - Talent Bridge Academy Aug 2025 - Mar 2026 HR Assistant Trainee Kozhikode, Kerala Assisted with candidate screening and interview scheduling. Maintained basic employee records. Prepared Excel reports and office documents.",
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR036",
+                "skill": "Microsoft Office",
+                "category": "HR",
+                "subcategory": "Office Tools",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "skills",
+                "source_text": "MS Office",
+                "extraction_method": "skills_section"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Bachelor of Commerce",
+                "field_of_study": "Finance",
+                "institution": null,
+                "university": null,
+                "board": null,
+                "graduation_year": "2025"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": null,
+                    "title": "HR Assistant Trainee",
+                    "category": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Talent Bridge Academy",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Aug 2025",
+                    "end_date": "Mar 2026"
+                },
+                "total_experience": {
+                    "total_months": 8,
+                    "total_years": 0.7
+                },
+                "location": "HR Assistant Trainee Kozhikode, Kerala",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP004",
+                    "department": "Human Resources",
+                    "matched_by": "keyword",
+                    "confidence": 75
+                },
+                "description": [
+                    "Assisted with candidate screening and interview scheduling.",
+                    "Maintained basic employee records.",
+                    "Prepared Excel reports and office documents."
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-09-24T18:41:39.645881+00:00"
+        }
+    },
+    "resume_hash": "0de64f0389c105a7b21381475d1a6262afae95a1704106f7b0c4bdd7ea7cfdd8"
+}

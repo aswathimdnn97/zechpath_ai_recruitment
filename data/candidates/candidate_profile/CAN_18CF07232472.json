@@ -1,0 +1,1174 @@
+{
+    "candidate_id": "CAN_18CF07232472",
+    "masked_profile": {
+        "candidate_id": "CAN_18CF07232472",
+        "skills": [
+            {
+                "source_section": "summary",
+                "source_text": "Software Developer with 1 year of Java development experience, currently transitioning to Python Full-Stack",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Software Developer with 1 year of Java development experience, currently transitioning to Python Full-Stack",
+                        "source_skill": "Python"
+                    },
+                    {
+                        "source_section": "summary",
+                        "source_text": "Development after a career break. Completed Python Core and React.js training and currently learning Django.",
+                        "source_skill": "Python"
+                    },
+                    {
+                        "source_section": "summary",
+                        "source_text": "Looking for a junior Python Full-Stack Developer role to apply previous software development experience and newly acquired full-stack skills.",
+                        "source_skill": "Python"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "Python",
+                        "source_skill": "Python"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Working on data science and Python-based projects as part of an internship.",
+                        "source_skill": "Python"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Applying Python programming concepts for data processing, analysis, and problem-solving.",
+                        "source_skill": "Python"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Applying Python programming concepts for data processing, analysis, and problem-solving.",
+                        "source_skill": "python programming"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills",
+                    "experience"
+                ],
+                "original_skills": [
+                    "python programming"
+                ],
+                "original_skill": "python programming",
+                "skill": "Python",
+                "skill_id": "TECH001",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Software Developer with 1 year of Java development experience, currently transitioning to Python Full-Stack",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Software Developer with 1 year of Java development experience, currently transitioning to Python Full-Stack",
+                        "source_skill": "Java"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "Java",
+                        "source_skill": "Java"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Sorice Solutions Private Limited, Palarivattom | Java Developer Trainee",
+                        "source_skill": "Java"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Developed and maintained Java-based web applications (US healthcare application - MPI) using the Spring framework.",
+                        "source_skill": "Java"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills",
+                    "experience"
+                ],
+                "skill": "Java",
+                "skill_id": "TECH002",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Development after a career break. Completed Python Core and React.js training and currently learning Django. ReactJS",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Development after a career break. Completed Python Core and React.js training and currently learning Django.",
+                        "source_skill": "React"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "ReactJS",
+                        "source_skill": "ReactJS"
+                    },
+                    {
+                        "source_section": "summary",
+                        "source_text": "Development after a career break. Completed Python Core and React.js training and currently learning Django.",
+                        "source_skill": "react.js"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills"
+                ],
+                "original_skills": [
+                    "ReactJS",
+                    "react.js"
+                ],
+                "original_skill": "ReactJS",
+                "skill": "React",
+                "skill_id": "TECH007",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Development after a career break. Completed Python Core and React.js training and currently learning Django.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Development after a career break. Completed Python Core and React.js training and currently learning Django.",
+                        "source_skill": "Django"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "Django",
+                        "source_skill": "Django"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills"
+                ],
+                "skill": "Django",
+                "skill_id": "TECH012",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Development after a career break. Completed Python Core and React.js training and currently learning Django.",
+                "extraction_method": "alias",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Development after a career break. Completed Python Core and React.js training and currently learning Django.",
+                        "source_skill": "js"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "JavaScript",
+                        "source_skill": "JavaScript"
+                    }
+                ],
+                "original_skill": "js",
+                "resolved_from": "js",
+                "resolution_method": "synonym",
+                "original_skills": [
+                    "js"
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills"
+                ],
+                "skill": "JavaScript",
+                "skill_id": "TECH003",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "TypeScript",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "TypeScript",
+                        "source_skill": "TypeScript"
+                    }
+                ],
+                "skill": "TypeScript",
+                "skill_id": "TECH004",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "HTML",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "HTML",
+                        "source_skill": "HTML"
+                    }
+                ],
+                "skill": "HTML",
+                "skill_id": "TECH005",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "CSS",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "CSS",
+                        "source_skill": "CSS"
+                    }
+                ],
+                "skill": "CSS",
+                "skill_id": "TECH006",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "Next.JS",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Next.JS",
+                        "source_skill": "Next.JS"
+                    }
+                ],
+                "skill": "Next.js",
+                "skill_id": "TECH0564",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "Spring Boot",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Spring Boot",
+                        "source_skill": "Spring Boot"
+                    }
+                ],
+                "skill": "Spring Boot",
+                "skill_id": "TECH063",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "Apache",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Apache",
+                        "source_skill": "Apache"
+                    }
+                ],
+                "skill": "Apache",
+                "skill_id": "TECH084",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "VS Code",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "VS Code",
+                        "source_skill": "VS Code"
+                    }
+                ],
+                "skill": "VS Code",
+                "skill_id": "TECH051",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "MySQL",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "MySQL",
+                        "source_skill": "MySQL"
+                    }
+                ],
+                "skill": "MySQL",
+                "skill_id": "TECH017",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "MongoDB",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "MongoDB",
+                        "source_skill": "MongoDB"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Implemented data persistence and retrieval functionalities using MongoDB, optimizing query performance.",
+                        "source_skill": "MongoDB"
+                    }
+                ],
+                "source_sections": [
+                    "skills",
+                    "experience"
+                ],
+                "skill": "MongoDB",
+                "skill_id": "TECH019",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "Linux",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Linux",
+                        "source_skill": "Linux"
+                    }
+                ],
+                "skill": "Linux",
+                "skill_id": "TECH044",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "Git",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Git",
+                        "source_skill": "Git"
+                    }
+                ],
+                "skill": "Git",
+                "skill_id": "TECH023",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "experience",
+                "source_text": "Applying Python programming concepts for data processing, analysis, and problem-solving.",
+                "extraction_method": "alias",
+                "sources": [
+                    {
+                        "source_section": "experience",
+                        "source_text": "Applying Python programming concepts for data processing, analysis, and problem-solving.",
+                        "source_skill": "problem-solving"
+                    }
+                ],
+                "original_skill": "problem-solving",
+                "resolved_from": "problem-solving",
+                "resolution_method": "synonym",
+                "original_skills": [
+                    "problem-solving"
+                ],
+                "skill": "Problem Solving",
+                "skill_id": "HR072",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "experience",
+                "source_text": "Developed and maintained Java-based web applications (US healthcare application - MPI) using the Spring framework.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "experience",
+                        "source_text": "Developed and maintained Java-based web applications (US healthcare application - MPI) using the Spring framework.",
+                        "source_skill": "Spring"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Developed and maintained Java-based web applications (US healthcare application - MPI) using the Spring framework.",
+                        "source_skill": "spring framework"
+                    }
+                ],
+                "source_sections": [
+                    "experience"
+                ],
+                "original_skills": [
+                    "spring framework"
+                ],
+                "skill": "Spring",
+                "skill_id": "TECH062",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "experience",
+                "source_text": "Utilized Postman for comprehensive API testing and documentation.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "experience",
+                        "source_text": "Utilized Postman for comprehensive API testing and documentation.",
+                        "source_skill": "Postman"
+                    }
+                ],
+                "source_sections": [
+                    "experience"
+                ],
+                "skill": "Postman",
+                "skill_id": "TECH039",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "experience",
+                "source_text": "Utilized Postman for comprehensive API testing and documentation.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "experience",
+                        "source_text": "Utilized Postman for comprehensive API testing and documentation.",
+                        "source_skill": "API Testing"
+                    }
+                ],
+                "source_sections": [
+                    "experience"
+                ],
+                "skill": "API Testing",
+                "skill_id": "TECH061",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "experience",
+                "source_text": "Utilized Postman for comprehensive API testing and documentation.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "experience",
+                        "source_text": "Utilized Postman for comprehensive API testing and documentation.",
+                        "source_skill": "API"
+                    }
+                ],
+                "source_sections": [
+                    "experience"
+                ],
+                "skill": "API",
+                "skill_id": "TECH087",
+                "matched_by": "exact"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Bachelor of Technology",
+                "field_of_study": "Electronics and Communication Engineering",
+                "institution": "Govt. College of Engineering Kannur",
+                "university": null,
+                "board": null,
+                "graduation_year": "2018"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": "JOB001",
+                    "title": "Software Engineer",
+                    "category": "Software Development",
+                    "matched_by": "fuzzy",
+                    "confidence": 86
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Zecser Business LLP",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "July 2026",
+                    "end_date": "present"
+                },
+                "total_experience": {
+                    "total_months": 4,
+                    "total_years": 0.3
+                },
+                "location": "Kochi",
+                "employment_type": {
+                    "type_id": "EMP003",
+                    "employment_type": "Internship",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "department": {
+                    "department_id": "DEP002",
+                    "department": "Data Science",
+                    "matched_by": "keyword",
+                    "confidence": 50
+                },
+                "description": [
+                    "Applying Python programming concepts for data processing, analysis, and problem-solving.",
+                    "Gaining hands-on exposure to real-world project development, debugging, testing, and documentation."
+                ]
+            },
+            {
+                "title": {
+                    "title_id": null,
+                    "title": "Java Developer Trainee",
+                    "category": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Sorice Solutions Private Limited",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "July 2022",
+                    "end_date": "July 2023"
+                },
+                "total_experience": {
+                    "total_months": 13,
+                    "total_years": 1.1
+                },
+                "location": "Palarivattom",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 75
+                },
+                "description": [
+                    "Developed and maintained Java-based web applications (US healthcare application - MPI) using the Spring framework.",
+                    "Debugged and resolved high-priority production bugs.",
+                    "Wrote and executed comprehensive unit tests using JUnit and Mockito, ensuring high code quality.",
+                    "Utilized Postman for comprehensive API testing and documentation.",
+                    "Implemented data persistence and retrieval functionalities using MongoDB, optimizing query performance.",
+                    "Integrated Solr for efficient full-text search capabilities within the application, improving search response time.",
+                    "Collaborated on code reviews and managed source control using GitLab."
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [
+            {
+                "certification_name": "Java With SpringBoot",
+                "issuing_organization": "ROGERSOFT Technology Private Limited",
+                "issue_date": "May 2022",
+                "expiration_date": "July 2022",
+                "credential_id": null
+            },
+            {
+                "certification_name": "Python Full-Stack Development",
+                "issuing_organization": "ROGERSOFT Technology Private Limited",
+                "issue_date": "May 2026",
+                "expiration_date": "Present",
+                "credential_id": null
+            }
+        ],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-10-05T18:37:38.372847+00:00"
+        }
+    },
+    "bias_report": {
+        "bias_detected": false,
+        "risk_level": "none",
+        "indicator_count": 0,
+        "indicators": [],
+        "status": "clear"
+    },
+    "original_profile": {
+        "candidate_id": "CAN_18CF07232472",
+        "personal_information": {
+            "name": "Aswathi Madanan",
+            "email": "aswathimdnn@gmail.com",
+            "phone": "91-8157036973",
+            "location": null,
+            "linkedin": "linkedin.com/in/aswathimdnn",
+            "github": "github.com/aswathimdnn",
+            "portfolio": null
+        },
+        "skills": [
+            {
+                "source_section": "summary",
+                "source_text": "Software Developer with 1 year of Java development experience, currently transitioning to Python Full-Stack",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Software Developer with 1 year of Java development experience, currently transitioning to Python Full-Stack",
+                        "source_skill": "Python"
+                    },
+                    {
+                        "source_section": "summary",
+                        "source_text": "Development after a career break. Completed Python Core and React.js training and currently learning Django.",
+                        "source_skill": "Python"
+                    },
+                    {
+                        "source_section": "summary",
+                        "source_text": "Looking for a junior Python Full-Stack Developer role to apply previous software development experience and newly acquired full-stack skills.",
+                        "source_skill": "Python"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "Python",
+                        "source_skill": "Python"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Working on data science and Python-based projects as part of an internship.",
+                        "source_skill": "Python"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Applying Python programming concepts for data processing, analysis, and problem-solving.",
+                        "source_skill": "Python"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Applying Python programming concepts for data processing, analysis, and problem-solving.",
+                        "source_skill": "python programming"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills",
+                    "experience"
+                ],
+                "original_skills": [
+                    "python programming"
+                ],
+                "original_skill": "python programming",
+                "skill": "Python",
+                "skill_id": "TECH001",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Software Developer with 1 year of Java development experience, currently transitioning to Python Full-Stack",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Software Developer with 1 year of Java development experience, currently transitioning to Python Full-Stack",
+                        "source_skill": "Java"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "Java",
+                        "source_skill": "Java"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Sorice Solutions Private Limited, Palarivattom | Java Developer Trainee",
+                        "source_skill": "Java"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Developed and maintained Java-based web applications (US healthcare application - MPI) using the Spring framework.",
+                        "source_skill": "Java"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills",
+                    "experience"
+                ],
+                "skill": "Java",
+                "skill_id": "TECH002",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Development after a career break. Completed Python Core and React.js training and currently learning Django. ReactJS",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Development after a career break. Completed Python Core and React.js training and currently learning Django.",
+                        "source_skill": "React"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "ReactJS",
+                        "source_skill": "ReactJS"
+                    },
+                    {
+                        "source_section": "summary",
+                        "source_text": "Development after a career break. Completed Python Core and React.js training and currently learning Django.",
+                        "source_skill": "react.js"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills"
+                ],
+                "original_skills": [
+                    "ReactJS",
+                    "react.js"
+                ],
+                "original_skill": "ReactJS",
+                "skill": "React",
+                "skill_id": "TECH007",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Development after a career break. Completed Python Core and React.js training and currently learning Django.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Development after a career break. Completed Python Core and React.js training and currently learning Django.",
+                        "source_skill": "Django"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "Django",
+                        "source_skill": "Django"
+                    }
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills"
+                ],
+                "skill": "Django",
+                "skill_id": "TECH012",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "summary",
+                "source_text": "Development after a career break. Completed Python Core and React.js training and currently learning Django.",
+                "extraction_method": "alias",
+                "sources": [
+                    {
+                        "source_section": "summary",
+                        "source_text": "Development after a career break. Completed Python Core and React.js training and currently learning Django.",
+                        "source_skill": "js"
+                    },
+                    {
+                        "source_section": "skills",
+                        "source_text": "JavaScript",
+                        "source_skill": "JavaScript"
+                    }
+                ],
+                "original_skill": "js",
+                "resolved_from": "js",
+                "resolution_method": "synonym",
+                "original_skills": [
+                    "js"
+                ],
+                "source_sections": [
+                    "summary",
+                    "skills"
+                ],
+                "skill": "JavaScript",
+                "skill_id": "TECH003",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "TypeScript",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "TypeScript",
+                        "source_skill": "TypeScript"
+                    }
+                ],
+                "skill": "TypeScript",
+                "skill_id": "TECH004",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "HTML",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "HTML",
+                        "source_skill": "HTML"
+                    }
+                ],
+                "skill": "HTML",
+                "skill_id": "TECH005",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "CSS",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "CSS",
+                        "source_skill": "CSS"
+                    }
+                ],
+                "skill": "CSS",
+                "skill_id": "TECH006",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "Next.JS",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Next.JS",
+                        "source_skill": "Next.JS"
+                    }
+                ],
+                "skill": "Next.js",
+                "skill_id": "TECH0564",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "Spring Boot",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Spring Boot",
+                        "source_skill": "Spring Boot"
+                    }
+                ],
+                "skill": "Spring Boot",
+                "skill_id": "TECH063",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "Apache",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Apache",
+                        "source_skill": "Apache"
+                    }
+                ],
+                "skill": "Apache",
+                "skill_id": "TECH084",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "VS Code",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "VS Code",
+                        "source_skill": "VS Code"
+                    }
+                ],
+                "skill": "VS Code",
+                "skill_id": "TECH051",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "MySQL",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "MySQL",
+                        "source_skill": "MySQL"
+                    }
+                ],
+                "skill": "MySQL",
+                "skill_id": "TECH017",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "MongoDB",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "MongoDB",
+                        "source_skill": "MongoDB"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Implemented data persistence and retrieval functionalities using MongoDB, optimizing query performance.",
+                        "source_skill": "MongoDB"
+                    }
+                ],
+                "source_sections": [
+                    "skills",
+                    "experience"
+                ],
+                "skill": "MongoDB",
+                "skill_id": "TECH019",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "Linux",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Linux",
+                        "source_skill": "Linux"
+                    }
+                ],
+                "skill": "Linux",
+                "skill_id": "TECH044",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "skills",
+                "source_text": "Git",
+                "extraction_method": "skills_section",
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Git",
+                        "source_skill": "Git"
+                    }
+                ],
+                "skill": "Git",
+                "skill_id": "TECH023",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "experience",
+                "source_text": "Applying Python programming concepts for data processing, analysis, and problem-solving.",
+                "extraction_method": "alias",
+                "sources": [
+                    {
+                        "source_section": "experience",
+                        "source_text": "Applying Python programming concepts for data processing, analysis, and problem-solving.",
+                        "source_skill": "problem-solving"
+                    }
+                ],
+                "original_skill": "problem-solving",
+                "resolved_from": "problem-solving",
+                "resolution_method": "synonym",
+                "original_skills": [
+                    "problem-solving"
+                ],
+                "skill": "Problem Solving",
+                "skill_id": "HR072",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "experience",
+                "source_text": "Developed and maintained Java-based web applications (US healthcare application - MPI) using the Spring framework.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "experience",
+                        "source_text": "Developed and maintained Java-based web applications (US healthcare application - MPI) using the Spring framework.",
+                        "source_skill": "Spring"
+                    },
+                    {
+                        "source_section": "experience",
+                        "source_text": "Developed and maintained Java-based web applications (US healthcare application - MPI) using the Spring framework.",
+                        "source_skill": "spring framework"
+                    }
+                ],
+                "source_sections": [
+                    "experience"
+                ],
+                "original_skills": [
+                    "spring framework"
+                ],
+                "skill": "Spring",
+                "skill_id": "TECH062",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "experience",
+                "source_text": "Utilized Postman for comprehensive API testing and documentation.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "experience",
+                        "source_text": "Utilized Postman for comprehensive API testing and documentation.",
+                        "source_skill": "Postman"
+                    }
+                ],
+                "source_sections": [
+                    "experience"
+                ],
+                "skill": "Postman",
+                "skill_id": "TECH039",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "experience",
+                "source_text": "Utilized Postman for comprehensive API testing and documentation.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "experience",
+                        "source_text": "Utilized Postman for comprehensive API testing and documentation.",
+                        "source_skill": "API Testing"
+                    }
+                ],
+                "source_sections": [
+                    "experience"
+                ],
+                "skill": "API Testing",
+                "skill_id": "TECH061",
+                "matched_by": "exact"
+            },
+            {
+                "source_section": "experience",
+                "source_text": "Utilized Postman for comprehensive API testing and documentation.",
+                "extraction_method": "master_dictionary",
+                "sources": [
+                    {
+                        "source_section": "experience",
+                        "source_text": "Utilized Postman for comprehensive API testing and documentation.",
+                        "source_skill": "API"
+                    }
+                ],
+                "source_sections": [
+                    "experience"
+                ],
+                "skill": "API",
+                "skill_id": "TECH087",
+                "matched_by": "exact"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Bachelor of Technology",
+                "field_of_study": "Electronics and Communication Engineering",
+                "institution": "Govt. College of Engineering Kannur",
+                "university": null,
+                "board": null,
+                "graduation_year": "2018"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": "JOB001",
+                    "title": "Software Engineer",
+                    "category": "Software Development",
+                    "matched_by": "fuzzy",
+                    "confidence": 86
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Zecser Business LLP",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "July 2026",
+                    "end_date": "present"
+                },
+                "total_experience": {
+                    "total_months": 4,
+                    "total_years": 0.3
+                },
+                "location": "Kochi",
+                "employment_type": {
+                    "type_id": "EMP003",
+                    "employment_type": "Internship",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "department": {
+                    "department_id": "DEP002",
+                    "department": "Data Science",
+                    "matched_by": "keyword",
+                    "confidence": 50
+                },
+                "description": [
+                    "Applying Python programming concepts for data processing, analysis, and problem-solving.",
+                    "Gaining hands-on exposure to real-world project development, debugging, testing, and documentation."
+                ]
+            },
+            {
+                "title": {
+                    "title_id": null,
+                    "title": "Java Developer Trainee",
+                    "category": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Sorice Solutions Private Limited",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "July 2022",
+                    "end_date": "July 2023"
+                },
+                "total_experience": {
+                    "total_months": 13,
+                    "total_years": 1.1
+                },
+                "location": "Palarivattom",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 75
+                },
+                "description": [
+                    "Developed and maintained Java-based web applications (US healthcare application - MPI) using the Spring framework.",
+                    "Debugged and resolved high-priority production bugs.",
+                    "Wrote and executed comprehensive unit tests using JUnit and Mockito, ensuring high code quality.",
+                    "Utilized Postman for comprehensive API testing and documentation.",
+                    "Implemented data persistence and retrieval functionalities using MongoDB, optimizing query performance.",
+                    "Integrated Solr for efficient full-text search capabilities within the application, improving search response time.",
+                    "Collaborated on code reviews and managed source control using GitLab."
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [
+            {
+                "certification_name": "Java With SpringBoot",
+                "issuing_organization": "ROGERSOFT Technology Private Limited",
+                "issue_date": "May 2022",
+                "expiration_date": "July 2022",
+                "credential_id": null
+            },
+            {
+                "certification_name": "Python Full-Stack Development",
+                "issuing_organization": "ROGERSOFT Technology Private Limited",
+                "issue_date": "May 2026",
+                "expiration_date": "Present",
+                "credential_id": null
+            }
+        ],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-10-05T18:37:38.372847+00:00"
+        }
+    },
+    "resume_hash": "7da7af15c4c798c18d28b50f1a5865ed9375717ac0fd1366c43b6ed6a6e4dafa"
+}

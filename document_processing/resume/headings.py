@@ -54,6 +54,7 @@ heading_aliases = {
     "professional profile": "summary",
     "career profile": "summary",
     "about me": "summary",
+    "career highlights": "summary",
 
 
     # --------------------------------------------------------
@@ -75,6 +76,14 @@ heading_aliases = {
     "technical expertise": "skills",
     "areas of expertise": "skills",
     "expertise": "skills",
+    
+    "core technical skills": "skills",
+    "technical skills matrix": "skills",
+    "technical skill matrix": "skills",
+    "technical knowledge": "skills",
+    "technical competencies": "skills",
+    "technology skills": "skills",
+    
 
 
     # --------------------------------------------------------
@@ -110,6 +119,14 @@ heading_aliases = {
     "qualification": "education",
     "qualifications": "education",
     "educational background": "education",
+    "education details": "education",
+    "education details": "education",
+    "educational details": "education",
+    "academic details": "education",
+    "academic qualifications": "education",
+    "academic qualification": "education",
+    "educational background": "education",
+    "academic background": "education",
 
 
     # --------------------------------------------------------
@@ -214,6 +231,15 @@ heading_aliases = {
     "co curricular activities": "activities",
     "co-curricular activities": "activities",
     "other activities": "activities",
+    "additional contribution": "activities",
+    "additional contributions" : "activities",
+    "other contributions" : "activities",
+    "professional contributions" : "activities",
+    "technical contributions" : "activities",
+    "additional contribution": "activities",
+    "additional contributions" :"activities",
+    "other contributions" : "activities",
+    "professional contributions" : "activities",
 
 
     # --------------------------------------------------------

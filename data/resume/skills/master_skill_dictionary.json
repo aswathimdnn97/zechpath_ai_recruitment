@@ -521,14 +521,7 @@
     "type": "Testing Framework",
     "status": "active"
   },
-  {
-    "skill_id": "TECH053",
-    "name": "Next.js",
-    "category": "Technology",
-    "subcategory": "Frontend Framework",
-    "type": "Web Framework",
-    "status": "active"
-  },
+ 
   {
     "skill_id": "TECH054",
     "name": "Material UI",
@@ -609,6 +602,15 @@
     "category": "Technical",
     "subcategory": "Java Framework",
     "type": "Framework",
+    "status": "active"
+  },
+
+   {
+    "skill_id": "TECH0564",
+    "name": "Next.js",
+    "category": "Technology",
+    "subcategory": "Frontend Framework",
+    "type": "Web Framework",
     "status": "active"
   },
 
@@ -1237,7 +1239,197 @@
     "subcategory": "HR Operations",
     "type": "Process",
     "status": "active"
-  }
+  },
 
-  
+   
+  {
+    "skill_id": "TECH084",
+    "name": "Apache",
+    "category": "Technical",
+    "subcategory": "Web Server",
+    "type": "Web Server",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH085",
+    "name": "PHP",
+    "category": "Technical",
+    "subcategory": "Programming Language",
+    "type": "Language",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH086",
+    "name": "Nginx",
+    "category": "Technical",
+    "subcategory": "Web Server",
+    "type": "Web Server",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH087",
+    "name": "API",
+    "category": "Technical",
+    "subcategory": "Web Services",
+    "type": "Technology",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH088",
+    "name": "Markup",
+    "category": "Technical",
+    "subcategory": "Web Technology",
+    "type": "Technology",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH089",
+    "name": "C#",
+    "category": "Technical",
+    "subcategory": "Programming Language",
+    "type": "Language",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH090",
+    "name": ".NET",
+    "category": "Technical",
+    "subcategory": "Backend Framework",
+    "type": "Framework",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH091",
+    "name": "ASP.NET",
+    "category": "Technical",
+    "subcategory": "Backend Framework",
+    "type": "Framework",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH092",
+    "name": "Hibernate",
+    "category": "Technical",
+    "subcategory": "Java Framework",
+    "type": "ORM",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH093",
+    "name": "Matplotlib",
+    "category": "Technical",
+    "subcategory": "Data Visualization",
+    "type": "Library",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH094",
+    "name": "PyTorch",
+    "category": "Technical",
+    "subcategory": "Deep Learning",
+    "type": "Framework",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH095",
+    "name": "Jenkins",
+    "category": "Technical",
+    "subcategory": "DevOps",
+    "type": "CI/CD Tool",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH096",
+    "name": "Terraform",
+    "category": "Technical",
+    "subcategory": "DevOps",
+    "type": "Infrastructure as Code",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH097",
+    "name": "Ansible",
+    "category": "Technical",
+    "subcategory": "DevOps",
+    "type": "Automation Tool",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH098",
+    "name": "Elasticsearch",
+    "category": "Technical",
+    "subcategory": "Search / Analytics",
+    "type": "Search Engine",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH099",
+    "name": "Logstash",
+    "category": "Technical",
+    "subcategory": "Data Processing",
+    "type": "Data Processing Tool",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH100",
+    "name": "Kibana",
+    "category": "Technical",
+    "subcategory": "Data Visualization",
+    "type": "Visualization Tool",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH101",
+    "name": "tRPC",
+    "category": "Technical",
+    "subcategory": "API Framework",
+    "type": "Framework",
+    "status": "active"
+  },
+  {
+    "skill_id": "TECH102",
+    "name": "Prisma",
+    "category": "Technical",
+    "subcategory": "Database ORM",
+    "type": "ORM",
+    "status": "active"
+  },
+
+  {
+    "skill_id": "TECH103",
+    "name": "C++",
+    "category": "Technical",
+    "subcategory": "Programming Language",
+    "type": "Language",
+    "status": "active"
+},
+{
+    "skill_id": "TECH104",
+    "name": "spaCy",
+    "category": "Technical",
+    "subcategory": "NLP Framework",
+    "type": "Framework",
+    "status": "active"
+},
+{
+    
+        "skill_id": "TECH105",
+        "name": "OpenCV",
+        "category": "Technical",
+        "subcategory": "Computer Vision",
+        "type": "Library",
+        "status": "active"
+    
+},
+
+{
+  "skill_id": "TECH106",
+  "name": "Object-Oriented Programming",
+  "category": "Technical",
+  "subcategory": "Programming Paradigm",
+  "type": "Programming Concept",
+  "status": "active"
+}
 ]
+  
+

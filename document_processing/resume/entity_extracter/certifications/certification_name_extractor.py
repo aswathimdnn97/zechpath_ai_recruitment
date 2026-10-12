@@ -1,5 +1,9 @@
 import re
 
+from document_processing.resume.entity_extracter.certifications.organization_extractor import (
+    split_organization_suffix,
+)
+
 
 # ============================================================
 # PATTERNS
@@ -9,13 +13,11 @@ YEAR_PATTERN = re.compile(
     r"\b(?:19|20)\d{2}\b"
 )
 
-
 STATUS_PATTERN = re.compile(
     r"\b(?:completed|complete|passed|attained|"
-    r"received|achieved|obtained)\b",
+    r"received|achieved|obtained|earned)\b",
     re.IGNORECASE,
 )
-
 
 KNOWN_ORG_PATTERN = re.compile(
     r"\b(?:"
@@ -23,8 +25,8 @@ KNOWN_ORG_PATTERN = re.compile(
     r"|google\s+cloud"
     r"|google"
     r"|coursera"
-    r"|deep\s*learning\.ai"
-    r"|deeplearning\.ai"
+    r"|deep\s*learning\s*\.?\s*ai"
+    r"|deeplearning\s*\.?\s*ai"
     r"|tensorflow"
     r"|ibm"
     r"|amazon\s+web\s+services"
@@ -51,8 +53,10 @@ KNOWN_ORG_PATTERN = re.compile(
 def _clean_text(text):
     """
     Basic text normalization.
-    """
 
+    Returns:
+        str
+    """
     if not isinstance(text, str):
         return ""
 
@@ -62,9 +66,9 @@ def _clean_text(text):
         return ""
 
     # Normalize PDF dash characters.
-    text = text.replace("\u2013", "-")
-    text = text.replace("\u2014", "-")
-    text = text.replace("\u2212", "-")
+    text = text.replace("\u2013", "-")  # en dash
+    text = text.replace("\u2014", "-")  # em dash
+    text = text.replace("\u2212", "-")  # minus sign
 
     # Normalize whitespace.
     text = re.sub(
@@ -81,7 +85,6 @@ def _remove_status(text):
     Remove completion/status words.
 
     Examples:
-
         Python Certification Completed
             ->
         Python Certification
@@ -90,6 +93,8 @@ def _remove_status(text):
             ->
         Professional Development Program
     """
+    if not text:
+        return ""
 
     text = STATUS_PATTERN.sub(
         " ",
@@ -117,7 +122,6 @@ def _remove_certificate_wrapper(text):
     Remove generic wrappers when they are used as prefixes.
 
     Examples:
-
         Certificate: Python Basics
             ->
         Python Basics
@@ -134,6 +138,8 @@ def _remove_certificate_wrapper(text):
 
     because 'Certification' is part of the actual title.
     """
+    if not text:
+        return ""
 
     text = re.sub(
         r"^\s*(?:certificate|certification|certified)"
@@ -151,7 +157,6 @@ def _remove_years(text):
     Remove parenthesized or trailing years.
 
     Examples:
-
         Python Certificate (2024)
             ->
         Python Certificate
@@ -160,6 +165,8 @@ def _remove_years(text):
             ->
         Python Certificate
     """
+    if not text:
+        return ""
 
     # Parenthesized year.
     text = re.sub(
@@ -184,13 +191,20 @@ def _remove_organization(text):
     as a suffix.
 
     Examples:
-
         Python for Everybody - Coursera
-            -> Python for Everybody
+            ->
+        Python for Everybody
 
         AWS Developer - Amazon Web Services
-            -> AWS Developer
+            ->
+        AWS Developer
     """
+    if not text:
+        return ""
+
+    suffix = split_organization_suffix(text)
+    if suffix:
+        text = suffix[0]
 
     organization_pattern = (
         r"(?:"
@@ -198,8 +212,8 @@ def _remove_organization(text):
         r"|google\s+cloud"
         r"|google"
         r"|coursera"
-        r"|deep\s*learning\.ai"
-        r"|deeplearning\.ai"
+        r"|deep\s*learning\s*\.?\s*ai"
+        r"|deeplearning\s*\.?\s*ai"
         r"|tensorflow"
         r"|ibm"
         r"|amazon\s+web\s+services"
@@ -234,14 +248,49 @@ def _remove_leading_bullets(text):
     """
     Remove PDF bullet characters.
     """
+    if not text:
+        return ""
 
     text = re.sub(
-        r"^[\s•●▪◦*-]+",
+        r"^[\s•●▪◦*\-]+",
         "",
         text,
     )
 
     return _clean_text(text)
+
+
+# ============================================================
+# METADATA DETECTION
+# ============================================================
+
+def _is_metadata_line(line):
+    """
+    Determine whether a line is obvious certification metadata.
+    """
+    if not isinstance(line, str):
+        return False
+
+    line = line.strip()
+
+    if not line:
+        return False
+
+    return bool(
+        re.match(
+            r"^(?:"
+            r"issued|issue date|issued date|issued on|"
+            r"expiration|expiration date|expiry|expiry date|"
+            r"expires|valid until|valid through|"
+            r"credential id|credential number|credential no|"
+            r"certificate id|certificate number|certificate no|"
+            r"certification id|certification number|certification no|"
+            r"cert id|cert number|cert no"
+            r")\b",
+            line,
+            flags=re.IGNORECASE,
+        )
+    )
 
 
 # ============================================================
@@ -254,7 +303,6 @@ def extract_certification_name(block):
 
     Examples
     --------
-
     Input:
         [
             "Python / Domain Certification",
@@ -302,17 +350,11 @@ def extract_certification_name(block):
     # Normalize block
     # ========================================================
 
-    if isinstance(
-        block,
-        str,
-    ):
+    if isinstance(block, str):
         lines = [block]
 
-    elif isinstance(
-        block,
-        list,
-    ):
-        lines = block
+    elif isinstance(block, (list, tuple)):
+        lines = list(block)
 
     else:
         return None
@@ -320,23 +362,20 @@ def extract_certification_name(block):
     cleaned_lines = []
 
     for line in lines:
-
         line = _clean_text(line)
 
         if not line:
             continue
 
-        cleaned_lines.append(
-            line
-        )
+        cleaned_lines.append(line)
 
     if not cleaned_lines:
         return None
 
     # ========================================================
-    # IMPORTANT:
+    # IMPORTANT
     #
-    # The certification splitter now creates logical blocks.
+    # The certification splitter creates logical blocks.
     #
     # Therefore the FIRST meaningful non-metadata line is
     # normally the certification name.
@@ -346,28 +385,24 @@ def extract_certification_name(block):
 
     for line in cleaned_lines:
 
+        # ----------------------------------------------------
         # Skip status-only lines.
-        if STATUS_PATTERN.fullmatch(
-            line
-        ):
+        # ----------------------------------------------------
+
+        if STATUS_PATTERN.fullmatch(line):
             continue
 
+        # ----------------------------------------------------
         # Skip obvious metadata.
-        if re.match(
-            r"^(?:"
-            r"issued|issue date|issued date|issued on|"
-            r"expiration|expiration date|expiry|expiry date|"
-            r"expires|valid until|valid through|"
-            r"credential id|credential number|credential no|"
-            r"certificate id|certificate number|certificate no|"
-            r"certification id|certification number|certification no"
-            r")\b",
-            line,
-            flags=re.IGNORECASE,
-        ):
+        # ----------------------------------------------------
+
+        if _is_metadata_line(line):
             continue
 
+        # ----------------------------------------------------
         # Skip standalone years.
+        # ----------------------------------------------------
+
         if re.fullmatch(
             r"(?:19|20)\d{2}",
             line,
@@ -386,25 +421,15 @@ def extract_certification_name(block):
 
     text = candidate
 
-    text = _remove_leading_bullets(
-        text
-    )
+    text = _remove_leading_bullets(text)
 
-    text = _remove_status(
-        text
-    )
+    text = _remove_status(text)
 
-    text = _remove_certificate_wrapper(
-        text
-    )
+    text = _remove_certificate_wrapper(text)
 
-    text = _remove_years(
-        text
-    )
+    text = _remove_years(text)
 
-    text = _remove_organization(
-        text
-    )
+    text = _remove_organization(text)
 
     # Normalize slash formatting but PRESERVE slash.
     #
@@ -412,9 +437,10 @@ def extract_certification_name(block):
     #
     # Python / Domain Certification
     #
-    # should remain:
+    # remains:
     #
     # Python / Domain Certification
+
     text = re.sub(
         r"\s*/\s*",
         " / ",
@@ -441,6 +467,7 @@ def extract_certification_name(block):
     if not text:
         return None
 
+    # Must contain at least one alphabetic character.
     if not any(
         character.isalpha()
         for character in text
@@ -466,3 +493,42 @@ def extract_certification_name(block):
         return None
 
     return text
+
+
+# ============================================================
+# MANUAL TEST
+# ============================================================
+
+if __name__ == "__main__":
+
+    test_blocks = [
+        [
+            "Python / Domain Certification",
+            "Completed",
+        ],
+        [
+            "Professional Development Program",
+            "Completed",
+        ],
+        [
+            "AWS Certified Developer",
+            "Amazon Web Services",
+            "Issued: 2024",
+        ],
+        [
+            "Python for Everybody - Coursera",
+        ],
+    ]
+
+    print("\nCERTIFICATION NAME TESTS")
+    print("=" * 60)
+
+    for index, block in enumerate(
+        test_blocks,
+        start=1,
+    ):
+        result = extract_certification_name(block)
+
+        print(f"\nTEST {index}")
+        print("INPUT :", block)
+        print("OUTPUT:", result)

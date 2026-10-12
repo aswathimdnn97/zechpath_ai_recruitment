@@ -303,7 +303,10 @@ def extract_field_of_study(block):
         # Handle "Degree in FieldOfStudy" pattern
         #
         # Example:
-        # B.Tech in Computer Science and Engineering
+        # B.Tech in Computer Science and
+        # Engineering
+        #
+        # -> Computer Science and Engineering
         # =============================================
 
         if " in " in lower_line:
@@ -311,19 +314,96 @@ def extract_field_of_study(block):
             parts = re.split(
                 r"\s+in\s+",
                 line,
+                maxsplit=1,
                 flags=re.IGNORECASE,
             )
 
             if len(parts) > 1:
 
-                field_candidate = parts[1]
+                field_candidate = parts[1].strip()
+
+                # -------------------------------------
+                # Collect continuation lines
+                # -------------------------------------
+
+                continuation_parts = [field_candidate]
+
+                current_index = block.index(line)
+
+                for next_line in block[current_index + 1:]:
+
+                    if not isinstance(next_line, str):
+                        continue
+
+                    next_line = next_line.strip()
+
+                    if not next_line:
+                        continue
+
+                    next_lower = next_line.lower()
+
+                    # Stop at institution information
+                    if re.search(
+                        r"\b(university|college|institute|institution|"
+                        r"academy|polytechnic|school|vidyalaya)\b",
+                        next_lower,
+                    ):
+                        break
+
+                    # Stop at academic year
+                    if YEAR_RANGE_PATTERN.search(next_line):
+                        break
+
+                    if YEAR_PATTERN.fullmatch(next_line.strip()):
+                        break
+
+                    # Stop at obvious metadata
+                    if re.search(
+                        r"^(cgpa|gpa|sgpa|aggregate|marks obtained|"
+                        r"percentage|grade)\b",
+                        next_lower,
+                    ):
+                        break
+
+                    # Only append if it looks like a continuation
+                    if any(
+                        keyword.lower() in next_lower
+                        for keyword in FIELD_KEYWORDS
+                    ):
+                        continuation_parts.append(next_line)
+                    else:
+                        # For a continuation such as:
+                        # "Engineering"
+                        # allow it when the previous field
+                        # clearly looks incomplete.
+                        previous_text = " ".join(
+                            continuation_parts
+                        ).lower()
+
+                        if previous_text.endswith(
+                            (
+                                " and",
+                                " of",
+                                " in",
+                                " computer",
+                                " information",
+                            )
+                        ):
+                            continuation_parts.append(
+                                next_line
+                            )
+                        else:
+                            break
+
+                field_candidate = " ".join(
+                    continuation_parts
+                )
 
                 # -------------------------------------
                 # Remove everything after "|"
                 # -------------------------------------
 
                 if "|" in field_candidate:
-
                     field_candidate = (
                         field_candidate
                         .split("|")[0]
@@ -340,32 +420,11 @@ def extract_field_of_study(block):
                 )
 
                 if match:
-
                     field_candidate = (
                         field_candidate[
                             :match.start()
                         ].strip()
                     )
-
-                else:
-
-                    # ---------------------------------
-                    # Remove institution information
-                    # ---------------------------------
-
-                    match = re.search(
-                        r"\b(?:university|college|institute|institution|technological|polytechnic)\b",
-                        field_candidate,
-                        re.IGNORECASE,
-                    )
-
-                    if match:
-
-                        field_candidate = (
-                            field_candidate[
-                                :match.start()
-                            ].strip()
-                        )
 
                 # -------------------------------------
                 # Clean academic years
@@ -376,13 +435,8 @@ def extract_field_of_study(block):
                 )
 
                 if field_candidate:
-
                     for keyword in FIELD_KEYWORDS:
-
-                        if (
-                            keyword.lower()
-                            in field_candidate.lower()
-                        ):
+                        if keyword.lower() in field_candidate.lower():
                             return field_candidate
 
         # =============================================
@@ -559,3 +613,31 @@ if __name__ == "__main__":
                 block
             )
         )
+        
+    print("\n========== DIRECT FIELD EXTRACTION DEBUG ==========")
+
+    test_blocks = [
+        [
+            "B.Tech in Computer Science and",
+            "Engineering",
+            "Kerala Institute of Technology - 2020 -",
+            "2024",
+        ],
+        [
+            "Higher Secondary - Computer Science",
+            "Government Higher Secondary School -",
+            "2020",
+        ],
+    ]
+
+    for i, block in enumerate(test_blocks):
+        print(f"\nBLOCK {i}:")
+        for line in block:
+            print(repr(line))
+
+        print(
+            "EXTRACTED FIELD:",
+            repr(extract_field_of_study(block))
+        )
+
+    print("===================================================")

@@ -42,6 +42,14 @@ MASTER_SKILL_FILE = (
     / "master_skill_dictionary.json"
 )
 
+SKILL_ALIAS_FILE = (
+    PROJECT_ROOT
+    / "data"
+    / "resume"
+    / "skills"
+    / "skill_aliases.json"
+)
+
 
 # ============================================================
 # FILLER PATTERNS
@@ -167,6 +175,59 @@ def _load_master_skills() -> list[str]:
 
     return skills
 
+def _load_skill_aliases() -> dict[str, str]:
+    """
+    Load skill aliases.
+
+    Example:
+        {
+            "rest api": "REST API",
+            "rest apis": "REST API"
+        }
+
+    Returns:
+        Mapping of normalized alias -> canonical skill name.
+    """
+
+    if not SKILL_ALIAS_FILE.exists():
+        return {}
+
+    try:
+        with open(
+            SKILL_ALIAS_FILE,
+            "r",
+            encoding="utf-8",
+        ) as file:
+            data = json.load(file)
+
+    except (
+        OSError,
+        json.JSONDecodeError,
+    ):
+        return {}
+
+    if not isinstance(data, dict):
+        return {}
+
+    aliases = {}
+
+    for alias, canonical in data.items():
+
+        if not isinstance(alias, str):
+            continue
+
+        if not isinstance(canonical, str):
+            continue
+
+        alias = alias.strip()
+        canonical = canonical.strip()
+
+        if not alias or not canonical:
+            continue
+
+        aliases[_normalize(alias)] = canonical
+
+    return aliases
 
 # ============================================================
 # NORMALIZATION
@@ -367,27 +428,31 @@ def _split_connectors(
 
 def _build_master_skill_index():
     """
-    Build a normalized master-skill index.
+    Build a normalized skill index from the master dictionary
+    and skill aliases.
 
-    Multi-word skills are sorted before shorter skills.
+    Canonical names and aliases are matched using the same
+    longest-first strategy.
 
     Example:
 
-        Django REST Framework
-        Django
+        REST APIs
+            -> REST API
 
-    becomes:
+        RESTful API
+            -> REST API
 
-        Django REST Framework
-        Django
-
-    This is important because the longest valid skill should
-    be selected first.
+    The returned skill name is always the canonical name.
     """
 
     master_skills = _load_master_skills()
+    skill_aliases = _load_skill_aliases()
 
     indexed_skills = []
+
+    # --------------------------------------------------------
+    # Canonical master skills
+    # --------------------------------------------------------
 
     for skill in master_skills:
 
@@ -404,7 +469,34 @@ def _build_master_skill_index():
         )
 
     # --------------------------------------------------------
-    # Longest skills first
+    # Skill aliases
+    # --------------------------------------------------------
+
+    for alias, canonical_skill in skill_aliases.items():
+
+        if not alias:
+            continue
+
+        if not canonical_skill:
+            continue
+
+        indexed_skills.append(
+            (
+                alias,
+                canonical_skill.strip(),
+            )
+        )
+
+    # --------------------------------------------------------
+    # Remove duplicate aliases/canonical entries
+    # --------------------------------------------------------
+
+    indexed_skills = list(
+        dict.fromkeys(indexed_skills)
+    )
+
+    # --------------------------------------------------------
+    # Longest phrase first
     # --------------------------------------------------------
 
     indexed_skills.sort(

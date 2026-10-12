@@ -1,1009 +1,842 @@
 import re
-from typing import Any, Dict, List
+
+from typing import Any, Dict, List, Optional
 
 
-# ============================================================
-# Patterns
-# ============================================================
+EXPERIENCE_WEIGHT = 0.30
 
-YEAR_RANGE_PATTERN = re.compile(
-    r"(\d+(?:\.\d+)?)\s*[-–—]\s*"
-    r"(\d+(?:\.\d+)?)\s*(?:years?|yrs?)",
-    re.IGNORECASE,
-)
+YEARS_WEIGHT = 0.35
+ROLE_WEIGHT = 0.25
+TECHNOLOGY_WEIGHT = 0.40
 
-PLUS_YEAR_PATTERN = re.compile(
-    r"(\d+(?:\.\d+)?)\s*\+\s*(?:years?|yrs?)",
-    re.IGNORECASE,
-)
-
-MIN_YEAR_PATTERN = re.compile(
-    r"(?:minimum|min|at least)\s*"
-    r"(\d+(?:\.\d+)?)\s*(?:years?|yrs?)",
-    re.IGNORECASE,
-)
-
-
-
-
-# ============================================================
-# Text Normalization
-# ============================================================
 
 def normalize_text(value: Any) -> str:
-    """
-    Normalize text for comparison.
-    """
-    if not isinstance(value, str):
-        return ""
-
-    value = value.lower().strip()
-    value = re.sub(r"[^a-z0-9+#.\s-]", " ", value)
-
-    return " ".join(value.split())
-
-
-# ============================================================
-# JD Experience Parsing
-# ============================================================
-
-def extract_required_years(
-    experience: List[Any]
-) -> Dict[str, float]:
-    """
-    Extract minimum and maximum years of experience
-    from JD experience requirements.
-
-    Supports both structured dictionaries and strings.
-
-    Structured example:
-        {
-            "minimum_years": 0,
-            "maximum_years": 1,
-            "description": "0-1 year experience"
-        }
-
-    String examples:
-        "2-4 years"
-        "3+ years"
-        "minimum 2 years"
-        "at least 1 year"
-    """
-
-    min_years = 0.0
-    max_years = 0.0
-
-    for item in experience or []:
-
-        # ----------------------------------------------------
-        # Structured experience object
-        # ----------------------------------------------------
-        if isinstance(item, dict):
-
-            minimum = item.get("minimum_years")
-            maximum = item.get("maximum_years")
-
-            # Read explicit minimum_years
-            try:
-                if minimum is not None:
-                    minimum_value = float(minimum)
-
-                    min_years = max(
-                        min_years,
-                        minimum_value
-                    )
-            except (TypeError, ValueError):
-                pass
-
-            # Read explicit maximum_years
-            try:
-                if maximum is not None:
-                    maximum_value = float(maximum)
-
-                    max_years = max(
-                        max_years,
-                        maximum_value
-                    )
-            except (TypeError, ValueError):
-                pass
-
-            # ------------------------------------------------
-            # Also inspect description
-            # ------------------------------------------------
-            description = item.get("description")
-
-            if isinstance(description, str):
-
-                # 2-4 years
-                range_match = YEAR_RANGE_PATTERN.search(
-                    description
-                )
-
-                if range_match:
-                    range_min = float(
-                        range_match.group(1)
-                    )
-
-                    range_max = float(
-                        range_match.group(2)
-                    )
-
-                    min_years = max(
-                        min_years,
-                        range_min
-                    )
-
-                    max_years = max(
-                        max_years,
-                        range_max
-                    )
-
-                    continue
-
-                # 3+ years
-                plus_match = PLUS_YEAR_PATTERN.search(
-                    description
-                )
-
-                if plus_match:
-                    plus_min = float(
-                        plus_match.group(1)
-                    )
-
-                    min_years = max(
-                        min_years,
-                        plus_min
-                    )
-
-                    continue
-
-                # minimum 2 years / at least 1 year
-                min_match = MIN_YEAR_PATTERN.search(
-                    description
-                )
-
-                if min_match:
-                    description_min = float(
-                        min_match.group(1)
-                    )
-
-                    min_years = max(
-                        min_years,
-                        description_min
-                    )
-
-            continue
-
-        # ----------------------------------------------------
-        # String experience requirement
-        # ----------------------------------------------------
-        if isinstance(item, str):
-
-            # 2-4 years
-            range_match = YEAR_RANGE_PATTERN.search(item)
-
-            if range_match:
-                range_min = float(
-                    range_match.group(1)
-                )
-
-                range_max = float(
-                    range_match.group(2)
-                )
-
-                min_years = max(
-                    min_years,
-                    range_min
-                )
-
-                max_years = max(
-                    max_years,
-                    range_max
-                )
-
-                continue
-
-            # 3+ years
-            plus_match = PLUS_YEAR_PATTERN.search(item)
-
-            if plus_match:
-                plus_min = float(
-                    plus_match.group(1)
-                )
-
-                min_years = max(
-                    min_years,
-                    plus_min
-                )
-
-                continue
-
-            # minimum 2 years / at least 1 year
-            min_match = MIN_YEAR_PATTERN.search(item)
-
-            if min_match:
-                string_min = float(
-                    min_match.group(1)
-                )
-
-                min_years = max(
-                    min_years,
-                    string_min
-                )
-
-    return {
-        "minimum_years": min_years,
-        "maximum_years": max_years,
-    }
-# ============================================================
-# Years Score
-# ============================================================
-
-def calculate_year_score(
-    candidate_years: float,
-    required_years: float
-) -> float:
-    """
-    Calculate candidate experience score based on
-    the minimum required years.
-
-    Current logic:
-        Candidate >= required -> 100
-        Candidate < required  -> proportional score
-
-    If no minimum experience is required,
-    the score is 100.
-    """
-
-    if required_years <= 0:
-        return 100.0
-
-    if candidate_years >= required_years:
-        return 100.0
-
-    return min(
-        (candidate_years / required_years) * 100,
-        100.0,
+    return " ".join(
+        str(value or "").strip().lower().split()
     )
 
 
-# ============================================================
-# Role Relevance
-# ============================================================
+def extract_required_years(value: Any) -> Dict[str, Optional[float]]:
+    """
+    Extract minimum and maximum experience requirements.
+
+    Supported examples:
+
+        "2 - 4 Years"
+        "2-4 years"
+        "2 years"
+        "2+ years"
+        "Minimum 2 years"
+        "At least 2 years"
+
+    Also supports lists and dictionaries.
+    """
+
+    if value is None:
+        return {
+            "minimum_years": 0.0,
+            "maximum_years": None,
+        }
+
+    # --------------------------------------------------------
+    # List / tuple
+    # --------------------------------------------------------
+
+    if isinstance(value, (list, tuple)):
+        values = [
+            extract_required_years(item)
+            for item in value
+        ]
+
+        minimum_values = [
+            item["minimum_years"]
+            for item in values
+            if item["minimum_years"] is not None
+        ]
+
+        maximum_values = [
+            item["maximum_years"]
+            for item in values
+            if item["maximum_years"] is not None
+        ]
+
+        return {
+            "minimum_years": max(
+                minimum_values or [0.0]
+            ),
+            "maximum_years": (
+                max(maximum_values)
+                if maximum_values
+                else None
+            ),
+        }
+
+    # --------------------------------------------------------
+    # Dictionary
+    # --------------------------------------------------------
+
+    if isinstance(value, dict):
+
+        minimum = value.get("minimum_years")
+        maximum = value.get("maximum_years")
+
+        text = (
+            value.get("description")
+            or value.get("required_experience")
+            or value.get("experience")
+            or ""
+        )
+
+        if minimum is None:
+            minimum = extract_required_years(
+                text
+            )["minimum_years"]
+
+        if maximum is None:
+            maximum = extract_required_years(
+                text
+            )["maximum_years"]
+
+        try:
+            minimum = float(minimum or 0)
+        except (TypeError, ValueError):
+            minimum = 0.0
+
+        try:
+            maximum = (
+                None
+                if maximum is None
+                else float(maximum)
+            )
+        except (TypeError, ValueError):
+            maximum = None
+
+        return {
+            "minimum_years": minimum,
+            "maximum_years": maximum,
+        }
+
+    # --------------------------------------------------------
+    # String
+    # --------------------------------------------------------
+
+    text = normalize_text(value)
+
+    # Example:
+    # 2 - 4 years
+    # 2–4 years
+    # 2 — 4 yrs
+    range_match = re.search(
+        r"(\d+(?:\.\d+)?)\s*[-–—]\s*"
+        r"(\d+(?:\.\d+)?)\s*"
+        r"(?:years?|yrs?)",
+        text,
+        re.IGNORECASE,
+    )
+
+    if range_match:
+        return {
+            "minimum_years": float(
+                range_match.group(1)
+            ),
+            "maximum_years": float(
+                range_match.group(2)
+            ),
+        }
+
+    # Example:
+    # 2+ years
+    plus_match = re.search(
+        r"(\d+(?:\.\d+)?)\s*\+\s*"
+        r"(?:years?|yrs?)",
+        text,
+        re.IGNORECASE,
+    )
+
+    if plus_match:
+        return {
+            "minimum_years": float(
+                plus_match.group(1)
+            ),
+            "maximum_years": None,
+        }
+
+    # Example:
+    # minimum 2 years
+    # min 2 years
+    # at least 2 years
+    minimum_match = re.search(
+        r"(?:minimum|min|at\s+least)\s*"
+        r"(\d+(?:\.\d+)?)\s*"
+        r"(?:years?|yrs?)",
+        text,
+        re.IGNORECASE,
+    )
+
+    if minimum_match:
+        return {
+            "minimum_years": float(
+                minimum_match.group(1)
+            ),
+            "maximum_years": None,
+        }
+
+    # Example:
+    # 2 years
+    simple_match = re.search(
+        r"(\d+(?:\.\d+)?)\s*"
+        r"(?:years?|yrs?)",
+        text,
+        re.IGNORECASE,
+    )
+
+    if simple_match:
+        return {
+            "minimum_years": float(
+                simple_match.group(1)
+            ),
+            "maximum_years": None,
+        }
+
+    return {
+        "minimum_years": 0.0,
+        "maximum_years": None,
+    }
+
+
+def calculate_year_score(
+    candidate_years: Any,
+    required_years: Any,
+) -> float:
+
+    try:
+        candidate = float(
+            candidate_years or 0
+        )
+        required = float(
+            required_years or 0
+        )
+    except (TypeError, ValueError):
+        candidate = 0.0
+        required = 0.0
+
+    # No JD requirement.
+    if required <= 0:
+        return 100.0
+
+    # Candidate satisfies minimum.
+    if candidate >= required:
+        return 100.0
+
+    return round(
+        max(
+            0.0,
+            candidate / required * 100,
+        ),
+        2,
+    )
+
 
 def calculate_role_relevance(
     candidate_roles: List[str],
-    target_job_title: str,
+    target_role: Optional[str] = None,
+    target_job_title: Optional[str] = None,
 ) -> float:
-    """
-    Compare candidate's previous roles with the target job title.
-    """
 
-    if not candidate_roles or not target_job_title:
+    target = normalize_text(
+        target_role or target_job_title
+    )
+
+    roles = [
+        normalize_text(role)
+        for role in (candidate_roles or [])
+        if normalize_text(role)
+    ]
+
+    if not target or not roles:
         return 0.0
 
-    target = normalize_text(target_job_title)
+    # Exact / containment match.
+    for role in roles:
 
-    if not target:
-        return 0.0
-
-    target_tokens = set(target.split())
-
-    best_score = 0.0
-
-    for role in candidate_roles:
-
-        normalized_role = normalize_text(role)
-
-        if not normalized_role:
-            continue
-
-        # Exact role match
-        if normalized_role == target:
+        if (
+            role == target
+            or target in role
+            or role in target
+        ):
             return 100.0
 
-        role_tokens = set(normalized_role.split())
+    # Token overlap fallback.
+    target_tokens = set(
+        target.split()
+    )
 
-        if role_tokens:
+    best = 0.0
 
-            overlap = (
-                len(target_tokens & role_tokens)
-                / len(target_tokens)
-                * 100
+    for role in roles:
+
+        role_tokens = set(
+            role.split()
+        )
+
+        if not target_tokens:
+            continue
+
+        overlap = (
+            len(
+                target_tokens
+                & role_tokens
             )
+            / len(target_tokens)
+            * 100
+        )
 
-            best_score = max(
-                best_score,
-                overlap
-            )
+        best = max(
+            best,
+            overlap,
+        )
 
-    return round(best_score, 2)
+    return round(best, 2)
 
-
-# ============================================================
-# Technology Relevance
-# ============================================================
 
 def calculate_technology_relevance(
     candidate_skills: List[str],
     required_skills: List[str],
 ) -> float:
-    """
-    Compare candidate skills with required JD skills.
-
-    Example:
-
-        Candidate:
-            Python
-            Django
-            FastAPI
-            PostgreSQL
-
-        Required:
-            Python
-            Django
-            FastAPI
-            PostgreSQL
-
-        Score = 100
-    """
-
-    if not required_skills:
-        return 100.0
-
-    if not candidate_skills:
-        return 0.0
-
-    candidate = {
-        normalize_text(skill)
-        for skill in candidate_skills
-        if normalize_text(skill)
-    }
 
     required = {
         normalize_text(skill)
-        for skill in required_skills
+        for skill in (required_skills or [])
+        if normalize_text(skill)
+    }
+
+    candidate = {
+        normalize_text(skill)
+        for skill in (candidate_skills or [])
         if normalize_text(skill)
     }
 
     if not required:
         return 100.0
 
-    matched = candidate.intersection(required)
-
     return round(
-        (len(matched) / len(required)) * 100,
+        len(required & candidate)
+        / len(required)
+        * 100,
         2,
     )
 
 
-# ============================================================
-# Experience Skills
-# ============================================================
-
-def _extract_experience_skills(
-    candidate_roles_data: Any
-) -> List[str]:
+def _profile(profile: Any) -> Dict[str, Any]:
     """
-    Extract skills from individual experience records.
+    Support both:
 
-    This is kept for compatibility with the existing project.
-    """
+        {
+            "experience": [...]
+        }
 
-    if not isinstance(candidate_roles_data, list):
-        return []
-
-    skills = []
-
-    for item in candidate_roles_data:
-
-        if not isinstance(item, dict):
-            continue
-
-        item_skills = item.get("skills", [])
-
-        if not isinstance(item_skills, list):
-            continue
-
-        for skill in item_skills:
-
-            if isinstance(skill, str):
-                skills.append(skill)
-
-            elif isinstance(skill, dict):
-
-                name = (
-                    skill.get("name")
-                    or skill.get("skill")
-                    or skill.get("canonical_name")
-                )
-
-                if isinstance(name, str):
-                    skills.append(name)
-
-    return skills
-
-
-# Backward-compatible aliases
-calculate_role_relevance_score = calculate_role_relevance
-calculate_technology_relevance_score = calculate_technology_relevance
-
-
-# ============================================================
-# Profile Helpers
-# ============================================================
-
-def _resume_data(profile: Any) -> Dict[str, Any]:
-    """
-    Return the actual resume/JD data.
-
-    Supports both:
-        profile
     and:
-        profile["resume_text"]
+
+        {
+            "resume_text": {
+                "experience": [...]
+            }
+        }
     """
 
     if not isinstance(profile, dict):
         return {}
 
-    data = profile.get("resume_text")
+    resume_text = profile.get(
+        "resume_text"
+    )
 
-    return data if isinstance(data, dict) else profile
+    if isinstance(resume_text, dict):
+        return {
+            **resume_text,
+            **profile,
+        }
 
+    return profile
 
-# ============================================================
-# Experience Records
-# ============================================================
-
-def _experience_records(
-    profile: Any
-) -> List[Dict[str, Any]]:
-    """
-    Extract experience records from candidate profile.
-    """
-
-    data = _resume_data(profile)
-
-    value = data.get("experience", [])
-
-    if not isinstance(value, list):
-        return []
-
-    return [
-        item
-        for item in value
-        if isinstance(item, dict)
-    ]
-
-
-# ============================================================
-# Candidate Years
-# ============================================================
 
 def _candidate_years(
-    records: List[Dict[str, Any]]
+    profile: Any,
 ) -> float:
-    """
-    Calculate total candidate experience in years.
 
-    Priority:
-        total_months
-        total_years
+    profile = _profile(profile)
 
-    Example:
-        4 months + 7 months
-        = 11 months
-        = 0.92 years
-    """
+    total_experience = profile.get(
+        "total_experience"
+    )
 
-    total_months = 0.0
+    if isinstance(
+        total_experience,
+        dict,
+    ):
 
-    for item in records:
-
-        total_experience = item.get(
-            "total_experience",
-            {}
-        )
-
-        if isinstance(total_experience, dict):
-
-            months = total_experience.get(
+        total_months = (
+            total_experience.get(
                 "total_months"
             )
+        )
 
+        if total_months is not None:
             try:
-
-                if months is not None:
-
-                    total_months += float(months)
-
-                    continue
-
-            except (TypeError, ValueError):
+                return round(
+                    float(total_months) / 12,
+                    2,
+                )
+            except (
+                TypeError,
+                ValueError,
+            ):
                 pass
 
-            years = total_experience.get(
+        total_years = (
+            total_experience.get(
                 "total_years"
             )
+        )
 
+        if total_years is not None:
             try:
-
-                if years is not None:
-
-                    total_months += (
-                        float(years) * 12
-                    )
-
-                    continue
-
-            except (TypeError, ValueError):
+                return round(
+                    float(total_years),
+                    2,
+                )
+            except (
+                TypeError,
+                ValueError,
+            ):
                 pass
 
-        # Fallback
-        try:
+    experience = profile.get(
+        "experience",
+        [],
+    )
 
-            years = item.get("total_years")
+    if not isinstance(
+        experience,
+        list,
+    ):
+        experience = []
 
-            if years is not None:
+    best = 0.0
 
-                total_months += (
-                    float(years) * 12
+    for record in experience:
+
+        if not isinstance(
+            record,
+            dict,
+        ):
+            continue
+
+        total = record.get(
+            "total_experience"
+        )
+
+        if not isinstance(
+            total,
+            dict,
+        ):
+            continue
+
+        total_years = total.get(
+            "total_years"
+        )
+
+        if total_years is not None:
+            try:
+                best = max(
+                    best,
+                    float(total_years),
                 )
+            except (
+                TypeError,
+                ValueError,
+            ):
+                pass
 
-        except (TypeError, ValueError):
-            pass
+        total_months = total.get(
+            "total_months"
+        )
+
+        if total_months is not None:
+            try:
+                best = max(
+                    best,
+                    float(total_months) / 12,
+                )
+            except (
+                TypeError,
+                ValueError,
+            ):
+                pass
 
     return round(
-        total_months / 12,
-        2
+        best,
+        2,
     )
 
 
-# ============================================================
-# Candidate Roles
-# ============================================================
-
-def _candidate_roles(
-    records: List[Dict[str, Any]]
+def _roles(
+    profile: Any,
 ) -> List[str]:
-    """
-    Extract candidate job titles from experience records.
-    """
+
+    profile = _profile(profile)
+
+    experience = profile.get(
+        "experience",
+        [],
+    )
+
+    if not isinstance(
+        experience,
+        list,
+    ):
+        return []
 
     roles = []
 
-    print("\n===== _candidate_roles DEBUG =====")
-    print("Records:", records)
+    for record in experience:
 
-    for item in records:
-
-        if not isinstance(item, dict):
+        if not isinstance(
+            record,
+            dict,
+        ):
             continue
 
-        title = item.get("title")
+        role = (
+            record.get("role")
+            or record.get("job_title")
+            or record.get("title")
+        )
 
-        print("TITLE:", title)
-        print("TITLE TYPE:", type(title))
+        if role:
 
-        # Example:
-        # "title": "Python Developer"
-        if isinstance(title, str):
-
-            title = title.strip()
-
-            if title:
-                roles.append(title)
-
-        # Example:
-        # "title": {
-        #     "title": "Python Developer"
-        # }
-        elif isinstance(title, dict):
-
-            title_name = title.get("title")
-
-            print("TITLE NAME:", title_name)
+            role = str(
+                role
+            ).strip()
 
             if (
-                isinstance(title_name, str)
-                and title_name.strip()
+                role
+                and role not in roles
             ):
-                roles.append(
-                    title_name.strip()
-                )
-
-    # Remove duplicate roles while preserving order
-    roles = list(
-        dict.fromkeys(roles)
-    )
-
-    print("FINAL ROLES:", roles)
-    print("=================================\n")
+                roles.append(role)
 
     return roles
 
 
-# ============================================================
-# Experience-Level Skills
-# ============================================================
-
-def _experience_skills(
-    records: List[Dict[str, Any]]
+def _skills(
+    profile: Any,
 ) -> List[str]:
     """
-    Extract skills that are explicitly stored inside
-    individual experience records.
+    Collect skills from:
 
-    This may be empty if skills are stored only at
-    the top-level profile.
+    1. top-level skills
+    2. skills inside experience records
     """
 
-    skills = []
+    profile = _profile(profile)
 
-    for item in records:
+    collected = []
 
-        values = item.get(
-            "skills",
-            []
-        )
+    def add_skill(value: Any):
 
-        if not isinstance(values, list):
-            continue
-
-        for skill in values:
-
-            if isinstance(skill, str):
-
-                skills.append(skill)
-
-            elif isinstance(skill, dict):
-
-                name = (
-                    skill.get("name")
-                    or skill.get("skill")
-                    or skill.get("canonical_name")
-                )
-
-                if isinstance(name, str):
-                    skills.append(name)
-
-    return list(
-        dict.fromkeys(skills)
-    )
-
-
-# ============================================================
-# Candidate Top-Level Skills
-# ============================================================
-
-def _candidate_skills(
-    profile: Any
-) -> List[str]:
-    """
-    Extract normalized candidate skills from the
-    top-level profile.
-
-    Expected structure:
-
-        "skills": [
-            {
-                "skill": "Python"
-            },
-            {
-                "skill": "Django"
-            },
-            {
-                "skill": "FastAPI"
-            }
-        ]
-
-    Also supports:
-
-        "skills": [
-            "Python",
-            "Django",
-            "FastAPI"
-        ]
-    """
-
-    data = _resume_data(profile)
-
-    skills_data = data.get(
-        "skills",
-        []
-    )
-
-    if not isinstance(skills_data, list):
-        return []
-
-    skills = []
-
-    for item in skills_data:
-
-        # String skill
-        if isinstance(item, str):
-
-            skill = item.strip()
-
-            if skill:
-                skills.append(skill)
-
-        # Dictionary skill
-        elif isinstance(item, dict):
-
-            skill = (
-                item.get("skill")
-                or item.get("name")
-                or item.get("canonical_name")
+        if isinstance(
+            value,
+            dict,
+        ):
+            value = (
+                value.get("name")
+                or value.get("skill")
+                or value.get("canonical_name")
             )
 
-            if isinstance(skill, str):
+        if value is None:
+            return
 
-                skill = skill.strip()
+        value = str(value).strip()
 
-                if skill:
-                    skills.append(skill)
+        if (
+            value
+            and value not in collected
+        ):
+            collected.append(value)
 
-    # Remove duplicates while preserving order
-    return list(
-        dict.fromkeys(skills)
+    # --------------------------------------------------------
+    # Top-level skills
+    # --------------------------------------------------------
+
+    skills = profile.get(
+        "skills",
+        [],
     )
 
+    if isinstance(
+        skills,
+        str,
+    ):
+        skills = [skills]
 
-# ============================================================
-# Main Experience Scoring
-# ============================================================
+    if isinstance(
+        skills,
+        list,
+    ):
+        for skill in skills:
+            add_skill(skill)
+
+    # --------------------------------------------------------
+    # Experience-level skills
+    # --------------------------------------------------------
+
+    experience = profile.get(
+        "experience",
+        [],
+    )
+
+    if isinstance(
+        experience,
+        list,
+    ):
+
+        for record in experience:
+
+            if not isinstance(
+                record,
+                dict,
+            ):
+                continue
+
+            experience_skills = record.get(
+                "skills",
+                [],
+            )
+
+            if isinstance(
+                experience_skills,
+                str,
+            ):
+                experience_skills = [
+                    experience_skills
+                ]
+
+            if isinstance(
+                experience_skills,
+                list,
+            ):
+                for skill in experience_skills:
+                    add_skill(skill)
+
+    return collected
+
 
 def calculate_experience_score(
     candidate_profile: Any,
     jd_profile: Any,
+    skill_result: Optional[
+        Dict[str, Any]
+    ] = None,
 ) -> Dict[str, Any]:
-    """
-    Calculate experience score.
 
-    Weight distribution:
-
-        Years       = 35%
-        Role        = 25%
-        Technology  = 40%
-    """
-
-    candidate_data = _resume_data(
+    candidate = _profile(
         candidate_profile
     )
 
-    jd_data = _resume_data(
+    jd = _profile(
         jd_profile
     )
-
-    # --------------------------------------------------------
-    # No data
-    # --------------------------------------------------------
-
-    if not candidate_data and not jd_data:
-
-        return {
-            "score": 100.0,
-            "years_score": 100.0,
-            "role_relevance_score": 100.0,
-            "technology_relevance_score": 100.0,
-            "candidate_years": 0.0,
-            "required_minimum_years": 0.0,
-            "preferred_maximum_years": 0.0,
-            "candidate_roles": [],
-            "target_job_title": "",
-            "experience_skills": [],
-            "candidate_skills": [],
-            "required_skills": [],
-            "status": "no_data",
-        }
 
     # --------------------------------------------------------
     # Candidate data
     # --------------------------------------------------------
 
-    records = _experience_records(
-        candidate_profile
-    )
-
     candidate_years = _candidate_years(
-        records
+        candidate
     )
 
-    candidate_roles = _candidate_roles(
-        records
+    candidate_roles = _roles(
+        candidate
     )
 
-    # Skills stored inside experience records
-    experience_skills = _experience_skills(
-        records
-    )
-
-    # IMPORTANT:
-    # Candidate's actual normalized skills are stored
-    # at the top-level "skills" field.
-    candidate_skills = _candidate_skills(
-        candidate_profile
+    experience_skills = _skills(
+        candidate
     )
 
     # --------------------------------------------------------
     # JD data
     # --------------------------------------------------------
 
-    jd_experience = jd_data.get(
+    target_role = str(
+        jd.get("job_title")
+        or jd.get("title")
+        or jd.get("position")
+        or ""
+    )
+
+    required_skills = list(
+        jd.get(
+            "required_skills",
+            [],
+        )
+        or []
+    )
+
+    required_experience = jd.get(
         "experience",
-        []
+        [],
     )
 
-    if not isinstance(jd_experience, list):
-        jd_experience = []
-
-    jd_job_title = jd_data.get(
-        "job_title",
-        ""
+    required_experience_data = (
+        extract_required_years(
+            required_experience
+        )
     )
 
-    if not isinstance(jd_job_title, str):
-        jd_job_title = ""
-
-    required_skills = jd_data.get(
-        "required_skills",
-        []
+    required_minimum_years = (
+        required_experience_data[
+            "minimum_years"
+        ]
     )
 
-    if not isinstance(required_skills, list):
-        required_skills = []
+    required_maximum_years = (
+        required_experience_data[
+            "maximum_years"
+        ]
+    )
 
     # --------------------------------------------------------
-    # Required experience
-    # --------------------------------------------------------
-
-    requirement = extract_required_years(
-        jd_experience
-    )
-
-    required_years = requirement[
-        "minimum_years"
-    ]
-
-    maximum_years = requirement[
-        "maximum_years"
-    ]
-
-    # --------------------------------------------------------
-    # Years score
+    # Calculate components
     # --------------------------------------------------------
 
     years_score = calculate_year_score(
         candidate_years,
-        required_years,
+        required_minimum_years,
     )
-
-    # --------------------------------------------------------
-    # Role score
-    # --------------------------------------------------------
-
-    print("\n===== ROLE DEBUG =====")
-    print(
-        "Candidate roles:",
-        candidate_roles
-    )
-    print(
-        "JD job title:",
-        jd_job_title
-    )
-    print(
-        "Calculated role score:",
-        calculate_role_relevance(
-            candidate_roles,
-            jd_job_title
-        )
-    )
-    print("=====================\n")
 
     role_score = calculate_role_relevance(
         candidate_roles,
-        jd_job_title,
+        target_role=target_role,
     )
 
-    # --------------------------------------------------------
-    # Technology score
-    # --------------------------------------------------------
-    #
-    # IMPORTANT CHANGE:
-    #
-    # Previously:
-    #
-    #     experience_skills
-    #
-    # was used for technology scoring.
-    #
-    # But the candidate JSON stores normalized skills
-    # at:
-    #
-    #     profile["skills"]
-    #
-    # Therefore we now use:
-    #
-    #     candidate_skills
-    #
-    # for technology relevance.
-    # --------------------------------------------------------
+    # Technology score can come from the
+    # SkillScore module.
+    if isinstance(
+        skill_result,
+        dict,
+    ):
 
-    technology_score = calculate_technology_relevance(
-        candidate_skills,
-        required_skills,
-    )
+        technology_score = float(
+            (
+                skill_result.get(
+                    "required"
+                )
+                or {}
+            ).get(
+                "match_percentage",
+                0,
+            )
+            or 0
+        )
+
+        technology_score_source = (
+            "skill_score"
+        )
+
+    else:
+
+        technology_score = (
+            calculate_technology_relevance(
+                experience_skills,
+                required_skills,
+            )
+        )
+
+        technology_score_source = (
+            "legacy_technology_scorer"
+        )
 
     # --------------------------------------------------------
     # Final experience score
     # --------------------------------------------------------
 
-    final_score = (
-        years_score * 0.35
-        + role_score * 0.25
-        + technology_score * 0.40
+    final_score = round(
+        years_score * YEARS_WEIGHT
+        + role_score * ROLE_WEIGHT
+        + technology_score
+        * TECHNOLOGY_WEIGHT,
+        2,
     )
-
-    # --------------------------------------------------------
-    # Status
-    # --------------------------------------------------------
-
-    if not records:
-
-        status = "no_data"
-
-    elif not jd_experience:
-
-        status = "no_requirement"
-
-    else:
-
-        status = "calculated"
 
     # --------------------------------------------------------
     # Result
     # --------------------------------------------------------
 
+    has_experience_data = bool(
+        candidate_roles
+        or experience_skills
+        or candidate_years > 0
+    )
+
     return {
-        "score": round(
-            final_score,
-            2
-        ),
+        "score": final_score,
+        "weight": EXPERIENCE_WEIGHT,
 
-        "years_score": round(
-            years_score,
-            2
-        ),
+        # Numeric component scores are expected
+        # by the experience scorer test suite.
+        "component_scores": {
+            "years": round(
+                years_score,
+                2,
+            ),
+            "role": round(
+                role_score,
+                2,
+            ),
+            "technology": round(
+                technology_score,
+                2,
+            ),
+        },
 
-        "role_relevance_score": round(
-            role_score,
-            2
-        ),
-
-        "technology_relevance_score": round(
-            technology_score,
-            2
-        ),
+        # Component weights remain available
+        # separately.
+        "weights": {
+            "years": YEARS_WEIGHT,
+            "role": ROLE_WEIGHT,
+            "technology": TECHNOLOGY_WEIGHT,
+        },
 
         "candidate_years": candidate_years,
 
-        "required_minimum_years": required_years,
+        "required_minimum_years": (
+            required_minimum_years
+        ),
 
-        "preferred_maximum_years": maximum_years,
+        "required_maximum_years": (
+            required_maximum_years
+        ),
 
         "candidate_roles": candidate_roles,
 
-        "target_job_title": jd_job_title,
+        "target_role": target_role,
 
-        # Skills specifically stored inside
-        # experience records.
+        "candidate_skills": experience_skills,
+
+        # Explicit field required by the
+        # experience scorer tests.
         "experience_skills": experience_skills,
-
-        # Candidate's normalized top-level skills.
-        "candidate_skills": candidate_skills,
 
         "required_skills": required_skills,
 
-        "status": status,
+        "technology_score_source": (
+            technology_score_source
+        ),
+
+        "status": (
+            "calculated"
+            if has_experience_data
+            else "no_data"
+        ),
     }

@@ -1,0 +1,37 @@
+{
+    "job_id": "JOB_BF2FEFE4A4A3",
+    "jd_id": "PythonDeveloperFresher",
+    "rule_version": "1.0",
+    "required_skills": [
+        "Python",
+        "Django",
+        "FastAPI",
+        "REST API",
+        "PostgreSQL",
+        "Git",
+        "API Testing"
+    ],
+    "preferred_skills": [],
+    "mandatory_skills": [
+        "Python",
+        "Django",
+        "FastAPI",
+        "REST API",
+        "PostgreSQL",
+        "Git",
+        "API Testing"
+    ],
+    "experience": {
+        "minimum_years": 0.0,
+        "maximum_years": 1.0,
+        "description": "0-1 year experience, internship or relevant project experience acceptable."
+    },
+    "education": [
+        {
+            "description": "B.Tech / B.E. / equivalent technical degree preferred.",
+            "enforcement": "preferred"
+        }
+    ],
+    "requirements": [],
+    "generation_status": "generated"
+}

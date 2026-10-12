@@ -45,7 +45,7 @@
     "Google Cloud Plateform": "Google Cloud Platform",
     "Tensor Flow": "TensorFlow",
     "Pytorch": "PyTorch",
-    "Scikit Learn": "Scikit-learn",
+    "scikit Learn": "scikit-learn",
     "Pandas Dataframe": "Pandas",
     "Machine Learing": "Machine Learning",
     "Machine Learnng": "Machine Learning",
@@ -130,7 +130,6 @@
 
     "screening": "screening",
     "shortlisting": "shortlisting",
-    "shortlisting": "shortlisting",
 
     "payrol": "payroll",
     "payrol processing": "payroll processing",
@@ -145,6 +144,7 @@
     "emploee": "employee",
     "employess": "employees",
     "employes": "employees",
+    "employee": "employee",
 
     "employement": "employment",
     "employmnt": "employment",
@@ -232,9 +232,6 @@
     "resumee": "resume",
     "resuma": "resume",
 
-    "employee": "employee",
-    "employe": "employee",
-
     "training": "training",
     "traning": "training",
 
@@ -263,6 +260,35 @@
     "sorcing": "sourcing",
 
     "boolean": "boolean",
-    "booleean": "boolean"
+    "booleean": "boolean",
+
+    
+    "spacy": "spaCy",
+    "Spacy": "spaCy",
+    "spa cy": "spaCy",
+
+    
+    "opencv": "OpenCV",
+    "OpenCV": "OpenCV",
+    "open cv": "OpenCV",
+    "Open CV": "OpenCV",
+    "opencv-python": "OpenCV",
+    "opencv python": "OpenCV",
+    "OpenCV-Python": "OpenCV",
+
+    
+  "object oriented programing": "Object-Oriented Programming",
+  "object-orientd programming": "Object-Oriented Programming",
+  "object orinted programming": "Object-Oriented Programming",
+  "object oriented programmng": "Object-Oriented Programming",
+  "object oriented programmming": "Object-Oriented Programming",
+  "object-oriented programing": "Object-Oriented Programming",
+  "object-orinted programming": "Object-Oriented Programming",
+  "object-orientated programming": "Object-Oriented Programming",
+  "object oriented progrmming": "Object-Oriented Programming",
+  "object oriented progamming": "Object-Oriented Programming"
+
+
+
 
 }

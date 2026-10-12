@@ -2,7 +2,7 @@ import re
 
 
 # ============================================================
-# Patterns
+# URL PATTERNS
 # ============================================================
 
 URL_PATTERN = re.compile(
@@ -11,8 +11,14 @@ URL_PATTERN = re.compile(
         https?://
         |
         www\.
+        |
+        github\.com/
+        |
+        gitlab\.com/
+        |
+        bitbucket\.org/
     )
-    [^\s<>()]+
+    [^\s<>\[\]()]+
     """,
     re.IGNORECASE | re.VERBOSE,
 )
@@ -27,11 +33,16 @@ DOMAIN_PATTERN = re.compile(
         |
         bitbucket\.org
     )
-    /[^\s<>()]+
+    /
+    [^\s<>\[\]()]+
     """,
     re.IGNORECASE | re.VERBOSE,
 )
 
+
+# ============================================================
+# URL LABEL
+# ============================================================
 
 URL_LABEL_PATTERN = re.compile(
     r"""
@@ -57,48 +68,60 @@ URL_LABEL_PATTERN = re.compile(
 
 
 # ============================================================
-# Helpers
+# CLEAN LINE
 # ============================================================
 
 def clean_line(line):
-    """
-    Clean a single resume line.
-    """
 
     if not line:
         return ""
 
-    line = line.strip()
+    line = str(line).strip()
 
-    # Remove common bullet characters
-    line = re.sub(r"^[•●▪◦*-]\s*", "", line)
+    line = re.sub(
+        r"^[•●▪◦*\-]\s*",
+        "",
+        line,
+    )
 
-    # Normalize whitespace
-    line = re.sub(r"\s+", " ", line)
+    line = re.sub(
+        r"\s+",
+        " ",
+        line,
+    )
 
     return line.strip()
 
 
+# ============================================================
+# CLEAN URL
+# ============================================================
+
 def clean_url(url):
-    """
-    Remove punctuation accidentally captured after a URL.
-    """
 
     if not url:
         return None
 
     url = url.strip()
 
-    # Remove trailing punctuation commonly found in resumes
-    url = url.rstrip(".,;:)]}>")
+    # Remove markdown brackets
+    url = url.strip(
+        "[]()<>"
+    )
+
+    # Remove trailing punctuation
+    url = url.rstrip(
+        ".,;:)]}>"
+    )
 
     return url
 
 
+# ============================================================
+# NORMALIZE URL
+# ============================================================
+
 def normalize_url(url):
-    """
-    Add https:// to known domains when protocol is missing.
-    """
 
     if not url:
         return None
@@ -108,65 +131,57 @@ def normalize_url(url):
     if not url:
         return None
 
-    if url.startswith(("http://", "https://")):
+    # Already has protocol
+    if url.startswith(
+        ("http://", "https://")
+    ):
         return url
 
+    # www
     if url.startswith("www."):
+
         return f"https://{url}"
 
+    # Known domains
     if re.match(
-        r"^(github\.com|gitlab\.com|bitbucket\.org)/",
+        r"^(?:"
+        r"github\.com"
+        r"|gitlab\.com"
+        r"|bitbucket\.org"
+        r")/",
         url,
         re.IGNORECASE,
     ):
+
         return f"https://{url}"
 
     return url
 
 
 # ============================================================
-# Main Extractor
+# EXTRACT PROJECT URL
 # ============================================================
 
 def extract_project_url(block):
-    """
-    Extract the first URL from an individual project block.
-
-    Supported examples:
-
-        GitHub: https://github.com/user/project
-        Demo: https://example.com
-        https://github.com/user/project
-        github.com/user/project
-
-    Parameters
-    ----------
-    block : list[str] | str
-        Individual project block.
-
-    Returns
-    -------
-    str | None
-        Extracted project URL.
-    """
 
     if not block:
         return None
 
-    # --------------------------------------------------------
-    # Support string input
-    # --------------------------------------------------------
-
     if isinstance(block, str):
+
         lines = block.splitlines()
-    else:
+
+    elif isinstance(block, list):
+
         lines = block
 
-    # --------------------------------------------------------
-    # Search each line
-    # --------------------------------------------------------
+    else:
+        return None
 
     for raw_line in lines:
+
+        if not isinstance(raw_line, str):
+            continue
 
         line = clean_line(raw_line)
 
@@ -174,41 +189,65 @@ def extract_project_url(block):
             continue
 
         # ----------------------------------------------------
-        # First check explicitly labelled URL
+        # Labelled URL
         # ----------------------------------------------------
 
-        label_match = URL_LABEL_PATTERN.match(line)
+        label_match = URL_LABEL_PATTERN.match(
+            line
+        )
 
         if label_match:
 
             value = label_match.group(1).strip()
 
-            url_match = URL_PATTERN.search(value)
+            # Full URL
+            url_match = URL_PATTERN.search(
+                value
+            )
 
             if url_match:
-                return normalize_url(url_match.group(0))
 
-            domain_match = DOMAIN_PATTERN.search(value)
+                return normalize_url(
+                    url_match.group(0)
+                )
+
+            # GitHub/GitLab/etc without protocol
+            domain_match = DOMAIN_PATTERN.search(
+                value
+            )
 
             if domain_match:
-                return normalize_url(domain_match.group(0))
+
+                return normalize_url(
+                    domain_match.group(0)
+                )
 
         # ----------------------------------------------------
-        # Check normal URLs
+        # Any URL in line
         # ----------------------------------------------------
 
-        url_match = URL_PATTERN.search(line)
+        url_match = URL_PATTERN.search(
+            line
+        )
 
         if url_match:
-            return normalize_url(url_match.group(0))
+
+            return normalize_url(
+                url_match.group(0)
+            )
 
         # ----------------------------------------------------
-        # Check GitHub/GitLab/Bitbucket without protocol
+        # Known domain without protocol
         # ----------------------------------------------------
 
-        domain_match = DOMAIN_PATTERN.search(line)
+        domain_match = DOMAIN_PATTERN.search(
+            line
+        )
 
         if domain_match:
-            return normalize_url(domain_match.group(0))
+
+            return normalize_url(
+                domain_match.group(0)
+            )
 
     return None

@@ -1,4 +1,29 @@
-from typing import Any, Dict, List, Optional
+"""
+ATS Scoring Engine
+
+Pipeline
+--------
+Resume
+    ↓
+Candidate Profile
+    ↓
+Bias Mitigation
+    ↓
+Skill Score
+    ↓
+Experience Score
+    ↓
+Education Score
+    ↓
+Overall Semantic Score
+    ↓
+Final ATS Score
+
+This module is the orchestration layer. Individual scorers remain
+responsible for their own calculations.
+"""
+
+from typing import Any, Dict, Optional
 
 from scoring.skill_score import calculate_skill_score
 from scoring.experince_score import calculate_experience_score
@@ -6,451 +31,243 @@ from scoring.education_score import calculate_education_score
 from scoring.semantic_scorer import calculate_semantic_score
 from scoring.score_generator import generate_candidate_score
 from embeddings.embedding_generator import EmbeddingGenerator
-from scoring.bias_mitigation.personal_attribute_masker import mask_personal_attributes
+from scoring.bias_mitigation.personal_attribute_masker import (
+    mask_personal_attributes,
+)
 
-#    embedding_generator=EmbeddingGenerator()
 
-def _get_resume_text(
-    candidate_profile: Dict[str, Any]
-) -> Dict[str, Any]:
-
+def _get_resume_text(candidate_profile: Any) -> str:
     if not isinstance(candidate_profile, dict):
-        return {}
+        return ""
 
-    resume_text = candidate_profile.get("resume_text")
-
-    if isinstance(resume_text, dict):
-        return resume_text
-
-    return candidate_profile
-
-
-def _get_jd_data(
-    jd_profile: Dict[str, Any]
-) -> Dict[str, Any]:
-
-    if not isinstance(jd_profile, dict):
-        return {}
-
-    jd_data = jd_profile.get("resume_text")
-
-    if isinstance(jd_data, dict):
-        return jd_data
-
-    return jd_profile
-
-
-def _extract_candidate_skills(
-    candidate_data: Dict[str, Any]
-) -> List[Any]:
-
-    skills = candidate_data.get("skills", [])
-
-    if isinstance(skills, list):
-        return skills
-
-    return []
-
-
-def _extract_candidate_years(
-    candidate_data: Dict[str, Any]
-) -> float:
-
-    experience = candidate_data.get(
-        "experience",
-        []
+    value = (
+        candidate_profile.get("resume_text")
+        or candidate_profile.get("raw_text")
+        or candidate_profile.get("text")
+        or ""
     )
-
-    if not isinstance(experience, list):
-        return 0.0
-
-    total_years = 0.0
-
-    for item in experience:
-
-        if not isinstance(item, dict):
-            continue
-
-        total_experience = item.get(
-            "total_experience",
-            {}
-        )
-
-        if isinstance(total_experience, dict):
-
-            years = total_experience.get(
-                "total_years"
-            )
-
-            if isinstance(
-                years,
-                (int, float)
-            ):
-                total_years = max(
-                    total_years,
-                    float(years)
-                )
-
-    return total_years
+    return value if isinstance(value, str) else str(value)
 
 
-def _extract_candidate_roles(
-    candidate_data: Dict[str, Any]
-) -> List[str]:
+def _get_jd_data(jd_profile: Any) -> Dict[str, Any]:
+    return jd_profile if isinstance(jd_profile, dict) else {}
 
-    experience = candidate_data.get(
-        "experience",
-        []
-    )
 
+def _extract_candidate_skills(candidate_profile: Any):
+    if not isinstance(candidate_profile, dict):
+        return []
+
+    skills = candidate_profile.get("skills", [])
+    return skills if isinstance(skills, list) else []
+
+
+def _extract_candidate_roles(candidate_profile: Any):
+    if not isinstance(candidate_profile, dict):
+        return []
+
+    experience = candidate_profile.get("experience", [])
     if not isinstance(experience, list):
         return []
 
     roles = []
-
-    for item in experience:
-
-        if not isinstance(item, dict):
+    for record in experience:
+        if not isinstance(record, dict):
             continue
 
-        title = (
-            item.get("title")
-            or item.get("job_title")
-            or item.get("role")
+        role = (
+            record.get("role")
+            or record.get("job_title")
+            or record.get("title")
         )
+        if role:
+            roles.append(role)
 
-        # -----------------------------------------
-        # Case 1: title is a string
-        # -----------------------------------------
+    return roles
 
-        if isinstance(title, str):
 
-            if title.strip():
-                roles.append(title.strip())
+def _extract_candidate_education(candidate_profile: Any):
+    if not isinstance(candidate_profile, dict):
+        return []
 
-        # -----------------------------------------
-        # Case 2: title is structured dictionary
-        # -----------------------------------------
+    education = candidate_profile.get("education", [])
+    return education if isinstance(education, list) else []
 
-        elif isinstance(title, dict):
 
-            title_name = (
-                title.get("title")
-                or title.get("name")
-                or title.get("job_title")
-            )
-
-            if (
-                isinstance(title_name, str)
-                and title_name.strip()
-            ):
-                roles.append(
-                    title_name.strip()
-                )
-
-    # Remove duplicates while preserving order
-
-    return list(
-        dict.fromkeys(roles)
+def _extract_job_title(jd_profile: Dict[str, Any]) -> str:
+    value = (
+        jd_profile.get("job_title")
+        or jd_profile.get("title")
+        or jd_profile.get("position")
+        or ""
     )
+    return value if isinstance(value, str) else str(value)
 
 
-def _extract_candidate_education(
-    candidate_data: Dict[str, Any]
-) -> List[Any]:
+def _format_experience_result_for_ats(
+    experience_result: Dict[str, Any],
+) -> Dict[str, Any]:
     """
-    Extract candidate education records.
+    Adapt the low-level experience scorer result to the richer
+    structure exposed by the ATS engine.
 
-    Returns the education records as a list so that
-    metadata can correctly count education entries.
+    The low-level experience scorer intentionally keeps component
+    scores numeric for backward compatibility with its direct tests.
+    The ATS API exposes score + weight for the weighted components.
     """
+    if not isinstance(experience_result, dict):
+        return {}
 
-    education = candidate_data.get(
-        "education",
-        []
-    )
+    component_scores = experience_result.get("component_scores", {})
+    weights = experience_result.get("weights", {})
 
-    if isinstance(education, list):
-        return education
+    if not isinstance(component_scores, dict):
+        component_scores = {}
 
-    if isinstance(education, str) and education.strip():
-        return [
-            education.strip()
-        ]
+    if not isinstance(weights, dict):
+        weights = {}
 
-    return []
+    formatted_components = dict(component_scores)
+
+    if "years" in component_scores:
+        formatted_components["years"] = {
+            "score": component_scores["years"],
+            "weight": weights.get("years", 0.0),
+        }
+
+    if "role" in component_scores:
+        formatted_components["role"] = {
+            "score": component_scores["role"],
+            "weight": weights.get("role", 0.0),
+        }
+
+    # Keep technology numeric because the ATS tests and existing
+    # consumers expect technology to remain a direct score.
+    if "technology" in component_scores:
+        formatted_components["technology"] = component_scores["technology"]
+
+    return {
+        **experience_result,
+        "component_scores": formatted_components,
+    }
 
 def calculate_ats_score(
-    candidate_profile: Dict[str, Any],
-    jd_profile: Dict[str, Any],
-    resume_embedding: Optional[List[float]] = None,
-    jd_embedding: Optional[List[float]] = None,
-    custom_weights: Optional[
-        Dict[str, float]
-    ] = None,
-    embedding_generator: Any = None,
+    candidate_profile: Any,
+    jd_profile: Any,
+    embedding_generator: Optional[EmbeddingGenerator] = None,
+    resume_embedding=None,
+    jd_embedding=None,
+    custom_weights: Optional[Dict[str, float]] = None,
 ) -> Dict[str, Any]:
-    
-    
-    if embedding_generator is None:
-        embedding_generator = EmbeddingGenerator()
     """
     Calculate the complete ATS score.
 
-    Pipeline:
+    Component weights are owned by score_generator.py / weight_config.py.
+    The engine does not recalculate the final score itself.
 
-        Candidate Profile
-              |
-              +-- Preserve candidate_id
-              |
-              +-- Mask non-essential personal attributes
-              |
-              v
-        Masked Candidate Profile
-              |
-              +-- Skill scorer
-              |
-              +-- Experience scorer
-              |
-              +-- Education scorer
-              |
-              +-- Semantic scorer
-              |
-              v
-        Score Generator
-              |
-              v
-        Final ATS Result
-
-    Important:
-
-        candidate_id is preserved for identifying the
-        candidate after scoring/ranking.
-
-        Personal attributes such as name, email, phone,
-        LinkedIn, and GitHub are excluded from the
-        scoring profile.
+    resume_embedding and jd_embedding are optional compatibility inputs.
+    If supplied, the semantic scorer uses them directly.
     """
-    
-     # ========================================================
-    # 1. Preserve candidate identity
-    # ========================================================
 
-    candidate_id = candidate_profile.get(
-        "candidate_id"
+    if embedding_generator is None:
+        embedding_generator = EmbeddingGenerator()
+
+    candidate_profile = (
+        candidate_profile
+        if isinstance(candidate_profile, dict)
+        else {}
+    )
+    jd_profile = _get_jd_data(jd_profile)
+
+    candidate_id = candidate_profile.get("candidate_id")
+
+    masked_candidate_profile = mask_personal_attributes(
+        candidate_profile
     )
 
-    # ========================================================
-    # 2. Mask non-essential personal attributes
-    # ========================================================
+    if not isinstance(masked_candidate_profile, dict):
+        masked_candidate_profile = candidate_profile.copy()
 
-    masked_candidate_profile = (
-        mask_personal_attributes(
-            candidate_profile
-        )
+    # Candidate ID is an identifier, not a scoring attribute.
+    if candidate_id is not None:
+        masked_candidate_profile["candidate_id"] = candidate_id
+
+    candidate_skills = _extract_candidate_skills(
+        masked_candidate_profile
     )
-
-
-    candidate_data = _get_resume_text(
+    candidate_roles = _extract_candidate_roles(
+        masked_candidate_profile
+    )
+    candidate_education = _extract_candidate_education(
         masked_candidate_profile
     )
 
-    jd_data = _get_jd_data(
-        jd_profile
-    )
-
-    # ========================================================
-    # Candidate data
-    # ========================================================
-
-    candidate_skills = (
-        _extract_candidate_skills(
-            candidate_data
-        )
-    )
-
-    candidate_years = (
-        _extract_candidate_years(
-            candidate_data
-        )
-    )
-
-    candidate_roles = (
-        _extract_candidate_roles(
-            candidate_data
-        )
-    )
-
-    candidate_education = (
-        _extract_candidate_education(
-            candidate_data
-        )
-    )
-
-    # ========================================================
-    # JD data
-    # ========================================================
-
-    job_title = jd_data.get(
-        "job_title",
-        ""
-    )
-
-    if not isinstance(job_title, str):
-        job_title = ""
-
-    required_skills = jd_data.get(
-        "required_skills",
-        []
-    )
-
-    if not isinstance(required_skills, list):
-        required_skills = []
-
-    preferred_skills = jd_data.get(
-        "preferred_skills",
-        []
-    )
-
-    if not isinstance(preferred_skills, list):
-        preferred_skills = []
-
-    jd_experience = jd_data.get(
-        "experience",
-        []
-    )
-
-    if not isinstance(jd_experience, list):
-        jd_experience = []
-
-    jd_education = jd_data.get(
-        "education",
-        []
-    )
-
-    if not isinstance(jd_education, list):
-        jd_education = []
-
-    # ========================================================
     # 1. Skill score
-    # ========================================================
+    skill_result = calculate_skill_score(
+        masked_candidate_profile,
+        jd_profile,
+        embedding_generator=embedding_generator,
+    )
 
-    skill_result = calculate_skill_score( masked_candidate_profile, 
-                        jd_profile, 
-                        embedding_generator=embedding_generator, 
-                        )
-
-
-    # ========================================================
     # 2. Experience score
-    # ========================================================
-
+    # Skill matching is owned by SkillScore. ExperienceScore receives
+    # the result instead of independently rematching JD skills.
     experience_result = calculate_experience_score(
+        masked_candidate_profile,
+        jd_profile,
+        skill_result=skill_result,
+    )
+
+    # 3. Education score
+    education_result = calculate_education_score(
         masked_candidate_profile,
         jd_profile,
     )
 
-    if not isinstance(
-        experience_result,
-        dict
-    ):
-        raise ValueError(
-            "Experience scorer returned "
-            "an invalid result."
-        )
-        
-    candidate_years = experience_result.get(
-        "candidate_years",
-        0.0
-    )
-
-
-    # ========================================================
-    # 3. Education score
-    # ========================================================
-
-    education_result = calculate_education_score(
-    masked_candidate_profile,
-    jd_profile,
-)
-
-
-    # ========================================================
-    # 4. Semantic score
-    # ========================================================
+    # 4. Overall semantic score
+    resume_text = _get_resume_text(masked_candidate_profile)
 
     semantic_result = calculate_semantic_score(
+        resume_text=resume_text,
+        jd_profile=jd_profile,
+        embedding_generator=embedding_generator,
         resume_embedding=resume_embedding,
         jd_embedding=jd_embedding,
     )
 
-
-    # ========================================================
-    # 5. Generate final ATS score
-    # ========================================================
-
-    final_result = generate_candidate_score(
+    # 5. Final weighted score
+    candidate_score = generate_candidate_score(
         skill_result=skill_result,
         experience_result=experience_result,
         education_result=education_result,
         semantic_result=semantic_result,
-        job_title=job_title,
+        job_title=_extract_job_title(jd_profile),
         custom_weights=custom_weights,
     )
-    
-    # ========================================================
-    # Final output
-    # ========================================================
+
+    metadata = {
+        "candidate_id": candidate_id,
+        "candidate_skills": candidate_skills,
+        "candidate_roles": candidate_roles,
+        "candidate_education": candidate_education,
+        "candidate_years": experience_result.get(
+            "candidate_years",
+            0.0,
+        ),
+    }
 
     return {
         "candidate_id": candidate_id,
-        "candidate_score": final_result,
-
+        "candidate_score": candidate_score,
         "component_scores": {
             "skill": skill_result,
-            "experience": experience_result,
+            "experience": _format_experience_result_for_ats(
+                experience_result
+            ),
             "education": education_result,
             "semantic": semantic_result,
         },
-
-        "metadata": {
-            "job_title": job_title,
-
-            "required_skills_count":
-                len(required_skills),
-
-            "preferred_skills_count":
-                len(preferred_skills),
-
-            "candidate_skills_count":
-                len(candidate_skills),
-
-            "candidate_years":
-                candidate_years,
-
-            "candidate_roles":
-                candidate_roles,
-                
-            "candidate_education_count":
-                len(candidate_education),
-
-            "jd_experience_count":
-                len(jd_experience),
-
-            "jd_education_count":
-                len(jd_education),
-        },
-
-        # ----------------------------------------------------
-        # Bias mitigation metadata
-        # ----------------------------------------------------
-
+                "metadata": metadata,
         "bias_mitigation": {
-
-            "personal_attributes_masked":
-                True,
-
-            "candidate_id_preserved":
-                True,
+            "applied": True,
         },
     }

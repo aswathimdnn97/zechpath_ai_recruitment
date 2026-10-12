@@ -1,0 +1,422 @@
+{
+    "API": {
+        "broader": [],
+        "related": [
+            "REST API",
+            "GraphQL",
+            "SOAP API"
+        ]
+    },
+
+    "REST API": {
+        "broader": [
+            "API"
+        ],
+        "related": [
+            "Django REST Framework",
+            "FastAPI"
+        ]
+    },
+
+    "Django REST Framework": {
+        "broader": [
+            "REST API",
+            "API"
+        ],
+        "related": [
+            "Django"
+        ]
+    },
+
+    "FastAPI": {
+        "broader": [
+            "API"
+        ],
+        "related": [
+            "REST API",
+            "Python"
+        ]
+    },
+
+    "GraphQL": {
+        "broader": [
+            "API"
+        ],
+        "related": []
+    },
+
+    "SOAP API": {
+        "broader": [
+            "API"
+        ],
+        "related": []
+    },
+
+    "Django": {
+        "broader": [
+            "Python",
+            "Web Framework"
+        ],
+        "related": [
+            "Django REST Framework"
+        ]
+    },
+
+    "Flask": {
+        "broader": [
+            "Python",
+            "Web Framework"
+        ],
+        "related": []
+    },
+
+    "Python": {
+        "broader": [
+            "Programming Language"
+        ],
+        "related": [
+            "Django",
+            "Flask",
+            "FastAPI"
+        ]
+    },
+
+    "JavaScript": {
+        "broader": [
+            "Programming Language"
+        ],
+        "related": [
+            "React",
+            "Angular",
+            "Vue.js",
+            "Node.js"
+        ]
+    },
+
+    "TypeScript": {
+        "broader": [
+            "Programming Language"
+        ],
+        "related": [
+            "JavaScript",
+            "React"
+        ]
+    },
+
+    "React": {
+        "broader": [
+            "JavaScript",
+            "Frontend Framework"
+        ],
+        "related": [
+            "React.js",
+            "Next.js"
+        ]
+    },
+
+    "React.js": {
+        "broader": [
+            "React",
+            "JavaScript",
+            "Frontend Framework"
+        ],
+        "related": []
+    },
+
+    "Angular": {
+        "broader": [
+            "JavaScript",
+            "Frontend Framework"
+        ],
+        "related": [
+            "TypeScript"
+        ]
+    },
+
+    "Vue.js": {
+        "broader": [
+            "JavaScript",
+            "Frontend Framework"
+        ],
+        "related": []
+    },
+
+    "Node.js": {
+        "broader": [
+            "JavaScript",
+            "Backend Runtime"
+        ],
+        "related": [
+            "Express.js"
+        ]
+    },
+
+    "Express.js": {
+        "broader": [
+            "Node.js",
+            "JavaScript",
+            "Web Framework"
+        ],
+        "related": []
+    },
+
+    "PostgreSQL": {
+        "broader": [
+            "SQL",
+            "Relational Database"
+        ],
+        "related": [
+            "MySQL",
+            "SQLite"
+        ]
+    },
+
+    "MySQL": {
+        "broader": [
+            "SQL",
+            "Relational Database"
+        ],
+        "related": [
+            "PostgreSQL",
+            "SQLite"
+        ]
+    },
+
+    "SQLite": {
+        "broader": [
+            "SQL",
+            "Relational Database"
+        ],
+        "related": [
+            "PostgreSQL",
+            "MySQL"
+        ]
+    },
+
+    "SQL": {
+        "broader": [
+            "Database",
+            "Query Language"
+        ],
+        "related": [
+            "PostgreSQL",
+            "MySQL",
+            "SQLite"
+        ]
+    },
+
+    "Git": {
+        "broader": [
+            "Version Control"
+        ],
+        "related": [
+            "GitHub",
+            "GitLab",
+            "Bitbucket"
+        ]
+    },
+
+    "GitHub": {
+        "broader": [
+            "Version Control Platform"
+        ],
+        "related": [
+            "Git",
+            "GitLab",
+            "Bitbucket"
+        ]
+    },
+
+    "GitLab": {
+        "broader": [
+            "Version Control Platform"
+        ],
+        "related": [
+            "Git",
+            "GitHub",
+            "Bitbucket"
+        ]
+    },
+
+    "Docker": {
+        "broader": [
+            "Containerization"
+        ],
+        "related": [
+            "Kubernetes"
+        ]
+    },
+
+    "Kubernetes": {
+        "broader": [
+            "Container Orchestration"
+        ],
+        "related": [
+            "Docker"
+        ]
+    },
+
+    "AWS": {
+        "broader": [
+            "Cloud Computing",
+            "Cloud Platform"
+        ],
+        "related": [
+            "Azure",
+            "Google Cloud"
+        ]
+    },
+
+    "Azure": {
+        "broader": [
+            "Cloud Computing",
+            "Cloud Platform"
+        ],
+        "related": [
+            "AWS",
+            "Google Cloud"
+        ]
+    },
+
+    "Google Cloud": {
+        "broader": [
+            "Cloud Computing",
+            "Cloud Platform"
+        ],
+        "related": [
+            "AWS",
+            "Azure"
+        ]
+    },
+
+    "HTML": {
+        "broader": [
+            "Web Technology",
+            "Frontend"
+        ],
+        "related": [
+            "CSS",
+            "JavaScript"
+        ]
+    },
+
+    "CSS": {
+        "broader": [
+            "Web Technology",
+            "Frontend"
+        ],
+        "related": [
+            "HTML",
+            "JavaScript"
+        ]
+    },
+
+    "Testing": {
+        "broader": [
+            "Software Testing"
+        ],
+        "related": [
+            "Unit Testing",
+            "Integration Testing",
+            "Pytest",
+            "Selenium"
+        ]
+    },
+
+    "Unit Testing": {
+        "broader": [
+            "Testing"
+        ],
+        "related": [
+            "Pytest"
+        ]
+    },
+
+    "Integration Testing": {
+        "broader": [
+            "Testing"
+        ],
+        "related": []
+    },
+
+    "Pytest": {
+        "broader": [
+            "Testing",
+            "Python"
+        ],
+        "related": [
+            "Unit Testing",
+            "Integration Testing"
+        ]
+    },
+
+    "Selenium": {
+        "broader": [
+            "Testing",
+            "Test Automation"
+        ],
+        "related": []
+    },
+
+    "Pandas": {
+        "broader": [
+            "Python",
+            "Data Analysis"
+        ],
+        "related": [
+            "NumPy"
+        ]
+    },
+
+    "NumPy": {
+        "broader": [
+            "Python",
+            "Scientific Computing"
+        ],
+        "related": [
+            "Pandas"
+        ]
+    },
+
+    "Machine Learning": {
+        "broader": [
+            "Artificial Intelligence"
+        ],
+        "related": [
+            "Scikit-learn",
+            "TensorFlow",
+            "PyTorch"
+        ]
+    },
+
+    "Scikit-learn": {
+        "broader": [
+            "Machine Learning",
+            "Python"
+        ],
+        "related": [
+            "Pandas",
+            "NumPy"
+        ]
+    },
+
+    "TensorFlow": {
+        "broader": [
+            "Machine Learning",
+            "Deep Learning"
+        ],
+        "related": [
+            "PyTorch"
+        ]
+    },
+
+    "PyTorch": {
+        "broader": [
+            "Machine Learning",
+            "Deep Learning"
+        ],
+        "related": [
+            "TensorFlow"
+        ]
+    }
+}

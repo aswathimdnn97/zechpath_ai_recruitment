@@ -1,0 +1,652 @@
+{
+    "candidate_id": "CAN_CB63A04EDA0B",
+    "masked_profile": {
+        "candidate_id": "CAN_CB63A04EDA0B",
+        "skills": [
+            {
+                "skill_id": "TECH001",
+                "skill": "Python",
+                "category": "Technical",
+                "subcategory": "Programming Language",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                "sources": [
+                    "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                    "Senior Python Developer - Cloud Bridge Systems Apr 2022 - Present Bengaluru, Karnataka Designed Fast API micro services and Postgre SQL-backed workflows. Introduced Redis caching and improved high-volume API response times. Python Developer - Data Works Pvt Ltd Jun 2020 - Mar 2022 Bengaluru, Karnataka Developed Django REST APIs and background processing jobs. Integrated third-party services and CI workflows. Software Engineer - Web Matrix Solutions Jul 2019 - May 2020 Bengaluru, Karnataka Built Python utilities and API integrations."
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH012",
+                "skill": "Django",
+                "category": "Technical",
+                "subcategory": "Backend Framework",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                "sources": [
+                    "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                    "Senior Python Developer - Cloud Bridge Systems Apr 2022 - Present Bengaluru, Karnataka Designed Fast API micro services and Postgre SQL-backed workflows. Introduced Redis caching and improved high-volume API response times. Python Developer - Data Works Pvt Ltd Jun 2020 - Mar 2022 Bengaluru, Karnataka Developed Django REST APIs and background processing jobs. Integrated third-party services and CI workflows. Software Engineer - Web Matrix Solutions Jul 2019 - May 2020 Bengaluru, Karnataka Built Python utilities and API integrations."
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH018",
+                "skill": "PostgreSQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_text": "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                "extraction_method": "master_dictionary",
+                "source_sections": [
+                    "summary",
+                    "skills"
+                ],
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Python Fast API Django PostgreSQL Redis Docker AWS Git"
+                    }
+                ]
+            },
+            {
+                "skill_id": "TECH021",
+                "skill": "Docker",
+                "category": "Technical",
+                "subcategory": "DevOps",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_text": "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH027",
+                "skill": "AWS",
+                "category": "Technical",
+                "subcategory": "Cloud",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_text": "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH043",
+                "skill": "Redis",
+                "category": "Technical",
+                "subcategory": "In-Memory Database",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                "sources": [
+                    "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                    "Senior Python Developer - Cloud Bridge Systems Apr 2022 - Present Bengaluru, Karnataka Designed Fast API micro services and Postgre SQL-backed workflows. Introduced Redis caching and improved high-volume API response times. Python Developer - Data Works Pvt Ltd Jun 2020 - Mar 2022 Bengaluru, Karnataka Developed Django REST APIs and background processing jobs. Integrated third-party services and CI workflows. Software Engineer - Web Matrix Solutions Jul 2019 - May 2020 Bengaluru, Karnataka Built Python utilities and API integrations."
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH014",
+                "skill": "FastAPI",
+                "category": "Technical",
+                "subcategory": "Backend Framework",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                "sources": [
+                    "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                    "Senior Python Developer - Cloud Bridge Systems Apr 2022 - Present Bengaluru, Karnataka Designed Fast API micro services and Postgre SQL-backed workflows. Introduced Redis caching and improved high-volume API response times. Python Developer - Data Works Pvt Ltd Jun 2020 - Mar 2022 Bengaluru, Karnataka Developed Django REST APIs and background processing jobs. Integrated third-party services and CI workflows. Software Engineer - Web Matrix Solutions Jul 2019 - May 2020 Bengaluru, Karnataka Built Python utilities and API integrations."
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "TECH025",
+                "skill": "REST API",
+                "category": "Technical",
+                "subcategory": "Web Services",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                "sources": [
+                    "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                    "Senior Python Developer - Cloud Bridge Systems Apr 2022 - Present Bengaluru, Karnataka Designed Fast API micro services and Postgre SQL-backed workflows. Introduced Redis caching and improved high-volume API response times. Python Developer - Data Works Pvt Ltd Jun 2020 - Mar 2022 Bengaluru, Karnataka Developed Django REST APIs and background processing jobs. Integrated third-party services and CI workflows. Software Engineer - Web Matrix Solutions Jul 2019 - May 2020 Bengaluru, Karnataka Built Python utilities and API integrations."
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "TECH016A",
+                "skill": "SQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "Senior Python Developer - Cloud Bridge Systems Apr 2022 - Present Bengaluru, Karnataka Designed Fast API micro services and Postgre SQL-backed workflows. Introduced Redis caching and improved high-volume API response times. Python Developer - Data Works Pvt Ltd Jun 2020 - Mar 2022 Bengaluru, Karnataka Developed Django REST APIs and background processing jobs. Integrated third-party services and CI workflows. Software Engineer - Web Matrix Solutions Jul 2019 - May 2020 Bengaluru, Karnataka Built Python utilities and API integrations.",
+                "extraction_method": "master_dictionary"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Bachelor of Technology",
+                "field_of_study": "Computer Science and Engineering",
+                "institution": null,
+                "university": null,
+                "board": null,
+                "graduation_year": "2019"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": "JOB002",
+                    "title": "Python Developer",
+                    "category": "Software Development",
+                    "matched_by": "fuzzy",
+                    "confidence": 95
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Cloud Bridge Systems",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Apr 2022",
+                    "end_date": "Present"
+                },
+                "total_experience": {
+                    "total_months": 54,
+                    "total_years": 4.5
+                },
+                "location": "Bengaluru, Karnataka",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 50
+                },
+                "description": [
+                    "Designed Fast API micro services and Postgre SQL-backed workflows.",
+                    "Introduced Redis caching and improved high-volume API response times."
+                ]
+            },
+            {
+                "title": {
+                    "title_id": "JOB002",
+                    "title": "Python Developer",
+                    "category": "Software Development",
+                    "matched_by": "exact",
+                    "confidence": 100
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Data Works Pvt Ltd",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jun 2020",
+                    "end_date": "Mar 2022"
+                },
+                "total_experience": {
+                    "total_months": 22,
+                    "total_years": 1.8
+                },
+                "location": "Bengaluru, Karnataka",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 50
+                },
+                "description": [
+                    "Developed Django REST APIs and background processing jobs.",
+                    "Integrated third-party services and CI workflows."
+                ]
+            },
+            {
+                "title": {
+                    "title_id": "JOB001",
+                    "title": "Software Engineer",
+                    "category": "Software Development",
+                    "matched_by": "exact",
+                    "confidence": 100
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Web Matrix Solutions",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jul 2019",
+                    "end_date": "May 2020"
+                },
+                "total_experience": {
+                    "total_months": 11,
+                    "total_years": 0.9
+                },
+                "location": "Bengaluru, Karnataka",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 75
+                },
+                "description": [
+                    "Built Python utilities and API integrations."
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [
+            {
+                "certification_name": "Professional Certification",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "Industry Skills Program",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "Advanced Workplace Training",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            }
+        ],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-09-03T19:11:51.093272+00:00"
+        }
+    },
+    "bias_report": {
+        "bias_detected": false,
+        "risk_level": "none",
+        "indicator_count": 0,
+        "indicators": [],
+        "status": "clear"
+    },
+    "original_profile": {
+        "candidate_id": "CAN_CB63A04EDA0B",
+        "personal_information": {
+            "name": "ANIL RAJ",
+            "email": "anil.raj@example.com",
+            "phone": null,
+            "location": "n Bengaluru, Karnataka",
+            "linkedin": null,
+            "github": null,
+            "portfolio": null
+        },
+        "skills": [
+            {
+                "skill_id": "TECH001",
+                "skill": "Python",
+                "category": "Technical",
+                "subcategory": "Programming Language",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                "sources": [
+                    "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                    "Senior Python Developer - Cloud Bridge Systems Apr 2022 - Present Bengaluru, Karnataka Designed Fast API micro services and Postgre SQL-backed workflows. Introduced Redis caching and improved high-volume API response times. Python Developer - Data Works Pvt Ltd Jun 2020 - Mar 2022 Bengaluru, Karnataka Developed Django REST APIs and background processing jobs. Integrated third-party services and CI workflows. Software Engineer - Web Matrix Solutions Jul 2019 - May 2020 Bengaluru, Karnataka Built Python utilities and API integrations."
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH012",
+                "skill": "Django",
+                "category": "Technical",
+                "subcategory": "Backend Framework",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                "sources": [
+                    "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                    "Senior Python Developer - Cloud Bridge Systems Apr 2022 - Present Bengaluru, Karnataka Designed Fast API micro services and Postgre SQL-backed workflows. Introduced Redis caching and improved high-volume API response times. Python Developer - Data Works Pvt Ltd Jun 2020 - Mar 2022 Bengaluru, Karnataka Developed Django REST APIs and background processing jobs. Integrated third-party services and CI workflows. Software Engineer - Web Matrix Solutions Jul 2019 - May 2020 Bengaluru, Karnataka Built Python utilities and API integrations."
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH018",
+                "skill": "PostgreSQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_text": "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                "extraction_method": "master_dictionary",
+                "source_sections": [
+                    "summary",
+                    "skills"
+                ],
+                "sources": [
+                    {
+                        "source_section": "skills",
+                        "source_text": "Python Fast API Django PostgreSQL Redis Docker AWS Git"
+                    }
+                ]
+            },
+            {
+                "skill_id": "TECH021",
+                "skill": "Docker",
+                "category": "Technical",
+                "subcategory": "DevOps",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_text": "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH027",
+                "skill": "AWS",
+                "category": "Technical",
+                "subcategory": "Cloud",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_text": "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH043",
+                "skill": "Redis",
+                "category": "Technical",
+                "subcategory": "In-Memory Database",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                "sources": [
+                    "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                    "Senior Python Developer - Cloud Bridge Systems Apr 2022 - Present Bengaluru, Karnataka Designed Fast API micro services and Postgre SQL-backed workflows. Introduced Redis caching and improved high-volume API response times. Python Developer - Data Works Pvt Ltd Jun 2020 - Mar 2022 Bengaluru, Karnataka Developed Django REST APIs and background processing jobs. Integrated third-party services and CI workflows. Software Engineer - Web Matrix Solutions Jul 2019 - May 2020 Bengaluru, Karnataka Built Python utilities and API integrations."
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "TECH014",
+                "skill": "FastAPI",
+                "category": "Technical",
+                "subcategory": "Backend Framework",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                "sources": [
+                    "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                    "Senior Python Developer - Cloud Bridge Systems Apr 2022 - Present Bengaluru, Karnataka Designed Fast API micro services and Postgre SQL-backed workflows. Introduced Redis caching and improved high-volume API response times. Python Developer - Data Works Pvt Ltd Jun 2020 - Mar 2022 Bengaluru, Karnataka Developed Django REST APIs and background processing jobs. Integrated third-party services and CI workflows. Software Engineer - Web Matrix Solutions Jul 2019 - May 2020 Bengaluru, Karnataka Built Python utilities and API integrations."
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "TECH025",
+                "skill": "REST API",
+                "category": "Technical",
+                "subcategory": "Web Services",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                "sources": [
+                    "Backend engineer with 6 years of experience designing Python services and REST APIs. Strong experience with Fast API, Django, PostgreSQL, Redis, Docker and AWS.",
+                    "Senior Python Developer - Cloud Bridge Systems Apr 2022 - Present Bengaluru, Karnataka Designed Fast API micro services and Postgre SQL-backed workflows. Introduced Redis caching and improved high-volume API response times. Python Developer - Data Works Pvt Ltd Jun 2020 - Mar 2022 Bengaluru, Karnataka Developed Django REST APIs and background processing jobs. Integrated third-party services and CI workflows. Software Engineer - Web Matrix Solutions Jul 2019 - May 2020 Bengaluru, Karnataka Built Python utilities and API integrations."
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "TECH016A",
+                "skill": "SQL",
+                "category": "Technical",
+                "subcategory": "Database",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "Senior Python Developer - Cloud Bridge Systems Apr 2022 - Present Bengaluru, Karnataka Designed Fast API micro services and Postgre SQL-backed workflows. Introduced Redis caching and improved high-volume API response times. Python Developer - Data Works Pvt Ltd Jun 2020 - Mar 2022 Bengaluru, Karnataka Developed Django REST APIs and background processing jobs. Integrated third-party services and CI workflows. Software Engineer - Web Matrix Solutions Jul 2019 - May 2020 Bengaluru, Karnataka Built Python utilities and API integrations.",
+                "extraction_method": "master_dictionary"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Bachelor of Technology",
+                "field_of_study": "Computer Science and Engineering",
+                "institution": null,
+                "university": null,
+                "board": null,
+                "graduation_year": "2019"
+            }
+        ],
+        "experience": [
+            {
+                "title": {
+                    "title_id": "JOB002",
+                    "title": "Python Developer",
+                    "category": "Software Development",
+                    "matched_by": "fuzzy",
+                    "confidence": 95
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Cloud Bridge Systems",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Apr 2022",
+                    "end_date": "Present"
+                },
+                "total_experience": {
+                    "total_months": 54,
+                    "total_years": 4.5
+                },
+                "location": "Bengaluru, Karnataka",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 50
+                },
+                "description": [
+                    "Designed Fast API micro services and Postgre SQL-backed workflows.",
+                    "Introduced Redis caching and improved high-volume API response times."
+                ]
+            },
+            {
+                "title": {
+                    "title_id": "JOB002",
+                    "title": "Python Developer",
+                    "category": "Software Development",
+                    "matched_by": "exact",
+                    "confidence": 100
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Data Works Pvt Ltd",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jun 2020",
+                    "end_date": "Mar 2022"
+                },
+                "total_experience": {
+                    "total_months": 22,
+                    "total_years": 1.8
+                },
+                "location": "Bengaluru, Karnataka",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 50
+                },
+                "description": [
+                    "Developed Django REST APIs and background processing jobs.",
+                    "Integrated third-party services and CI workflows."
+                ]
+            },
+            {
+                "title": {
+                    "title_id": "JOB001",
+                    "title": "Software Engineer",
+                    "category": "Software Development",
+                    "matched_by": "exact",
+                    "confidence": 100
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Web Matrix Solutions",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jul 2019",
+                    "end_date": "May 2020"
+                },
+                "total_experience": {
+                    "total_months": 11,
+                    "total_years": 0.9
+                },
+                "location": "Bengaluru, Karnataka",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP001",
+                    "department": "Software Development",
+                    "matched_by": "keyword",
+                    "confidence": 75
+                },
+                "description": [
+                    "Built Python utilities and API integrations."
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [
+            {
+                "certification_name": "Professional Certification",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "Industry Skills Program",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            },
+            {
+                "certification_name": "Advanced Workplace Training",
+                "issuing_organization": null,
+                "issue_date": null,
+                "expiration_date": null,
+                "credential_id": null
+            }
+        ],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-09-03T19:11:51.093272+00:00"
+        }
+    },
+    "resume_hash": "d967d6531f06301a5ec5d40e084d3283a0d1c2d7ac39de323a5b22ea037d20e6"
+}

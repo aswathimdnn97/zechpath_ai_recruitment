@@ -4,340 +4,653 @@ spelling_resolver.py
 Responsibilities
 ----------------
 1. Correct known skill spelling mistakes.
-2. Preserve extraction metadata.
+2. Preserve extraction/source metadata.
 3. Support both:
        - list[str]
        - list[dict]
-4. Keep the original skill for traceability.
-5. Merge duplicate skills after correction.
+4. Deduplicate skills after spelling resolution.
+5. Merge source evidence when the same canonical skill
+   appears multiple times.
 
-This module does NOT:
-    - validate skills
-    - resolve synonyms
-    - perform fuzzy matching
-    - expand technology stacks
+This module DOES NOT:
+    - perform synonym resolution
+    - perform fuzzy master validation
+    - expand skill stacks
+
+Pipeline position
+-----------------
+    skill_extractor
+          ↓
+    spelling_resolver
+          ↓
+    synonym_resolver
+          ↓
+    master_skill_validator
+          ↓
+    stack_resolver
 """
 
-import json
-from pathlib import Path
+from __future__ import annotations
 
+import json
+import logging
+from pathlib import Path
+from typing import Any
+
+
+# ============================================================
+# LOGGING
+# ============================================================
+
+logger = logging.getLogger(__name__)
+
+
+# ============================================================
+# PROJECT PATH
+# ============================================================
 
 PROJECT_ROOT = Path(__file__).resolve().parents[4]
 
-SPELLING_FILE = (
+SKILL_DATA_DIR = (
     PROJECT_ROOT
     / "data"
     / "resume"
     / "skills"
+)
+
+SPELLING_FILE = (
+    SKILL_DATA_DIR
     / "spelling_dictionary.json"
 )
+
+
+# ============================================================
+# JSON LOADER
+# ============================================================
+
+def _load_json(path: Path) -> Any:
+    """
+    Load JSON data from a file.
+    """
+
+    if not path.exists():
+        raise FileNotFoundError(
+            f"Spelling dictionary not found: {path}"
+        )
+
+    try:
+        with path.open(
+            "r",
+            encoding="utf-8",
+        ) as file:
+            return json.load(file)
+
+    except json.JSONDecodeError as exc:
+        raise ValueError(
+            f"Invalid JSON in spelling dictionary: {path}"
+        ) from exc
 
 
 # ============================================================
 # LOAD SPELLING DICTIONARY
 # ============================================================
 
-def load_spelling_dictionary():
-    """
-    Load the spelling correction dictionary.
+SPELLING_DICTIONARY = _load_json(
+    SPELLING_FILE
+)
 
-    Example:
-        {
-            "pyhton": "Python",
-            "javscript": "JavaScript"
-        }
-    """
 
-    if not SPELLING_FILE.exists():
-        return {}
-
-    with open(SPELLING_FILE, "r", encoding="utf-8") as file:
-        data = json.load(file)
-
-    return data if isinstance(data, dict) else {}
+if not isinstance(SPELLING_DICTIONARY, dict):
+    raise ValueError(
+        "spelling_dictionary.json must contain a JSON object."
+    )
 
 
 # ============================================================
 # NORMALIZATION
 # ============================================================
 
-def _normalize(value):
+def _normalize(value: Any) -> str:
     """
-    Normalize text for case-insensitive comparison.
+    Normalize text for dictionary lookup.
+
+    Examples
+    --------
+    ' Pyhton ' -> 'pyhton'
+    'PYHTON'   -> 'pyhton'
+    'Fast  API' -> 'fast api'
     """
 
-    if not isinstance(value, str):
+    if value is None:
         return ""
 
     return " ".join(
-        value.strip().lower().split()
+        str(value)
+        .strip()
+        .lower()
+        .split()
     )
 
 
 # ============================================================
-# GET SKILL NAME
+# BUILD NORMALIZED SPELLING MAP
 # ============================================================
 
-def _get_skill_name(candidate):
+NORMALIZED_SPELLING_MAP = {
+    _normalize(wrong): str(correct).strip()
+    for wrong, correct in SPELLING_DICTIONARY.items()
+    if _normalize(wrong)
+    and correct is not None
+    and str(correct).strip()
+}
+
+
+# ============================================================
+# SKILL NAME EXTRACTION
+# ============================================================
+
+def _get_skill_name(candidate: Any) -> str:
     """
-    Get the skill name from either:
+    Extract skill name from supported candidate formats.
 
-        "Python"
+    Supported:
 
-    or:
+        "pyhton"
 
         {
-            "skill": "Python"
+            "skill": "pyhton"
+        }
+
+        {
+            "name": "pyhton"
+        }
+
+        {
+            "canonical_name": "pyhton"
         }
     """
 
     if isinstance(candidate, str):
         return candidate.strip()
 
-    if isinstance(candidate, dict):
-        skill = candidate.get("skill")
+    if not isinstance(candidate, dict):
+        return ""
 
-        if isinstance(skill, str):
-            return skill.strip()
+    for key in (
+        "skill",
+        "name",
+        "canonical_name",
+    ):
+        value = candidate.get(key)
+
+        if value is not None:
+            value = str(value).strip()
+
+            if value:
+                return value
 
     return ""
 
 
 # ============================================================
-# COPY METADATA
+# SOURCE KEY
 # ============================================================
 
-def _copy_metadata(source, target):
+def _source_key(source: Any) -> tuple:
     """
-    Preserve extraction/source metadata.
+    Create a stable key for source deduplication.
     """
 
     if not isinstance(source, dict):
-        return
+        return (str(source),)
 
-    metadata_fields = [
-        "source_section",
-        "source_sections",
-        "source_text",
-        "sources",
-        "source_skill",
-        "extraction_method",
-    ]
-
-    for field in metadata_fields:
-        if field in source:
-            target[field] = source[field]
+    return (
+        source.get("source_section", ""),
+        source.get("source_text", ""),
+        source.get("source_skill", ""),
+    )
 
 
 # ============================================================
-# MERGE SOURCE INFORMATION
+# MERGE SOURCES
 # ============================================================
 
-def _merge_metadata(existing, candidate):
+def _merge_sources(
+    existing: list[dict],
+    incoming: list[dict],
+) -> list[dict]:
     """
-    Merge source information when two candidates resolve
-    to the same skill.
+    Merge source evidence without duplicates.
     """
 
+    merged = []
+
+    seen = set()
+
+    for source in [
+        *existing,
+        *incoming,
+    ]:
+
+        if not isinstance(source, dict):
+            continue
+
+        key = _source_key(source)
+
+        if key in seen:
+            continue
+
+        seen.add(key)
+        merged.append(source)
+
+    return merged
+
+
+# ============================================================
+# MERGE METADATA
+# ============================================================
+
+def _merge_metadata(
+    existing: dict,
+    incoming: dict,
+) -> dict:
+    """
+    Merge extraction metadata.
+
+    Existing values are preserved while new evidence
+    is added.
+    """
+
+    result = dict(existing)
+
     # --------------------------------------------------------
-    # source_sections
+    # SOURCES
     # --------------------------------------------------------
 
-    existing_sections = existing.get(
-        "source_sections",
-        []
-    )
-
-    candidate_sections = candidate.get(
-        "source_sections",
-        []
-    )
-
-    if not isinstance(existing_sections, list):
-        existing_sections = [existing_sections]
-
-    if not isinstance(candidate_sections, list):
-        candidate_sections = [candidate_sections]
-
-    sections = []
-
-    for section in (
-        existing_sections + candidate_sections
-    ):
-        if section and section not in sections:
-            sections.append(section)
-
-    if sections:
-        existing["source_sections"] = sections
-
-    # --------------------------------------------------------
-    # sources
-    # --------------------------------------------------------
-
-    existing_sources = existing.get(
+    existing_sources = result.get(
         "sources",
-        []
+        [],
     )
 
-    candidate_sources = candidate.get(
+    incoming_sources = incoming.get(
         "sources",
-        []
+        [],
     )
 
     if not isinstance(existing_sources, list):
-        existing_sources = [existing_sources]
+        existing_sources = []
 
-    if not isinstance(candidate_sources, list):
-        candidate_sources = [candidate_sources]
+    if not isinstance(incoming_sources, list):
+        incoming_sources = []
 
-    sources = existing_sources + candidate_sources
-
-    if sources:
-        existing["sources"] = sources
+    result["sources"] = _merge_sources(
+        existing_sources,
+        incoming_sources,
+    )
 
     # --------------------------------------------------------
-    # source_text
+    # SOURCE SECTIONS
     # --------------------------------------------------------
 
-    if not existing.get("source_text"):
-        existing["source_text"] = candidate.get(
-            "source_text",
-            ""
+    source_sections = []
+
+    for item in [
+        *result.get("source_sections", []),
+        *incoming.get("source_sections", []),
+    ]:
+
+        if item and item not in source_sections:
+            source_sections.append(item)
+
+    # Also derive source sections from sources.
+    for source in result["sources"]:
+
+        section = source.get("source_section")
+
+        if section and section not in source_sections:
+            source_sections.append(section)
+
+    if source_sections:
+        result["source_sections"] = source_sections
+
+    # --------------------------------------------------------
+    # ORIGINAL SKILLS
+    # --------------------------------------------------------
+
+    original_skills = []
+
+    for item in [
+        *result.get("original_skills", []),
+        *incoming.get("original_skills", []),
+    ]:
+
+        if item and item not in original_skills:
+            original_skills.append(item)
+
+    if original_skills:
+        result["original_skills"] = original_skills
+
+    # --------------------------------------------------------
+    # SOURCE TEXT
+    # --------------------------------------------------------
+
+    source_texts = []
+
+    for item in [
+        result.get("source_text"),
+        incoming.get("source_text"),
+    ]:
+
+        if item and item not in source_texts:
+            source_texts.append(item)
+
+    if source_texts:
+        result["source_text"] = " ".join(
+            source_texts
         )
 
+    return result
+
 
 # ============================================================
-# RESOLVE SPELLING
+# SPELLING RESOLUTION
 # ============================================================
 
-def resolve_spelling(candidate_skills):
+def _resolve_spelling(
+    skill_name: str,
+) -> str:
     """
-    Resolve known spelling mistakes.
+    Resolve a skill using exact normalized spelling lookup.
 
-    Supports:
+    No fuzzy matching is performed here.
+    """
 
-        list[str]
+    normalized = _normalize(skill_name)
 
-    and:
+    if not normalized:
+        return skill_name
 
-        list[dict]
+    resolved = NORMALIZED_SPELLING_MAP.get(
+        normalized
+    )
 
-    Example input:
+    if resolved:
+        return resolved
+
+    return skill_name
+
+
+# ============================================================
+# RESOLVE SINGLE SKILL
+# ============================================================
+
+def resolve_skill(
+    candidate: Any,
+) -> dict | None:
+    """
+    Resolve spelling for one candidate.
+
+    Returns
+    -------
+    dict | None
+
+    Example
+    -------
+    Input:
 
         {
             "skill": "pyhton",
-            "source_section": "experience",
-            "source_text": "Worked with pyhton and Django"
+            "sources": [...]
         }
 
-    Example output:
+    Output:
 
         {
             "skill": "Python",
             "original_skill": "pyhton",
+            "resolved_from": "pyhton",
             "resolution_method": "spelling",
-            "source_section": "experience",
-            "source_text": "Worked with pyhton and Django"
+            "original_skills": ["pyhton"],
+            "sources": [...]
         }
     """
 
-    if not isinstance(candidate_skills, list):
-        return []
+    # --------------------------------------------------------
+    # STRING CANDIDATE
+    # --------------------------------------------------------
 
-    if not candidate_skills:
-        return []
+    if isinstance(candidate, str):
 
-    spelling_dictionary = load_spelling_dictionary()
+        skill_name = candidate.strip()
 
-    lookup = {
-        _normalize(wrong): correct.strip()
-        for wrong, correct in spelling_dictionary.items()
-        if isinstance(wrong, str)
-        and isinstance(correct, str)
-        and wrong.strip()
-        and correct.strip()
-    }
+        if not skill_name:
+            return None
 
-    resolved = []
-    seen = {}
-
-    for candidate in candidate_skills:
-
-        original_skill = _get_skill_name(candidate)
-
-        if not original_skill:
-            continue
-
-        normalized_original = _normalize(
-            original_skill
+        resolved = _resolve_spelling(
+            skill_name
         )
 
-        corrected_skill = lookup.get(
-            normalized_original,
-            original_skill
+        result = {
+            "skill": resolved,
+        }
+
+        if _normalize(resolved) != _normalize(skill_name):
+
+            result.update(
+                {
+                    "original_skill": skill_name,
+                    "resolved_from": skill_name,
+                    "resolution_method": "spelling",
+                    "original_skills": [
+                        skill_name
+                    ],
+                }
+            )
+
+        return result
+
+    # --------------------------------------------------------
+    # DICT CANDIDATE
+    # --------------------------------------------------------
+
+    if not isinstance(candidate, dict):
+        return None
+
+    skill_name = _get_skill_name(candidate)
+
+    if not skill_name:
+        return None
+
+    result = dict(candidate)
+
+    resolved = _resolve_spelling(
+        skill_name
+    )
+
+    # --------------------------------------------------------
+    # SPELLING CHANGED
+    # --------------------------------------------------------
+
+    if _normalize(resolved) != _normalize(skill_name):
+
+        result["skill"] = resolved
+
+        # Preserve first original value.
+        if not result.get("original_skill"):
+            result["original_skill"] = skill_name
+
+        result["resolved_from"] = skill_name
+
+        result["resolution_method"] = "spelling"
+
+        existing_originals = result.get(
+            "original_skills",
+            [],
         )
 
-        corrected_skill = corrected_skill.strip()
+        if not isinstance(existing_originals, list):
+            existing_originals = []
+
+        if skill_name not in existing_originals:
+            existing_originals.append(
+                skill_name
+            )
+
+        result["original_skills"] = (
+            existing_originals
+        )
+
+    else:
+
+        result["skill"] = resolved
+
+        # Keep existing metadata intact.
+
+    return result
+
+
+# ============================================================
+# RESOLVE LIST OF SKILLS
+# ============================================================
+
+def resolve_spelling(
+    candidates: list[Any],
+) -> list[dict]:
+    """
+    Resolve spelling for all candidates.
+
+    Important:
+        Deduplication is performed AFTER spelling resolution.
+
+    This means:
+
+        pyhton
+        Python
+
+    become:
+
+        Python
+
+    and their source metadata is merged.
+    """
+
+    if not candidates:
+        return []
+
+    resolved_skills: dict[str, dict] = {}
+
+    for candidate in candidates:
+
+        result = resolve_skill(
+            candidate
+        )
+
+        if not result:
+            continue
+
+        skill_name = _get_skill_name(
+            result
+        )
+
+        if not skill_name:
+            continue
+
+        canonical_key = _normalize(
+            skill_name
+        )
+
+        if not canonical_key:
+            continue
 
         # ----------------------------------------------------
-        # STRING INPUT
+        # FIRST OCCURRENCE
         # ----------------------------------------------------
 
-        if isinstance(candidate, str):
+        if canonical_key not in resolved_skills:
 
-            result = {
-                "skill": corrected_skill
-            }
-
-            if normalized_original != _normalize(
-                corrected_skill
-            ):
-                result["original_skill"] = (
-                    original_skill
-                )
-                result["resolution_method"] = (
-                    "spelling"
-                )
-
-        # ----------------------------------------------------
-        # DICT INPUT
-        # ----------------------------------------------------
-
-        else:
-
-            result = dict(candidate)
-
-            result["skill"] = corrected_skill
-
-            if normalized_original != _normalize(
-                corrected_skill
-            ):
-                result["original_skill"] = (
-                    original_skill
-                )
-                result["resolution_method"] = (
-                    "spelling"
-                )
-
-        # ----------------------------------------------------
-        # DEDUPLICATION
-        # ----------------------------------------------------
-
-        key = _normalize(corrected_skill)
-
-        if key in seen:
-
-            existing = seen[key]
-
-            if isinstance(candidate, dict):
-                _merge_metadata(
-                    existing,
-                    candidate
-                )
+            resolved_skills[
+                canonical_key
+            ] = result
 
             continue
 
-        seen[key] = result
-        resolved.append(result)
+        # ----------------------------------------------------
+        # DUPLICATE AFTER SPELLING
+        # ----------------------------------------------------
 
-    return resolved
+        existing = resolved_skills[
+            canonical_key
+        ]
+
+        resolved_skills[
+            canonical_key
+        ] = _merge_metadata(
+            existing,
+            result,
+        )
+
+    return list(
+        resolved_skills.values()
+    )
+
+
+# ============================================================
+# BACKWARD-COMPATIBILITY ALIAS
+# ============================================================
+
+resolve_skills = resolve_spelling
+
+
+# ============================================================
+# DEBUG / MANUAL TEST
+# ============================================================
+
+if __name__ == "__main__":
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(levelname)s - %(message)s",
+    )
+
+    test_candidates = [
+        {
+            "skill": "pyhton",
+            "source_section": "skills",
+            "source_text": "pyhton, Django",
+            "sources": [
+                {
+                    "source_section": "skills",
+                    "source_text": "pyhton, Django",
+                    "source_skill": "pyhton",
+                }
+            ],
+        },
+        {
+            "skill": "Python",
+            "source_section": "experience",
+            "source_text": (
+                "Developed applications using Python"
+            ),
+            "sources": [
+                {
+                    "source_section": "experience",
+                    "source_text": (
+                        "Developed applications using Python"
+                    ),
+                    "source_skill": "Python",
+                }
+            ],
+        },
+    ]
+
+    result = resolve_spelling(
+        test_candidates
+    )
+
+    print(
+        json.dumps(
+            result,
+            indent=2,
+            ensure_ascii=False,
+        )
+    )

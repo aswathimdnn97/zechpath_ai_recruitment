@@ -1,0 +1,556 @@
+{
+    "candidate_id": "CAN_79F428525AFE",
+    "masked_profile": {
+        "candidate_id": "CAN_79F428525AFE",
+        "skills": [
+            {
+                "skill_id": "HR003",
+                "skill": "HR Operations",
+                "category": "HR",
+                "subcategory": "HR Operations",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "skills"
+                ],
+                "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                "sources": [
+                    "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                    "HR Operations"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR005",
+                "skill": "Recruitment",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                "sources": [
+                    "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                    "HR Executive - Talent Bridge Solutions Jan 2021 - Present Chennai, Tamil Nadu Coordinated recruitment and interview scheduling. Supported onboarding and employee records. Prepared HR reports using Excel. HR Assistant - Office People 2019 - 2020 Chennai, Tamil Nadu Maintained employee documentation.",
+                    "Recruitment"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR006",
+                "skill": "Talent Acquisition",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR023",
+                "skill": "HR Documentation",
+                "category": "HR",
+                "subcategory": "HR Administration",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR001",
+                "skill": "Human Resources",
+                "category": "HR",
+                "subcategory": "HR Fundamentals",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                "sources": [
+                    "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                    "HR Executive - Talent Bridge Solutions Jan 2021 - Present Chennai, Tamil Nadu Coordinated recruitment and interview scheduling. Supported onboarding and employee records. Prepared HR reports using Excel. HR Assistant - Office People 2019 - 2020 Chennai, Tamil Nadu Maintained employee documentation."
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR035",
+                "skill": "Microsoft Excel",
+                "category": "HR",
+                "subcategory": "HR Tools",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                "sources": [
+                    "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                    "HR Executive - Talent Bridge Solutions Jan 2021 - Present Chennai, Tamil Nadu Coordinated recruitment and interview scheduling. Supported onboarding and employee records. Prepared HR reports using Excel. HR Assistant - Office People 2019 - 2020 Chennai, Tamil Nadu Maintained employee documentation.",
+                    "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                    "MS Excel"
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR011",
+                "skill": "Interview Scheduling",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "HR Executive - Talent Bridge Solutions Jan 2021 - Present Chennai, Tamil Nadu Coordinated recruitment and interview scheduling. Supported onboarding and employee records. Prepared HR reports using Excel. HR Assistant - Office People 2019 - 2020 Chennai, Tamil Nadu Maintained employee documentation.",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR019",
+                "skill": "Employee Onboarding",
+                "category": "HR",
+                "subcategory": "Employee Lifecycle",
+                "matched_by": "fuzzy",
+                "confidence": 90,
+                "source_section": "experience",
+                "source_text": "HR Executive - Talent Bridge Solutions Jan 2021 - Present Chennai, Tamil Nadu Coordinated recruitment and interview scheduling. Supported onboarding and employee records. Prepared HR reports using Excel. HR Assistant - Office People 2019 - 2020 Chennai, Tamil Nadu Maintained employee documentation.",
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR022",
+                "skill": "Employee Records Management",
+                "category": "HR",
+                "subcategory": "HR Administration",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "HR Executive - Talent Bridge Solutions Jan 2021 - Present Chennai, Tamil Nadu Coordinated recruitment and interview scheduling. Supported onboarding and employee records. Prepared HR reports using Excel. HR Assistant - Office People 2019 - 2020 Chennai, Tamil Nadu Maintained employee documentation.",
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR063",
+                "skill": "HR Reporting",
+                "category": "HR",
+                "subcategory": "HR Analytics",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "HR Executive - Talent Bridge Solutions Jan 2021 - Present Chennai, Tamil Nadu Coordinated recruitment and interview scheduling. Supported onboarding and employee records. Prepared HR reports using Excel. HR Assistant - Office People 2019 - 2020 Chennai, Tamil Nadu Maintained employee documentation.",
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR069",
+                "skill": "Communication",
+                "category": "HR",
+                "subcategory": "Soft Skills",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "skills",
+                "source_text": "Communication",
+                "extraction_method": "skills_section"
+            },
+            {
+                "skill_id": "HR017",
+                "skill": "Applicant Tracking System",
+                "category": "HR",
+                "subcategory": "Recruitment Tools",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "skills",
+                "source_text": "ATS",
+                "extraction_method": "skills_section"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Master of Business Administration",
+                "field_of_study": "Business Administration",
+                "institution": null,
+                "university": null,
+                "board": null,
+                "graduation_year": "2019"
+            }
+        ],
+        "experience": [
+            {
+                "title": null,
+                "company": {
+                    "company_id": null,
+                    "company": "Tamil Nadu",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jan 2021",
+                    "end_date": "Present"
+                },
+                "total_experience": {
+                    "total_months": 69,
+                    "total_years": 5.8
+                },
+                "location": "Chennai, Tamil Nadu",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP004",
+                    "department": "Human Resources",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "description": [
+                    "Coordinated recruitment and interview scheduling.",
+                    "Supported onboarding and employee records.",
+                    "Prepared HR reports using Excel."
+                ]
+            },
+            {
+                "title": {
+                    "title_id": null,
+                    "title": "HR Assistant",
+                    "category": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Office People",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "2019",
+                    "end_date": "2020"
+                },
+                "total_experience": {
+                    "total_months": 13,
+                    "total_years": 1.1
+                },
+                "location": "Chennai, Tamil Nadu",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP004",
+                    "department": "Human Resources",
+                    "matched_by": "keyword",
+                    "confidence": 50
+                },
+                "description": [
+                    "Maintained employee documentation."
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-09-24T19:32:37.726677+00:00"
+        }
+    },
+    "bias_report": {
+        "bias_detected": false,
+        "risk_level": "none",
+        "indicator_count": 0,
+        "indicators": [],
+        "status": "clear"
+    },
+    "original_profile": {
+        "candidate_id": "CAN_79F428525AFE",
+        "personal_information": {
+            "name": "ANJALI RAJ",
+            "email": "anjali.r@example.com",
+            "phone": null,
+            "location": "Chennai, Tamil Nadu",
+            "linkedin": null,
+            "github": null,
+            "portfolio": null
+        },
+        "skills": [
+            {
+                "skill_id": "HR003",
+                "skill": "HR Operations",
+                "category": "HR",
+                "subcategory": "HR Operations",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "skills"
+                ],
+                "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                "sources": [
+                    "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                    "HR Operations"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR005",
+                "skill": "Recruitment",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                "sources": [
+                    "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                    "HR Executive - Talent Bridge Solutions Jan 2021 - Present Chennai, Tamil Nadu Coordinated recruitment and interview scheduling. Supported onboarding and employee records. Prepared HR reports using Excel. HR Assistant - Office People 2019 - 2020 Chennai, Tamil Nadu Maintained employee documentation.",
+                    "Recruitment"
+                ],
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR006",
+                "skill": "Talent Acquisition",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR023",
+                "skill": "HR Documentation",
+                "category": "HR",
+                "subcategory": "HR Administration",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR001",
+                "skill": "Human Resources",
+                "category": "HR",
+                "subcategory": "HR Fundamentals",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience"
+                ],
+                "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                "sources": [
+                    "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                    "HR Executive - Talent Bridge Solutions Jan 2021 - Present Chennai, Tamil Nadu Coordinated recruitment and interview scheduling. Supported onboarding and employee records. Prepared HR reports using Excel. HR Assistant - Office People 2019 - 2020 Chennai, Tamil Nadu Maintained employee documentation."
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR035",
+                "skill": "Microsoft Excel",
+                "category": "HR",
+                "subcategory": "HR Tools",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "summary",
+                "source_sections": [
+                    "summary",
+                    "experience",
+                    "skills"
+                ],
+                "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                "sources": [
+                    "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                    "HR Executive - Talent Bridge Solutions Jan 2021 - Present Chennai, Tamil Nadu Coordinated recruitment and interview scheduling. Supported onboarding and employee records. Prepared HR reports using Excel. HR Assistant - Office People 2019 - 2020 Chennai, Tamil Nadu Maintained employee documentation.",
+                    "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+                    "MS Excel"
+                ],
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR011",
+                "skill": "Interview Scheduling",
+                "category": "HR",
+                "subcategory": "Talent Acquisition",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "HR Executive - Talent Bridge Solutions Jan 2021 - Present Chennai, Tamil Nadu Coordinated recruitment and interview scheduling. Supported onboarding and employee records. Prepared HR reports using Excel. HR Assistant - Office People 2019 - 2020 Chennai, Tamil Nadu Maintained employee documentation.",
+                "extraction_method": "master_dictionary"
+            },
+            {
+                "skill_id": "HR019",
+                "skill": "Employee Onboarding",
+                "category": "HR",
+                "subcategory": "Employee Lifecycle",
+                "matched_by": "fuzzy",
+                "confidence": 90,
+                "source_section": "experience",
+                "source_text": "HR Executive - Talent Bridge Solutions Jan 2021 - Present Chennai, Tamil Nadu Coordinated recruitment and interview scheduling. Supported onboarding and employee records. Prepared HR reports using Excel. HR Assistant - Office People 2019 - 2020 Chennai, Tamil Nadu Maintained employee documentation.",
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR022",
+                "skill": "Employee Records Management",
+                "category": "HR",
+                "subcategory": "HR Administration",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "HR Executive - Talent Bridge Solutions Jan 2021 - Present Chennai, Tamil Nadu Coordinated recruitment and interview scheduling. Supported onboarding and employee records. Prepared HR reports using Excel. HR Assistant - Office People 2019 - 2020 Chennai, Tamil Nadu Maintained employee documentation.",
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR063",
+                "skill": "HR Reporting",
+                "category": "HR",
+                "subcategory": "HR Analytics",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "experience",
+                "source_text": "HR Executive - Talent Bridge Solutions Jan 2021 - Present Chennai, Tamil Nadu Coordinated recruitment and interview scheduling. Supported onboarding and employee records. Prepared HR reports using Excel. HR Assistant - Office People 2019 - 2020 Chennai, Tamil Nadu Maintained employee documentation.",
+                "extraction_method": "alias"
+            },
+            {
+                "skill_id": "HR069",
+                "skill": "Communication",
+                "category": "HR",
+                "subcategory": "Soft Skills",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "skills",
+                "source_text": "Communication",
+                "extraction_method": "skills_section"
+            },
+            {
+                "skill_id": "HR017",
+                "skill": "Applicant Tracking System",
+                "category": "HR",
+                "subcategory": "Recruitment Tools",
+                "matched_by": "exact",
+                "confidence": 100,
+                "source_section": "skills",
+                "source_text": "ATS",
+                "extraction_method": "skills_section"
+            }
+        ],
+        "education": [
+            {
+                "degree_type": "Master of Business Administration",
+                "field_of_study": "Business Administration",
+                "institution": null,
+                "university": null,
+                "board": null,
+                "graduation_year": "2019"
+            }
+        ],
+        "experience": [
+            {
+                "title": null,
+                "company": {
+                    "company_id": null,
+                    "company": "Tamil Nadu",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "Jan 2021",
+                    "end_date": "Present"
+                },
+                "total_experience": {
+                    "total_months": 69,
+                    "total_years": 5.8
+                },
+                "location": "Chennai, Tamil Nadu",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP004",
+                    "department": "Human Resources",
+                    "matched_by": "keyword",
+                    "confidence": 100
+                },
+                "description": [
+                    "Coordinated recruitment and interview scheduling.",
+                    "Supported onboarding and employee records.",
+                    "Prepared HR reports using Excel."
+                ]
+            },
+            {
+                "title": {
+                    "title_id": null,
+                    "title": "HR Assistant",
+                    "category": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "company": {
+                    "company_id": null,
+                    "company": "Office People",
+                    "industry": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "duration": {
+                    "start_date": "2019",
+                    "end_date": "2020"
+                },
+                "total_experience": {
+                    "total_months": 13,
+                    "total_years": 1.1
+                },
+                "location": "Chennai, Tamil Nadu",
+                "employment_type": {
+                    "type_id": null,
+                    "employment_type": "Unknown",
+                    "matched_by": "none",
+                    "confidence": 0
+                },
+                "department": {
+                    "department_id": "DEP004",
+                    "department": "Human Resources",
+                    "matched_by": "keyword",
+                    "confidence": 50
+                },
+                "description": [
+                    "Maintained employee documentation."
+                ]
+            }
+        ],
+        "projects": [],
+        "certifications": [],
+        "metadata": {
+            "parser_version": "1.0",
+            "created_at": "2026-09-24T19:32:37.726677+00:00"
+        }
+    },
+    "resume_hash": "00244f2e849a465f4db0f76c7d3920232ed1c80c0c619b618c21f40eddf27283"
+}

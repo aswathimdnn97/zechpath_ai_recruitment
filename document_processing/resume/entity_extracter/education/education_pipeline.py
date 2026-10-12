@@ -1,3 +1,5 @@
+import logging
+
 from document_processing.resume.entity_extracter.education.education_block_splitter import (
     split_education_blocks
 )
@@ -36,6 +38,8 @@ from document_processing.resume.entity_extracter.education.school_degree_classif
     classify_school_degree
 )
 
+logger = logging.getLogger(__name__)
+
 
 def education_pipeline(education_section):
 
@@ -49,6 +53,7 @@ def education_pipeline(education_section):
     )
 
     education_data = []
+    logger.debug("Education blocks: %r", blocks)
 
     # ========================================================
     # STEP 2
@@ -146,6 +151,12 @@ def education_pipeline(education_section):
             resolve_field_alias(
                 field_of_study
             )
+        )
+
+        logger.debug(
+            "Education field resolution: field=%r block=%r",
+            field_of_study,
+            block,
         )
 
         # ----------------------------------------------------

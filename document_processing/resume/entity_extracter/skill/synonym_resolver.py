@@ -3,25 +3,37 @@ synonym_resolver.py
 
 Responsibilities
 ----------------
-1. Convert skill aliases into canonical skill names.
-2. Preserve extraction metadata.
-3. Support list[str] and list[dict].
-4. Merge duplicate candidates.
+1. Resolve skill aliases/synonyms.
+2. Convert aliases to canonical skill names.
+3. Preserve extraction metadata.
+4. Merge duplicate canonical skills.
+5. Do NOT perform fuzzy matching.
+6. Do NOT expand skill stacks.
 
-This module does NOT:
-    - validate skills
-    - perform fuzzy matching
-    - expand technology stacks
+Pipeline position
+-----------------
+Spelling Resolver
+        ↓
+Synonym Resolver
+        ↓
+Master Skill Validator
 """
+
+from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[4]
+# ============================================================
+# CONFIGURATION
+# ============================================================
 
-ALIAS_FILE = (
-    PROJECT_ROOT
+BASE_DIR = Path(__file__).resolve().parents[4]
+
+ALIAS_DICTIONARY_PATH = (
+    BASE_DIR
     / "data"
     / "resume"
     / "skills"
@@ -30,281 +42,317 @@ ALIAS_FILE = (
 
 
 # ============================================================
-# LOAD ALIASES
+# JSON LOADER
 # ============================================================
 
-def load_skill_aliases():
+def _load_json(path: Path) -> dict[str, Any]:
     """
-    Load skill alias dictionary.
-
-    Example:
-
-        {
-            "js": "JavaScript",
-            "reactjs": "React",
-            "nodejs": "Node.js"
-        }
+    Load alias dictionary.
     """
 
-    if not ALIAS_FILE.exists():
-        return {}
-
-    with open(ALIAS_FILE, "r", encoding="utf-8") as file:
-        data = json.load(file)
-
-    return data if isinstance(data, dict) else {}
-
-
-# ============================================================
-# NORMALIZATION
-# ============================================================
-
-def _normalize(value):
-    if not isinstance(value, str):
-        return ""
-
-    return " ".join(
-        value.strip().lower().split()
-    )
-
-
-# ============================================================
-# GET SKILL NAME
-# ============================================================
-
-def _get_skill_name(candidate):
-    """
-    Extract skill name from supported input formats.
-
-    Supports:
-
-        "Python"
-
-        {
-            "skill": "Python"
-        }
-
-        {
-            "name": "Python"
-        }
-
-        {
-            "canonical_name": "Python"
-        }
-    """
-
-    if isinstance(candidate, str):
-        return candidate.strip()
-
-    if isinstance(candidate, dict):
-
-        skill = (
-            candidate.get("skill")
-            or candidate.get("name")
-            or candidate.get("canonical_name")
+    if not path.exists():
+        raise FileNotFoundError(
+            f"Skill alias dictionary not found: {path}"
         )
 
-        if isinstance(skill, str):
-            return skill.strip()
+    with path.open("r", encoding="utf-8") as file:
+        data = json.load(file)
 
-    return ""
+    if not isinstance(data, dict):
+        raise ValueError(
+            "skill_aliases.json must contain a JSON object."
+        )
+
+    return data
+
+
+ALIAS_DICTIONARY = _load_json(
+    ALIAS_DICTIONARY_PATH
+)
+
 
 # ============================================================
-# MERGE METADATA
+# HELPERS
 # ============================================================
 
-def _merge_metadata(existing, candidate):
+def _normalize_text(value: Any) -> str:
+    if value is None:
+        return ""
 
-    # --------------------------------------------------------
-    # source_sections
-    # --------------------------------------------------------
+    return str(value).strip().lower()
 
-    existing_sections = existing.get(
-        "source_sections",
-        []
+
+def _get_skill_name(candidate: dict[str, Any]) -> str:
+    return str(
+        candidate.get("skill")
+        or candidate.get("name")
+        or candidate.get("canonical_name")
+        or ""
+    ).strip()
+
+
+# ============================================================
+# ALIAS LOOKUP
+# ============================================================
+
+def _build_normalized_alias_map(
+    aliases: dict[str, Any],
+) -> dict[str, str]:
+    """
+    Normalize alias keys once.
+    """
+
+    normalized: dict[str, str] = {}
+
+    for alias, canonical in aliases.items():
+
+        if not isinstance(alias, str):
+            continue
+
+        if not isinstance(canonical, str):
+            continue
+
+        alias_key = _normalize_text(alias)
+        canonical_name = canonical.strip()
+
+        if alias_key and canonical_name:
+            normalized[alias_key] = canonical_name
+
+    return normalized
+
+
+ALIAS_MAP = _build_normalized_alias_map(
+    ALIAS_DICTIONARY
+)
+
+
+# ============================================================
+# SOURCE MERGING
+# ============================================================
+
+def _source_key(source: Any) -> str:
+
+    if isinstance(source, dict):
+        return "|".join(
+            [
+                str(source.get("source_section", "")).strip(),
+                str(source.get("source_text", "")).strip(),
+                str(source.get("source_skill", "")).strip(),
+            ]
+        ).lower()
+
+    return str(source).strip().lower()
+
+
+def _merge_sources(
+    existing: list[Any] | None,
+    incoming: list[Any] | None,
+) -> list[Any]:
+
+    merged: list[Any] = []
+    seen: set[str] = set()
+
+    for source in (existing or []) + (incoming or []):
+
+        key = _source_key(source)
+
+        if not key or key in seen:
+            continue
+
+        seen.add(key)
+        merged.append(source)
+
+    return merged
+
+
+# ============================================================
+# METADATA MERGING
+# ============================================================
+
+def _merge_metadata(
+    existing: dict[str, Any],
+    incoming: dict[str, Any],
+) -> None:
+
+    existing["sources"] = _merge_sources(
+        existing.get("sources"),
+        incoming.get("sources"),
     )
 
-    candidate_sections = candidate.get(
-        "source_sections",
-        []
-    )
-
-    if not isinstance(existing_sections, list):
-        existing_sections = [existing_sections]
-
-    if not isinstance(candidate_sections, list):
-        candidate_sections = [candidate_sections]
+    # --------------------------------------------------------
+    # Source sections
+    # --------------------------------------------------------
 
     sections = []
 
-    for section in (
-        existing_sections + candidate_sections
-    ):
-        if section and section not in sections:
+    for candidate in (existing, incoming):
+
+        value = candidate.get("source_sections", [])
+
+        if isinstance(value, str):
+            value = [value]
+
+        if isinstance(value, list):
+            sections.extend(value)
+
+        section = candidate.get("source_section")
+
+        if section:
             sections.append(section)
 
-    if sections:
-        existing["source_sections"] = sections
-
-    # --------------------------------------------------------
-    # sources
-    # --------------------------------------------------------
-
-    existing_sources = existing.get(
-        "sources",
-        []
+    existing["source_sections"] = list(
+        dict.fromkeys(
+            str(section).strip()
+            for section in sections
+            if str(section).strip()
+        )
     )
 
-    candidate_sources = candidate.get(
-        "sources",
-        []
+    # --------------------------------------------------------
+    # Original skills
+    # --------------------------------------------------------
+
+    original_skills = []
+
+    for candidate in (existing, incoming):
+
+        value = candidate.get("original_skills", [])
+
+        if isinstance(value, str):
+            value = [value]
+
+        if isinstance(value, list):
+            original_skills.extend(value)
+
+        original_skill = candidate.get("original_skill")
+
+        if original_skill:
+            original_skills.append(original_skill)
+
+        resolved_from = candidate.get("resolved_from")
+
+        if resolved_from:
+            original_skills.append(resolved_from)
+
+    existing["original_skills"] = list(
+        dict.fromkeys(
+            str(skill).strip()
+            for skill in original_skills
+            if str(skill).strip()
+        )
     )
 
-    if not isinstance(existing_sources, list):
-        existing_sources = [existing_sources]
-
-    if not isinstance(candidate_sources, list):
-        candidate_sources = [candidate_sources]
-
-    sources = existing_sources + candidate_sources
-
-    if sources:
-        existing["sources"] = sources
+    if existing["original_skills"]:
+        existing["original_skill"] = (
+            existing["original_skills"][0]
+        )
 
     # --------------------------------------------------------
-    # source_text
+    # Source text
     # --------------------------------------------------------
 
     if not existing.get("source_text"):
-        existing["source_text"] = candidate.get(
-            "source_text",
-            ""
+        existing["source_text"] = incoming.get(
+            "source_text"
+        )
+
+    # --------------------------------------------------------
+    # Extraction method
+    # --------------------------------------------------------
+
+    if not existing.get("extraction_method"):
+        existing["extraction_method"] = incoming.get(
+            "extraction_method"
         )
 
 
 # ============================================================
-# RESOLVE SYNONYMS
+# RESOLVE SINGLE SKILL
 # ============================================================
 
-def resolve_synonyms(candidate_skills):
+def resolve_skill(candidate: dict[str, Any]) -> dict[str, Any]:
     """
-    Convert aliases into canonical skill names.
-
-    Example:
-
-        {
-            "skill": "reactjs",
-            "source_section": "experience"
-        }
-
-    becomes:
-
-        {
-            "skill": "React",
-            "original_skill": "reactjs",
-            "resolution_method": "synonym",
-            "source_section": "experience"
-        }
+    Resolve an alias to its canonical skill.
     """
 
-    if not isinstance(candidate_skills, list):
+    if not isinstance(candidate, dict):
+        return candidate
+
+    result = dict(candidate)
+
+    skill_name = _get_skill_name(result)
+
+    if not skill_name:
+        return result
+
+    normalized = _normalize_text(skill_name)
+
+    canonical = ALIAS_MAP.get(normalized)
+
+    if not canonical:
+        return result
+
+    # Already canonical.
+    if normalized == _normalize_text(canonical):
+        return result
+
+    result["skill"] = canonical
+
+    result["original_skill"] = skill_name
+    result["resolved_from"] = skill_name
+    result["resolution_method"] = "synonym"
+
+    result["original_skills"] = [skill_name]
+
+    return result
+
+
+# ============================================================
+# RESOLVE ALL
+# ============================================================
+
+def resolve_synonyms(
+    candidates: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """
+    Resolve aliases and merge duplicate canonical skills.
+    """
+
+    if not candidates:
         return []
 
-    if not candidate_skills:
-        return []
+    resolved: dict[str, dict[str, Any]] = {}
 
-    aliases = load_skill_aliases()
+    for candidate in candidates:
 
-    lookup = {
-        _normalize(alias): canonical.strip()
-        for alias, canonical in aliases.items()
-        if isinstance(alias, str)
-        and isinstance(canonical, str)
-        and alias.strip()
-        and canonical.strip()
-    }
-
-    resolved = []
-    seen = {}
-
-    for candidate in candidate_skills:
-
-        original_skill = _get_skill_name(candidate)
-
-        if not original_skill:
+        if not isinstance(candidate, dict):
             continue
 
-        normalized_original = _normalize(
-            original_skill
-        )
+        result = resolve_skill(candidate)
 
-        canonical_skill = lookup.get(
-            normalized_original,
-            original_skill
-        )
+        skill_name = _get_skill_name(result)
 
-        canonical_skill = canonical_skill.strip()
-
-        # ----------------------------------------------------
-        # STRING INPUT
-        # ----------------------------------------------------
-
-        if isinstance(candidate, str):
-
-            result = {
-                "skill": canonical_skill
-            }
-
-        # ----------------------------------------------------
-        # DICT INPUT
-        # ----------------------------------------------------
-
-        else:
-
-            result = dict(candidate)
-
-            result["skill"] = canonical_skill
-
-        # ----------------------------------------------------
-        # RECORD SYNONYM TRANSFORMATION
-        # ----------------------------------------------------
-
-        if normalized_original != _normalize(
-            canonical_skill
-        ):
-
-            if "original_skill" not in result:
-                result["original_skill"] = (
-                    original_skill
-                )
-
-            result["resolved_from"] = (
-                original_skill
-            )
-
-            result["resolution_method"] = (
-                "synonym"
-            )
-
-        # ----------------------------------------------------
-        # DEDUPLICATION
-        # ----------------------------------------------------
-
-        key = _normalize(canonical_skill)
-
-        if key in seen:
-
-            existing = seen[key]
-
-            if isinstance(candidate, dict):
-                _merge_metadata(
-                    existing,
-                    candidate
-                )
-
+        if not skill_name:
             continue
 
-        seen[key] = result
-        resolved.append(result)
+        key = _normalize_text(skill_name)
 
-    return resolved
+        if key not in resolved:
+            resolved[key] = result
+            continue
+
+        # IMPORTANT:
+        # Merge transformed candidate.
+        _merge_metadata(
+            resolved[key],
+            result,
+        )
+
+    return list(resolved.values())
+
+
+# ============================================================
+# BACKWARD-COMPATIBLE ALIAS
+# ============================================================
+
+resolve_skills = resolve_synonyms

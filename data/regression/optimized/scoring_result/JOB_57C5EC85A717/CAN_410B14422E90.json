@@ -1,0 +1,522 @@
+{
+  "candidate_id": "CAN_410B14422E90",
+  "candidate_score": {
+    "final_score": 60.94,
+    "status": "calculated",
+    "job_title": "Senior Python Developer",
+    "weights": {
+      "skill": 0.45,
+      "experience": 0.3,
+      "education": 0.1,
+      "semantic": 0.15
+    },
+    "component_scores": {
+      "skill": {
+        "score": 55.56,
+        "weight": 0.45,
+        "weight_percentage": 45.0
+      },
+      "experience": {
+        "score": 52.78,
+        "weight": 0.3,
+        "weight_percentage": 30.0
+      },
+      "education": {
+        "score": 76.0,
+        "weight": 0.1,
+        "weight_percentage": 10.0
+      },
+      "semantic": {
+        "score": 83.37,
+        "weight": 0.15,
+        "weight_percentage": 15.0
+      }
+    },
+    "contributions": {
+      "skill": {
+        "score": 55.56,
+        "weight": 0.45,
+        "weight_percentage": 45.0,
+        "contribution": 25.0
+      },
+      "experience": {
+        "score": 52.78,
+        "weight": 0.3,
+        "weight_percentage": 30.0,
+        "contribution": 15.83
+      },
+      "education": {
+        "score": 76.0,
+        "weight": 0.1,
+        "weight_percentage": 10.0,
+        "contribution": 7.6
+      },
+      "semantic": {
+        "score": 83.37,
+        "weight": 0.15,
+        "weight_percentage": 15.0,
+        "contribution": 12.51
+      }
+    },
+    "missing_components": [],
+    "available_weight": 1.0,
+    "weight_source": "role_category",
+    "role_category": "backend",
+    "explanation": [
+      "Skill score: 55.56 (45.00% weight)",
+      "Experience score: 52.78 (30.00% weight)",
+      "Education score: 76.00 (10.00% weight)",
+      "Semantic score: 83.37 (15.00% weight)"
+    ]
+  },
+  "component_scores": {
+    "skill": {
+      "score": 55.56,
+      "weight": 0.4,
+      "candidate_skills": [
+        "Python",
+        "Flask",
+        "SQL",
+        "MySQL",
+        "Docker",
+        "API",
+        "Git",
+        "REST API"
+      ],
+      "required": {
+        "skills": [
+          "Python",
+          "Django",
+          "FastAPI",
+          "REST API",
+          "PostgreSQL",
+          "Git",
+          "API Testing",
+          "Docker",
+          "AWS"
+        ],
+        "matched": [
+          {
+            "required_skill": "Python",
+            "matched_skill": "Python",
+            "matched": true,
+            "match_type": "exact",
+            "confidence": 1.0
+          },
+          {
+            "required_skill": "REST API",
+            "matched_skill": "REST API",
+            "matched": true,
+            "match_type": "exact",
+            "confidence": 1.0
+          },
+          {
+            "required_skill": "Git",
+            "matched_skill": "Git",
+            "matched": true,
+            "match_type": "exact",
+            "confidence": 1.0
+          },
+          {
+            "required_skill": "Docker",
+            "matched_skill": "Docker",
+            "matched": true,
+            "match_type": "exact",
+            "confidence": 1.0
+          }
+        ],
+        "missing": [
+          {
+            "required_skill": "Django",
+            "matched": false,
+            "match_type": "missing"
+          },
+          {
+            "required_skill": "FastAPI",
+            "matched": false,
+            "match_type": "missing",
+            "related_skill_context": {
+              "required_skill": "FastAPI",
+              "matched_skill": "REST API",
+              "matched": false,
+              "match_type": "related",
+              "relationship": "related",
+              "confidence": 0.0
+            }
+          },
+          {
+            "required_skill": "PostgreSQL",
+            "matched": false,
+            "match_type": "missing",
+            "related_skill_context": {
+              "required_skill": "PostgreSQL",
+              "matched_skill": "SQL",
+              "matched": false,
+              "match_type": "related",
+              "relationship": "related",
+              "confidence": 0.0
+            }
+          },
+          {
+            "required_skill": "API Testing",
+            "matched": false,
+            "match_type": "missing"
+          },
+          {
+            "required_skill": "AWS",
+            "matched": false,
+            "match_type": "missing"
+          }
+        ],
+        "match_percentage": 44.44
+      },
+      "preferred": {
+        "skills": [],
+        "matched": [],
+        "missing": [],
+        "match_percentage": 100.0
+      },
+      "weights": {
+        "required": 0.8,
+        "preferred": 0.2
+      }
+    },
+    "experience": {
+      "score": 52.78,
+      "weight": 0.3,
+      "component_scores": {
+        "years": {
+          "score": 100.0,
+          "weight": 0.35
+        },
+        "role": {
+          "score": 0.0,
+          "weight": 0.25
+        },
+        "technology": 44.44
+      },
+      "weights": {
+        "years": 0.35,
+        "role": 0.25,
+        "technology": 0.4
+      },
+      "candidate_years": 6.83,
+      "required_minimum_years": 5.0,
+      "required_maximum_years": null,
+      "candidate_roles": [
+        "{'title_id': None, 'title': 'Backend Engineer', 'category': 'Unknown', 'matched_by': 'none', 'confidence': 0}"
+      ],
+      "target_role": "Senior Python Developer",
+      "candidate_skills": [
+        "Python",
+        "Flask",
+        "SQL",
+        "MySQL",
+        "Docker",
+        "API",
+        "Git",
+        "REST API"
+      ],
+      "experience_skills": [
+        "Python",
+        "Flask",
+        "SQL",
+        "MySQL",
+        "Docker",
+        "API",
+        "Git",
+        "REST API"
+      ],
+      "required_skills": [
+        "Python",
+        "Django",
+        "FastAPI",
+        "REST API",
+        "PostgreSQL",
+        "Git",
+        "API Testing",
+        "Docker",
+        "AWS"
+      ],
+      "technology_score_source": "skill_score",
+      "status": "calculated"
+    },
+    "education": {
+      "score": 76.0,
+      "weight": 0.1,
+      "degree_score": 100.0,
+      "field_score": 40.0,
+      "candidate_education": [
+        {
+          "degree_type": "Bachelor of Technology",
+          "field_of_study": "Information Technology",
+          "institution": null,
+          "university": "KTU",
+          "board": null,
+          "graduation_year": "2019"
+        }
+      ],
+      "best_matching_education": {
+        "degree_score": 100.0,
+        "field_score": 40.0,
+        "score": 76.0,
+        "degree_type": "Bachelor of Technology",
+        "field_of_study": "Information Technology",
+        "institution": null,
+        "graduation_year": "2019"
+      },
+      "required_education": [
+        "B.Tech / B.E. / equivalent technical degree preferred."
+      ],
+      "status": "calculated"
+    },
+    "semantic": {
+      "score": 83.37,
+      "weight": 0.2,
+      "similarity": 0.6674,
+      "status": "calculated"
+    }
+  },
+  "metadata": {
+    "candidate_id": "CAN_410B14422E90",
+    "candidate_skills": [
+      {
+        "source_section": "summary",
+        "source_text": "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Developed Python backend services and database integrations.",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Python",
+            "source_skill": "Python"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Python",
+        "skill_id": "TECH001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+            "source_skill": "Flask"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Built APIs using Flask and maintained MySQL databases.",
+            "source_skill": "Flask"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Flask",
+            "source_skill": "Flask"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Flask",
+        "skill_id": "TECH013",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+            "source_skill": "SQL"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "SQL",
+            "source_skill": "SQL"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "skill": "SQL",
+        "skill_id": "TECH016A",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+            "source_skill": "MySQL"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Built APIs using Flask and maintained MySQL databases.",
+            "source_skill": "MySQL"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "MySQL",
+            "source_skill": "MySQL"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "MySQL",
+        "skill_id": "TECH017",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Backend engineer with 7 years of experience developing enterprise applications. Strong in Python and SQL with experience in Flask, MySQL and Docker.",
+            "source_skill": "Docker"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Used Docker and Git in team development.",
+            "source_skill": "Docker"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Docker",
+            "source_skill": "Docker"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Docker",
+        "skill_id": "TECH021",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Built APIs using Flask and maintained MySQL databases.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Built APIs using Flask and maintained MySQL databases.",
+            "source_skill": "apis"
+          }
+        ],
+        "original_skill": "apis",
+        "resolved_from": "apis",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "apis"
+        ],
+        "skill": "API",
+        "skill_id": "TECH087",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Used Docker and Git in team development.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Used Docker and Git in team development.",
+            "source_skill": "Git"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Git",
+            "source_skill": "Git"
+          }
+        ],
+        "source_sections": [
+          "experience",
+          "skills"
+        ],
+        "skill": "Git",
+        "skill_id": "TECH023",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "rest apis",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "rest apis",
+            "source_skill": "rest apis"
+          }
+        ],
+        "original_skill": "rest apis",
+        "resolved_from": "rest apis",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "rest apis"
+        ],
+        "skill": "REST API",
+        "skill_id": "TECH025",
+        "matched_by": "exact"
+      }
+    ],
+    "candidate_roles": [
+      {
+        "title_id": null,
+        "title": "Backend Engineer",
+        "category": "Unknown",
+        "matched_by": "none",
+        "confidence": 0
+      }
+    ],
+    "candidate_education": [
+      {
+        "degree_type": "Bachelor of Technology",
+        "field_of_study": "Information Technology",
+        "institution": null,
+        "university": "KTU",
+        "board": null,
+        "graduation_year": "2019"
+      }
+    ],
+    "candidate_years": 6.83
+  },
+  "bias_mitigation": {
+    "applied": true
+  },
+  "candidate_name": "SNEHA PILLAI",
+  "jd_id": "SeniorPythonDeveloper",
+  "job_id": "JOB_57C5EC85A717",
+  "jd_file": "SeniorPythonDeveloper.pdf"
+}

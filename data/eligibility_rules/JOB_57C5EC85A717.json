@@ -1,0 +1,41 @@
+{
+    "job_id": "JOB_57C5EC85A717",
+    "jd_id": "SeniorPythonDeveloper",
+    "rule_version": "1.0",
+    "required_skills": [
+        "Python",
+        "Django",
+        "FastAPI",
+        "REST API",
+        "PostgreSQL",
+        "Git",
+        "API Testing",
+        "Docker",
+        "AWS"
+    ],
+    "preferred_skills": [],
+    "mandatory_skills": [
+        "Python",
+        "Django",
+        "FastAPI",
+        "REST API",
+        "PostgreSQL",
+        "Git",
+        "API Testing",
+        "Docker",
+        "AWS"
+    ],
+    "experience": {
+        "minimum_years": 5.0,
+        "maximum_years": null,
+        "description": "5 years of relevant backend development experience."
+    },
+    "education": [
+        {
+            "description": "B.Tech / B.E. / equivalent technical degree preferred.",
+            "enforcement": "preferred"
+        }
+    ],
+    "requirements": [],
+    "generation_status": "generated"
+}

@@ -34,6 +34,10 @@ Expected output:
 
 import re
 
+from document_processing.resume.entity_extracter.certifications.organization_extractor import (
+    split_organization_suffix,
+)
+
 
 # ============================================================
 # PATTERNS
@@ -57,6 +61,38 @@ YEAR_RANGE_PATTERN = re.compile(
         present
         |
         current
+    )
+    \b
+    """,
+    re.IGNORECASE | re.VERBOSE,
+)
+
+MONTH_PATTERN = (
+    r"(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|"
+    r"Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|"
+    r"Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)"
+)
+
+DATE_RANGE_SEPARATOR_PATTERN = re.compile(
+    rf"""
+    (?P<start>
+        (?:{MONTH_PATTERN}\s*,?\s*)?
+        (?:19|20)\d{{2}}
+    )
+    (?P<before>\s*)
+    (?P<separator>[—–])
+    (?P<after>\s*)
+    (?P<end>
+        (?:
+            (?:{MONTH_PATTERN}\s*,?\s*)?
+            (?:19|20)\d{{2}}
+            |
+            present
+            |
+            current
+            |
+            ongoing
+        )
     )
     \b
     """,
@@ -130,16 +166,28 @@ def split_long_certification_line(line):
         if len(cleaned) > 1:
             return cleaned
 
+    date_range_token = "\x00DATE_RANGE_SEPARATOR\x00"
+    protected_line = DATE_RANGE_SEPARATOR_PATTERN.sub(
+        lambda match: (
+            f"{match.group('start')}"
+            f"{match.group('before')}"
+            f"{date_range_token}"
+            f"{match.group('after')}"
+            f"{match.group('end')}"
+        ),
+        line,
+    )
+
     parts = re.split(
         r"\s+[—–]\s+",
-        line
+        protected_line
     )
 
     if len(parts) <= 1:
         return [line]
 
     cleaned_parts = [
-        part.strip()
+        part.replace(date_range_token, "–").strip()
         for part in parts
         if part.strip()
     ]
@@ -234,6 +282,15 @@ def is_certification_start(line):
 
     if YEAR_RANGE_PATTERN.fullmatch(line):
         return False
+
+    # Training records often use "Course | Issuer" without
+    # certification-specific wording in the course title.
+    parts = [part.strip() for part in line.split("|")]
+    if len(parts) > 1 and all(parts):
+        return True
+
+    if split_organization_suffix(line):
+        return True
 
     # ========================================================
     # Explicit certification keywords

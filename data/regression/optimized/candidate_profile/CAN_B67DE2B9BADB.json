@@ -1,0 +1,489 @@
+{
+  "candidate_id": "CAN_B67DE2B9BADB",
+  "masked_profile": {
+    "candidate_id": "CAN_B67DE2B9BADB",
+    "skills": [
+      {
+        "source_section": "summary",
+        "source_text": "Recent engineering graduate with a strong foundation in Python, SQL and web development. Built academic applications and practiced object-oriented programming and database integration.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Recent engineering graduate with a strong foundation in Python, SQL and web development. Built academic applications and practiced object-oriented programming and database integration.",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Created Python applications using OOP principles.",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Python",
+            "source_skill": "Python"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Python",
+        "skill_id": "TECH001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Recent engineering graduate with a strong foundation in Python, SQL and web development. Built academic applications and practiced object-oriented programming and database integration.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Recent engineering graduate with a strong foundation in Python, SQL and web development. Built academic applications and practiced object-oriented programming and database integration.",
+            "source_skill": "SQL"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Prepared SQL queries and documented application workflows.",
+            "source_skill": "SQL"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "SQL",
+            "source_skill": "SQL"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Prepared SQL queries and documented application workflows.",
+            "source_skill": "sql queries"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "original_skills": [
+          "sql queries"
+        ],
+        "original_skill": "sql queries",
+        "skill": "SQL",
+        "skill_id": "TECH016A",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Recent engineering graduate with a strong foundation in Python, SQL and web development. Built academic applications and practiced object-oriented programming and database integration.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Recent engineering graduate with a strong foundation in Python, SQL and web development. Built academic applications and practiced object-oriented programming and database integration.",
+            "source_skill": "Object-Oriented Programming"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Created Python applications using OOP principles.",
+            "source_skill": "oop"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skills": [
+          "oop"
+        ],
+        "original_skill": "oop",
+        "skill": "Object-Oriented Programming",
+        "skill_id": "TECH106",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "MySQL",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "MySQL",
+            "source_skill": "MySQL"
+          }
+        ],
+        "skill": "MySQL",
+        "skill_id": "TECH017",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "JavaScript",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "JavaScript",
+            "source_skill": "JavaScript"
+          }
+        ],
+        "skill": "JavaScript",
+        "skill_id": "TECH003",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "HTML",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "HTML",
+            "source_skill": "HTML"
+          }
+        ],
+        "skill": "HTML",
+        "skill_id": "TECH005",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "CSS",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "CSS",
+            "source_skill": "CSS"
+          }
+        ],
+        "skill": "CSS",
+        "skill_id": "TECH006",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "Git",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "Git",
+            "source_skill": "Git"
+          }
+        ],
+        "skill": "Git",
+        "skill_id": "TECH023",
+        "matched_by": "exact"
+      }
+    ],
+    "education": [
+      {
+        "degree_type": "Bachelor of Technology",
+        "field_of_study": "Electronics and Communication Engineering",
+        "institution": null,
+        "university": "KTU",
+        "board": null,
+        "graduation_year": "2026"
+      }
+    ],
+    "experience": [
+      {
+        "title": {
+          "title_id": null,
+          "title": "Software Trainee",
+          "category": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "company": {
+          "company_id": null,
+          "company": "LearnCode Institute",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Aug 2025",
+          "end_date": "Mar 2026"
+        },
+        "total_experience": {
+          "total_months": 8,
+          "total_years": 0.7
+        },
+        "location": "Thiruvananthapuram, Kerala",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP001",
+          "department": "Software Development",
+          "matched_by": "keyword",
+          "confidence": 50
+        },
+        "description": [
+          "Prepared SQL queries and documented application workflows."
+        ]
+      }
+    ],
+    "projects": [],
+    "certifications": [],
+    "metadata": {
+      "parser_version": "1.0",
+      "created_at": "2026-10-09T06:49:52.940619+00:00"
+    }
+  },
+  "bias_report": {
+    "bias_detected": false,
+    "risk_level": "none",
+    "indicator_count": 0,
+    "indicators": [],
+    "status": "clear"
+  },
+  "original_profile": {
+    "candidate_id": "CAN_B67DE2B9BADB",
+    "personal_information": {
+      "name": "RAHUL MENON",
+      "email": "rahul.m@example.com",
+      "phone": null,
+      "location": "Thiruvananthapuram, Kerala",
+      "linkedin": null,
+      "github": null,
+      "portfolio": null
+    },
+    "skills": [
+      {
+        "source_section": "summary",
+        "source_text": "Recent engineering graduate with a strong foundation in Python, SQL and web development. Built academic applications and practiced object-oriented programming and database integration.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Recent engineering graduate with a strong foundation in Python, SQL and web development. Built academic applications and practiced object-oriented programming and database integration.",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Created Python applications using OOP principles.",
+            "source_skill": "Python"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Python",
+            "source_skill": "Python"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Python",
+        "skill_id": "TECH001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Recent engineering graduate with a strong foundation in Python, SQL and web development. Built academic applications and practiced object-oriented programming and database integration.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Recent engineering graduate with a strong foundation in Python, SQL and web development. Built academic applications and practiced object-oriented programming and database integration.",
+            "source_skill": "SQL"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Prepared SQL queries and documented application workflows.",
+            "source_skill": "SQL"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "SQL",
+            "source_skill": "SQL"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Prepared SQL queries and documented application workflows.",
+            "source_skill": "sql queries"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "original_skills": [
+          "sql queries"
+        ],
+        "original_skill": "sql queries",
+        "skill": "SQL",
+        "skill_id": "TECH016A",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Recent engineering graduate with a strong foundation in Python, SQL and web development. Built academic applications and practiced object-oriented programming and database integration.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Recent engineering graduate with a strong foundation in Python, SQL and web development. Built academic applications and practiced object-oriented programming and database integration.",
+            "source_skill": "Object-Oriented Programming"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Created Python applications using OOP principles.",
+            "source_skill": "oop"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skills": [
+          "oop"
+        ],
+        "original_skill": "oop",
+        "skill": "Object-Oriented Programming",
+        "skill_id": "TECH106",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "MySQL",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "MySQL",
+            "source_skill": "MySQL"
+          }
+        ],
+        "skill": "MySQL",
+        "skill_id": "TECH017",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "JavaScript",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "JavaScript",
+            "source_skill": "JavaScript"
+          }
+        ],
+        "skill": "JavaScript",
+        "skill_id": "TECH003",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "HTML",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "HTML",
+            "source_skill": "HTML"
+          }
+        ],
+        "skill": "HTML",
+        "skill_id": "TECH005",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "CSS",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "CSS",
+            "source_skill": "CSS"
+          }
+        ],
+        "skill": "CSS",
+        "skill_id": "TECH006",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "Git",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "Git",
+            "source_skill": "Git"
+          }
+        ],
+        "skill": "Git",
+        "skill_id": "TECH023",
+        "matched_by": "exact"
+      }
+    ],
+    "education": [
+      {
+        "degree_type": "Bachelor of Technology",
+        "field_of_study": "Electronics and Communication Engineering",
+        "institution": null,
+        "university": "KTU",
+        "board": null,
+        "graduation_year": "2026"
+      }
+    ],
+    "experience": [
+      {
+        "title": {
+          "title_id": null,
+          "title": "Software Trainee",
+          "category": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "company": {
+          "company_id": null,
+          "company": "LearnCode Institute",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Aug 2025",
+          "end_date": "Mar 2026"
+        },
+        "total_experience": {
+          "total_months": 8,
+          "total_years": 0.7
+        },
+        "location": "Thiruvananthapuram, Kerala",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP001",
+          "department": "Software Development",
+          "matched_by": "keyword",
+          "confidence": 50
+        },
+        "description": [
+          "Prepared SQL queries and documented application workflows."
+        ]
+      }
+    ],
+    "projects": [],
+    "certifications": [],
+    "metadata": {
+      "parser_version": "1.0",
+      "created_at": "2026-10-09T06:49:52.940619+00:00"
+    }
+  }
+}

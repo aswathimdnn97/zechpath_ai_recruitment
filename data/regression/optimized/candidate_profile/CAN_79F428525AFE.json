@@ -1,0 +1,817 @@
+{
+  "candidate_id": "CAN_79F428525AFE",
+  "masked_profile": {
+    "candidate_id": "CAN_79F428525AFE",
+    "skills": [
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+            "source_skill": "HR Operations"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "HR Operations",
+            "source_skill": "HR Operations"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "skill": "HR Operations",
+        "skill_id": "HR003",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Coordinated recruitment and interview scheduling.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Recruitment",
+            "source_skill": "Recruitment"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Recruitment",
+        "skill_id": "HR005",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+            "source_skill": "Talent Acquisition"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Talent",
+            "source_skill": "Talent"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Acquisition",
+            "source_skill": "Acquisition"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "skill": "Talent Acquisition",
+        "skill_id": "HR006",
+        "matched_by": "exact",
+        "original_skills": [
+          "Talent",
+          "Acquisition"
+        ],
+        "original_skill": "Talent"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+            "source_skill": "HR Documentation"
+          }
+        ],
+        "source_sections": [
+          "summary"
+        ],
+        "skill": "HR Documentation",
+        "skill_id": "HR023",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Executive - TalentBridge Solutions",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Prepared HR reports using Excel.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Assistant - OfficePeople",
+            "source_skill": "hr"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skill": "hr",
+        "resolved_from": "hr",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "hr"
+        ],
+        "skill": "Human Resources",
+        "skill_id": "HR001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Prepared HR reports using Excel.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+            "source_skill": "ms excel"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "ms excel",
+            "source_skill": "ms excel"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "original_skill": "excel",
+        "resolved_from": "excel",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "excel",
+          "ms excel"
+        ],
+        "skill": "Microsoft Excel",
+        "skill_id": "HR035",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Coordinated recruitment and interview scheduling.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Coordinated recruitment and interview scheduling.",
+            "source_skill": "Interview Scheduling"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "skill": "Interview Scheduling",
+        "skill_id": "HR011",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Supported onboarding and employee records.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Supported onboarding and employee records.",
+            "source_skill": "onboarding"
+          }
+        ],
+        "original_skill": "onboarding",
+        "resolved_from": "onboarding",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "onboarding"
+        ],
+        "skill": "Employee Onboarding",
+        "skill_id": "HR019",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Prepared HR reports using Excel.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Prepared HR reports using Excel.",
+            "source_skill": "hr reports"
+          }
+        ],
+        "original_skill": "hr reports",
+        "resolved_from": "hr reports",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "hr reports"
+        ],
+        "skill": "HR Reporting",
+        "skill_id": "HR063",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Maintained employee documentation.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Maintained employee documentation.",
+            "source_skill": "employee documentation"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Records",
+            "source_skill": "Records"
+          }
+        ],
+        "original_skill": "employee documentation",
+        "resolved_from": "employee documentation",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "employee documentation",
+          "Records"
+        ],
+        "skill": "Employee Records Management",
+        "skill_id": "HR022",
+        "matched_by": "exact",
+        "source_sections": [
+          "experience",
+          "skills"
+        ]
+      },
+      {
+        "source_section": "skills",
+        "source_text": "Communication",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "Communication",
+            "source_skill": "Communication"
+          }
+        ],
+        "skill": "Communication",
+        "skill_id": "HR069",
+        "matched_by": "exact"
+      }
+    ],
+    "education": [
+      {
+        "degree_type": "Master of Business Administration",
+        "field_of_study": "Business Administration",
+        "institution": null,
+        "university": null,
+        "board": null,
+        "graduation_year": "2019"
+      }
+    ],
+    "experience": [
+      {
+        "title": {
+          "title_id": null,
+          "title": "HR Executive",
+          "category": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "company": {
+          "company_id": null,
+          "company": "TalentBridge Solutions",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jan 2021",
+          "end_date": "Present"
+        },
+        "total_experience": {
+          "total_months": 70,
+          "total_years": 5.8
+        },
+        "location": "Chennai",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP004",
+          "department": "Human Resources",
+          "matched_by": "keyword",
+          "confidence": 100
+        },
+        "description": [
+          "Coordinated recruitment and interview scheduling.",
+          "Supported onboarding and employee records.",
+          "Prepared HR reports using Excel."
+        ]
+      },
+      {
+        "title": {
+          "title_id": null,
+          "title": "HR Assistant",
+          "category": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "company": {
+          "company_id": null,
+          "company": "OfficePeople",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "2019",
+          "end_date": "2020"
+        },
+        "total_experience": {
+          "total_months": 13,
+          "total_years": 1.1
+        },
+        "location": "Chennai",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP004",
+          "department": "Human Resources",
+          "matched_by": "keyword",
+          "confidence": 50
+        },
+        "description": [
+          "Maintained employee documentation."
+        ]
+      }
+    ],
+    "projects": [],
+    "certifications": [],
+    "metadata": {
+      "parser_version": "1.0",
+      "created_at": "2026-10-09T06:49:52.879747+00:00"
+    }
+  },
+  "bias_report": {
+    "bias_detected": false,
+    "risk_level": "none",
+    "indicator_count": 0,
+    "indicators": [],
+    "status": "clear"
+  },
+  "original_profile": {
+    "candidate_id": "CAN_79F428525AFE",
+    "personal_information": {
+      "name": "ANJALI RAJ",
+      "email": "anjali.r@example.com",
+      "phone": null,
+      "location": "Chennai, Tamil Nadu",
+      "linkedin": null,
+      "github": null,
+      "portfolio": null
+    },
+    "skills": [
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+            "source_skill": "HR Operations"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "HR Operations",
+            "source_skill": "HR Operations"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "skill": "HR Operations",
+        "skill_id": "HR003",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Coordinated recruitment and interview scheduling.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Recruitment",
+            "source_skill": "Recruitment"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Recruitment",
+        "skill_id": "HR005",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+            "source_skill": "Talent Acquisition"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Talent",
+            "source_skill": "Talent"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Acquisition",
+            "source_skill": "Acquisition"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "skill": "Talent Acquisition",
+        "skill_id": "HR006",
+        "matched_by": "exact",
+        "original_skills": [
+          "Talent",
+          "Acquisition"
+        ],
+        "original_skill": "Talent"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+            "source_skill": "HR Documentation"
+          }
+        ],
+        "source_sections": [
+          "summary"
+        ],
+        "skill": "HR Documentation",
+        "skill_id": "HR023",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Executive - TalentBridge Solutions",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Prepared HR reports using Excel.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Assistant - OfficePeople",
+            "source_skill": "hr"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skill": "hr",
+        "resolved_from": "hr",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "hr"
+        ],
+        "skill": "Human Resources",
+        "skill_id": "HR001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Prepared HR reports using Excel.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 6 years of experience in recruitment coordination and employee administration. Experienced in talent acquisition, HR operations, MS Excel and HR documentation.",
+            "source_skill": "ms excel"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "ms excel",
+            "source_skill": "ms excel"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "original_skill": "excel",
+        "resolved_from": "excel",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "excel",
+          "ms excel"
+        ],
+        "skill": "Microsoft Excel",
+        "skill_id": "HR035",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Coordinated recruitment and interview scheduling.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Coordinated recruitment and interview scheduling.",
+            "source_skill": "Interview Scheduling"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "skill": "Interview Scheduling",
+        "skill_id": "HR011",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Supported onboarding and employee records.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Supported onboarding and employee records.",
+            "source_skill": "onboarding"
+          }
+        ],
+        "original_skill": "onboarding",
+        "resolved_from": "onboarding",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "onboarding"
+        ],
+        "skill": "Employee Onboarding",
+        "skill_id": "HR019",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Prepared HR reports using Excel.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Prepared HR reports using Excel.",
+            "source_skill": "hr reports"
+          }
+        ],
+        "original_skill": "hr reports",
+        "resolved_from": "hr reports",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "hr reports"
+        ],
+        "skill": "HR Reporting",
+        "skill_id": "HR063",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Maintained employee documentation.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Maintained employee documentation.",
+            "source_skill": "employee documentation"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Records",
+            "source_skill": "Records"
+          }
+        ],
+        "original_skill": "employee documentation",
+        "resolved_from": "employee documentation",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "employee documentation",
+          "Records"
+        ],
+        "skill": "Employee Records Management",
+        "skill_id": "HR022",
+        "matched_by": "exact",
+        "source_sections": [
+          "experience",
+          "skills"
+        ]
+      },
+      {
+        "source_section": "skills",
+        "source_text": "Communication",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "Communication",
+            "source_skill": "Communication"
+          }
+        ],
+        "skill": "Communication",
+        "skill_id": "HR069",
+        "matched_by": "exact"
+      }
+    ],
+    "education": [
+      {
+        "degree_type": "Master of Business Administration",
+        "field_of_study": "Business Administration",
+        "institution": null,
+        "university": null,
+        "board": null,
+        "graduation_year": "2019"
+      }
+    ],
+    "experience": [
+      {
+        "title": {
+          "title_id": null,
+          "title": "HR Executive",
+          "category": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "company": {
+          "company_id": null,
+          "company": "TalentBridge Solutions",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jan 2021",
+          "end_date": "Present"
+        },
+        "total_experience": {
+          "total_months": 70,
+          "total_years": 5.8
+        },
+        "location": "Chennai",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP004",
+          "department": "Human Resources",
+          "matched_by": "keyword",
+          "confidence": 100
+        },
+        "description": [
+          "Coordinated recruitment and interview scheduling.",
+          "Supported onboarding and employee records.",
+          "Prepared HR reports using Excel."
+        ]
+      },
+      {
+        "title": {
+          "title_id": null,
+          "title": "HR Assistant",
+          "category": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "company": {
+          "company_id": null,
+          "company": "OfficePeople",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "2019",
+          "end_date": "2020"
+        },
+        "total_experience": {
+          "total_months": 13,
+          "total_years": 1.1
+        },
+        "location": "Chennai",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP004",
+          "department": "Human Resources",
+          "matched_by": "keyword",
+          "confidence": 50
+        },
+        "description": [
+          "Maintained employee documentation."
+        ]
+      }
+    ],
+    "projects": [],
+    "certifications": [],
+    "metadata": {
+      "parser_version": "1.0",
+      "created_at": "2026-10-09T06:49:52.879747+00:00"
+    }
+  }
+}

@@ -1,0 +1,634 @@
+{
+  "candidate_id": "CAN_E3036E1C2BDA",
+  "candidate_score": {
+    "final_score": 75.19,
+    "status": "calculated",
+    "job_title": "Senior HR Executive",
+    "weights": {
+      "skill": 0.4,
+      "experience": 0.3,
+      "education": 0.1,
+      "semantic": 0.2
+    },
+    "component_scores": {
+      "skill": {
+        "score": 64.44,
+        "weight": 0.4,
+        "weight_percentage": 40.0
+      },
+      "experience": {
+        "score": 82.22,
+        "weight": 0.3,
+        "weight_percentage": 30.0
+      },
+      "education": {
+        "score": 76.0,
+        "weight": 0.1,
+        "weight_percentage": 10.0
+      },
+      "semantic": {
+        "score": 85.72,
+        "weight": 0.2,
+        "weight_percentage": 20.0
+      }
+    },
+    "contributions": {
+      "skill": {
+        "score": 64.44,
+        "weight": 0.4,
+        "weight_percentage": 40.0,
+        "contribution": 25.78
+      },
+      "experience": {
+        "score": 82.22,
+        "weight": 0.3,
+        "weight_percentage": 30.0,
+        "contribution": 24.67
+      },
+      "education": {
+        "score": 76.0,
+        "weight": 0.1,
+        "weight_percentage": 10.0,
+        "contribution": 7.6
+      },
+      "semantic": {
+        "score": 85.72,
+        "weight": 0.2,
+        "weight_percentage": 20.0,
+        "contribution": 17.14
+      }
+    },
+    "missing_components": [],
+    "available_weight": 1.0,
+    "weight_source": "role_category",
+    "role_category": "general",
+    "explanation": [
+      "Skill score: 64.44 (40.00% weight)",
+      "Experience score: 82.22 (30.00% weight)",
+      "Education score: 76.00 (10.00% weight)",
+      "Semantic score: 85.72 (20.00% weight)"
+    ]
+  },
+  "component_scores": {
+    "skill": {
+      "score": 64.44,
+      "weight": 0.4,
+      "candidate_skills": [
+        "HR Operations",
+        "Recruitment",
+        "HRMS",
+        "Employee Relations",
+        "Human Resources",
+        "Interview Coordination",
+        "Employee Onboarding",
+        "HR Metrics",
+        "Interview Scheduling",
+        "HR Documentation",
+        "Candidate Screening",
+        "Microsoft Excel"
+      ],
+      "required": {
+        "skills": [
+          "Recruitment",
+          "Talent Acquisition",
+          "Employee Relations",
+          "HR Operations",
+          "Payroll",
+          "MS",
+          "Excel",
+          "HRMS",
+          "Communication"
+        ],
+        "matched": [
+          {
+            "required_skill": "Recruitment",
+            "matched_skill": "Recruitment",
+            "matched": true,
+            "match_type": "exact",
+            "confidence": 1.0
+          },
+          {
+            "required_skill": "Employee Relations",
+            "matched_skill": "Employee Relations",
+            "matched": true,
+            "match_type": "exact",
+            "confidence": 1.0
+          },
+          {
+            "required_skill": "HR Operations",
+            "matched_skill": "HR Operations",
+            "matched": true,
+            "match_type": "exact",
+            "confidence": 1.0
+          },
+          {
+            "required_skill": "Excel",
+            "matched_skill": "Microsoft Excel",
+            "matched": true,
+            "match_type": "semantic",
+            "confidence": 0.9659,
+            "similarity": 0.9659
+          },
+          {
+            "required_skill": "HRMS",
+            "matched_skill": "HRMS",
+            "matched": true,
+            "match_type": "exact",
+            "confidence": 1.0
+          }
+        ],
+        "missing": [
+          {
+            "required_skill": "Talent Acquisition",
+            "matched": false,
+            "match_type": "missing"
+          },
+          {
+            "required_skill": "Payroll",
+            "matched": false,
+            "match_type": "missing"
+          },
+          {
+            "required_skill": "MS",
+            "matched": false,
+            "match_type": "missing"
+          },
+          {
+            "required_skill": "Communication",
+            "matched": false,
+            "match_type": "missing"
+          }
+        ],
+        "match_percentage": 55.56
+      },
+      "preferred": {
+        "skills": [],
+        "matched": [],
+        "missing": [],
+        "match_percentage": 100.0
+      },
+      "weights": {
+        "required": 0.8,
+        "preferred": 0.2
+      }
+    },
+    "experience": {
+      "score": 82.22,
+      "weight": 0.3,
+      "component_scores": {
+        "years": {
+          "score": 100.0,
+          "weight": 0.35
+        },
+        "role": {
+          "score": 100.0,
+          "weight": 0.25
+        },
+        "technology": 55.56
+      },
+      "weights": {
+        "years": 0.35,
+        "role": 0.25,
+        "technology": 0.4
+      },
+      "candidate_years": 5.6,
+      "required_minimum_years": 5.0,
+      "required_maximum_years": null,
+      "candidate_roles": [
+        "{'title_id': None, 'title': 'Senior HR Executive', 'category': 'Unknown', 'matched_by': 'none', 'confidence': 0}",
+        "{'title_id': None, 'title': 'HR Executive', 'category': 'Unknown', 'matched_by': 'none', 'confidence': 0}",
+        "{'title_id': None, 'title': 'HR Assistant', 'category': 'Unknown', 'matched_by': 'none', 'confidence': 0}"
+      ],
+      "target_role": "Senior HR Executive",
+      "candidate_skills": [
+        "HR Operations",
+        "Recruitment",
+        "HRMS",
+        "Employee Relations",
+        "Human Resources",
+        "Interview Coordination",
+        "Employee Onboarding",
+        "HR Metrics",
+        "Interview Scheduling",
+        "HR Documentation",
+        "Candidate Screening",
+        "Microsoft Excel"
+      ],
+      "experience_skills": [
+        "HR Operations",
+        "Recruitment",
+        "HRMS",
+        "Employee Relations",
+        "Human Resources",
+        "Interview Coordination",
+        "Employee Onboarding",
+        "HR Metrics",
+        "Interview Scheduling",
+        "HR Documentation",
+        "Candidate Screening",
+        "Microsoft Excel"
+      ],
+      "required_skills": [
+        "Recruitment",
+        "Talent Acquisition",
+        "Employee Relations",
+        "HR Operations",
+        "Payroll",
+        "MS",
+        "Excel",
+        "HRMS",
+        "Communication"
+      ],
+      "technology_score_source": "skill_score",
+      "status": "calculated"
+    },
+    "education": {
+      "score": 76.0,
+      "weight": 0.1,
+      "degree_score": 100.0,
+      "field_score": 40.0,
+      "candidate_education": [
+        {
+          "degree_type": "Master of Business Administration",
+          "field_of_study": "Human Resources",
+          "institution": null,
+          "university": "Bangalore University",
+          "board": null,
+          "graduation_year": "2018"
+        }
+      ],
+      "best_matching_education": {
+        "degree_score": 100.0,
+        "field_score": 40.0,
+        "score": 76.0,
+        "degree_type": "Master of Business Administration",
+        "field_of_study": "Human Resources",
+        "institution": null,
+        "graduation_year": "2018"
+      },
+      "required_education": [
+        "Degree or MBA in HR, Business Administration, Commerce or equivalent preferred."
+      ],
+      "status": "calculated"
+    },
+    "semantic": {
+      "score": 85.72,
+      "weight": 0.2,
+      "similarity": 0.7145,
+      "status": "calculated"
+    }
+  },
+  "metadata": {
+    "candidate_id": "CAN_E3036E1C2BDA",
+    "candidate_skills": [
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring.",
+            "source_skill": "HR Operations"
+          }
+        ],
+        "source_sections": [
+          "summary"
+        ],
+        "skill": "HR Operations",
+        "skill_id": "HR003",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Managed end-to-end recruitment, interview coordination and onboarding.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Handled HRMS updates, employee records and recruitment coordination.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Recruitment",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring.",
+            "source_skill": "hiring"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "original_skills": [
+          "hiring"
+        ],
+        "original_skill": "hiring",
+        "skill": "Recruitment",
+        "skill_id": "HR005",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring.",
+            "source_skill": "HRMS"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Handled HRMS updates, employee records and recruitment coordination.",
+            "source_skill": "HRMS"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "HRMS",
+            "source_skill": "HRMS"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "HRMS",
+        "skill_id": "HR029",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring.",
+            "source_skill": "Employee Relations"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Maintained HR metrics and supported employee relations activities.",
+            "source_skill": "Employee Relations"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Employee Relations",
+            "source_skill": "Employee Relations"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Employee Relations",
+        "skill_id": "HR042",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 7 years of experience across recruitment, HR operations, employee relations and HRMS administration. Experienced in technology and business hiring.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Senior HR Executive",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Maintained HR metrics and supported employee relations activities.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Executive",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Assistant",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Supported interview scheduling and HR documentation.",
+            "source_skill": "hr"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skill": "hr",
+        "resolved_from": "hr",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "hr"
+        ],
+        "skill": "Human Resources",
+        "skill_id": "HR001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Managed end-to-end recruitment, interview coordination and onboarding.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Managed end-to-end recruitment, interview coordination and onboarding.",
+            "source_skill": "Interview Coordination"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Interview Coordination",
+            "source_skill": "Interview Coordination"
+          }
+        ],
+        "source_sections": [
+          "experience",
+          "skills"
+        ],
+        "skill": "Interview Coordination",
+        "skill_id": "HR010",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Managed end-to-end recruitment, interview coordination and onboarding.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Managed end-to-end recruitment, interview coordination and onboarding.",
+            "source_skill": "onboarding"
+          }
+        ],
+        "original_skill": "onboarding",
+        "resolved_from": "onboarding",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "onboarding"
+        ],
+        "skill": "Employee Onboarding",
+        "skill_id": "HR019",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Maintained HR metrics and supported employee relations activities.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Maintained HR metrics and supported employee relations activities.",
+            "source_skill": "HR Metrics"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "skill": "HR Metrics",
+        "skill_id": "HR064",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Supported interview scheduling and HR documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Supported interview scheduling and HR documentation.",
+            "source_skill": "Interview Scheduling"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "skill": "Interview Scheduling",
+        "skill_id": "HR011",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Supported interview scheduling and HR documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Supported interview scheduling and HR documentation.",
+            "source_skill": "HR Documentation"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "skill": "HR Documentation",
+        "skill_id": "HR023",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "Candidate Screening",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "Candidate Screening",
+            "source_skill": "Candidate Screening"
+          }
+        ],
+        "skill": "Candidate Screening",
+        "skill_id": "HR007",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "excel",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "excel",
+            "source_skill": "excel"
+          }
+        ],
+        "original_skill": "excel",
+        "resolved_from": "excel",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "excel"
+        ],
+        "skill": "Microsoft Excel",
+        "skill_id": "HR035",
+        "matched_by": "exact"
+      }
+    ],
+    "candidate_roles": [
+      {
+        "title_id": null,
+        "title": "Senior HR Executive",
+        "category": "Unknown",
+        "matched_by": "none",
+        "confidence": 0
+      },
+      {
+        "title_id": null,
+        "title": "HR Executive",
+        "category": "Unknown",
+        "matched_by": "none",
+        "confidence": 0
+      },
+      {
+        "title_id": null,
+        "title": "HR Assistant",
+        "category": "Unknown",
+        "matched_by": "none",
+        "confidence": 0
+      }
+    ],
+    "candidate_education": [
+      {
+        "degree_type": "Master of Business Administration",
+        "field_of_study": "Human Resources",
+        "institution": null,
+        "university": "Bangalore University",
+        "board": null,
+        "graduation_year": "2018"
+      }
+    ],
+    "candidate_years": 5.6
+  },
+  "bias_mitigation": {
+    "applied": true
+  },
+  "candidate_name": "PRIYA MENON",
+  "jd_id": "SeniorHRExecutive",
+  "job_id": "JOB_0E2E9FA9C79D",
+  "jd_file": "SeniorHRExecutive.pdf"
+}

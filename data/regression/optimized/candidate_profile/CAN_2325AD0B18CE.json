@@ -1,0 +1,977 @@
+{
+  "candidate_id": "CAN_2325AD0B18CE",
+  "masked_profile": {
+    "candidate_id": "CAN_2325AD0B18CE",
+    "skills": [
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+            "source_skill": "HR Operations"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Supported onboarding, employee documentation and HR operations.",
+            "source_skill": "HR Operations"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "HR Operations",
+            "source_skill": "HR Operations"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "HR Operations",
+        "skill_id": "HR003",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Managed recruitment and talent acquisition activities.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Recruitment",
+            "source_skill": "Recruitment"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Recruitment",
+        "skill_id": "HR005",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+            "source_skill": "Talent Acquisition"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Managed recruitment and talent acquisition activities.",
+            "source_skill": "Talent Acquisition"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Talent",
+            "source_skill": "Talent"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Acquisition",
+            "source_skill": "Acquisition"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Talent Acquisition",
+        "skill_id": "HR006",
+        "matched_by": "exact",
+        "original_skills": [
+          "Talent",
+          "Acquisition"
+        ],
+        "original_skill": "Talent"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+            "source_skill": "HRMS"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Maintained HRMS records and HR reports using MS Excel.",
+            "source_skill": "HRMS"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "HRMS",
+            "source_skill": "HRMS"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "HRMS",
+        "skill_id": "HR029",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+            "source_skill": "Employee Relations"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Coordinated payroll and employee relations processes.",
+            "source_skill": "Employee Relations"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "Employee Relations",
+        "skill_id": "HR042",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+            "source_skill": "Payroll"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Coordinated payroll and employee relations processes.",
+            "source_skill": "Payroll"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Payroll",
+            "source_skill": "Payroll"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Payroll",
+        "skill_id": "HR078",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Senior HR Manager - PeopleWorks Technologies",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Maintained HRMS records and HR reports using MS Excel.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Executive - TalentCore Solutions",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Supported onboarding, employee documentation and HR operations.",
+            "source_skill": "hr"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skill": "hr",
+        "resolved_from": "hr",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "hr"
+        ],
+        "skill": "Human Resources",
+        "skill_id": "HR001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Maintained HRMS records and HR reports using MS Excel.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+            "source_skill": "ms excel"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Maintained HRMS records and HR reports using MS Excel.",
+            "source_skill": "ms excel"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "ms excel",
+            "source_skill": "ms excel"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "original_skill": "excel",
+        "resolved_from": "excel",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "excel",
+          "ms excel"
+        ],
+        "skill": "Microsoft Excel",
+        "skill_id": "HR035",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Maintained HRMS records and HR reports using MS Excel.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Maintained HRMS records and HR reports using MS Excel.",
+            "source_skill": "hr reports"
+          }
+        ],
+        "original_skill": "hr reports",
+        "resolved_from": "hr reports",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "hr reports"
+        ],
+        "skill": "HR Reporting",
+        "skill_id": "HR063",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Supported onboarding, employee documentation and HR operations.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Supported onboarding, employee documentation and HR operations.",
+            "source_skill": "onboarding"
+          }
+        ],
+        "original_skill": "onboarding",
+        "resolved_from": "onboarding",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "onboarding"
+        ],
+        "skill": "Employee Onboarding",
+        "skill_id": "HR019",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Supported onboarding, employee documentation and HR operations.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Supported onboarding, employee documentation and HR operations.",
+            "source_skill": "employee documentation"
+          }
+        ],
+        "original_skill": "employee documentation",
+        "resolved_from": "employee documentation",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "employee documentation"
+        ],
+        "skill": "Employee Records Management",
+        "skill_id": "HR022",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "Relations",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "Relations",
+            "source_skill": "Relations"
+          }
+        ],
+        "skill": "Customer Relationship Management",
+        "skill_id": "BUS005",
+        "matched_by": "fuzzy",
+        "match_score": 90.0,
+        "original_skill": "Relations",
+        "original_skills": [
+          "Relations"
+        ]
+      },
+      {
+        "source_section": "skills",
+        "source_text": "Communication",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "Communication",
+            "source_skill": "Communication"
+          }
+        ],
+        "skill": "Communication",
+        "skill_id": "HR069",
+        "matched_by": "exact"
+      }
+    ],
+    "education": [
+      {
+        "degree_type": "Master of Business Administration",
+        "field_of_study": "Human Resources",
+        "institution": null,
+        "university": null,
+        "board": null,
+        "graduation_year": "2018"
+      }
+    ],
+    "experience": [
+      {
+        "title": {
+          "title_id": null,
+          "title": "Senior HR Manager",
+          "category": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "company": {
+          "company_id": null,
+          "company": "PeopleWorks Technologies",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jan 2020",
+          "end_date": "Present"
+        },
+        "total_experience": {
+          "total_months": 82,
+          "total_years": 6.8
+        },
+        "location": "Bengaluru",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP004",
+          "department": "Human Resources",
+          "matched_by": "keyword",
+          "confidence": 100
+        },
+        "description": [
+          "Managed recruitment and talent acquisition activities.",
+          "Coordinated payroll and employee relations processes.",
+          "Maintained HRMS records and HR reports using MS Excel."
+        ]
+      },
+      {
+        "title": {
+          "title_id": null,
+          "title": "HR Executive",
+          "category": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "company": {
+          "company_id": null,
+          "company": "TalentCore Solutions",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jun 2018",
+          "end_date": "Dec 2019"
+        },
+        "total_experience": {
+          "total_months": 19,
+          "total_years": 1.6
+        },
+        "location": "Bengaluru",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP004",
+          "department": "Human Resources",
+          "matched_by": "keyword",
+          "confidence": 75
+        },
+        "description": [
+          "Supported onboarding, employee documentation and HR operations."
+        ]
+      }
+    ],
+    "projects": [],
+    "certifications": [],
+    "metadata": {
+      "parser_version": "1.0",
+      "created_at": "2026-10-09T06:49:51.949734+00:00"
+    }
+  },
+  "bias_report": {
+    "bias_detected": false,
+    "risk_level": "none",
+    "indicator_count": 0,
+    "indicators": [],
+    "status": "clear"
+  },
+  "original_profile": {
+    "candidate_id": "CAN_2325AD0B18CE",
+    "personal_information": {
+      "name": "DIVYA MENON",
+      "email": "divya.m@example.com",
+      "phone": null,
+      "location": "Bengaluru, Karnataka",
+      "linkedin": null,
+      "github": null,
+      "portfolio": null
+    },
+    "skills": [
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+            "source_skill": "HR Operations"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Supported onboarding, employee documentation and HR operations.",
+            "source_skill": "HR Operations"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "HR Operations",
+            "source_skill": "HR Operations"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "HR Operations",
+        "skill_id": "HR003",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Managed recruitment and talent acquisition activities.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Recruitment",
+            "source_skill": "Recruitment"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Recruitment",
+        "skill_id": "HR005",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+            "source_skill": "Talent Acquisition"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Managed recruitment and talent acquisition activities.",
+            "source_skill": "Talent Acquisition"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Talent",
+            "source_skill": "Talent"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Acquisition",
+            "source_skill": "Acquisition"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Talent Acquisition",
+        "skill_id": "HR006",
+        "matched_by": "exact",
+        "original_skills": [
+          "Talent",
+          "Acquisition"
+        ],
+        "original_skill": "Talent"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+            "source_skill": "HRMS"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Maintained HRMS records and HR reports using MS Excel.",
+            "source_skill": "HRMS"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "HRMS",
+            "source_skill": "HRMS"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "HRMS",
+        "skill_id": "HR029",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+            "source_skill": "Employee Relations"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Coordinated payroll and employee relations processes.",
+            "source_skill": "Employee Relations"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "skill": "Employee Relations",
+        "skill_id": "HR042",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+            "source_skill": "Payroll"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Coordinated payroll and employee relations processes.",
+            "source_skill": "Payroll"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Payroll",
+            "source_skill": "Payroll"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "skill": "Payroll",
+        "skill_id": "HR078",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Senior HR Manager - PeopleWorks Technologies",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Maintained HRMS records and HR reports using MS Excel.",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Executive - TalentCore Solutions",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Supported onboarding, employee documentation and HR operations.",
+            "source_skill": "hr"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience"
+        ],
+        "original_skill": "hr",
+        "resolved_from": "hr",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "hr"
+        ],
+        "skill": "Human Resources",
+        "skill_id": "HR001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Maintained HRMS records and HR reports using MS Excel.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "summary",
+            "source_text": "HR professional with 8 years of experience across recruitment, HR operations and employee relations. Experienced in HRMS, payroll coordination, MS Excel and talent acquisition.",
+            "source_skill": "ms excel"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Maintained HRMS records and HR reports using MS Excel.",
+            "source_skill": "ms excel"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "ms excel",
+            "source_skill": "ms excel"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "original_skill": "excel",
+        "resolved_from": "excel",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "excel",
+          "ms excel"
+        ],
+        "skill": "Microsoft Excel",
+        "skill_id": "HR035",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Maintained HRMS records and HR reports using MS Excel.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Maintained HRMS records and HR reports using MS Excel.",
+            "source_skill": "hr reports"
+          }
+        ],
+        "original_skill": "hr reports",
+        "resolved_from": "hr reports",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "hr reports"
+        ],
+        "skill": "HR Reporting",
+        "skill_id": "HR063",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Supported onboarding, employee documentation and HR operations.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Supported onboarding, employee documentation and HR operations.",
+            "source_skill": "onboarding"
+          }
+        ],
+        "original_skill": "onboarding",
+        "resolved_from": "onboarding",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "onboarding"
+        ],
+        "skill": "Employee Onboarding",
+        "skill_id": "HR019",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Supported onboarding, employee documentation and HR operations.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Supported onboarding, employee documentation and HR operations.",
+            "source_skill": "employee documentation"
+          }
+        ],
+        "original_skill": "employee documentation",
+        "resolved_from": "employee documentation",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "employee documentation"
+        ],
+        "skill": "Employee Records Management",
+        "skill_id": "HR022",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "Relations",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "Relations",
+            "source_skill": "Relations"
+          }
+        ],
+        "skill": "Customer Relationship Management",
+        "skill_id": "BUS005",
+        "matched_by": "fuzzy",
+        "match_score": 90.0,
+        "original_skill": "Relations",
+        "original_skills": [
+          "Relations"
+        ]
+      },
+      {
+        "source_section": "skills",
+        "source_text": "Communication",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "Communication",
+            "source_skill": "Communication"
+          }
+        ],
+        "skill": "Communication",
+        "skill_id": "HR069",
+        "matched_by": "exact"
+      }
+    ],
+    "education": [
+      {
+        "degree_type": "Master of Business Administration",
+        "field_of_study": "Human Resources",
+        "institution": null,
+        "university": null,
+        "board": null,
+        "graduation_year": "2018"
+      }
+    ],
+    "experience": [
+      {
+        "title": {
+          "title_id": null,
+          "title": "Senior HR Manager",
+          "category": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "company": {
+          "company_id": null,
+          "company": "PeopleWorks Technologies",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jan 2020",
+          "end_date": "Present"
+        },
+        "total_experience": {
+          "total_months": 82,
+          "total_years": 6.8
+        },
+        "location": "Bengaluru",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP004",
+          "department": "Human Resources",
+          "matched_by": "keyword",
+          "confidence": 100
+        },
+        "description": [
+          "Managed recruitment and talent acquisition activities.",
+          "Coordinated payroll and employee relations processes.",
+          "Maintained HRMS records and HR reports using MS Excel."
+        ]
+      },
+      {
+        "title": {
+          "title_id": null,
+          "title": "HR Executive",
+          "category": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "company": {
+          "company_id": null,
+          "company": "TalentCore Solutions",
+          "industry": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "duration": {
+          "start_date": "Jun 2018",
+          "end_date": "Dec 2019"
+        },
+        "total_experience": {
+          "total_months": 19,
+          "total_years": 1.6
+        },
+        "location": "Bengaluru",
+        "employment_type": {
+          "type_id": null,
+          "employment_type": "Unknown",
+          "matched_by": "none",
+          "confidence": 0
+        },
+        "department": {
+          "department_id": "DEP004",
+          "department": "Human Resources",
+          "matched_by": "keyword",
+          "confidence": 75
+        },
+        "description": [
+          "Supported onboarding, employee documentation and HR operations."
+        ]
+      }
+    ],
+    "projects": [],
+    "certifications": [],
+    "metadata": {
+      "parser_version": "1.0",
+      "created_at": "2026-10-09T06:49:51.949734+00:00"
+    }
+  }
+}

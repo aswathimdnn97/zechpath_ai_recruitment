@@ -2,7 +2,7 @@ import json
 import os
 
 
-def save_resume(text, original_pdf_path):
+def save_file(text, original_pdf_path):
 
     # Create folder to save structured JD
     output_dir = "data/extracted/jd"

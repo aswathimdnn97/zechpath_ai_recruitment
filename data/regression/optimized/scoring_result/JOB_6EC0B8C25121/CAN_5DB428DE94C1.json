@@ -1,0 +1,502 @@
+{
+  "candidate_id": "CAN_5DB428DE94C1",
+  "candidate_score": {
+    "final_score": 58.23,
+    "status": "calculated",
+    "job_title": "HR Executive - Fresher",
+    "weights": {
+      "skill": 0.4,
+      "experience": 0.3,
+      "education": 0.1,
+      "semantic": 0.2
+    },
+    "component_scores": {
+      "skill": {
+        "score": 46.67,
+        "weight": 0.4,
+        "weight_percentage": 40.0
+      },
+      "experience": {
+        "score": 48.33,
+        "weight": 0.3,
+        "weight_percentage": 30.0
+      },
+      "education": {
+        "score": 76.0,
+        "weight": 0.1,
+        "weight_percentage": 10.0
+      },
+      "semantic": {
+        "score": 87.32,
+        "weight": 0.2,
+        "weight_percentage": 20.0
+      }
+    },
+    "contributions": {
+      "skill": {
+        "score": 46.67,
+        "weight": 0.4,
+        "weight_percentage": 40.0,
+        "contribution": 18.67
+      },
+      "experience": {
+        "score": 48.33,
+        "weight": 0.3,
+        "weight_percentage": 30.0,
+        "contribution": 14.5
+      },
+      "education": {
+        "score": 76.0,
+        "weight": 0.1,
+        "weight_percentage": 10.0,
+        "contribution": 7.6
+      },
+      "semantic": {
+        "score": 87.32,
+        "weight": 0.2,
+        "weight_percentage": 20.0,
+        "contribution": 17.46
+      }
+    },
+    "missing_components": [],
+    "available_weight": 1.0,
+    "weight_source": "role_category",
+    "role_category": "general",
+    "explanation": [
+      "Skill score: 46.67 (40.00% weight)",
+      "Experience score: 48.33 (30.00% weight)",
+      "Education score: 76.00 (10.00% weight)",
+      "Semantic score: 87.32 (20.00% weight)"
+    ]
+  },
+  "component_scores": {
+    "skill": {
+      "score": 46.67,
+      "weight": 0.4,
+      "candidate_skills": [
+        "Communication",
+        "Recruitment",
+        "Microsoft Excel",
+        "Employee Records Management",
+        "Human Resources",
+        "Candidate Screening",
+        "Interview Scheduling",
+        "Microsoft Office"
+      ],
+      "required": {
+        "skills": [
+          "Recruitment",
+          "Talent Acquisition",
+          "Employee Relations",
+          "HR Operations",
+          "Payroll",
+          "MS",
+          "Excel",
+          "HRMS",
+          "Communication"
+        ],
+        "matched": [
+          {
+            "required_skill": "Recruitment",
+            "matched_skill": "Recruitment",
+            "matched": true,
+            "match_type": "exact",
+            "confidence": 1.0
+          },
+          {
+            "required_skill": "Excel",
+            "matched_skill": "Microsoft Excel",
+            "matched": true,
+            "match_type": "semantic",
+            "confidence": 0.9659,
+            "similarity": 0.9659
+          },
+          {
+            "required_skill": "Communication",
+            "matched_skill": "Communication",
+            "matched": true,
+            "match_type": "exact",
+            "confidence": 1.0
+          }
+        ],
+        "missing": [
+          {
+            "required_skill": "Talent Acquisition",
+            "matched": false,
+            "match_type": "missing"
+          },
+          {
+            "required_skill": "Employee Relations",
+            "matched": false,
+            "match_type": "missing"
+          },
+          {
+            "required_skill": "HR Operations",
+            "matched": false,
+            "match_type": "missing"
+          },
+          {
+            "required_skill": "Payroll",
+            "matched": false,
+            "match_type": "missing"
+          },
+          {
+            "required_skill": "MS",
+            "matched": false,
+            "match_type": "missing"
+          },
+          {
+            "required_skill": "HRMS",
+            "matched": false,
+            "match_type": "missing"
+          }
+        ],
+        "match_percentage": 33.33
+      },
+      "preferred": {
+        "skills": [],
+        "matched": [],
+        "missing": [],
+        "match_percentage": 100.0
+      },
+      "weights": {
+        "required": 0.8,
+        "preferred": 0.2
+      }
+    },
+    "experience": {
+      "score": 48.33,
+      "weight": 0.3,
+      "component_scores": {
+        "years": {
+          "score": 100.0,
+          "weight": 0.35
+        },
+        "role": {
+          "score": 0.0,
+          "weight": 0.25
+        },
+        "technology": 33.33
+      },
+      "weights": {
+        "years": 0.35,
+        "role": 0.25,
+        "technology": 0.4
+      },
+      "candidate_years": 0.7,
+      "required_minimum_years": 0.0,
+      "required_maximum_years": 1.0,
+      "candidate_roles": [
+        "{'title_id': None, 'title': 'HR Assistant Trainee', 'category': 'Unknown', 'matched_by': 'none', 'confidence': 0}"
+      ],
+      "target_role": "HR Executive - Fresher",
+      "candidate_skills": [
+        "Communication",
+        "Recruitment",
+        "Microsoft Excel",
+        "Employee Records Management",
+        "Human Resources",
+        "Candidate Screening",
+        "Interview Scheduling",
+        "Microsoft Office"
+      ],
+      "experience_skills": [
+        "Communication",
+        "Recruitment",
+        "Microsoft Excel",
+        "Employee Records Management",
+        "Human Resources",
+        "Candidate Screening",
+        "Interview Scheduling",
+        "Microsoft Office"
+      ],
+      "required_skills": [
+        "Recruitment",
+        "Talent Acquisition",
+        "Employee Relations",
+        "HR Operations",
+        "Payroll",
+        "MS",
+        "Excel",
+        "HRMS",
+        "Communication"
+      ],
+      "technology_score_source": "skill_score",
+      "status": "calculated"
+    },
+    "education": {
+      "score": 76.0,
+      "weight": 0.1,
+      "degree_score": 100.0,
+      "field_score": 40.0,
+      "candidate_education": [
+        {
+          "degree_type": "Bachelor of Commerce",
+          "field_of_study": "Finance",
+          "institution": null,
+          "university": null,
+          "board": null,
+          "graduation_year": "2025"
+        }
+      ],
+      "best_matching_education": {
+        "degree_score": 100.0,
+        "field_score": 40.0,
+        "score": 76.0,
+        "degree_type": "Bachelor of Commerce",
+        "field_of_study": "Finance",
+        "institution": null,
+        "graduation_year": "2025"
+      },
+      "required_education": [
+        "Degree in HR, Business Administration, Commerce or equivalent preferred."
+      ],
+      "status": "calculated"
+    },
+    "semantic": {
+      "score": 87.32,
+      "weight": 0.2,
+      "similarity": 0.7464,
+      "status": "calculated"
+    }
+  },
+  "metadata": {
+    "candidate_id": "CAN_5DB428DE94C1",
+    "candidate_skills": [
+      {
+        "source_section": "summary",
+        "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+            "source_skill": "Communication"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Communication",
+            "source_skill": "Communication"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "skill": "Communication",
+        "skill_id": "HR069",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+            "source_skill": "Recruitment"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Recruitment",
+            "source_skill": "Recruitment"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "skills"
+        ],
+        "skill": "Recruitment",
+        "skill_id": "HR005",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "Prepared Excel reports and office documents.",
+            "source_skill": "excel"
+          },
+          {
+            "source_section": "summary",
+            "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+            "source_skill": "ms excel"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "ms excel",
+            "source_skill": "ms excel"
+          }
+        ],
+        "source_sections": [
+          "summary",
+          "experience",
+          "skills"
+        ],
+        "original_skill": "excel",
+        "resolved_from": "excel",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "excel",
+          "ms excel"
+        ],
+        "skill": "Microsoft Excel",
+        "skill_id": "HR035",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "summary",
+        "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "summary",
+            "source_text": "Graduate with experience supporting recruitment activities and office administration. Familiar with MS Excel, communication and employee documentation.",
+            "source_skill": "employee documentation"
+          },
+          {
+            "source_section": "skills",
+            "source_text": "Employee Records",
+            "source_skill": "Employee Records"
+          }
+        ],
+        "original_skill": "employee documentation",
+        "resolved_from": "employee documentation",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "employee documentation",
+          "Employee Records"
+        ],
+        "skill": "Employee Records Management",
+        "skill_id": "HR022",
+        "matched_by": "exact",
+        "source_sections": [
+          "summary",
+          "skills"
+        ]
+      },
+      {
+        "source_section": "experience",
+        "source_text": "HR Assistant Trainee - TalentBridge Academy",
+        "extraction_method": "alias",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "HR Assistant Trainee - TalentBridge Academy",
+            "source_skill": "hr"
+          },
+          {
+            "source_section": "experience",
+            "source_text": "HR Assistant Trainee",
+            "source_skill": "hr"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "original_skill": "hr",
+        "resolved_from": "hr",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "hr"
+        ],
+        "skill": "Human Resources",
+        "skill_id": "HR001",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Assisted with candidate screening and interview scheduling.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Assisted with candidate screening and interview scheduling.",
+            "source_skill": "Candidate Screening"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "skill": "Candidate Screening",
+        "skill_id": "HR007",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "experience",
+        "source_text": "Assisted with candidate screening and interview scheduling.",
+        "extraction_method": "master_dictionary",
+        "sources": [
+          {
+            "source_section": "experience",
+            "source_text": "Assisted with candidate screening and interview scheduling.",
+            "source_skill": "Interview Scheduling"
+          }
+        ],
+        "source_sections": [
+          "experience"
+        ],
+        "skill": "Interview Scheduling",
+        "skill_id": "HR011",
+        "matched_by": "exact"
+      },
+      {
+        "source_section": "skills",
+        "source_text": "ms office",
+        "extraction_method": "skills_section",
+        "sources": [
+          {
+            "source_section": "skills",
+            "source_text": "ms office",
+            "source_skill": "ms office"
+          }
+        ],
+        "original_skill": "ms office",
+        "resolved_from": "ms office",
+        "resolution_method": "synonym",
+        "original_skills": [
+          "ms office"
+        ],
+        "skill": "Microsoft Office",
+        "skill_id": "HR036",
+        "matched_by": "exact"
+      }
+    ],
+    "candidate_roles": [
+      {
+        "title_id": null,
+        "title": "HR Assistant Trainee",
+        "category": "Unknown",
+        "matched_by": "none",
+        "confidence": 0
+      }
+    ],
+    "candidate_education": [
+      {
+        "degree_type": "Bachelor of Commerce",
+        "field_of_study": "Finance",
+        "institution": null,
+        "university": null,
+        "board": null,
+        "graduation_year": "2025"
+      }
+    ],
+    "candidate_years": 0.7
+  },
+  "bias_mitigation": {
+    "applied": true
+  },
+  "candidate_name": "KEERTHANA R",
+  "jd_id": "HRExecutiveFresher",
+  "job_id": "JOB_6EC0B8C25121",
+  "jd_file": "HRExecutiveFresher.pdf"
+}

@@ -3,460 +3,390 @@ master_skill_validator.py
 
 Responsibilities
 ----------------
-1. Load master_skill_dictionary.json
-2. Validate extracted skill candidates
-3. Perform exact matching
-4. Perform fuzzy matching
-5. Calculate confidence score
-6. Return only valid master skills
-7. Reject unknown/non-skill text
-8. Preserve extraction metadata
-9. Merge metadata when the same skill appears in
-   multiple resume sections
-
-Supported input
----------------
-
-Simple format:
-
-    [
-        "Python",
-        "FastAPI",
-        "PostgreSQL"
-    ]
-
-Structured format:
-
-    [
-        {
-            "skill": "Python",
-            "matched_by": "skills_section",
-            "source_section": "skills",
-            "source_text": "Python, FastAPI, Django"
-        }
-    ]
-
-The structured format is preferred for the new
-resume skill extraction pipeline.
+1. Validate extracted/resolved skills against the master dictionary.
+2. Perform exact matching first.
+3. Perform conservative fuzzy matching when required.
+4. Reject unknown skills.
+5. Preserve all source/evidence metadata.
+6. Normalize canonical master skill names.
+7. Never perform synonym resolution or stack expansion.
 
 Pipeline position
 -----------------
-
-skill_list_splitter.py
-        +
-skill_extractor_from_section.py
+Spelling Resolver
         ↓
-candidate skills
+Synonym Resolver
         ↓
-spelling_resolver.py
+Master Skill Validator
         ↓
-synonym_resolver.py
-        ↓
-master_skill_validator.py
-        ↓
-validated master skills
-        ↓
-stack_resolver.py
+Stack Resolver
 """
 
+from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any
 
-from rapidfuzz import process, fuzz
-
-
-# ============================================================
-# PROJECT ROOT
-# ============================================================
-
-PROJECT_ROOT = Path(__file__).resolve().parents[4]
+from rapidfuzz import fuzz, process
 
 
 # ============================================================
-# MASTER SKILL FILE
+# CONFIGURATION
 # ============================================================
 
-MASTER_SKILL_FILE = (
-    PROJECT_ROOT
+BASE_DIR = Path(__file__).resolve().parents[4]
+
+MASTER_SKILL_DICTIONARY_PATH = (
+    BASE_DIR
     / "data"
     / "resume"
     / "skills"
     / "master_skill_dictionary.json"
 )
 
+FUZZY_MATCH_THRESHOLD = 90.0
+
+SKILL_ALIASES_PATH = (
+    BASE_DIR
+    / "data"
+    / "resume"
+    / "skills"
+    / "skill_aliases.json"
+)
+
 
 # ============================================================
-# LOAD MASTER SKILL DICTIONARY
+# JSON LOADER
 # ============================================================
 
-def load_master_skill_dictionary():
-    """
-    Load active skills from master_skill_dictionary.json.
+def _load_json(path: Path) -> Any:
 
-    Returns
-    -------
-    list[dict]
-
-        Only active and valid master skill records.
-    """
-
-    if not MASTER_SKILL_FILE.exists():
+    if not path.exists():
         raise FileNotFoundError(
-            "Master skill dictionary not found: "
-            f"{MASTER_SKILL_FILE}"
+            f"Master skill dictionary not found: {path}"
         )
 
-    with open(
-        MASTER_SKILL_FILE,
-        "r",
-        encoding="utf-8",
-    ) as file:
+    with path.open("r", encoding="utf-8") as file:
+        return json.load(file)
 
-        data = json.load(file)
 
-    if not isinstance(data, list):
-        raise ValueError(
-            "master_skill_dictionary.json "
-            "must contain a list of skills."
-        )
-
-    active_skills = []
-
-    for skill in data:
-
-        if not isinstance(skill, dict):
-            continue
-
-        # ----------------------------------------------------
-        # Only active skills are allowed.
-        # ----------------------------------------------------
-
-        if skill.get("status") != "active":
-            continue
-
-        # ----------------------------------------------------
-        # Required master fields.
-        # ----------------------------------------------------
-
-        if not skill.get("skill_id"):
-            continue
-
-        if not skill.get("name"):
-            continue
-
-        active_skills.append(
-            skill
-        )
-
-    return active_skills
+MASTER_SKILL_DICTIONARY = _load_json(
+    MASTER_SKILL_DICTIONARY_PATH
+)
 
 
 # ============================================================
-# NORMALIZE SKILL TEXT
+# MASTER SKILL NORMALIZATION
 # ============================================================
 
-def normalize_skill_text(skill):
+def _extract_master_skills(
+    data: Any,
+) -> list[dict[str, Any]]:
     """
-    Normalize skill text before matching.
+    Normalize supported master dictionary structures.
 
-    Examples
-    --------
-    "  Python   "
-        -> "python"
+    Supported examples:
 
-    "REST APIs"
-        -> "rest apis"
+    [
+        {"name": "Python", "skill_id": "SK001"}
+    ]
 
-    "  Machine   Learning  "
-        -> "machine learning"
+    or
+
+    {
+        "skills": [
+            {"name": "Python", "skill_id": "SK001"}
+        ]
+    }
     """
 
-    if not isinstance(skill, str):
+    if isinstance(data, list):
+        raw_skills = data
+
+    elif isinstance(data, dict):
+        raw_skills = data.get("skills", [])
+
+    else:
+        raw_skills = []
+
+    normalized: list[dict[str, Any]] = []
+
+    for item in raw_skills:
+
+        if isinstance(item, str):
+
+            name = item.strip()
+
+            if name:
+                normalized.append(
+                    {
+                        "name": name,
+                        "skill_id": None,
+                    }
+                )
+
+            continue
+
+        if not isinstance(item, dict):
+            continue
+
+        name = (
+            item.get("name")
+            or item.get("skill")
+            or item.get("canonical_name")
+        )
+
+        if not name:
+            continue
+
+        normalized.append(
+            {
+                **item,
+                "name": str(name).strip(),
+                "skill_id": item.get("skill_id"),
+            }
+        )
+
+    return normalized
+
+
+MASTER_SKILLS = _extract_master_skills(
+    MASTER_SKILL_DICTIONARY
+)
+
+# ============================================================
+# SKILL ALIAS LOADING
+# ============================================================
+
+def _load_skill_aliases() -> dict[str, str]:
+    """
+    Load skill aliases such as:
+
+        "rest apis" -> "REST API"
+        "fast api"  -> "FastAPI"
+        "drf"      -> "Django REST Framework"
+
+    Aliases are used only to map extracted skill names to
+    canonical master skill names.
+    """
+
+    if not SKILL_ALIASES_PATH.exists():
+        return {}
+
+    data = _load_json(SKILL_ALIASES_PATH)
+
+    if not isinstance(data, dict):
+        return {}
+
+    return {
+        str(alias).strip().lower(): str(canonical).strip()
+        for alias, canonical in data.items()
+        if str(alias).strip() and str(canonical).strip()
+    }
+
+
+SKILL_ALIASES = _load_skill_aliases()
+
+
+# ============================================================
+# MASTER LOOKUP MAPS
+# ============================================================
+
+def _normalize(value: Any) -> str:
+
+    if value is None:
         return ""
 
-    return " ".join(
-        skill.strip().split()
-    ).lower()
+    return str(value).strip().lower()
+
+
+MASTER_BY_NAME: dict[str, dict[str, Any]] = {}
+
+MASTER_NAMES: list[str] = []
+
+for master_skill in MASTER_SKILLS:
+
+    name = master_skill["name"]
+
+    key = _normalize(name)
+
+    if not key:
+        continue
+
+    MASTER_BY_NAME[key] = master_skill
+    MASTER_NAMES.append(name)
 
 
 # ============================================================
-# BUILD EXACT LOOKUP
+# CANDIDATE HELPERS
 # ============================================================
 
-def build_exact_lookup(master_skills):
-    """
-    Build normalized lookup.
+def _get_skill_name(candidate: dict[str, Any]) -> str:
 
-    Example
-    -------
-
-        {
-            "python": {
-                "skill_id": "...",
-                "name": "Python",
-                ...
-            }
-        }
-    """
-
-    lookup = {}
-
-    for skill in master_skills:
-
-        name = skill.get(
-            "name"
-        )
-
-        normalized_name = normalize_skill_text(
-            name
-        )
-
-        if normalized_name:
-
-            lookup[
-                normalized_name
-            ] = skill
-
-    return lookup
+    return str(
+        candidate.get("skill")
+        or candidate.get("name")
+        or candidate.get("canonical_name")
+        or ""
+    ).strip()
 
 
 # ============================================================
-# EXTRACT CANDIDATE NAME
+# SOURCE HELPERS
 # ============================================================
 
-def _get_candidate_name(candidate):
-    """
-    Extract skill name from a candidate.
+def _source_key(source: Any) -> str:
 
-    Supports:
+    if isinstance(source, dict):
 
-        "Python"
+        return "|".join(
+            [
+                str(source.get("source_section", "")).strip(),
+                str(source.get("source_text", "")).strip(),
+                str(source.get("source_skill", "")).strip(),
+            ]
+        ).lower()
 
-    and:
+    return str(source).strip().lower()
 
-        {
-            "skill": "Python",
-            ...
-        }
 
-    Returns
-    -------
-    str
-    """
+def _merge_sources(
+    existing: list[Any] | None,
+    incoming: list[Any] | None,
+) -> list[Any]:
 
-    # --------------------------------------------------------
-    # Backward compatibility
-    # --------------------------------------------------------
+    merged: list[Any] = []
+    seen: set[str] = set()
 
-    if isinstance(candidate, str):
+    for source in (existing or []) + (incoming or []):
 
-        return candidate.strip()
+        key = _source_key(source)
 
-    # --------------------------------------------------------
-    # Structured candidate
-    # --------------------------------------------------------
+        if not key or key in seen:
+            continue
 
-    if isinstance(candidate, dict):
+        seen.add(key)
+        merged.append(source)
 
-        skill_name = candidate.get(
-            "skill"
-        )
-
-        if isinstance(
-            skill_name,
-            str
-        ):
-
-            return skill_name.strip()
-
-    return ""
+    return merged
 
 
 # ============================================================
-# COPY EXTRACTION METADATA
+# METADATA COPY
 # ============================================================
 
 def _copy_metadata(
-    candidate,
-    result,
-):
-    """
-    Preserve extraction metadata.
+    candidate: dict[str, Any],
+) -> dict[str, Any]:
 
-    The validator must not destroy information produced
-    by the extraction stage.
+    metadata: dict[str, Any] = {}
 
-    Possible metadata:
-
-        source_section
-        source_sections
-        source_text
-        sources
-        source_skill
-        extraction_method
-    """
-
-    if not isinstance(
-        candidate,
-        dict
-    ):
-        return
-
-    # ========================================================
-    # SOURCE SECTION
-    # ========================================================
-
-    source_section = candidate.get(
-        "source_section"
-    )
-
-    if source_section:
-
-        result[
-            "source_section"
-        ] = source_section
-
-    # ========================================================
-    # SOURCE SECTIONS
-    # ========================================================
-
-    source_sections = candidate.get(
-        "source_sections"
-    )
-
-    if (
-        isinstance(
-            source_sections,
-            list
-        )
-        and source_sections
-    ):
-
-        result[
-            "source_sections"
-        ] = list(
-            dict.fromkeys(
-                str(section).strip()
-                for section in source_sections
-                if section
-            )
-        )
-
-    # ========================================================
-    # SOURCE TEXT
-    # ========================================================
-
-    source_text = candidate.get(
-        "source_text"
-    )
-
-    if source_text:
-
-        result[
-            "source_text"
-        ] = source_text
-
-    # ========================================================
-    # SOURCES
-    # ========================================================
-
-    sources = candidate.get(
-        "sources"
-    )
-
-    if (
-        isinstance(
-            sources,
-            list
-        )
-        and sources
-    ):
-
-        result[
-            "sources"
-        ] = sources
-
-    # ========================================================
-    # SOURCE SKILL
-    # ========================================================
-
-    source_skill = candidate.get(
-        "source_skill"
-    )
-
-    if source_skill:
-
-        result[
-            "source_skill"
-        ] = source_skill
-
-    # ========================================================
-    # EXTRACTION METHOD
-    # ========================================================
-
-    extraction_method = candidate.get(
-        "extraction_method"
-    )
-
-    if extraction_method:
-
-        result[
-            "extraction_method"
-        ] = extraction_method
-
-
-# ============================================================
-# CREATE VALIDATED SKILL
-# ============================================================
-
-def build_validated_skill(
-    skill,
-    matched_by,
-    confidence,
-    candidate=None,
-):
-    """
-    Convert a master dictionary entry into
-    an ATS-ready validated skill object.
-
-    IMPORTANT
-    ---------
-    Master dictionary information is authoritative.
-
-    Extraction metadata is copied from the candidate.
-    """
-
-    result = {
-        "skill_id": skill.get(
-            "skill_id"
-        ),
-
-        "skill": skill.get(
-            "name"
-        ),
-
-        "category": skill.get(
-            "category",
-            "Unknown"
-        ),
-
-        "subcategory": skill.get(
-            "subcategory",
-            "Unknown"
-        ),
-
-        "matched_by": matched_by,
-
-        "confidence": confidence,
+    excluded = {
+        "skill",
+        "name",
+        "canonical_name",
+        "matched_by",
+        "skill_id",
     }
 
-    _copy_metadata(
-        candidate,
-        result
+    for key, value in candidate.items():
+
+        if key in excluded:
+            continue
+
+        metadata[key] = value
+
+    return metadata
+
+
+# ============================================================
+# VALIDATE EXACT
+# ============================================================
+
+def _exact_match(
+    skill_name: str,
+) -> dict[str, Any] | None:
+    """
+    Perform exact matching against the master dictionary.
+
+    Alias resolution is applied before the master lookup.
+
+    Examples:
+
+        REST APIs
+            -> REST API
+            -> TECH025
+
+        Fast API
+            -> FastAPI
+            -> TECH014
+
+        DRF
+            -> Django REST Framework
+            -> TECH041
+    """
+
+    normalized_name = _normalize(skill_name)
+
+    if not normalized_name:
+        return None
+
+    # Direct canonical master match first.
+    master_skill = MASTER_BY_NAME.get(normalized_name)
+
+    if master_skill is not None:
+        return master_skill
+
+    # Alias -> canonical name.
+    canonical_name = SKILL_ALIASES.get(normalized_name)
+
+    if canonical_name:
+        return MASTER_BY_NAME.get(
+            _normalize(canonical_name)
+        )
+
+    return None
+
+
+# ============================================================
+# VALIDATE FUZZY
+# ============================================================
+
+def _fuzzy_match(
+    skill_name: str,
+) -> tuple[dict[str, Any] | None, float]:
+
+    if not MASTER_NAMES:
+        return None, 0.0
+
+    normalized_name = "".join(
+        character
+        for character in skill_name.casefold()
+        if character.isalnum()
+    )
+    if len(normalized_name) < 3:
+        return None, 0.0
+
+    result = process.extractOne(
+        skill_name,
+        MASTER_NAMES,
+        scorer=fuzz.WRatio,
     )
 
-    return result
+    if not result:
+        return None, 0.0
+
+    matched_name, score, _ = result
+
+    if score < FUZZY_MATCH_THRESHOLD:
+        return None, score
+
+    master_skill = MASTER_BY_NAME.get(
+        _normalize(matched_name)
+    )
+
+    return master_skill, float(score)
 
 
 # ============================================================
@@ -464,637 +394,257 @@ def build_validated_skill(
 # ============================================================
 
 def _merge_metadata(
-    existing,
-    candidate,
-):
-    """
-    Merge metadata from a duplicate candidate.
+    existing: dict[str, Any],
+    incoming: dict[str, Any],
+) -> None:
 
-    Example
-    -------
+    # --------------------------------------------------------
+    # Sources
+    # --------------------------------------------------------
 
-    Python appears in:
+    existing["sources"] = _merge_sources(
+        existing.get("sources"),
+        incoming.get("sources"),
+    )
 
-        skills
-        experience
-        projects
-
-    Instead of losing that information, keep:
-
-        source_section = "skills"
-
-        source_sections = [
-            "skills",
-            "experience",
-            "projects"
-        ]
-    """
-
-    if not isinstance(
-        candidate,
-        dict
-    ):
-        return
-
-    # ========================================================
-    # SOURCE SECTIONS
-    # ========================================================
+    # --------------------------------------------------------
+    # Source sections
+    # --------------------------------------------------------
 
     sections = []
 
-    # Existing source_section
-    existing_section = existing.get(
-        "source_section"
-    )
+    for candidate in (existing, incoming):
 
-    if existing_section:
-        sections.append(
-            existing_section
-        )
+        value = candidate.get("source_sections", [])
 
-    # Existing source_sections
-    existing_sections = existing.get(
-        "source_sections"
-    )
+        if isinstance(value, str):
+            value = [value]
 
-    if isinstance(
-        existing_sections,
-        list
-    ):
+        if isinstance(value, list):
+            sections.extend(value)
 
-        sections.extend(
-            existing_sections
-        )
+        section = candidate.get("source_section")
 
-    # New source_section
-    new_section = candidate.get(
-        "source_section"
-    )
+        if section:
+            sections.append(section)
 
-    if new_section:
-        sections.append(
-            new_section
-        )
-
-    # New source_sections
-    new_sections = candidate.get(
-        "source_sections"
-    )
-
-    if isinstance(
-        new_sections,
-        list
-    ):
-
-        sections.extend(
-            new_sections
-        )
-
-    # Remove duplicates while preserving order.
-    sections = list(
+    existing["source_sections"] = list(
         dict.fromkeys(
             str(section).strip()
             for section in sections
-            if section
+            if str(section).strip()
         )
     )
 
-    if sections:
+    # --------------------------------------------------------
+    # Original skills
+    # --------------------------------------------------------
 
-        # First source remains the primary source.
-        existing[
-            "source_section"
-        ] = sections[0]
+    original_skills = []
 
-        existing[
-            "source_sections"
-        ] = sections
+    for candidate in (existing, incoming):
 
-    # ========================================================
-    # SOURCE TEXTS
-    # ========================================================
-
-    source_texts = []
-
-    # Existing source_text
-    existing_text = existing.get(
-        "source_text"
-    )
-
-    if existing_text:
-        source_texts.append(
-            existing_text
+        value = candidate.get(
+            "original_skills",
+            [],
         )
 
-    # Existing sources
-    existing_sources = existing.get(
-        "sources"
-    )
+        if isinstance(value, str):
+            value = [value]
 
-    if isinstance(
-        existing_sources,
-        list
-    ):
+        if isinstance(value, list):
+            original_skills.extend(value)
 
-        source_texts.extend(
-            source.get("source_text", "")
-            for source in existing_sources
-            if isinstance(source, dict)
-        )
-
-    # New source text
-    new_text = candidate.get(
-        "source_text"
-    )
-
-    if new_text:
-        source_texts.append(
-            new_text
-        )
-
-    # Remove duplicate/empty texts.
-    source_texts = list(
-        dict.fromkeys(
-            text.strip()
-            for text in source_texts
-            if isinstance(text, str)
-            and text.strip()
-        )
-    )
-
-    if source_texts:
-
-        # Preserve first source text for backward compatibility.
-        existing[
-            "source_text"
-        ] = source_texts[0]
-
-    # ========================================================
-    # STRUCTURED SOURCES
-    # ========================================================
-
-    merged_sources = []
-
-    if isinstance(
-        existing.get("sources"),
-        list
-    ):
-
-        merged_sources.extend(
-            existing["sources"]
-        )
-
-    # Add current candidate as a source.
-    candidate_source = {}
-
-    if candidate.get(
-        "source_section"
-    ):
-
-        candidate_source[
-            "source_section"
-        ] = candidate[
-            "source_section"
-        ]
-
-    if candidate.get(
-        "source_text"
-    ):
-
-        candidate_source[
-            "source_text"
-        ] = candidate[
-            "source_text"
-        ]
-
-    if candidate.get(
-        "source_skill"
-    ):
-
-        candidate_source[
-            "source_skill"
-        ] = candidate[
-            "source_skill"
-        ]
-
-    if candidate_source:
-
-        merged_sources.append(
-            candidate_source
-        )
-
-    # Deduplicate structured sources.
-    unique_sources = []
-
-    seen_sources = set()
-
-    for source in merged_sources:
-
-        if not isinstance(
-            source,
-            dict
+        for key in (
+            "original_skill",
+            "resolved_from",
         ):
-            continue
+            value = candidate.get(key)
 
-        key = (
-            source.get(
-                "source_section",
-                ""
-            ),
-            source.get(
-                "source_text",
-                ""
-            ),
-            source.get(
-                "source_skill",
-                ""
-            ),
+            if value:
+                original_skills.append(value)
+
+    existing["original_skills"] = list(
+        dict.fromkeys(
+            str(skill).strip()
+            for skill in original_skills
+            if str(skill).strip()
+        )
+    )
+
+    if existing["original_skills"]:
+        existing["original_skill"] = (
+            existing["original_skills"][0]
         )
 
-        if key in seen_sources:
-            continue
+    # --------------------------------------------------------
+    # Preserve source text
+    # --------------------------------------------------------
 
-        seen_sources.add(
-            key
+    if not existing.get("source_text"):
+        existing["source_text"] = incoming.get(
+            "source_text"
         )
 
-        unique_sources.append(
-            source
+    # --------------------------------------------------------
+    # Preserve extraction method
+    # --------------------------------------------------------
+
+    if not existing.get("extraction_method"):
+        existing["extraction_method"] = incoming.get(
+            "extraction_method"
         )
-
-    if unique_sources:
-
-        existing[
-            "sources"
-        ] = unique_sources
 
 
 # ============================================================
-# VALIDATE THRESHOLD
+# VALIDATE SINGLE CANDIDATE
 # ============================================================
 
-def _validate_threshold(threshold):
+def validate_skill(
+    candidate: dict[str, Any],
+) -> dict[str, Any] | None:
     """
-    Validate fuzzy matching threshold.
-    """
-
-    if not isinstance(
-        threshold,
-        (int, float)
-    ):
-
-        raise TypeError(
-            "threshold must be a number."
-        )
-
-    if threshold < 0 or threshold > 100:
-
-        raise ValueError(
-            "threshold must be between 0 and 100."
-        )
-
-
-# ============================================================
-# VALIDATE SKILLS
-# ============================================================
-
-def validate_skills(
-    candidate_skills,
-    threshold=90,
-):
-    """
-    Validate extracted skills against the
-    master skill dictionary.
-
-    Supports:
-
-        list[str]
-
-    and:
-
-        list[dict]
-
-    Unknown candidates are discarded.
-
-    Parameters
-    ----------
-    candidate_skills : list[str] | list[dict]
-
-    threshold : int | float
-        Minimum fuzzy matching score.
+    Validate one candidate.
 
     Returns
     -------
-    list[dict]
-        Validated master skill objects.
+    dict | None
+        Validated canonical skill or None when rejected.
     """
 
-    # ========================================================
-    # EMPTY INPUT
-    # ========================================================
+    if not isinstance(candidate, dict):
+        return None
 
-    if not candidate_skills:
+    skill_name = _get_skill_name(candidate)
 
-        return []
+    if not skill_name:
+        return None
 
-    # ========================================================
-    # INPUT VALIDATION
-    # ========================================================
+    # --------------------------------------------------------
+    # Exact match
+    # --------------------------------------------------------
 
-    if not isinstance(
-        candidate_skills,
-        (list, tuple, set)
+    master_skill = _exact_match(skill_name)
+
+    matched_by = "exact"
+    fuzzy_score = None
+
+    # --------------------------------------------------------
+    # Fuzzy fallback
+    # --------------------------------------------------------
+
+    if master_skill is None:
+
+        master_skill, fuzzy_score = _fuzzy_match(
+            skill_name
+        )
+
+        if master_skill is None:
+            return None
+
+        matched_by = "fuzzy"
+
+    # --------------------------------------------------------
+    # Build canonical result
+    # --------------------------------------------------------
+
+    result = _copy_metadata(candidate)
+
+    result["skill"] = master_skill["name"]
+
+    if master_skill.get("skill_id") is not None:
+        result["skill_id"] = master_skill["skill_id"]
+
+    result["matched_by"] = matched_by
+
+    if fuzzy_score is not None:
+        result["match_score"] = round(
+            fuzzy_score,
+            2,
+        )
+
+    # --------------------------------------------------------
+    # Preserve original candidate if changed
+    # --------------------------------------------------------
+
+    if _normalize(skill_name) != _normalize(
+        master_skill["name"]
     ):
 
-        raise TypeError(
-            "candidate_skills must be a list, "
-            "tuple, or set."
+        result.setdefault(
+            "original_skill",
+            skill_name,
         )
 
-    _validate_threshold(
-        threshold
-    )
+        result.setdefault(
+            "original_skills",
+            [],
+        )
 
-    # ========================================================
-    # LOAD MASTER SKILLS
-    # ========================================================
+        if skill_name not in result["original_skills"]:
+            result["original_skills"].append(
+                skill_name
+            )
 
-    master_skills = (
-        load_master_skill_dictionary()
-    )
+    return result
 
-    if not master_skills:
 
+# ============================================================
+# VALIDATE ALL
+# ============================================================
+
+def validate_skills(
+    candidates: list[dict[str, Any] | str],
+) -> list[dict[str, Any]]:
+    """
+    Validate all candidates against the master dictionary.
+
+    Unknown skills are rejected.
+    Duplicate canonical skills are merged.
+    """
+
+    if not candidates:
         return []
 
-    # ========================================================
-    # BUILD EXACT LOOKUP
-    # ========================================================
+    validated: dict[str, dict[str, Any]] = {}
 
-    exact_lookup = build_exact_lookup(
-        master_skills
-    )
+    for candidate in candidates:
 
-    # ========================================================
-    # CANONICAL SKILL NAMES
-    # ========================================================
+        # split_skill_line() returns strings.
+        # Other pipeline stages may return dictionaries.
+        # Support both formats.
 
-    skill_names = [
-        skill["name"]
-        for skill in master_skills
-    ]
+        if isinstance(candidate, str):
+            candidate = {
+                "skill": candidate,
+            }
 
-    # ========================================================
-    # RESULT STORAGE
-    # ========================================================
+        result = validate_skill(candidate)
 
-    validated = []
+        if result is None:
+            continue
 
-    # Map skill_id -> validated object.
-    #
-    # This allows duplicate skills to have their metadata
-    # merged instead of simply being discarded.
-    validated_by_id = {}
+        skill_name = _get_skill_name(result)
 
-    # ========================================================
-    # PROCESS CANDIDATES
-    # ========================================================
+        if not skill_name:
+            continue
 
-    for candidate in candidate_skills:
+        key = _normalize(skill_name)
 
-        # ----------------------------------------------------
-        # Extract candidate name.
-        # ----------------------------------------------------
+        if key not in validated:
+            validated[key] = result
+            continue
 
-        candidate_name = (
-            _get_candidate_name(
-                candidate
-            )
+        _merge_metadata(
+            validated[key],
+            result,
         )
 
-        if not candidate_name:
-
-            continue
-
-        normalized_candidate = (
-            normalize_skill_text(
-                candidate_name
-            )
-        )
-
-        if not normalized_candidate:
-
-            continue
-
-        # ====================================================
-        # EXACT MATCH
-        # ====================================================
-
-        matched_skill = exact_lookup.get(
-            normalized_candidate
-        )
-
-        if matched_skill:
-
-            skill_id = matched_skill.get(
-                "skill_id"
-            )
-
-            if not skill_id:
-
-                continue
-
-            # ------------------------------------------------
-            # First occurrence.
-            # ------------------------------------------------
-
-            if skill_id not in validated_by_id:
-
-                validated_skill = (
-                    build_validated_skill(
-                        skill=matched_skill,
-                        matched_by="exact",
-                        confidence=100,
-                        candidate=candidate,
-                    )
-                )
-
-                validated.append(
-                    validated_skill
-                )
-
-                validated_by_id[
-                    skill_id
-                ] = validated_skill
-
-            # ------------------------------------------------
-            # Duplicate occurrence.
-            # Merge source metadata.
-            # ------------------------------------------------
-
-            else:
-
-                _merge_metadata(
-                    validated_by_id[
-                        skill_id
-                    ],
-                    candidate
-                )
-
-            continue
-
-        # ====================================================
-        # FUZZY MATCH
-        # ====================================================
-
-        fuzzy_result = process.extractOne(
-            candidate_name,
-            skill_names,
-            scorer=fuzz.WRatio,
-        )
-
-        if not fuzzy_result:
-
-            continue
-
-        best_skill_name = fuzzy_result[0]
-
-        score = fuzzy_result[1]
-
-        # ----------------------------------------------------
-        # Reject weak fuzzy matches.
-        # ----------------------------------------------------
-
-        if score < threshold:
-
-            continue
-
-        # ----------------------------------------------------
-        # Find master skill.
-        # ----------------------------------------------------
-
-        best_skill = exact_lookup.get(
-            normalize_skill_text(
-                best_skill_name
-            )
-        )
-
-        if not best_skill:
-
-            continue
-
-        skill_id = best_skill.get(
-            "skill_id"
-        )
-
-        if not skill_id:
-
-            continue
-
-        # ----------------------------------------------------
-        # First fuzzy occurrence.
-        # ----------------------------------------------------
-
-        if skill_id not in validated_by_id:
-
-            validated_skill = (
-                build_validated_skill(
-                    skill=best_skill,
-                    matched_by="fuzzy",
-                    confidence=round(score),
-                    candidate=candidate,
-                )
-            )
-
-            validated.append(
-                validated_skill
-            )
-
-            validated_by_id[
-                skill_id
-            ] = validated_skill
-
-        # ----------------------------------------------------
-        # Duplicate fuzzy/exact occurrence.
-        # ----------------------------------------------------
-
-        else:
-
-            _merge_metadata(
-                validated_by_id[
-                    skill_id
-                ],
-                candidate
-            )
-
-    # ========================================================
-    # RETURN
-    # ========================================================
-
-    return validated
+    return list(validated.values())
 
 
 # ============================================================
-# TESTING
+# BACKWARD-COMPATIBLE ALIAS
 # ============================================================
 
-if __name__ == "__main__":
-
-    test_skills = [
-
-        # ----------------------------------------------------
-        # Simple format
-        # ----------------------------------------------------
-
-        "Python",
-
-        # ----------------------------------------------------
-        # Structured format
-        # ----------------------------------------------------
-
-        {
-            "skill": "FastAPI",
-            "matched_by": "skills_section",
-            "source_section": "skills",
-            "source_text": "Python, FastAPI, Django",
-        },
-
-        {
-            "skill": "PostgreSQL",
-            "matched_by": "master_dictionary",
-            "source_section": "projects",
-            "source_text": (
-                "Built an application using PostgreSQL."
-            ),
-        },
-
-        # ----------------------------------------------------
-        # Same skill appearing in another section.
-        # ----------------------------------------------------
-
-        {
-            "skill": "Python",
-            "matched_by": "master_dictionary",
-            "source_section": "experience",
-            "source_text": (
-                "Developed backend services using Python."
-            ),
-        },
-
-        # ----------------------------------------------------
-        # Unknown text.
-        # ----------------------------------------------------
-
-        {
-            "skill": "Won 4/4 hackathons",
-            "source_section": "achievements",
-        },
-    ]
-
-    result = validate_skills(
-        test_skills
-    )
-
-    for skill in result:
-
-        print(skill)
+validate_master_skills = validate_skills
