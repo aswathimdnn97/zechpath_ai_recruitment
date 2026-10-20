@@ -1,22 +1,24 @@
 """
 certification_pipeline.py
 
-Certification extraction pipeline.
+Certification extraction pipeline with optional local LLM fallback.
 
 Flow:
-
     certification section
-            ↓
-    split_certification_blocks()
-            ↓
-    certification_name_extractor
-    organization_extractor
-    certification_date_extraction
-    credential_id_extractor
-            ↓
+            |
+    split certification blocks
+            |
+    deterministic extraction
+            |
+    LLM fallback for missing fields
+            |
     normalized certification objects
+
+Existing deterministic values are preserved.
+LLM failures never crash certification extraction.
 """
 
+import logging
 import re
 
 from document_processing.resume.entity_extracter.certifications.certification_block_splitter import (
@@ -39,6 +41,11 @@ from document_processing.resume.entity_extracter.certifications.creditiel_id_ext
     extract_credential_id,
 )
 
+from document_processing.common.llm_fallback_service import llm_fallback_service
+
+
+logger = logging.getLogger(__name__)
+
 
 COMPLETION_WORDS = {
     "completed",
@@ -53,13 +60,35 @@ COMPLETION_WORDS = {
 
 
 # ============================================================
-# HELPERS
+# LLM RESPONSE SCHEMA
+# ============================================================
+
+CERTIFICATION_LLM_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "certification_name": {"type": "string"},
+        "issuing_organization": {"type": "string"},
+        "issue_date": {"type": "string"},
+        "expiration_date": {"type": "string"},
+        "credential_id": {"type": "string"},
+    },
+    "required": [
+        "certification_name",
+        "issuing_organization",
+        "issue_date",
+        "expiration_date",
+        "credential_id",
+    ],
+    "additionalProperties": False,
+}
+
+
+# ============================================================
+# GENERAL HELPERS
 # ============================================================
 
 def _has_meaningful_text(value):
-    """
-    Check whether an extracted value contains meaningful text.
-    """
+    """Return True when a value contains meaningful text."""
 
     if value is None:
         return False
@@ -70,21 +99,35 @@ def _has_meaningful_text(value):
     return bool(str(value).strip())
 
 
+def _clean_llm_value(value):
+    """Convert a valid, non-empty LLM string into a clean value."""
+
+    if not isinstance(value, str):
+        return None
+
+    value = value.strip()
+
+    if not value:
+        return None
+
+    if value.casefold() in {
+        "unknown",
+        "not available",
+        "not specified",
+        "not provided",
+        "n/a",
+        "na",
+        "null",
+        "none",
+        "unknown organization",
+    }:
+        return None
+
+    return value
+
+
 def _normalize_certification_name(name):
-    """
-    Normalize a certification name without changing its meaning.
-
-    Examples:
-
-        Python / Domain Certification
-            -> Python Domain Certification
-
-        Python  /  Domain Certification
-            -> Python Domain Certification
-
-    The slash is treated as a visual separator, not part of the
-    certification name.
-    """
+    """Normalize whitespace and slash separators in a name."""
 
     if name is None:
         return None
@@ -94,36 +137,14 @@ def _normalize_certification_name(name):
     if not name:
         return None
 
-    # Normalize slash separators to spaces.
-    name = re.sub(
-        r"\s*/\s*",
-        " ",
-        name,
-    )
+    name = re.sub(r"\s*/\s*", " ", name)
+    name = re.sub(r"\s+", " ", name)
 
-    # Remove repeated whitespace.
-    name = re.sub(
-        r"\s+",
-        " ",
-        name,
-    )
-
-    return name.strip()
+    return name.strip() or None
 
 
 def _remove_certificate_heading(text):
-    """
-    Remove a leading certification section heading when it has
-    been merged into the same physical line.
-
-    Example:
-
-        Certificate Python / Domain Certification Completed
-
-    becomes:
-
-        Python / Domain Certification Completed
-    """
+    """Remove a leading certification heading from a text line."""
 
     if not isinstance(text, str):
         return text
@@ -147,118 +168,41 @@ def _remove_certificate_heading(text):
     return text.strip()
 
 
-def _split_completion_marked_lines(lines):
-    """
-    Split certification records using completion/status markers.
+def _is_completion_only_line(line):
+    """Identify lines containing only a completion/status marker."""
 
-    Supports both:
-
-        [
-            "Python / Domain Certification",
-            "Completed",
-            "Professional Development Program",
-            "Completed"
-        ]
-
-    and:
-
-        [
-            "Certificate Python / Domain Certification Completed "
-            "Professional Development Program Completed"
-        ]
-
-    Returns a list of logical certification blocks.
-
-    This function is deliberately used only when completion
-    markers are present, so normal certification layouts continue
-    through split_certification_blocks().
-    """
-
-    if not lines:
-        return []
-
-    # Flatten nested input.
-    flattened = []
-
-    def flatten(value):
-        if isinstance(value, (list, tuple)):
-            for item in value:
-                flatten(item)
-        elif isinstance(value, str):
-            value = value.strip()
-            if value:
-                flattened.append(value)
-
-    flatten(lines)
-
-    if not flattened:
-        return []
-
-    blocks = []
-
-    for line in flattened:
-
-        line = _remove_certificate_heading(line)
-
-        if not line:
-            continue
-
-        # Split immediately before/after completion markers.
-        #
-        # Example:
-        #
-        # Python Certification Completed
-        # Professional Development Program Completed
-        #
-        # becomes:
-        #
-        # Python Certification
-        # Professional Development Program
-        #
-        parts = re.split(
-            r"\s+\b(?:completed|complete|passed|earned|obtained|"
-            r"attained|received|achieved)\b\s*",
-            line,
-            flags=re.IGNORECASE,
-        )
-
-        for part in parts:
-
-            part = part.strip()
-
-            if not part:
-                continue
-
-            # A completion marker may be followed by another
-            # certification on the same physical line.
-            part = _remove_certificate_heading(part)
-
-            if part:
-                blocks.append([part])
-
-    return blocks
-
-
-def _contains_completion_marker(lines):
-    """
-    Return True when the input contains a completion/status marker.
-    """
-
-    if not lines:
+    if not isinstance(line, str):
         return False
 
-    text_parts = []
+    return line.strip().casefold() in COMPLETION_WORDS
 
-    def flatten(value):
-        if isinstance(value, (list, tuple)):
-            for item in value:
-                flatten(item)
-        elif isinstance(value, str):
-            text_parts.append(value)
 
-    flatten(lines)
+def _flatten_lines(value):
+    """Flatten nested lists and tuples into non-empty strings."""
 
-    combined = " ".join(text_parts)
+    flattened = []
+
+    if isinstance(value, (list, tuple)):
+        for item in value:
+            flattened.extend(_flatten_lines(item))
+
+    elif isinstance(value, str):
+        value = value.strip()
+
+        if value:
+            flattened.append(value)
+
+    return flattened
+
+
+# ============================================================
+# COMPLETION-MARKED BLOCK SPLITTING
+# ============================================================
+
+def _contains_completion_marker(lines):
+    """Check whether the input contains a completion/status marker."""
+
+    combined = " ".join(_flatten_lines(lines))
 
     return bool(
         re.search(
@@ -269,40 +213,69 @@ def _contains_completion_marker(lines):
         )
     )
 
+
+def _split_completion_marked_lines(lines):
+    """
+    Split certification records using completion markers.
+
+    Handles completion words on separate lines and records that
+    appear consecutively on the same physical line.
+    """
+
+    flattened = _flatten_lines(lines)
+
+    if not flattened:
+        return []
+
+    blocks = []
+
+    for line in flattened:
+        line = _remove_certificate_heading(line)
+
+        if not line or _is_completion_only_line(line):
+            continue
+
+        parts = re.split(
+            r"\s+\b(?:completed|complete|passed|earned|obtained|"
+            r"attained|received|achieved)\b\s*",
+            line,
+            flags=re.IGNORECASE,
+        )
+
+        for part in parts:
+            part = _remove_certificate_heading(part)
+
+            if not part or _is_completion_only_line(part):
+                continue
+
+            blocks.append([part])
+
+    return blocks
+
+
+# ============================================================
+# METADATA-BASED BLOCK PREPARATION
+# ============================================================
+
 def _is_certification_metadata_line(line):
-    """
-    Return True when a line contains certification metadata
-    that belongs to the current certification record.
-    """
+    """Identify a line containing certification metadata."""
 
     if not isinstance(line, str):
         return False
 
-    normalized = line.strip().lower()
-
     return bool(
         re.match(
-            r"^(issued|issue date|issued on|expiration|expires|expiry|"
-            r"expiry date|credential id|credential|certificate id)\s*:",
-            normalized,
+            r"^\s*(?:issued|issue date|issued on|expiration|expires|"
+            r"expiry|expiry date|credential id|credential|"
+            r"certificate id)\s*:",
+            line,
+            flags=re.IGNORECASE,
         )
     )
 
 
 def _is_flat_string_list(lines):
-    """
-    Return True when the input is a simple list of strings.
-
-    Example:
-        [
-            "AWS Certified Solutions Architect",
-            "Amazon Web Services",
-            "Issued: March 2024",
-            "Credential ID: AWS123",
-        ]
-
-    Nested certification blocks are intentionally excluded.
-    """
+    """Check whether input is a flat list of strings."""
 
     return (
         isinstance(lines, list)
@@ -313,20 +286,9 @@ def _is_flat_string_list(lines):
 
 def _prepare_standard_certification_blocks(lines):
     """
-    Preserve a standard single-certification layout as one block.
+    Keep a single metadata-based certification record together.
 
-    This handles layouts such as:
-
-        AWS Certified Solutions Architect
-        Amazon Web Services
-        Issued: March 2024
-        Credential ID: AWS123
-
-    The presence of certification metadata indicates that the
-    preceding lines belong to the same certification record.
-
-    Returns None when the input does not clearly match this
-    standard layout, allowing the normal splitter to handle it.
+    Returns None when the input should use the normal splitter.
     """
 
     if not _is_flat_string_list(lines):
@@ -335,51 +297,47 @@ def _prepare_standard_certification_blocks(lines):
     cleaned = [
         line.strip()
         for line in lines
-        if isinstance(line, str) and line.strip()
+        if line.strip()
     ]
 
     if not cleaned:
         return None
 
-    metadata_indices = [
-        index
-        for index, line in enumerate(cleaned)
-        if _is_certification_metadata_line(line)
-    ]
+    has_metadata = any(
+        _is_certification_metadata_line(line)
+        for line in cleaned
+    )
 
-    # No metadata -> let the normal splitter handle the input.
-    if not metadata_indices:
+    if not has_metadata:
         return None
 
-    # For this layout, all metadata belongs to the same
-    # immediately preceding certification record.
-    #
-    # Keep the complete sequence together rather than allowing
-    # individual lines to become separate certification blocks.
     return [cleaned]
 
 
-def _safe_date_extraction(block):
-    """
-    Safely extract certification dates.
+# ============================================================
+# SAFE DETERMINISTIC EXTRACTORS
+# ============================================================
 
-    Keeps the pipeline from crashing when a certification
-    does not contain a date.
-    """
+def _safe_date_extraction(block):
+    """Extract certification dates without crashing the pipeline."""
+
+    empty_result = {
+        "issue_date": None,
+        "expiration_date": None,
+    }
 
     try:
         result = extract_certification_date(block)
+
     except Exception:
-        return {
-            "issue_date": None,
-            "expiration_date": None,
-        }
+        logger.debug(
+            "Deterministic certification date extraction failed.",
+            exc_info=True,
+        )
+        return empty_result
 
     if not isinstance(result, dict):
-        return {
-            "issue_date": None,
-            "expiration_date": None,
-        }
+        return empty_result
 
     return {
         "issue_date": result.get("issue_date"),
@@ -388,14 +346,71 @@ def _safe_date_extraction(block):
 
 
 def _safe_credential_extraction(block):
-    """
-    Safely extract credential ID.
-    """
+    """Extract a credential ID without crashing the pipeline."""
 
     try:
         return extract_credential_id(block)
+
     except Exception:
+        logger.debug(
+            "Deterministic credential ID extraction failed.",
+            exc_info=True,
+        )
         return None
+
+
+# ============================================================
+# LLM FALLBACK
+# ============================================================
+
+def _llm_certification_fallback(block):
+    """
+    Recover missing certification fields using the shared LLM service.
+
+    The LLM must extract only information supported by the supplied
+    text. Missing fields should be returned as empty strings.
+
+    Returns a dictionary containing cleaned suggestions or an empty
+    dictionary if the service fails or returns an invalid response.
+    """
+
+    block_text = "\n".join(_flatten_lines(block)).strip()
+
+    if not block_text:
+        return {}
+
+    prompt_text = (
+        "Extract certification information from the supplied resume "
+        "text. Use only details explicitly supported by the text. "
+        "Do not invent certification names, organizations, dates, "
+        "or credential IDs. If a field is absent, return an empty "
+        "string for that field. Preserve date wording as written "
+        "in the source.\n\n"
+        f"CERTIFICATION TEXT:\n{block_text}"
+    )
+
+    try:
+        response = llm_fallback_service.extract_json(
+            entity_name="certification",
+            text=prompt_text,
+            output_schema=CERTIFICATION_LLM_SCHEMA,
+        )
+
+        if not isinstance(response, dict):
+            return {}
+
+        return {
+            field: _clean_llm_value(response.get(field))
+            for field in CERTIFICATION_LLM_SCHEMA["properties"]
+        }
+
+    except Exception:
+        logger.warning(
+            "LLM certification fallback failed; preserving "
+            "deterministic extraction results.",
+            exc_info=True,
+        )
+        return {}
 
 
 # ============================================================
@@ -404,77 +419,32 @@ def _safe_credential_extraction(block):
 
 def certification_pipeline(lines):
     """
-    Extract certifications from a detected certification section.
-
-    Input examples:
-
-        [
-            [
-                "AWS Certified Solutions Architect - Associate",
-                "Amazon Web Services",
-                "Issued: March 2024",
-                "Credential ID: AWS123"
-            ]
-        ]
-
-    or:
-
-        [
-            "AWS Certified Solutions Architect - Associate",
-            "Amazon Web Services",
-            "Issued: March 2024"
-        ]
+    Extract and normalize certifications from a detected resume section.
 
     Returns:
-
         [
             {
-                "certification_name": "...",
-                "issuing_organization": "...",
-                "issue_date": "...",
-                "expiration_date": "...",
-                "credential_id": "..."
+                "certification_name": str,
+                "issuing_organization": str | None,
+                "issue_date": str | None,
+                "expiration_date": str | None,
+                "credential_id": str | None,
             }
         ]
     """
 
-    # ========================================================
-    # VALIDATE INPUT
-    # ========================================================
-
     if not lines:
         return []
 
-    # ========================================================
-    # STEP 1
-    # Split certification section into logical blocks
-    # ========================================================
+    # --------------------------------------------------------
+    # STEP 1: SPLIT INTO LOGICAL CERTIFICATION BLOCKS
+    # --------------------------------------------------------
 
     try:
-        # ------------------------------------------------------------
-        # Completion-marked certifications
-        # ------------------------------------------------------------
-
         if _contains_completion_marker(lines):
-
             blocks = _split_completion_marked_lines(lines)
 
         else:
-
-            # --------------------------------------------------------
-            # Standard metadata-based certification layout
-            # --------------------------------------------------------
-            #
-            # Example:
-            #
-            # AWS Certified Solutions Architect
-            # Amazon Web Services
-            # Issued: March 2024
-            # Credential ID: AWS123
-            #
-            # Keep this entire record together.
-            # --------------------------------------------------------
-
             prepared_blocks = _prepare_standard_certification_blocks(
                 lines
             )
@@ -485,6 +455,10 @@ def certification_pipeline(lines):
                 blocks = split_certification_blocks(lines)
 
     except Exception:
+        logger.warning(
+            "Certification block splitting failed.",
+            exc_info=True,
+        )
         return []
 
     if not blocks:
@@ -492,149 +466,153 @@ def certification_pipeline(lines):
 
     certifications = []
 
-    # ========================================================
-    # STEP 2
-    # Process every certification block
-    # ========================================================
+    # --------------------------------------------------------
+    # STEP 2: PROCESS EACH BLOCK
+    # --------------------------------------------------------
 
     for block in blocks:
-
         if not block:
             continue
-
-        # ----------------------------------------------------
-        # Ensure block is a list
-        # ----------------------------------------------------
 
         if isinstance(block, str):
             block = [block]
 
-        if not isinstance(block, list):
+        if not isinstance(block, (list, tuple)):
             continue
 
-        # ----------------------------------------------------
-        # Remove empty values
-        # ----------------------------------------------------
-
         block = [
-            line.strip()
+            _remove_certificate_heading(line.strip())
             for line in block
-            if isinstance(line, str)
-            and line.strip()
-        ]
-
-        if not block:
-            continue
-
-        # ----------------------------------------------------
-        # Remove accidental section heading from block
-        # ----------------------------------------------------
-
-        block = [
-            _remove_certificate_heading(line)
-            for line in block
+            if isinstance(line, str) and line.strip()
         ]
 
         block = [
             line
             for line in block
-            if line
+            if line and not _is_completion_only_line(line)
         ]
 
         if not block:
             continue
 
-        # ====================================================
-        # CERTIFICATION NAME
-        # ====================================================
+        # ----------------------------------------------------
+        # CERTIFICATION NAME - DETERMINISTIC FIRST
+        # ----------------------------------------------------
 
         try:
             name = extract_certification_name(block)
+
         except Exception:
+            logger.debug(
+                "Deterministic certification name extraction failed.",
+                exc_info=True,
+            )
             name = None
 
-        if not _has_meaningful_text(name):
-            continue
+        name = (
+            _normalize_certification_name(name)
+            if _has_meaningful_text(name)
+            else None
+        )
 
-        name = _normalize_certification_name(name)
-
-        if not _has_meaningful_text(name):
-            continue
-
-        # ====================================================
-        # ISSUING ORGANIZATION
-        # ====================================================
+        # ----------------------------------------------------
+        # ISSUING ORGANIZATION - DETERMINISTIC FIRST
+        # ----------------------------------------------------
 
         try:
-            organization = extract_issuing_organization(
-                block
-            )
+            organization = extract_issuing_organization(block)
+
         except Exception:
+            logger.debug(
+                "Deterministic issuing organization extraction failed.",
+                exc_info=True,
+            )
             organization = None
 
-        if organization is not None:
+        organization = _clean_llm_value(
+            organization
+        ) if isinstance(organization, str) else organization
 
-            organization = str(
-                organization
-            ).strip()
+        if (
+            isinstance(organization, str)
+            and organization.casefold() in COMPLETION_WORDS
+        ):
+            organization = None
 
-            if not organization:
-                organization = None
+        # ----------------------------------------------------
+        # DATES - DETERMINISTIC FIRST
+        # ----------------------------------------------------
 
-            # Prevent completion/status words from being treated
-            # as issuing organizations.
-            if (
-                organization
-                and organization.lower() in COMPLETION_WORDS
-            ):
-                organization = None
+        dates = _safe_date_extraction(block)
 
-        # ====================================================
-        # DATE
-        # ====================================================
+        issue_date = dates["issue_date"]
+        expiration_date = dates["expiration_date"]
 
-        date = _safe_date_extraction(block)
+        # ----------------------------------------------------
+        # CREDENTIAL ID - DETERMINISTIC FIRST
+        # ----------------------------------------------------
 
-        issue_date = date.get(
-            "issue_date"
+        credential_id = _safe_credential_extraction(block)
+
+        if isinstance(credential_id, str):
+            credential_id = credential_id.strip() or None
+
+        # ----------------------------------------------------
+        # STEP 3: CALL LLM ONLY IF A FIELD IS MISSING
+        # ----------------------------------------------------
+
+        missing_fields = (
+            not _has_meaningful_text(name)
+            or not _has_meaningful_text(organization)
+            or not _has_meaningful_text(issue_date)
+            or not _has_meaningful_text(expiration_date)
+            or not _has_meaningful_text(credential_id)
         )
 
-        expiration_date = date.get(
-            "expiration_date"
-        )
+        if missing_fields:
+            suggestions = _llm_certification_fallback(block)
 
-        # ====================================================
-        # CREDENTIAL ID
-        # ====================================================
+            # Fill only missing values. Preserve deterministic results.
+            if not _has_meaningful_text(name):
+                name = _normalize_certification_name(
+                    suggestions.get("certification_name")
+                )
 
-        credential_id = _safe_credential_extraction(
-            block
-        )
+            if not _has_meaningful_text(organization):
+                organization = suggestions.get("issuing_organization")
 
-        if credential_id is not None:
+            if not _has_meaningful_text(issue_date):
+                issue_date = suggestions.get("issue_date")
 
-            credential_id = str(
-                credential_id
-            ).strip()
+            if not _has_meaningful_text(expiration_date):
+                expiration_date = suggestions.get("expiration_date")
 
-            if not credential_id:
-                credential_id = None
+            if not _has_meaningful_text(credential_id):
+                credential_id = suggestions.get("credential_id")
 
-        # ====================================================
-        # BUILD CERTIFICATION
-        # ====================================================
+        # ----------------------------------------------------
+        # STEP 4: SKIP ONLY IF NAME REMAINS MISSING
+        # ----------------------------------------------------
 
-        certification = {
+        if not _has_meaningful_text(name):
+            logger.debug(
+                "Skipping certification block because its name "
+                "could not be extracted: %r",
+                block,
+            )
+            continue
+
+        # ----------------------------------------------------
+        # STEP 5: BUILD NORMALIZED CERTIFICATION OBJECT
+        # ----------------------------------------------------
+
+        certifications.append({
             "certification_name": name,
             "issuing_organization": organization,
             "issue_date": issue_date,
             "expiration_date": expiration_date,
             "credential_id": credential_id,
-        }
-
-        certifications.append(
-            certification
-        )
+        })
 
     return certifications
 

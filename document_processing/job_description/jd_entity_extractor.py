@@ -1,7 +1,7 @@
 import re
 
 from document_processing.common.skill_cleaner import clean_skills
-
+from document_processing.common.llm_fallback_service import llm_fallback_service
 
 # ============================================================
 # HEADER / METADATA PREFIXES
@@ -20,6 +20,67 @@ METADATA_PREFIXES = (
     "position:",
     "role:",
 )
+
+
+
+JD_LLM_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "job_title": {"type": ["string", "null"]},
+        "company": {"type": ["string", "null"]},
+        "location": {"type": ["string", "null"]},
+        "employment_type": {"type": ["string", "null"]},
+        "salary": {"type": ["string", "null"]},
+        "availability": {"type": ["string", "null"]},
+        "job_summary": {"type": ["string", "null"]},
+        "responsibilities": {
+            "type": "array",
+            "items": {"type": "string"},
+        },
+        "required_skills": {
+            "type": "array",
+            "items": {"type": "string"},
+        },
+        "preferred_skills": {
+            "type": "array",
+            "items": {"type": "string"},
+        },
+        "education": {
+            "type": "array",
+            "items": {"type": "string"},
+        },
+        "soft_skills": {
+            "type": "array",
+            "items": {"type": "string"},
+        },
+        "experience": {
+            "type": "array",
+            "items": {"type": "string"},
+        },
+        "requirements": {
+            "type": "array",
+            "items": {"type": "string"},
+        },
+    },
+    "required": [
+        "job_title",
+        "company",
+        "location",
+        "employment_type",
+        "salary",
+        "availability",
+        "job_summary",
+        "responsibilities",
+        "required_skills",
+        "preferred_skills",
+        "education",
+        "soft_skills",
+        "experience",
+        "requirements",
+    ],
+    "additionalProperties": False,
+}
+
 
 
 # ============================================================
@@ -874,6 +935,213 @@ def _normalize_experience(experience):
 
     return normalized
 
+
+def _build_jd_source_text(sections):
+    """Build source text from the parsed JD sections."""
+
+    parts = []
+
+    def add_value(value):
+        if isinstance(value, str):
+            if value.strip():
+                parts.append(value.strip())
+
+        elif isinstance(value, (list, tuple)):
+            for item in value:
+                add_value(item)
+
+        elif isinstance(value, dict):
+            for item in value.values():
+                add_value(item)
+
+    for value in sections.values():
+        add_value(value)
+
+    # Remove duplicate lines while preserving order.
+    unique_parts = list(dict.fromkeys(parts))
+
+    return "\n".join(unique_parts)
+
+
+def _has_source_evidence(value, source_text):
+    """Require extracted text to be present in the source."""
+
+    if not isinstance(value, str) or not value.strip():
+        return False
+
+    normalize = lambda text: re.sub(
+        r"\s+",
+        " ",
+        text,
+    ).strip().casefold()
+
+    return normalize(value) in normalize(source_text)
+
+
+def _needs_jd_llm_fallback(entities, sections):
+    """
+    Call the LLM only when important extraction is missing
+    or an existing experience statement could not be parsed.
+    """
+
+    if not entities.get("job_title"):
+        return True
+
+    if not (
+        entities.get("required_skills")
+        or entities.get("preferred_skills")
+    ):
+        return True
+
+    if not (
+        entities.get("job_summary")
+        or entities.get("responsibilities")
+    ):
+        return True
+
+    raw_experience = sections.get("experience", [])
+    normalized_experience = entities.get("experience", [])
+
+    if isinstance(raw_experience, str):
+        raw_experience = [raw_experience]
+
+    if raw_experience and normalized_experience:
+        if all(
+            item.get("minimum_years") is None
+            for item in normalized_experience
+            if isinstance(item, dict)
+        ):
+            return True
+
+    return False
+
+
+def _apply_jd_llm_fallback(entities, sections):
+    """Fill missing JD fields without replacing valid extraction."""
+
+    source_text = _build_jd_source_text(sections)
+
+    if not source_text.strip():
+        return entities
+
+    if not _needs_jd_llm_fallback(entities, sections):
+        return entities
+
+    try:
+        fallback = llm_fallback_service.extract_json(
+            entity_name="job description entities",
+            text=source_text,
+            output_schema=JD_LLM_SCHEMA,
+            document_type="job description",
+        )
+    except Exception:
+        # Extraction must continue if the fallback service fails.
+        return entities
+
+    if not isinstance(fallback, dict):
+        return entities
+
+    # --------------------------------------------------------
+    # Scalar fields: only fill empty values and require evidence.
+    # --------------------------------------------------------
+
+    scalar_fields = (
+        "job_title",
+        "company",
+        "location",
+        "employment_type",
+        "salary",
+        "availability",
+        "job_summary",
+    )
+
+    for field in scalar_fields:
+        current = entities.get(field)
+        candidate = fallback.get(field)
+
+        if current:
+            continue
+
+        if not isinstance(candidate, str) or not candidate.strip():
+            continue
+
+        # Avoid accepting invented metadata or paraphrases.
+        if _has_source_evidence(candidate, source_text):
+            entities[field] = candidate.strip()
+
+    # --------------------------------------------------------
+    # Array fields: fill only when deterministic extraction
+    # returned an empty list.
+    # --------------------------------------------------------
+
+    array_fields = (
+        "responsibilities",
+        "required_skills",
+        "preferred_skills",
+        "education",
+        "soft_skills",
+        "requirements",
+    )
+
+    for field in array_fields:
+        current = entities.get(field)
+        candidate_items = fallback.get(field)
+
+        if current:
+            continue
+
+        if not isinstance(candidate_items, list):
+            continue
+
+        grounded_items = [
+            item.strip()
+            for item in candidate_items
+            if isinstance(item, str)
+            and item.strip()
+            and _has_source_evidence(item, source_text)
+        ]
+
+        if field in ("required_skills", "preferred_skills"):
+            grounded_items = clean_skills(grounded_items)
+
+        entities[field] = grounded_items
+
+    # --------------------------------------------------------
+    # Experience: normalize source-grounded statements.
+    # Replace existing entries only when they contain no
+    # usable numeric experience information.
+    # --------------------------------------------------------
+
+    current_experience = entities.get("experience", [])
+    raw_experience = fallback.get("experience", [])
+
+    current_has_years = any(
+        isinstance(item, dict)
+        and item.get("minimum_years") is not None
+        for item in current_experience
+    )
+
+    if not current_has_years and isinstance(raw_experience, list):
+        grounded_experience = [
+            item.strip()
+            for item in raw_experience
+            if isinstance(item, str)
+            and item.strip()
+            and _has_source_evidence(item, source_text)
+        ]
+
+        normalized_experience = _normalize_experience(
+            grounded_experience
+        )
+
+        if any(
+            item.get("minimum_years") is not None
+            for item in normalized_experience
+        ):
+            entities["experience"] = normalized_experience
+
+    return entities
+
 # ============================================================
 # EXTRACT ENTITIES
 # ============================================================
@@ -1140,6 +1408,12 @@ def extract_entities(sections):
     entities["requirements"] = sections.get(
         "requirements",
         [],
+    )
+
+        # Use Ollama only if important fields are missing or ambiguous.
+    entities = _apply_jd_llm_fallback(
+        entities,
+        sections,
     )
 
     return entities

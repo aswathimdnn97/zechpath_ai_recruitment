@@ -40,3 +40,38 @@ def test_detect_sections_supports_layout_variants():
     assert "skills" in result
     assert "education" in result
     assert "experience" in result
+    
+from document_processing.resume.entity_extracter.personal_information.phone_extractor import (
+    extract_phone,
+)
+
+
+
+def test_extract_masked_indian_phone():
+    text = "Phone: +91 900XX 12345"
+    assert extract_phone(text) == "+91 900XX 12345"
+
+
+def test_extract_phone_without_country_code():
+    text = "Phone: 98765 43210"
+    assert extract_phone(text) == "98765 43210"
+
+
+def test_extract_location_with_label():
+    text = "Location: Thrissur, Kerala"
+    assert extract_location(text) == "Thrissur, Kerala"
+
+
+def test_extract_location_with_phone_on_same_line():
+    text = "Phone: +91 900XX 12345 | Location: Thrissur, Kerala"
+    assert extract_location(text) == "Thrissur, Kerala"
+
+
+def test_extract_location_from_header():
+    text = """
+    NIKHIL RAJ
+    nikhil.raj@example.com
+    Location: Thrissur, Kerala
+    """
+    assert extract_location(text) == "Thrissur, Kerala"
+

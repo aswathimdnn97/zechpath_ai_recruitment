@@ -21,3 +21,5 @@ def test_split_multiple_certifications_on_one_line():
     assert blocks[2][0] == "Google Cloud Professional Data Engineer"
     assert blocks[3][0] == "Machine Learning Specialization"
     assert blocks[4][0] == "TensorFlow Developer Certificate"
+
+

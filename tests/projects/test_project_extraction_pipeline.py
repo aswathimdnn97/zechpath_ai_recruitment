@@ -137,3 +137,65 @@ def test_project_pipeline_without_url():
     assert "OpenCV" in project["technologies"]
 
     assert project["url"] is None
+    
+
+from document_processing.resume.entity_extracter.projects.project_name_extractor import (
+    extract_project_name,
+)
+from document_processing.resume.entity_extracter.projects.project_technologies_extractor import (
+    extract_project_technologies,
+)
+from document_processing.resume.entity_extracter.projects.project_url_extractor import (
+    extract_project_url,
+)
+
+
+def test_extract_project_name_from_inline_description():
+    block = [
+        "Student Records REST API - Developed a small backend service "
+        "using Python, Django, and FastAPI practice endpoints"
+    ]
+
+    assert extract_project_name(block) == "Student Records REST API"
+
+
+def test_extract_project_technologies_from_narrative():
+    block = [
+        "Student Records REST API - Developed a backend service "
+        "using Python, Django, and FastAPI.",
+        "Connected PostgreSQL for persistent records and used Git "
+        "for version control.",
+        "Validated endpoints with Postman.",
+    ]
+
+    technologies = extract_project_technologies(block)
+
+    for expected in [
+        "Python",
+        "Django",
+        "FastAPI",
+        "PostgreSQL",
+        "Git",
+        "Postman",
+    ]:
+        assert expected in technologies
+
+
+def test_extract_project_url_from_markdown_link():
+    block = [
+        "Student Records REST API",
+        "GitHub: [Project](https://github.com/example/project)",
+    ]
+
+    assert extract_project_url(block) == (
+        "https://github.com/example/project"
+    )
+
+
+def test_missing_project_url_returns_none():
+    block = [
+        "Student Records REST API",
+        "Developed a backend service using Python.",
+    ]
+
+    assert extract_project_url(block) is None

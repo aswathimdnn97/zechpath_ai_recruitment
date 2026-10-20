@@ -1,5 +1,5 @@
 from document_processing.resume.entity_extracter.education.institution_extractor import (
-    extract_institution,
+    extract_institution,extract_university_from_block
 )
 
 
@@ -39,3 +39,31 @@ def test_no_institution():
     result = extract_institution(block)
 
     assert result is None
+    
+    
+
+def test_university_does_not_include_graduation_year():
+    block = ["University of Calicut, 2025"]
+
+    result = extract_university_from_block(block)
+
+    assert result is not None
+    assert result["value"] == "University of Calicut"
+
+
+def test_university_does_not_include_year_range():
+    block = ["University of Calicut, 2020 - 2025"]
+
+    result = extract_university_from_block(block)
+
+    assert result is not None
+    assert result["value"] == "University of Calicut"
+
+
+def test_university_preserves_canonical_detection():
+    block = ["University of Calicut"]
+
+    result = extract_university_from_block(block)
+
+    assert result is not None
+    assert result["value"] == "University of Calicut"

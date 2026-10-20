@@ -1,7 +1,9 @@
+
 import re
 
 from document_processing.resume.entity_extracter.projects.project_technologies_extractor import (
     is_technology_line,
+    extract_project_narrative_from_technology_line,
 )
 
 
@@ -10,7 +12,7 @@ from document_processing.resume.entity_extracter.projects.project_technologies_e
 # ============================================================
 
 PROJECT_LABEL_PATTERN = re.compile(
-    r"^\s*project(?:\s*name)?\s*[:\-]\s*(.+?)\s*$",
+    r"^\s*project(?:\s+name)?\s*[:\-–—]\s*(.+?)\s*$",
     re.IGNORECASE,
 )
 
@@ -21,12 +23,10 @@ PROJECT_LABEL_PATTERN = re.compile(
 
 METADATA_LABEL_PATTERN = re.compile(
     r"^\s*(?:"
-    r"technologies?"
+    r"technologies?(?:\s+used)?"
     r"|tech\s+stack"
     r"|technology\s+stack"
-    r"|tools"
-    r"|technologies\s+used"
-    r"|tools\s+used"
+    r"|tools?(?:\s+used)?"
     r"|built\s+with"
     r"|developed\s+using"
     r"|using"
@@ -64,6 +64,24 @@ URL_PATTERN = re.compile(
 
 
 # ============================================================
+# INLINE TITLE AND DESCRIPTION
+# ============================================================
+
+DESCRIPTION_ACTION_PATTERN = re.compile(
+    r"\b(?:"
+    r"developed|built|implemented|created|designed|"
+    r"engineered|integrated|deployed|managed|tested|"
+    r"maintained|configured|validated|automated|"
+    r"connected|improved|established|delivered|"
+    r"supported|provided|used|worked"
+    r")\b",
+    re.IGNORECASE,
+)
+
+INLINE_SEPARATOR_PATTERN = re.compile(r"\s+[-–—:]\s+")
+
+
+# ============================================================
 # CLEAN LINE
 # ============================================================
 
@@ -73,30 +91,21 @@ def clean_line(line):
 
     line = str(line).strip()
 
-    # Remove bullet characters
-    line = re.sub(
-        r"^[•●▪◦*\-]\s*",
-        "",
-        line,
-    )
-
-    # Normalize whitespace
+    line = re.sub(r"^[•●▪◦*\-]+\s*", "", line)
     line = re.sub(r"\s+", " ", line)
 
     return line.strip()
 
 
 # ============================================================
-# PROJECT LABEL
+# LABEL HELPERS
 # ============================================================
 
 def is_project_label(line):
     if not line:
         return False
 
-    return bool(
-        PROJECT_LABEL_PATTERN.match(line)
-    )
+    return bool(PROJECT_LABEL_PATTERN.match(line))
 
 
 def extract_project_name_from_label(line):
@@ -105,33 +114,63 @@ def extract_project_name_from_label(line):
     if not match:
         return None
 
-    return match.group(1).strip()
+    return match.group(1).strip() or None
 
-
-# ============================================================
-# METADATA
-# ============================================================
 
 def is_metadata_line(line):
     if not line:
         return False
 
-    return bool(
-        METADATA_LABEL_PATTERN.match(line)
-    )
+    return bool(METADATA_LABEL_PATTERN.match(line))
 
-
-# ============================================================
-# URL LINE
-# ============================================================
 
 def is_url_line(line):
     if not line:
         return False
 
-    return bool(
-        URL_PATTERN.search(line)
-    )
+    return bool(URL_PATTERN.search(line))
+
+
+# ============================================================
+# SPLIT INLINE PROJECT TITLE AND DESCRIPTION
+# ============================================================
+
+def split_inline_project_line(line):
+    """
+    Split a combined project title and description.
+
+    Example:
+        Student Records REST API - Developed a backend service.
+
+    Returns:
+        ("Student Records REST API", "Developed a backend service.")
+
+    If the line does not look like a combined title and
+    description, returns (line, None).
+    """
+
+    if not line:
+        return "", None
+
+    match = INLINE_SEPARATOR_PATTERN.search(line)
+
+    if not match:
+        return line, None
+
+    title = line[:match.start()].strip()
+    remainder = line[match.end():].strip()
+
+    if not title or not remainder:
+        return line, None
+
+    # Only split when the right-hand side begins with an
+    # action-oriented description.
+    action_match = DESCRIPTION_ACTION_PATTERN.search(remainder)
+
+    if action_match and action_match.start() <= 15:
+        return title, remainder
+
+    return line, None
 
 
 # ============================================================
@@ -142,16 +181,18 @@ def looks_like_project_title(line):
     if not line:
         return False
 
-    if is_metadata_line(line):
-        return False
-
-    if is_url_line(line):
+    if is_metadata_line(line) or is_url_line(line):
         return False
 
     if is_project_label(line):
         return False
 
-    # Too long to reasonably be a project title
+    # A combined title and description is not a new title.
+    title, description = split_inline_project_line(line)
+
+    if description:
+        return False
+
     if len(line) > 80:
         return False
 
@@ -160,7 +201,6 @@ def looks_like_project_title(line):
     if len(words) > 10:
         return False
 
-    # Sentence-like lines are usually descriptions
     if line.endswith((".", "!", "?")):
         return False
 
@@ -179,7 +219,11 @@ def looks_like_project_title(line):
         "integrated ",
         "deployed ",
         "added ",
-        "implemented ",
+        "connected ",
+        "validated ",
+        "tested ",
+        "maintained ",
+        "automated ",
     )
 
     if line.lower().startswith(description_starters):
@@ -193,7 +237,6 @@ def looks_like_project_title(line):
 # ============================================================
 
 def split_project_blocks(section):
-
     if not section:
         return []
 
@@ -202,20 +245,17 @@ def split_project_blocks(section):
     # --------------------------------------------------------
 
     if isinstance(section, str):
-
         raw_lines = section.splitlines()
 
-    elif isinstance(section, list):
-
+    elif isinstance(section, (list, tuple)):
         raw_lines = []
 
         for item in section:
-
-            if isinstance(item, list):
+            if isinstance(item, (list, tuple)):
                 raw_lines.extend(item)
 
             elif isinstance(item, str):
-                raw_lines.append(item)
+                raw_lines.extend(item.splitlines())
 
     else:
         return []
@@ -227,7 +267,6 @@ def split_project_blocks(section):
     lines = []
 
     for raw_line in raw_lines:
-
         if not isinstance(raw_line, str):
             continue
 
@@ -248,13 +287,8 @@ def split_project_blocks(section):
 
     for line in lines:
 
-        # ====================================================
-        # EXPLICIT PROJECT LABEL
-        # ====================================================
-
+        # Explicit project label.
         if is_project_label(line):
-
-            # Save previous project only if it has content
             if current_block:
                 blocks.append(current_block)
 
@@ -263,64 +297,54 @@ def split_project_blocks(section):
             project_name = extract_project_name_from_label(line)
 
             if project_name:
-                current_block.append(project_name)
+                # Support labels containing inline descriptions too.
+                title, description = split_inline_project_line(
+                    project_name
+                )
+
+                current_block.append(title)
+
+                if description:
+                    current_block.append(description)
 
             continue
 
-        # ====================================================
-        # METADATA
-        #
-        # IMPORTANT:
-        # Metadata belongs to the current project.
-        # It must NEVER start a new project.
-        # ====================================================
+        # Separate inline title and description before processing
+        # metadata or project-boundary heuristics.
+        title, inline_description = split_inline_project_line(line)
 
+        if inline_description:
+            if current_block:
+                blocks.append(current_block)
+
+            current_block = [title, inline_description]
+            continue
+
+        # Metadata belongs to the current project.
         if (
             is_metadata_line(line)
             or is_technology_line(line)
             or is_url_line(line)
         ):
-
             current_block.append(line)
             continue
 
-        # ====================================================
-        # POSSIBLE NEW PROJECT TITLE
-        # ====================================================
-
+        # Possible new project title.
         if (
             current_block
             and len(current_block) >= 2
             and looks_like_project_title(line)
         ):
-
             blocks.append(current_block)
-
             current_block = [line]
-
             continue
 
-        # ====================================================
-        # NORMAL DESCRIPTION LINE
-        # ====================================================
-
+        # Normal description line.
         current_block.append(line)
-
-    # --------------------------------------------------------
-    # Final block
-    # --------------------------------------------------------
 
     if current_block:
         blocks.append(current_block)
 
-    # --------------------------------------------------------
-    # Remove empty blocks
-    # --------------------------------------------------------
+    return [block for block in blocks if block]
 
-    blocks = [
-        block
-        for block in blocks
-        if block
-    ]
 
-    return blocks

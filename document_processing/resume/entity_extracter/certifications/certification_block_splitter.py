@@ -99,6 +99,11 @@ DATE_RANGE_SEPARATOR_PATTERN = re.compile(
     re.IGNORECASE | re.VERBOSE,
 )
 
+PROFESSIONAL_DATA_ENGINEER_PATTERN = re.compile(
+    r"\bprofessional\s*data\s*engineer\b",
+    re.IGNORECASE,
+)
+
 
 # ============================================================
 # BASIC CLEANING
@@ -111,7 +116,6 @@ def clean_line(line):
     Returns:
         str | None
     """
-
     if not isinstance(line, str):
         return None
 
@@ -120,9 +124,53 @@ def clean_line(line):
     if not line:
         return None
 
+    # Remove unrelated resume headers and test-data descriptions.
+    if is_document_noise(line):
+        return None
+
     return line
+# ============================================================
+# DOCUMENT NOISE FILTER
+# ============================================================
+
+DOCUMENT_NOISE_PATTERNS = (
+    re.compile(
+        r"\b(?:curriculum\s+vitae|resume)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\bfictional\s+test\s+data\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\btest\s+data\s+for\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\beligibility\s+api\s+validation\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\bsample\s+resume\b",
+        re.IGNORECASE,
+    ),
+)
 
 
+def is_document_noise(line):
+    """
+    Detect resume headings and unrelated test-data descriptions.
+
+    Do not reject normal certification titles merely because
+    they contain words such as 'professional' or 'fundamentals'.
+    """
+    if not isinstance(line, str):
+        return False
+
+    return any(
+        pattern.search(line)
+        for pattern in DOCUMENT_NOISE_PATTERNS
+    )
 # ============================================================
 # SPLIT LONG CERTIFICATION LINE
 # ============================================================
@@ -205,25 +253,8 @@ def split_long_certification_line(line):
 def is_certification_start(line):
     """
     Determine whether a line looks like the beginning
-    of a certification record.
-
-    Strong signals:
-
-        Certified
-        Certification
-        Certificate
-        License
-        Licence
-
-    Secondary signals:
-
-        Associate
-        Specialist
-        Professional
-        Fundamentals
-        Specialization
+    of a certification or training record.
     """
-
     if not isinstance(line, str):
         return False
 
@@ -233,6 +264,76 @@ def is_certification_start(line):
         return False
 
     lower = line.lower()
+
+    # Ignore document noise.
+    if is_document_noise(line):
+        return False
+
+    # Metadata lines are not certification starts.
+    if _is_metadata_line_for_splitter(line):
+        return False
+
+    # Standalone year is not a certification start.
+    if re.fullmatch(r"(?:19|20)\d{2}", line):
+        return False
+
+    # Date ranges are not certification starts.
+    if YEAR_RANGE_PATTERN.fullmatch(line):
+        return False
+
+    if PROFESSIONAL_DATA_ENGINEER_PATTERN.search(line):
+        return True
+
+    # Explicit certification wording.
+    certification_keywords = (
+        "certified",
+        "certification",
+        "certificate",
+        "license",
+        "licence",
+    )
+
+    if any(keyword in lower for keyword in certification_keywords):
+        return True
+
+    # Known organization suffix.
+    if split_organization_suffix(line):
+        return True
+
+    # Recognize common training/course title patterns.
+    # These are targeted signals, not a requirement for every title.
+    course_indicators = (
+        "fundamentals",
+        "professional development",
+        "programming",
+        "development and testing",
+        "specialization",
+        "specialisation",
+    )
+
+    if any(indicator in lower for indicator in course_indicators):
+        return True
+
+    return False
+
+
+def _is_metadata_line_for_splitter(line):
+    """Identify certification metadata lines."""
+    return bool(
+        re.match(
+            r"^(?:"
+            r"issued|issue date|issued date|issued on|"
+            r"expiration|expiration date|expiry|expiry date|"
+            r"expires|valid until|valid through|"
+            r"credential id|credential number|credential no|"
+            r"certificate id|certificate number|certificate no|"
+            r"certification id|certification number|certification no|"
+            r"cert id|cert number|cert no"
+            r")\b",
+            line.strip(),
+            re.IGNORECASE,
+        )
+    )
 
     # ========================================================
     # Metadata lines are NOT certification starts

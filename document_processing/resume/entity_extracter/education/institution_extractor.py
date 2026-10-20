@@ -26,10 +26,13 @@ Kerala Institute of Technology (2020 - 2024)
 
 import re
 
+
 from document_processing.resume.entity_extracter.education.university_extractor import (
     extract_university as extract_university_alias,
     remove_university_content,
+    remove_years_from_university_remainder,
 )
+
 
 
 # ============================================================
@@ -911,9 +914,17 @@ def find_fallback_institution_candidates(
 # UNIVERSITY
 # ============================================================
 
+
 def extract_university_from_block(block):
     """
-    Detect university from the education block.
+    Detect a university from an education block.
+
+    Responsibilities:
+    1. Detect universities using dictionary aliases or patterns.
+    2. Preserve the detected university name.
+    3. Remove graduation years from appended university text.
+    4. Avoid appending degree information to the university.
+    5. Preserve line_index for institution extraction.
     """
 
     if not block:
@@ -940,21 +951,22 @@ def extract_university_from_block(block):
 
             remainder = line[matched_end:].strip()
 
+            # Remove separators between the university and
+            # any remaining text.
             remainder = remainder.lstrip(
                 " ,;:-–—|"
             ).strip()
 
-            remainder = remainder.rstrip(
-                ".,;:"
-            ).strip()
-
+            # Remove degree information from the remainder.
             degree_start = None
+
             for pattern in DEGREE_PATTERNS:
                 match = re.search(
                     pattern,
                     remainder,
                     flags=re.IGNORECASE,
                 )
+
                 if match and (
                     degree_start is None
                     or match.start() < degree_start
@@ -962,10 +974,19 @@ def extract_university_from_block(block):
                     degree_start = match.start()
 
             if degree_start is not None:
-                remainder = remainder[:degree_start].rstrip(
-                    " ,;:-–—|."
-                )
+                remainder = remainder[:degree_start]
 
+            # Critical fix:
+            # Remove graduation years before appending
+            # any remaining text to the university name.
+            remainder = remove_years_from_university_remainder(
+                remainder
+            )
+
+            remainder = normalize_spaces(remainder)
+            remainder = remainder.strip(" ,;:-–—|.")
+
+            # Append only meaningful non-year remainder text.
             if remainder:
                 result["value"] = (
                     f"{result['value']}, {remainder}"
@@ -976,6 +997,7 @@ def extract_university_from_block(block):
         return result
 
     return None
+
 
 
 # ============================================================
@@ -1238,3 +1260,5 @@ if __name__ == "__main__":
             "Board:",
             result["board"],
         )
+        
+        

@@ -1,174 +1,110 @@
+
 import re
 
 
-# ============================================================
-# Patterns
-# ============================================================
-
 DATE_PATTERN = re.compile(
-    r"""
-    ^
-    (?:
-        (?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|
-        may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:tember)?|
-        oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)
-        \s+\d{4}
-        |
-        \d{4}
-        |
-        \d{4}\s*[-–]\s*\d{4}
-    )
-    $
-    """,
-    re.IGNORECASE | re.VERBOSE,
+    r"^(?:"
+    r"(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|"
+    r"jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:tember)?|"
+    r"oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\s+\d{4}"
+    r"|\d{4}"
+    r"|\d{4}\s*[-–]\s*(?:\d{4}|present|current)"
+    r")$",
+    re.IGNORECASE,
 )
 
-
 URL_PATTERN = re.compile(
-    r"^(?:https?://|www\.|github\.com|gitlab\.com|bitbucket\.org)",
+    r"(?:https?://|www\.|github\.com/|gitlab\.com/|"
+    r"bitbucket\.org/)",
+    re.IGNORECASE,
+)
+
+METADATA_LABELS = {
+    "project", "projects", "project name", "description",
+    "technologies", "technology", "tech stack", "tools",
+    "skills", "role", "responsibilities", "github", "demo",
+    "url", "repository", "repo",
+}
+
+ACTION_PATTERN = re.compile(
+    r"\b(?:developed|built|designed|implemented|created|"
+    r"engineered|architected|integrated|deployed|tested|"
+    r"automated|managed|maintained|configured|validated)\b",
     re.IGNORECASE,
 )
 
 
-# ============================================================
-# Metadata labels that should NOT be treated as project names
-# ============================================================
-
-METADATA_LABELS = {
-    "project",
-    "projects",
-    "project name",
-    "description",
-    "technologies",
-    "technology",
-    "tech stack",
-    "tools",
-    "skills",
-    "role",
-    "responsibilities",
-    "github",
-    "demo",
-    "url",
-}
-
-
-# ============================================================
-# Helpers
-# ============================================================
-
 def _clean_line(line):
-    """
-    Clean a single resume line.
-    """
+    if not isinstance(line, str):
+        return ""
 
     line = line.strip()
+    line = re.sub(r"^[•●▪◦*\-]+\s*", "", line)
+    return re.sub(r"\s+", " ", line).strip()
 
-    # Remove common bullet characters
-    line = re.sub(r"^[•●▪◦*-]\s*", "", line)
 
-    # Normalize whitespace
-    line = re.sub(r"\s+", " ", line)
+def _remove_description(line):
+    """
+    Separate a project title from an inline description.
+    Split only when the right-hand side starts with a
+    recognizable action verb.
+    """
+    match = re.search(r"\s[-–—:]\s+", line)
 
-    return line.strip()
+    if match:
+        title = line[:match.start()].strip()
+        remainder = line[match.end():].strip()
+
+        if title and ACTION_PATTERN.search(remainder):
+            first_action = ACTION_PATTERN.search(remainder)
+
+            if first_action and first_action.start() < 15:
+                return title
+
+    # Also support a title followed directly by an action.
+    match = ACTION_PATTERN.search(line)
+
+    if match and match.start() > 0:
+        prefix = line[:match.start()].rstrip(" :-–—")
+        if prefix and len(prefix.split()) <= 10:
+            return prefix
+
+    return line
 
 
 def _is_invalid_project_name(line):
-    """
-    Determine whether a line should not be considered
-    as a project name.
-    """
+    normalized = line.lower().strip(" :-–—")
 
-    if not line:
-        return True
+    return (
+        not normalized
+        or normalized in METADATA_LABELS
+        or bool(DATE_PATTERN.fullmatch(normalized))
+        or bool(URL_PATTERN.search(line))
+        or bool(re.match(
+            r"^(?:technologies|technology|tech stack|tools|"
+            r"skills|github|demo|url|repository|repo)\s*:",
+            line,
+            re.IGNORECASE,
+        ))
+    )
 
-    normalized = line.lower().strip(":- ")
-
-    # Section / metadata labels
-    if normalized in METADATA_LABELS:
-        return True
-
-    # Date
-    if DATE_PATTERN.match(line):
-        return True
-
-    # URL
-    if URL_PATTERN.match(line):
-        return True
-
-    # Technology metadata
-    if normalized.startswith(
-        (
-            "technologies:",
-            "technology:",
-            "tech stack:",
-            "tools:",
-            "skills:",
-        )
-    ):
-        return True
-
-    # URL metadata
-    if normalized.startswith(
-        (
-            "github:",
-            "demo:",
-            "url:",
-            "repository:",
-        )
-    ):
-        return True
-
-    return False
-
-
-# ============================================================
-# Main extractor
-# ============================================================
 
 def extract_project_name(block):
-    """
-    Extract project name from a project block.
-
-    Parameters
-    ----------
-    block : list[str] | str
-        Isolated project block.
-
-    Returns
-    -------
-    str | None
-        Extracted project name.
-    """
-
     if not block:
         return None
 
-    # Support both list[str] and raw string input
-    if isinstance(block, str):
-        lines = block.splitlines()
-    else:
-        lines = block
+    lines = block.splitlines() if isinstance(block, str) else block
 
-    for line in lines:
-
-        line = _clean_line(line)
+    for raw_line in lines:
+        line = _clean_line(raw_line)
 
         if _is_invalid_project_name(line):
             continue
 
-        return line
+        name = _remove_description(line)
+        name = name.strip(" :-–—")
+
+        if not _is_invalid_project_name(name):
+            return name
 
     return None
-
-
-block = [
-    "AI Resume Screening System",
-    "Jan 2025 - Apr 2025",
-    "Developed an AI-based resume screening platform.",
-    "Technologies: Python, FastAPI, PostgreSQL",
-    "GitHub: https://github.com/example/project"
-]
-
-result = extract_project_name(block)
-
-print(result)

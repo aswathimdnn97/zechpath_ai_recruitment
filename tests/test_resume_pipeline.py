@@ -107,6 +107,11 @@ def test_city_state_is_not_treated_as_title():
 
 
 def test_inline_company_title_and_full_month_dates_split_experiences():
+    from document_processing.resume.entity_extracter.experience.location_extractor import (
+        extract_inline_location,
+        extract_location,
+    )
+
     lines = [
         "Zecser Business LLP, Kochi | Data Science Engineer Intern July 2026 \u2013 present",
         "Working on data science and Python-based projects as part of an internship.",
@@ -115,25 +120,35 @@ def test_inline_company_title_and_full_month_dates_split_experiences():
 
     blocks = split_experience_blocks(lines)
 
+    # Temporary debugging: inspect the actual blocks and locations.
+    for index, block in enumerate(blocks):
+        print(f"\nBLOCK {index}: {block!r}")
+        print("Block type:", type(block).__name__)
+        print("Inline location:", extract_inline_location(block))
+        print("Final location:", extract_location(block))
+
     assert len(blocks) == 2
+
     assert [extract_titles(block)[0] for block in blocks] == [
         "Data Science Engineer Intern",
         "Java Developer Trainee",
     ]
+
     assert [extract_companies(block)[0] for block in blocks] == [
         "Zecser Business LLP",
         "Sorice Solutions Private Limited",
     ]
+
     assert [extract_location(block) for block in blocks] == [
         "Kochi",
         "Palarivattom",
     ]
+
     assert [extract_duration(block) for block in blocks] == [
         {"start_date": "July 2026", "end_date": "present"},
         {"start_date": "July 2022", "end_date": "July 2023"},
     ]
-
-
+    
 def test_description_sentence_is_not_treated_as_title_in_date_parser():
     from document_processing.resume.experience_parser import parse_experience_lines
 

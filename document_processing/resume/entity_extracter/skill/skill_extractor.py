@@ -1,83 +1,46 @@
 """
-skill_extractor.py
+Central skill extraction orchestrator with optional Ollama fallback.
 
-Central skill extraction orchestrator.
-
-Responsibilities
-----------------
-1. Collect skill candidates from multiple resume sections.
-2. Use skill_list_splitter.py for dedicated Skills sections.
-3. Use skill_extractor_from_section.py for prose sections.
-4. Preserve source/evidence metadata.
-5. Resolve spelling.
-6. Resolve synonyms / aliases.
-7. Validate against the master skill dictionary.
-8. Expand technology stacks.
-9. Deduplicate final skills.
-
-Pipeline
---------
-Resume sections
-        ↓
-Collect candidates
-        ↓
-Raw candidate deduplication
-        ↓
-Spelling resolver
-        ↓
-Synonym resolver
-        ↓
-Master skill validator
-        ↓
-Stack resolver
-        ↓
-Final deduplication
-        ↓
-Final validated skills
+Pipeline:
+1. Collect skill candidates from relevant resume sections.
+2. Deduplicate candidates and merge source evidence.
+3. Resolve spelling and synonyms.
+4. Validate against the master skill dictionary.
+5. Use the LLM only when deterministic extraction yields no usable skills.
+6. Expand technology stacks.
+7. Deduplicate final skills.
 """
 
 from __future__ import annotations
 
 import logging
+import time
 from typing import Any
 
 from document_processing.resume.entity_extracter.skill.skill_list_splitter import (
     split_skill_line,
 )
-
 from document_processing.resume.entity_extracter.skill.skill_extractor_from_section import (
     extract_skills_from_section,
 )
-
 from document_processing.resume.entity_extracter.skill.spelling_resolver import (
     resolve_spelling,
 )
-
 from document_processing.resume.entity_extracter.skill.synonym_resolver import (
     resolve_synonyms,
 )
-
 from document_processing.resume.entity_extracter.skill.master_skill_validator import (
     validate_skills,
 )
-
 from document_processing.resume.entity_extracter.skill.stack_resolver import (
     expand_skill_stacks,
 )
-
-import time
-
-
-# ============================================================
-# LOGGER
-# ============================================================
+from document_processing.common.llm_fallback_service import (
+    llm_fallback_service,
+)
 
 logger = logging.getLogger(__name__)
 
-
-# ============================================================
-# SECTIONS FROM WHICH TECHNICAL SKILLS CAN BE EXTRACTED
-# ============================================================
 
 SKILL_SOURCE_SECTIONS = {
     "skills",
@@ -85,11 +48,6 @@ SKILL_SOURCE_SECTIONS = {
     "experience",
     "projects",
 }
-
-
-# ============================================================
-# SECTIONS THAT SHOULD NOT BE USED FOR TECHNICAL SKILLS
-# ============================================================
 
 IGNORED_SECTIONS = {
     "personal_information",
@@ -99,246 +57,124 @@ IGNORED_SECTIONS = {
     "declaration",
 }
 
+SKILL_FALLBACK_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "skills": {
+            "type": "array",
+            "items": {"type": "string"},
+        }
+    },
+    "required": ["skills"],
+    "additionalProperties": False,
+}
 
-# ============================================================
-# FLATTEN SECTION DATA
-# ============================================================
 
-def _flatten_section(value):
-    """
-    Recursively flatten nested resume section data.
-
-    Supports:
-        str
-        dict
-        list
-        tuple
-        nested combinations
-    """
+def _flatten_section(value: Any) -> list[str]:
+    """Recursively flatten strings, dictionaries, and sequences."""
 
     if value is None:
         return []
 
     if isinstance(value, str):
         value = value.strip()
-
         return [value] if value else []
 
     if isinstance(value, dict):
         result = []
-
         for nested_value in value.values():
-            result.extend(
-                _flatten_section(nested_value)
-            )
-
+            result.extend(_flatten_section(nested_value))
         return result
 
     if isinstance(value, (list, tuple)):
         result = []
-
         for item in value:
-            result.extend(
-                _flatten_section(item)
-            )
-
+            result.extend(_flatten_section(item))
         return result
 
     return [str(value)]
 
 
-# ============================================================
-# NORMALIZE TEXT
-# ============================================================
-
 def _normalize(value: Any) -> str:
-    """
-    Normalize a value for case-insensitive comparison.
-    """
+    """Normalize a string for case-insensitive comparison."""
 
     if not isinstance(value, str):
         return ""
 
-    return " ".join(
-        value.strip().lower().split()
-    )
+    return " ".join(value.strip().lower().split())
 
 
-# ============================================================
-# NORMALIZE SECTION NAME
-# ============================================================
-
-def _normalize_section_name(
-    section_name: Any,
-) -> str:
-    """
-    Normalize resume section names.
-    """
+def _normalize_section_name(section_name: Any) -> str:
+    """Normalize resume section names."""
 
     if not isinstance(section_name, str):
         return ""
 
-    return " ".join(
-        section_name.strip().lower().split()
-    )
+    return " ".join(section_name.strip().lower().split())
 
-
-# ============================================================
-# SOURCE HELPERS
-# ============================================================
 
 def _source_key(source: Any) -> str:
-    """
-    Create a stable key for source deduplication.
-
-    Preferred source format:
-
-        {
-            "source_section": "experience",
-            "source_text": "...",
-            "source_skill": "Python"
-        }
-    """
+    """Build a stable key for source evidence."""
 
     if isinstance(source, dict):
-
         return "|".join(
-            [
-                str(
-                    source.get(
-                        "source_section",
-                        "",
-                    )
-                ).strip(),
-
-                str(
-                    source.get(
-                        "source_text",
-                        "",
-                    )
-                ).strip(),
-
-                str(
-                    source.get(
-                        "source_skill",
-                        "",
-                    )
-                ).strip(),
-            ]
+            str(source.get(field, "")).strip()
+            for field in (
+                "source_section",
+                "source_text",
+                "source_skill",
+            )
         ).lower()
 
     return str(source).strip().lower()
 
 
-def _merge_sources(
-    existing: Any,
-    incoming: Any,
-) -> list[Any]:
-    """
-    Merge source evidence without duplicates.
-
-    Supports both the new structured source format
-    and legacy string sources.
-    """
+def _merge_sources(existing: Any, incoming: Any) -> list[Any]:
+    """Merge evidence records without duplicates."""
 
     if not isinstance(existing, list):
-        existing = (
-            [existing]
-            if existing
-            else []
-        )
+        existing = [existing] if existing else []
 
     if not isinstance(incoming, list):
-        incoming = (
-            [incoming]
-            if incoming
-            else []
-        )
+        incoming = [incoming] if incoming else []
 
-    merged: list[Any] = []
-    seen: set[str] = set()
+    merged = []
+    seen = set()
 
-    for source in (
-        existing + incoming
-    ):
-
+    for source in existing + incoming:
         key = _source_key(source)
 
-        if not key:
-            continue
-
-        if key in seen:
-            continue
-
-        seen.add(key)
-        merged.append(source)
+        if key and key not in seen:
+            seen.add(key)
+            merged.append(source)
 
     return merged
 
-
-# ============================================================
-# MERGE SOURCE METADATA
-# ============================================================
 
 def _merge_source_metadata(
     existing: dict[str, Any],
     candidate: dict[str, Any],
 ) -> None:
-    """
-    Merge source/evidence metadata.
+    """Merge source sections, source text, and structured evidence."""
 
-    This function is mainly used by the orchestrator's
-    initial/final deduplication.
-
-    The canonical source format is:
-
-        sources: [
-            {
-                "source_section": "...",
-                "source_text": "...",
-                "source_skill": "..."
-            }
-        ]
-    """
-
-    if not isinstance(existing, dict):
+    if not isinstance(existing, dict) or not isinstance(candidate, dict):
         return
 
-    if not isinstance(candidate, dict):
-        return
+    sections = []
 
-    # --------------------------------------------------------
-    # SOURCE SECTION
-    # --------------------------------------------------------
+    for item in (existing, candidate):
+        values = item.get("source_sections", [])
 
-    sections: list[str] = []
+        if isinstance(values, str):
+            values = [values]
 
-    for item in (
-        existing,
-        candidate,
-    ):
+        if isinstance(values, list):
+            sections.extend(values)
 
-        value = item.get(
-            "source_sections",
-            [],
-        )
-
-        if isinstance(value, str):
-            value = [value]
-
-        if isinstance(value, list):
-            sections.extend(value)
-
-        source_section = item.get(
-            "source_section"
-        )
-
+        source_section = item.get("source_section")
         if source_section:
-            sections.append(
-                source_section
-            )
+            sections.append(source_section)
 
-    # Preserve order while removing duplicates.
     existing["source_sections"] = list(
         dict.fromkeys(
             str(section).strip()
@@ -347,588 +183,205 @@ def _merge_source_metadata(
         )
     )
 
-    # --------------------------------------------------------
-    # SOURCE TEXT
-    # --------------------------------------------------------
+    if not existing.get("source_text") and candidate.get("source_text"):
+        existing["source_text"] = candidate["source_text"]
 
-    existing_text = existing.get(
-        "source_text"
-    )
+    def build_sources(item: dict[str, Any]) -> list[Any]:
+        sources = item.get("sources", [])
 
-    candidate_text = candidate.get(
-        "source_text"
-    )
+        if isinstance(sources, list) and sources:
+            return sources
 
-    if not existing_text and candidate_text:
-        existing["source_text"] = (
-            candidate_text
-        )
-
-    # --------------------------------------------------------
-    # SOURCES
-    # --------------------------------------------------------
-
-    existing_sources = existing.get(
-        "sources",
-        [],
-    )
-
-    candidate_sources = candidate.get(
-        "sources",
-        [],
-    )
-
-    # If sources don't exist yet, construct structured
-    # evidence from the candidate metadata.
-
-    if not existing_sources:
-
-        existing_sources = []
-
-        if existing.get(
-            "source_section"
-        ) or existing.get(
-            "source_text"
-        ):
-
-            existing_sources.append(
+        if item.get("source_section") or item.get("source_text"):
+            return [
                 {
-                    "source_section": existing.get(
-                        "source_section"
-                    ),
-                    "source_text": existing.get(
-                        "source_text"
-                    ),
-                    "source_skill": existing.get(
-                        "skill"
-                    ),
+                    "source_section": item.get("source_section"),
+                    "source_text": item.get("source_text", ""),
+                    "source_skill": item.get("skill"),
                 }
-            )
+            ]
 
-    if not candidate_sources:
-
-        candidate_sources = []
-
-        if candidate.get(
-            "source_section"
-        ) or candidate.get(
-            "source_text"
-        ):
-
-            candidate_sources.append(
-                {
-                    "source_section": candidate.get(
-                        "source_section"
-                    ),
-                    "source_text": candidate.get(
-                        "source_text"
-                    ),
-                    "source_skill": candidate.get(
-                        "skill"
-                    ),
-                }
-            )
+        return []
 
     existing["sources"] = _merge_sources(
-        existing_sources,
-        candidate_sources,
+        build_sources(existing),
+        build_sources(candidate),
     )
 
-
-# ============================================================
-# COLLECT SKILL CANDIDATES
-# ============================================================
 
 def _collect_candidates(
     sections: dict[str, Any],
     profile: bool = False,
 ) -> list[dict[str, Any]]:
-    """
-    Collect raw skill candidates from all relevant sections.
+    """Collect skill candidates from configured resume sections."""
 
-    Performance profiling:
-        - Section-level timing
-        - Fragment-level timing
-        - Skills splitter timing
-
-    Important:
-        Each text fragment is passed individually to
-        extract_skills_from_section() to avoid repeatedly
-        processing the entire section.
-    """
-
-    candidates: list[dict[str, Any]] = []
+    candidates = []
+    collect_start = time.perf_counter() if profile else 0.0
 
     if not isinstance(sections, dict):
         return candidates
 
-    # ========================================================
-    # TOTAL COLLECT CANDIDATES TIMER
-    # ========================================================
-
-    collect_start = time.perf_counter() if profile else 0.0
-
-    # ========================================================
-    # PROCESS EACH SECTION
-    # ========================================================
-
     for raw_section_name, section_block in sections.items():
+        section_name = _normalize_section_name(raw_section_name)
 
-        # ----------------------------------------------------
-        # Normalize section name
-        # ----------------------------------------------------
-
-        section_name = _normalize_section_name(
-            raw_section_name
-        )
-
-        if not section_name:
+        if (
+            not section_name
+            or section_name in IGNORED_SECTIONS
+            or section_name not in SKILL_SOURCE_SECTIONS
+        ):
             continue
-
-        # ----------------------------------------------------
-        # Ignore excluded sections
-        # ----------------------------------------------------
-
-        if section_name in IGNORED_SECTIONS:
-            continue
-
-        # ----------------------------------------------------
-        # Only configured skill source sections
-        # ----------------------------------------------------
-
-        if section_name not in SKILL_SOURCE_SECTIONS:
-            continue
-
-        # ====================================================
-        # SECTION TIMER
-        # ====================================================
 
         section_start = time.perf_counter() if profile else 0.0
-        section_candidate_count_before = (
-            len(candidates)
-            if profile
-            else 0
-        )
-
-        # ====================================================
-        # DEDICATED SKILLS SECTION
-        # ====================================================
+        count_before = len(candidates)
 
         if section_name == "skills":
-
-            flatten_start = (
-                time.perf_counter()
-                if profile
-                else 0.0
-            )
-
-            lines = _flatten_section(
-                section_block
-            )
-
-            flatten_duration = (
-                time.perf_counter() - flatten_start
-                if profile
-                else 0.0
-            )
-
-            # ------------------------------------------------
-            # Skill splitter timing
-            # ------------------------------------------------
-
-            splitter_start = (
-                time.perf_counter()
-                if profile
-                else 0.0
-            )
+            lines = _flatten_section(section_block)
+            splitter_start = time.perf_counter() if profile else 0.0
 
             raw_skills = split_skill_line(lines)
-
-            splitter_duration = (
-                time.perf_counter() - splitter_start
-                if profile
-                else 0.0
-            )
 
             if profile:
                 print(
                     f"[SKILL SPLITTER] "
-                    f"time={splitter_duration:.6f}s "
+                    f"time={time.perf_counter() - splitter_start:.6f}s "
                     f"lines={len(lines)} "
                     f"skills={len(raw_skills) if isinstance(raw_skills, list) else 0}"
                 )
 
-            if not isinstance(raw_skills, list):
-                if profile:
-                    print(
-                        f"[SKILL SECTION] "
-                        f"section={section_name:<12} "
-                        f"time={time.perf_counter() - section_start:.6f}s "
-                        f"fragments={len(lines)} "
-                        f"candidates=0"
-                    )
-                continue
+            if isinstance(raw_skills, list):
+                for skill in raw_skills:
+                    if not isinstance(skill, str) or not skill.strip():
+                        continue
 
-            for skill in raw_skills:
-
-                if not isinstance(skill, str):
-                    continue
-
-                skill = skill.strip()
-
-                if not skill:
-                    continue
-
-                candidates.append(
-                    {
-                        "skill": skill,
-                        "source_section": "skills",
-                        "source_text": skill,
-                        "extraction_method": (
-                            "skills_section"
-                        ),
-                        "sources": [
-                            {
-                                "source_section": "skills",
-                                "source_text": skill,
-                                "source_skill": skill,
-                            }
-                        ],
-                    }
-                )
-
-            if profile:
-                section_duration = (
-                    time.perf_counter()
-                    - section_start
-                )
-
-                section_candidate_count = (
-                    len(candidates)
-                    - section_candidate_count_before
-                )
-
-                print(
-                    f"[SKILL SECTION] "
-                    f"section={section_name:<12} "
-                    f"time={section_duration:.6f}s "
-                    f"flatten={flatten_duration:.6f}s "
-                    f"splitter={splitter_duration:.6f}s "
-                    f"fragments={len(lines)} "
-                    f"candidates={section_candidate_count}"
-                )
-
-            continue
-
-        # ====================================================
-        # PROSE / STRUCTURED SECTIONS
-        # ====================================================
-
-        flatten_start = time.perf_counter() if profile else 0.0
-
-        text_fragments = _flatten_section(
-            section_block
-        )
-
-        flatten_duration = (
-            time.perf_counter() - flatten_start
-            if profile
-            else 0.0
-        )
-
-        if not text_fragments:
-            if profile:
-                print(
-                    f"[SKILL SECTION] "
-                    f"section={section_name:<12} "
-                    f"time={time.perf_counter() - section_start:.6f}s "
-                    f"flatten={flatten_duration:.6f}s "
-                    f"fragments=0 "
-                    f"candidates=0"
-                )
-            continue
-
-        # ----------------------------------------------------
-        # Fragment counters
-        # ----------------------------------------------------
-
-        fragment_count = 0
-        extraction_time_total = 0.0
-
-        # ====================================================
-        # PROCESS EACH FRAGMENT
-        # ====================================================
-
-        for source_text in text_fragments:
-
-            if not isinstance(
-                source_text,
-                str,
-            ):
-                continue
-
-            source_text = source_text.strip()
-
-            if not source_text:
-                continue
-
-            fragment_count += 1
-
-            # ------------------------------------------------
-            # Extract skills from THIS fragment only
-            # ------------------------------------------------
-
-            fragment_start = (
-                time.perf_counter()
-                if profile
-                else 0.0
-            )
-
-            section_candidates = extract_skills_from_section(
-                section_name=section_name,
-                section_block=source_text,
-            )
-
-            if profile:
-                extraction_time_total += (
-                    time.perf_counter()
-                    - fragment_start
-                )
-
-            if not isinstance(
-                section_candidates,
-                list,
-            ):
-                continue
-
-            # ------------------------------------------------
-            # Normalize each candidate
-            # ------------------------------------------------
-
-            for candidate in section_candidates:
-
-                if not isinstance(
-                    candidate,
-                    dict,
-                ):
-                    continue
-
-                skill = candidate.get(
-                    "skill"
-                )
-
-                if not isinstance(
-                    skill,
-                    str,
-                ):
-                    continue
-
-                skill = skill.strip()
-
-                if not skill:
-                    continue
-
-                candidate["skill"] = skill
-
-                # --------------------------------------------
-                # Preserve parent section
-                # --------------------------------------------
-
-                candidate["source_section"] = (
-                    section_name
-                )
-
-                # --------------------------------------------
-                # Preserve source text
-                # --------------------------------------------
-
-                candidate["source_text"] = (
-                    candidate.get("source_text")
-                    or source_text
-                )
-
-                candidate.setdefault(
-                    "extraction_method",
-                    "section_text",
-                )
-
-                # --------------------------------------------
-                # Structured source evidence
-                # --------------------------------------------
-
-                existing_sources = candidate.get(
-                    "sources"
-                )
-
-                if not isinstance(
-                    existing_sources,
-                    list,
-                ):
-                    existing_sources = []
-
-                if not existing_sources:
-
-                    existing_sources = [
+                    skill = skill.strip()
+                    candidates.append(
                         {
-                            "source_section": (
-                                section_name
-                            ),
-                            "source_text": (
-                                source_text
-                            ),
-                            "source_skill": skill,
+                            "skill": skill,
+                            "source_section": "skills",
+                            "source_text": skill,
+                            "extraction_method": "skills_section",
+                            "sources": [
+                                {
+                                    "source_section": "skills",
+                                    "source_text": skill,
+                                    "source_skill": skill,
+                                }
+                            ],
                         }
-                    ]
+                    )
 
-                candidate["sources"] = (
-                    existing_sources
+        else:
+            fragments = _flatten_section(section_block)
+            extraction_time = 0.0
+            fragment_count = 0
+
+            for source_text in fragments:
+                if not isinstance(source_text, str) or not source_text.strip():
+                    continue
+
+                source_text = source_text.strip()
+                fragment_count += 1
+                fragment_start = time.perf_counter() if profile else 0.0
+
+                section_candidates = extract_skills_from_section(
+                    section_name=section_name,
+                    section_block=source_text,
                 )
 
-                candidates.append(
-                    candidate
-                )
+                if profile:
+                    extraction_time += time.perf_counter() - fragment_start
 
-        # ====================================================
-        # SECTION PROFILING
-        # ====================================================
+                if not isinstance(section_candidates, list):
+                    continue
+
+                for candidate in section_candidates:
+                    if not isinstance(candidate, dict):
+                        continue
+
+                    skill = candidate.get("skill")
+                    if not isinstance(skill, str) or not skill.strip():
+                        continue
+
+                    candidate["skill"] = skill.strip()
+                    candidate["source_section"] = section_name
+                    candidate["source_text"] = (
+                        candidate.get("source_text") or source_text
+                    )
+                    candidate.setdefault("extraction_method", "section_text")
+
+                    if not isinstance(candidate.get("sources"), list):
+                        candidate["sources"] = []
+
+                    if not candidate["sources"]:
+                        candidate["sources"] = [
+                            {
+                                "source_section": section_name,
+                                "source_text": source_text,
+                                "source_skill": candidate["skill"],
+                            }
+                        ]
+
+                    candidates.append(candidate)
+
+            if profile:
+                print(
+                    f"[SKILL SECTION] section={section_name:<12} "
+                    f"fragments={fragment_count} "
+                    f"extract={extraction_time:.6f}s "
+                    f"candidates={len(candidates) - count_before}"
+                )
 
         if profile:
-            section_duration = (
-                time.perf_counter()
-                - section_start
-            )
-
-            section_candidate_count = (
-                len(candidates)
-                - section_candidate_count_before
-            )
-
             print(
-                f"[SKILL SECTION] "
-                f"section={section_name:<12} "
-                f"time={section_duration:.6f}s "
-                f"flatten={flatten_duration:.6f}s "
-                f"extract={extraction_time_total:.6f}s "
-                f"fragments={fragment_count} "
-                f"candidates={section_candidate_count}"
+                f"[SKILL SECTION TOTAL] section={section_name:<12} "
+                f"time={time.perf_counter() - section_start:.6f}s "
+                f"candidates={len(candidates) - count_before}"
             )
-
-    # ========================================================
-    # TOTAL PROFILING
-    # ========================================================
 
     if profile:
-        collect_duration = (
-            time.perf_counter()
-            - collect_start
-        )
-
         print(
-            f"[SKILL COLLECT] "
-            f"total={collect_duration:.6f}s "
+            f"[SKILL COLLECT] total={time.perf_counter() - collect_start:.6f}s "
             f"candidates={len(candidates)}"
         )
 
     return candidates
 
-# ============================================================
-# DEDUPLICATE CANDIDATES
-# ============================================================
 
 def _deduplicate_candidates(
     candidates: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
-    """
-    Deduplicate raw candidates by normalized skill name.
+    """Deduplicate candidates by normalized skill name."""
 
-    Source/evidence metadata is merged.
+    unique = []
+    seen = {}
 
-    Example:
-
-        Python
-        python
-        PYTHON
-
-    becomes one candidate while retaining evidence from
-    all occurrences.
-    """
-
-    if not isinstance(
-        candidates,
-        list,
-    ):
-        return []
-
-    unique: list[dict[str, Any]] = []
-    seen: dict[str, dict[str, Any]] = {}
+    if not isinstance(candidates, list):
+        return unique
 
     for candidate in candidates:
-
-        if not isinstance(
-            candidate,
-            dict,
-        ):
+        if not isinstance(candidate, dict):
             continue
 
-        skill = candidate.get(
-            "skill"
-        )
-
-        if not isinstance(
-            skill,
-            str,
-        ):
+        skill = candidate.get("skill")
+        if not isinstance(skill, str) or not skill.strip():
             continue
 
         skill = skill.strip()
-
-        if not skill:
-            continue
-
         candidate["skill"] = skill
-
         key = _normalize(skill)
 
         if not key:
             continue
 
-        # ----------------------------------------------------
-        # Existing candidate
-        # ----------------------------------------------------
-
         if key in seen:
-
-            _merge_source_metadata(
-                seen[key],
-                candidate,
-            )
-
+            _merge_source_metadata(seen[key], candidate)
             continue
 
-        # ----------------------------------------------------
-        # First occurrence
-        # ----------------------------------------------------
-
-        # Make sure the first candidate also has
-        # structured source evidence.
-
-        if not candidate.get(
-            "sources"
-        ):
-
+        if not candidate.get("sources"):
             candidate["sources"] = [
                 {
-                    "source_section": (
-                        candidate.get(
-                            "source_section"
-                        )
-                    ),
-                    "source_text": (
-                        candidate.get(
-                            "source_text",
-                            "",
-                        )
-                    ),
+                    "source_section": candidate.get("source_section"),
+                    "source_text": candidate.get("source_text", ""),
                     "source_skill": skill,
                 }
             ]
@@ -939,128 +392,46 @@ def _deduplicate_candidates(
     return unique
 
 
-# ============================================================
-# FINAL SKILL DEDUPLICATION
-# ============================================================
-
 def _deduplicate_final_skills(
     skills: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
-    """
-    Deduplicate final validated/expanded skills.
+    """Deduplicate final skills by ID and normalized name."""
 
-    A skill can be identified by:
+    final = []
+    seen_ids = {}
+    seen_names = {}
 
-        1. skill_id
-        2. normalized skill name
-
-    Both indexes are checked independently.
-
-    This is important because stack expansion may produce
-    a skill that already exists as a directly extracted skill.
-    """
-
-    if not isinstance(
-        skills,
-        list,
-    ):
-        return []
-
-    final: list[dict[str, Any]] = []
-
-    seen_ids: dict[Any, dict[str, Any]] = {}
-    seen_names: dict[str, dict[str, Any]] = {}
+    if not isinstance(skills, list):
+        return final
 
     for skill in skills:
-
-        if not isinstance(
-            skill,
-            dict,
-        ):
+        if not isinstance(skill, dict):
             continue
 
-        skill_id = skill.get(
-            "skill_id"
-        )
+        skill_id = skill.get("skill_id")
+        name = skill.get("skill")
+        normalized_name = _normalize(name) if isinstance(name, str) else ""
 
-        skill_name = skill.get(
-            "skill"
-        )
-
-        normalized_name = (
-            _normalize(skill_name)
-            if skill_name
-            else ""
-        )
-
-        # ----------------------------------------------------
-        # Find existing skill
-        # ----------------------------------------------------
-
-        existing = None
-
-        if skill_id is not None:
-            existing = seen_ids.get(
-                skill_id
-            )
+        existing = seen_ids.get(skill_id) if skill_id is not None else None
 
         if existing is None and normalized_name:
-            existing = seen_names.get(
-                normalized_name
-            )
-
-        # ----------------------------------------------------
-        # Duplicate
-        # ----------------------------------------------------
+            existing = seen_names.get(normalized_name)
 
         if existing is not None:
-
-            _merge_source_metadata(
-                existing,
-                skill,
-            )
-
-            # ------------------------------------------------
-            # Preserve stack source information
-            # ------------------------------------------------
+            _merge_source_metadata(existing, skill)
 
             source_skills = []
+            for item in (existing, skill):
+                values = item.get("source_skills", [])
+                if isinstance(values, str):
+                    values = [values]
+                if isinstance(values, list):
+                    source_skills.extend(values)
 
-            for item in (
-                existing,
-                skill,
-            ):
-
-                value = item.get(
-                    "source_skills",
-                    [],
-                )
-
-                if isinstance(
-                    value,
-                    str,
-                ):
-                    value = [value]
-
-                if isinstance(
-                    value,
-                    list,
-                ):
-                    source_skills.extend(
-                        value
-                    )
-
-                source_skill = item.get(
-                    "source_skill"
-                )
-
-                if source_skill:
-                    source_skills.append(
-                        source_skill
-                    )
+                if item.get("source_skill"):
+                    source_skills.append(item["source_skill"])
 
             if source_skills:
-
                 existing["source_skills"] = list(
                     dict.fromkeys(
                         str(value).strip()
@@ -1071,176 +442,240 @@ def _deduplicate_final_skills(
 
             continue
 
-        # ----------------------------------------------------
-        # New skill
-        # ----------------------------------------------------
-
-        final.append(
-            skill
-        )
+        final.append(skill)
 
         if skill_id is not None:
             seen_ids[skill_id] = skill
 
         if normalized_name:
-            seen_names[
-                normalized_name
-            ] = skill
+            seen_names[normalized_name] = skill
 
     return final
 
 
-# ============================================================
-# MAIN SKILL EXTRACTION FUNCTION
-# ============================================================
+def _llm_skill_fallback(sections):
+    """
+    Extract skills with the LLM only when deterministic extraction fails.
 
+    LLM suggestions are converted into the normal candidate format and
+    passed through the master skill validator before being returned.
+    """
+    relevant_sections = {
+        "skills",
+        "summary",
+        "experience",
+        "projects",
+    }
+
+    text_parts = []
+
+    for section_name, section_content in sections.items():
+        if section_name.lower() not in relevant_sections:
+            continue
+
+        if isinstance(section_content, str):
+            content = section_content.strip()
+            if content:
+                text_parts.append(content)
+
+        elif isinstance(section_content, list):
+            for item in section_content:
+                if isinstance(item, str) and item.strip():
+                    text_parts.append(item.strip())
+
+                elif isinstance(item, dict):
+                    content = (
+                        item.get("text")
+                        or item.get("description")
+                        or item.get("content")
+                    )
+
+                    if isinstance(content, str) and content.strip():
+                        text_parts.append(content.strip())
+
+    resume_text = "\n".join(text_parts).strip()
+
+    if not resume_text:
+        return []
+
+    schema = {
+        "type": "object",
+        "properties": {
+            "skills": {
+                "type": "array",
+                "items": {"type": "string"},
+            }
+        },
+        "required": ["skills"],
+        "additionalProperties": False,
+    }
+
+    try:
+        response = llm_fallback_service.extract_json(
+            entity_name="skills",
+            text=resume_text,
+            output_schema=schema,
+        )
+
+        if not isinstance(response, dict):
+            return []
+
+        suggestions = response.get("skills", [])
+
+        if not isinstance(suggestions, list):
+            return []
+
+        # Convert LLM strings into the existing candidate format.
+        candidates = []
+        seen = set()
+
+        for suggestion in suggestions:
+            if not isinstance(suggestion, str):
+                continue
+
+            skill_name = suggestion.strip()
+
+            if not skill_name:
+                continue
+
+            normalized_name = skill_name.casefold()
+
+            if normalized_name in seen:
+                continue
+
+            seen.add(normalized_name)
+
+            candidates.append({
+                "skill": skill_name,
+                "source_section": "llm_fallback",
+                "source_text": resume_text,
+                "extraction_method": "llm_fallback",
+            })
+
+        if not candidates:
+            return []
+
+        # Resolvers must not accidentally erase all candidates.
+        resolved = resolve_spelling(candidates)
+        if isinstance(resolved, list) and resolved:
+            candidates = resolved
+
+        resolved = resolve_synonyms(candidates)
+        if isinstance(resolved, list) and resolved:
+            candidates = resolved
+
+        # The master validator is authoritative. Do not bypass it.
+        validated = validate_skills(candidates)
+
+        if not isinstance(validated, list) or not validated:
+            return []
+
+        # Stack expansion should preserve the validated original skills.
+        expanded = expand_skill_stacks(validated)
+
+        if not isinstance(expanded, list) or not expanded:
+            expanded = validated
+
+        return _deduplicate_final_skills(expanded)
+
+    except Exception:
+        # LLM failure must not crash resume parsing.
+        return []
+    
 def extract_skill(
     sections: dict[str, Any],
     profile: bool = False,
 ) -> list[dict[str, Any]]:
     """
-    Extract and normalize skills from the complete
-    section-detected resume.
+    Extract skills from detected resume sections.
 
-    profile=True prints timing information for each
-    internal skill-extraction stage.
+    LLM fallback is used only when the deterministic pipeline
+    cannot produce validated skills.
     """
 
-    if not isinstance(sections, dict):
-        return []
-
-    if not sections:
+    if not isinstance(sections, dict) or not sections:
         return []
 
     timings = {}
     total_start = time.perf_counter()
 
-    # ========================================================
-    # STEP 1 — COLLECT CANDIDATES
-    # ========================================================
-
+    # Step 1: collect candidates.
     start = time.perf_counter()
-
-    candidates = _collect_candidates(
-        sections,
-        profile=profile,
-    )
-
+    candidates = _collect_candidates(sections, profile=profile)
     timings["collect_candidates"] = time.perf_counter() - start
 
-    logger.debug(
-        "Skill extraction: collected %d raw candidates",
-        len(candidates),
-    )
+    logger.debug("Collected %d raw skill candidates", len(candidates))
 
-    if not candidates:
-        return []
-
-    # ========================================================
-    # STEP 2 — RAW CANDIDATE DEDUPLICATION
-    # ========================================================
-
+    # Step 2: raw deduplication.
     start = time.perf_counter()
-
     candidates = _deduplicate_candidates(candidates)
-
     timings["raw_deduplication"] = time.perf_counter() - start
 
-    logger.debug(
-        "Skill extraction: %d candidates after raw deduplication",
-        len(candidates),
-    )
-
+    # If no candidates exist, try the LLM fallback.
     if not candidates:
-        return []
+        logger.info("No raw skill candidates; trying LLM fallback")
+        fallback_skills = _llm_skill_fallback(sections)
 
-    # ========================================================
-    # STEP 3 — SPELLING RESOLUTION
-    # ========================================================
+        if profile:
+            print(
+                f"[SKILL LLM FALLBACK] "
+                f"skills={len(fallback_skills)} "
+                f"total={time.perf_counter() - total_start:.6f}s"
+            )
 
+        return fallback_skills
+
+    # Step 3: spelling resolution.
     start = time.perf_counter()
-
     candidates = resolve_spelling(candidates)
-
     timings["spelling_resolution"] = time.perf_counter() - start
 
-    logger.debug(
-        "Skill extraction: %d candidates after spelling resolution",
-        len(candidates),
-    )
-
     if not candidates:
-        return []
+        logger.info("Spelling resolution returned no candidates")
+        return _llm_skill_fallback(sections)
 
-    # ========================================================
-    # STEP 4 — SYNONYM / ALIAS RESOLUTION
-    # ========================================================
-
+    # Step 4: synonym / alias resolution.
     start = time.perf_counter()
-
     candidates = resolve_synonyms(candidates)
-
     timings["synonym_resolution"] = time.perf_counter() - start
 
-    logger.debug(
-        "Skill extraction: %d candidates after synonym resolution",
-        len(candidates),
-    )
-
     if not candidates:
-        return []
+        logger.info("Synonym resolution returned no candidates")
+        return _llm_skill_fallback(sections)
 
-    # ========================================================
-    # STEP 5 — MASTER SKILL VALIDATION
-    # ========================================================
-
+    # Step 5: master skill dictionary validation.
     start = time.perf_counter()
-
     validated_skills = validate_skills(candidates)
-
     timings["master_validation"] = time.perf_counter() - start
 
-    logger.debug(
-        "Skill extraction: %d skills after master validation",
-        len(validated_skills),
-    )
+    if not isinstance(validated_skills, list) or not validated_skills:
+        logger.info("No validated skills; trying LLM fallback")
+        fallback_skills = _llm_skill_fallback(sections)
 
-    if not validated_skills:
-        return []
+        if profile:
+            print(
+                f"[SKILL LLM FALLBACK] "
+                f"skills={len(fallback_skills)} "
+                f"total={time.perf_counter() - total_start:.6f}s"
+            )
 
-    # ========================================================
-    # STEP 6 — STACK EXPANSION
-    # ========================================================
+        return fallback_skills
 
+    # Step 6: stack expansion.
     start = time.perf_counter()
-
     expanded_skills = expand_skill_stacks(validated_skills)
-
     timings["stack_expansion"] = time.perf_counter() - start
 
-    logger.debug(
-        "Skill extraction: %d skills after stack expansion",
-        len(expanded_skills),
-    )
+    if not isinstance(expanded_skills, list) or not expanded_skills:
+        logger.info("Stack expansion returned no skills")
+        return _deduplicate_final_skills(validated_skills)
 
-    if not expanded_skills:
-        return []
-
-    # ========================================================
-    # STEP 7 — FINAL DEDUPLICATION
-    # ========================================================
-
+    # Step 7: final deduplication.
     start = time.perf_counter()
-
     final_skills = _deduplicate_final_skills(expanded_skills)
-
     timings["final_deduplication"] = time.perf_counter() - start
 
     total_time = time.perf_counter() - total_start
-
-    # ========================================================
-    # PROFILING OUTPUT
-    # ========================================================
 
     if profile:
         print()

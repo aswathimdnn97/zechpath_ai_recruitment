@@ -1,253 +1,93 @@
+
 import re
 
 
-# ============================================================
-# URL PATTERNS
-# ============================================================
-
 URL_PATTERN = re.compile(
-    r"""
+    r"""(?ix)
     (?:
-        https?://
+        https?://[^\s<>\[\]()]+
         |
-        www\.
+        www\.[^\s<>\[\]()]+
         |
-        github\.com/
-        |
-        gitlab\.com/
-        |
-        bitbucket\.org/
+        (?:github\.com|gitlab\.com|bitbucket\.org)/
+        [^\s<>\[\]()]+
     )
-    [^\s<>\[\]()]+
-    """,
-    re.IGNORECASE | re.VERBOSE,
+    """
 )
-
-
-DOMAIN_PATTERN = re.compile(
-    r"""
-    (?:
-        github\.com
-        |
-        gitlab\.com
-        |
-        bitbucket\.org
-    )
-    /
-    [^\s<>\[\]()]+
-    """,
-    re.IGNORECASE | re.VERBOSE,
-)
-
-
-# ============================================================
-# URL LABEL
-# ============================================================
 
 URL_LABEL_PATTERN = re.compile(
-    r"""
-    ^
-    (?:
-        github
-        |gitlab
-        |bitbucket
-        |repository
-        |repo
-        |demo
-        |live
-        |website
-        |url
-        |link
-    )
-    \s*:\s*
-    (.+)
-    $
-    """,
-    re.IGNORECASE | re.VERBOSE,
+    r"^\s*(?:github|gitlab|bitbucket|repository|repo|"
+    r"demo|live|website|url|link)\s*:\s*(.*)$",
+    re.IGNORECASE,
 )
 
 
-# ============================================================
-# CLEAN LINE
-# ============================================================
-
 def clean_line(line):
-
-    if not line:
+    if not isinstance(line, str):
         return ""
 
-    line = str(line).strip()
+    return re.sub(r"\s+", " ", line.strip())
 
-    line = re.sub(
-        r"^[•●▪◦*\-]\s*",
-        "",
-        line,
-    )
-
-    line = re.sub(
-        r"\s+",
-        " ",
-        line,
-    )
-
-    return line.strip()
-
-
-# ============================================================
-# CLEAN URL
-# ============================================================
 
 def clean_url(url):
-
     if not url:
         return None
 
-    url = url.strip()
+    url = url.strip().strip("<>\"'")
 
-    # Remove markdown brackets
-    url = url.strip(
-        "[]()<>"
-    )
+    # Remove common trailing punctuation.
+    url = url.rstrip(".,;:!?")
 
-    # Remove trailing punctuation
-    url = url.rstrip(
-        ".,;:)]}>"
-    )
+    # A Markdown closing parenthesis may be attached to a URL.
+    url = url.rstrip(")")
 
-    return url
+    return url or None
 
-
-# ============================================================
-# NORMALIZE URL
-# ============================================================
 
 def normalize_url(url):
-
-    if not url:
-        return None
-
     url = clean_url(url)
 
     if not url:
         return None
 
-    # Already has protocol
-    if url.startswith(
-        ("http://", "https://")
-    ):
+    if url.lower().startswith(("http://", "https://")):
         return url
 
-    # www
-    if url.startswith("www."):
+    if url.lower().startswith("www."):
+        return "https://" + url
 
-        return f"https://{url}"
-
-    # Known domains
     if re.match(
-        r"^(?:"
-        r"github\.com"
-        r"|gitlab\.com"
-        r"|bitbucket\.org"
-        r")/",
+        r"^(?:github\.com|gitlab\.com|bitbucket\.org)/",
         url,
         re.IGNORECASE,
     ):
+        return "https://" + url
 
-        return f"https://{url}"
+    return None
 
-    return url
-
-
-# ============================================================
-# EXTRACT PROJECT URL
-# ============================================================
 
 def extract_project_url(block):
-
     if not block:
         return None
 
-    if isinstance(block, str):
-
-        lines = block.splitlines()
-
-    elif isinstance(block, list):
-
-        lines = block
-
-    else:
-        return None
+    lines = block.splitlines() if isinstance(block, str) else block
 
     for raw_line in lines:
-
-        if not isinstance(raw_line, str):
-            continue
-
         line = clean_line(raw_line)
 
         if not line:
             continue
 
-        # ----------------------------------------------------
-        # Labelled URL
-        # ----------------------------------------------------
+        # Prefer a URL inside a labeled repository/demo line.
+        label_match = URL_LABEL_PATTERN.match(line)
+        search_text = label_match.group(1) if label_match else line
 
-        label_match = URL_LABEL_PATTERN.match(
-            line
-        )
+        match = URL_PATTERN.search(search_text)
 
-        if label_match:
+        if match:
+            url = normalize_url(match.group(0))
 
-            value = label_match.group(1).strip()
-
-            # Full URL
-            url_match = URL_PATTERN.search(
-                value
-            )
-
-            if url_match:
-
-                return normalize_url(
-                    url_match.group(0)
-                )
-
-            # GitHub/GitLab/etc without protocol
-            domain_match = DOMAIN_PATTERN.search(
-                value
-            )
-
-            if domain_match:
-
-                return normalize_url(
-                    domain_match.group(0)
-                )
-
-        # ----------------------------------------------------
-        # Any URL in line
-        # ----------------------------------------------------
-
-        url_match = URL_PATTERN.search(
-            line
-        )
-
-        if url_match:
-
-            return normalize_url(
-                url_match.group(0)
-            )
-
-        # ----------------------------------------------------
-        # Known domain without protocol
-        # ----------------------------------------------------
-
-        domain_match = DOMAIN_PATTERN.search(
-            line
-        )
-
-        if domain_match:
-
-            return normalize_url(
-                domain_match.group(0)
-            )
+            if url:
+                return url
 
     return None

@@ -292,7 +292,35 @@ def _is_metadata_line(line):
         )
     )
 
+def _looks_like_document_title(text):
+    """
+    Reject resume titles, document headers, and test-data
+    descriptions that are not actual certification names.
+    """
+    if not text:
+        return True
 
+    normalized = re.sub(
+        r"[^a-z0-9]+",
+        " ",
+        text.lower(),
+    ).strip()
+
+    invalid_phrases = (
+        "resume",
+        "curriculum vitae",
+        "fictional test data",
+        "test data for",
+        "eligibility api validation",
+        "evaluation resume",
+        "sample resume",
+        "candidate profile",
+    )
+
+    return any(
+        phrase in normalized
+        for phrase in invalid_phrases
+    )
 # ============================================================
 # MAIN EXTRACTOR
 # ============================================================
@@ -467,6 +495,10 @@ def extract_certification_name(block):
     if not text:
         return None
 
+    # Reject resume/document titles and test-data descriptions.
+    if _looks_like_document_title(text):
+        return None
+    
     # Must contain at least one alphabetic character.
     if not any(
         character.isalpha()

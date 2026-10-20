@@ -1,280 +1,172 @@
+
 import re
 
 
-# ============================================================
-# TECHNOLOGY LABEL
-# ============================================================
-
 TECHNOLOGY_LABEL_PATTERN = re.compile(
-    r"""
-    ^
-    (?:
-        technolog(?:y|ies)(?:\s+used)?
-        |tech(?:nology)?\s*stack
-        |tools?(?:\s*(?:&|and)\s*technologies?)?(?:\s+used)?
-        |languages?(?:\s*(?:&|and)\s*frameworks?)?
-        |frameworks?(?:\s+and\s+libraries)?
-        |built\s+(?:with|using)
-        |developed\s+using
-        |using
-    )
-    (?:\s*[:\-–—]\s*|\s+)
-    (.+)
-    $
-    """,
-    re.IGNORECASE | re.VERBOSE,
-)
-
-PROJECT_NARRATIVE_START_PATTERN = re.compile(
-    r"\s+(?=(?:"
-    r"built|developed|designed|implemented|created|engineered|"
-    r"architected|led|added|integrated|deployed|managed|automated|"
-    r"established|delivered|tested|used|worked|improved|maintained|"
-    r"configured|supported|provided|created|"
-    r"the\s+project|this\s+project|the\s+application|the\s+system"
-    r")\b)",
+    r"^\s*(?:"
+    r"technologies?(?:\s+used)?|tech\s*stack|"
+    r"tools?(?:\s*(?:&|and)\s*technologies?)?|"
+    r"languages?(?:\s*(?:&|and)\s*frameworks?)?|"
+    r"frameworks?(?:\s+and\s+libraries)?|"
+    r"built\s+(?:with|using)|developed\s+using"
+    r")\s*[:\-–—]\s*(.+)$",
     re.IGNORECASE,
 )
-
-
-# ============================================================
-# URL
-# ============================================================
 
 URL_PATTERN = re.compile(
-    r"""
-    (?:
-        https?://
-        |
-        www\.
-        |
-        github\.com
-        |
-        gitlab\.com
-        |
-        bitbucket\.org
-    )
-    """,
-    re.IGNORECASE | re.VERBOSE,
-)
-
-
-# ============================================================
-# TECHNOLOGY SEPARATOR
-# ============================================================
-
-TECH_SEPARATOR_PATTERN = re.compile(
-    r"\s*(?:,|\||;|•|&|\band\b)\s*",
+    r"https?://\S+|www\.\S+|"
+    r"(?:github\.com|gitlab\.com|bitbucket\.org)/\S+",
     re.IGNORECASE,
 )
 
+# Extend this list as your master skill dictionary grows.
+KNOWN_TECHNOLOGIES = [
+    "Python",
+    "Django",
+    "FastAPI",
+    "Flask",
+    "PostgreSQL",
+    "MySQL",
+    "SQLite",
+    "SQL",
+    "Git",
+    "GitHub",
+    "Postman",
+    "REST API",
+    "React",
+    "JavaScript",
+    "TypeScript",
+    "Java",
+    "Spring Boot",
+    "MongoDB",
+    "Redis",
+    "Docker",
+    "AWS",
+    "HTML",
+    "CSS",
+]
 
-# ============================================================
-# CLEAN LINE
-# ============================================================
+# Match longer names first, e.g. Spring Boot before Java.
+TECHNOLOGY_PATTERN = re.compile(
+    r"(?<!\w)(?:"
+    + "|".join(
+        re.escape(item)
+        for item in sorted(KNOWN_TECHNOLOGIES, key=len, reverse=True)
+    )
+    + r")(?!\w)",
+    re.IGNORECASE,
+)
+
+SEPARATOR_PATTERN = re.compile(r"\s*[,;|•]\s*")
+
 
 def clean_line(line):
-
-    if not line:
+    if not isinstance(line, str):
         return ""
 
-    line = str(line).strip()
+    line = re.sub(r"^[•●▪◦*\-]+\s*", "", line.strip())
+    return re.sub(r"\s+", " ", line).strip()
 
-    line = re.sub(
-        r"^[•●▪◦*\-]\s*",
-        "",
-        line,
-    )
-
-    line = re.sub(
-        r"\s+",
-        " ",
-        line,
-    )
-
-    return line.strip()
-
-
-# ============================================================
-# TECHNOLOGY LINE
-# ============================================================
 
 def is_technology_line(line):
+    """
+    Check whether a line contains an explicit technology label.
 
-    if not line:
+    Supports labels such as:
+    Technologies: Python, Django
+    Technology Used: FastAPI
+    Tech Stack: React, Django
+    Tools: Git, Postman
+    Built with Python, Django
+    Developed using FastAPI
+    """
+    if not isinstance(line, str) or not line.strip():
         return False
 
-    return bool(
-        TECHNOLOGY_LABEL_PATTERN.match(line)
+    return bool(TECHNOLOGY_LABEL_PATTERN.match(line.strip()))
+
+def _split_list(text):
+    text = URL_PATTERN.sub("", text)
+    return [
+        item.strip(" \t.,;:|")
+        for item in SEPARATOR_PATTERN.split(text)
+        if item.strip(" \t.,;:|")
+    ]
+
+
+def _extract_known_technologies(text):
+    text = URL_PATTERN.sub("", text)
+    text = re.sub(
+        r"\b(?:github|gitlab|bitbucket)\s*:\s*$",
+        "",
+        text,
+        flags=re.IGNORECASE,
     )
-
-
-# ============================================================
-# EXTRACT TECHNOLOGY TEXT
-# ============================================================
-
-def extract_technology_text(line):
-
-    match = TECHNOLOGY_LABEL_PATTERN.match(line)
-
-    if not match:
-        return None
-
-    technology_text = match.group(1).strip()
-    narrative_boundary = PROJECT_NARRATIVE_START_PATTERN.search(
-        technology_text
-    )
-
-    if narrative_boundary:
-        technology_text = technology_text[:narrative_boundary.start()]
-
-    return technology_text.strip(" .;")
-
+    return [match.group(0) for match in TECHNOLOGY_PATTERN.finditer(text)]
 
 def extract_project_narrative_from_technology_line(line):
-    match = TECHNOLOGY_LABEL_PATTERN.match(line)
+    """
+    Extract narrative text that follows the technology list.
+
+    Example:
+        Technologies: Python, Django. Developed a REST API.
+
+    Returns:
+        Developed a REST API.
+    """
+    match = TECHNOLOGY_LABEL_PATTERN.match(line.strip())
 
     if not match:
         return None
 
     technology_text = match.group(1).strip()
-    narrative_boundary = PROJECT_NARRATIVE_START_PATTERN.search(
-        technology_text
+
+    narrative_pattern = re.compile(
+        r"\s+(?=(?:"
+        r"developed|built|designed|implemented|created|"
+        r"engineered|integrated|deployed|managed|tested|"
+        r"maintained|configured|validated|automated"
+        r")\b)",
+        re.IGNORECASE,
     )
 
-    if not narrative_boundary:
+    boundary = narrative_pattern.search(technology_text)
+
+    if not boundary:
         return None
 
-    narrative = technology_text[narrative_boundary.start():].strip()
-    return narrative or None
+    return technology_text[boundary.start():].strip() or None
 
 
-# ============================================================
-# SPLIT TECHNOLOGIES
-# ============================================================
-
-def split_technologies(text):
-
-    if not text:
-        return []
-
-    # Remove URLs
-    text = URL_PATTERN.sub("", text)
-
-    parts = TECH_SEPARATOR_PATTERN.split(text)
-
-    technologies = []
-
-    for part in parts:
-
-        part = part.strip()
-
-        if not part:
-            continue
-
-        technologies.append(part)
-
-    return technologies
-
-
-# ============================================================
-# CLEAN TECHNOLOGY
-# ============================================================
-
-def clean_technology(technology):
-
-    if not technology:
-        return ""
-
-    technology = technology.strip()
-
-    technology = technology.strip(
-        ":-,;|"
-    )
-
-    technology = re.sub(
-        r"\s+",
-        " ",
-        technology,
-    )
-
-    return technology.strip()
-
-
-# ============================================================
-# EXTRACT PROJECT TECHNOLOGIES
-# ============================================================
 
 def extract_project_technologies(block):
-
     if not block:
         return []
 
-    if isinstance(block, str):
-
-        lines = block.splitlines()
-
-    elif isinstance(block, list):
-
-        lines = block
-
-    else:
-        return []
-
+    lines = block.splitlines() if isinstance(block, str) else block
     technologies = []
+    seen = set()
 
     for raw_line in lines:
-
-        if not isinstance(raw_line, str):
-            continue
-
         line = clean_line(raw_line)
 
         if not line:
             continue
 
-        if not is_technology_line(line):
-            continue
+        # First handle explicit technology labels.
+        label_match = TECHNOLOGY_LABEL_PATTERN.match(line)
 
-        technology_text = extract_technology_text(line)
+        if label_match:
+            found = _split_list(label_match.group(1))
+        else:
+            # Also find recognized technologies in narrative text.
+            found = _extract_known_technologies(line)
 
-        if not technology_text:
-            continue
+        for technology in found:
+            key = technology.casefold()
 
-        extracted = split_technologies(
-            technology_text
-        )
+            if key not in seen:
+                seen.add(key)
+                technologies.append(technology)
 
-        for technology in extracted:
-
-            technology = clean_technology(
-                technology
-            )
-
-            if technology:
-                technologies.append(
-                    technology
-                )
-
-    # --------------------------------------------------------
-    # Remove duplicates while preserving order
-    # --------------------------------------------------------
-
-    unique_technologies = []
-
-    seen = set()
-
-    for technology in technologies:
-
-        key = technology.lower()
-
-        if key in seen:
-            continue
-
-        seen.add(key)
-
-        unique_technologies.append(
-            technology
-        )
-
-    return unique_technologies
+    return technologies
