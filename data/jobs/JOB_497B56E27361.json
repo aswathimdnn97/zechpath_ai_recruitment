@@ -1,0 +1,13 @@
+{
+  "job_id": "JOB_497B56E27361",
+  "job_type": "CANDIDATE_SCORING",
+  "candidate_id": "CAN_410B14422E90",
+  "jd_id": "SeniorPythonDeveloper",
+  "status": "COMPLETED",
+  "progress": 100,
+  "created_at": "2026-09-24T07:17:15.655140+00:00",
+  "started_at": "2026-09-24T07:17:15.680013+00:00",
+  "completed_at": "2026-09-24T07:17:25.010042+00:00",
+  "result_reference": "data/candidates/scoring_results/CAN_410B14422E90/SeniorPythonDeveloper.json",
+  "error": null
+}

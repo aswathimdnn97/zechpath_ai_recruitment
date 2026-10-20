@@ -1,0 +1,13 @@
+{
+  "job_id": "JOB_4B65B774FB04",
+  "job_type": "CANDIDATE_SCORING",
+  "candidate_id": "CAN_B67DE2B9BADB",
+  "jd_id": "PythonDeveloperFresher",
+  "status": "COMPLETED",
+  "progress": 100,
+  "created_at": "2026-09-22T14:52:29.254037+00:00",
+  "started_at": "2026-09-22T14:52:29.289318+00:00",
+  "completed_at": "2026-09-22T14:52:37.760115+00:00",
+  "result_reference": "data/candidates/scoring_results/CAN_B67DE2B9BADB/PythonDeveloperFresher.json",
+  "error": null
+}

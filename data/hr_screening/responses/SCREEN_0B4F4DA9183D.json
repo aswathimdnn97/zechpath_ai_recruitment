@@ -1,0 +1,34 @@
+{
+  "session_id": "SCREEN_0B4F4DA9183D",
+  "answers": {
+    "PYF_INTRO_001": {
+      "question_id": "PYF_INTRO_001",
+      "answer": "എന്റെ പേര് അശ്വതിയാണ്. ഞാൻ ഇലക്ട്രോണിക്സ് ആൻഡ് കമ്മ്യൂണിക്കേഷൻ എൻജിനീയറിംഗിൽ ബി.ടെക് പൂർത്തിയാക്കിയിട്ടുണ്ട്. എനിക്ക് Java ഡെവലപ്പറായി ഒരു വർഷത്തെ പ്രവൃത്തിപരിചയമുണ്ട്. ഇപ്പോൾ Python, Django, ReactJS, SQL എന്നിവയിൽ പരിശീലനം നേടിയിട്ടുണ്ട്. Python ഉപയോഗിച്ച് വെബ് ആപ്ലിക്കേഷനുകളും REST API-കളും വികസിപ്പിക്കാൻ എനിക്ക് താൽപ്പര്യമുണ്ട്. ഒരു മികച്ച Python ഡെവലപ്പറായി വളരാനാണ് എന്റെ ലക്ഷ്യം.",
+      "selected_options": null,
+      "details": null,
+      "currency": null,
+      "minimum_amount": null,
+      "maximum_amount": null,
+      "joining_date": null,
+      "duration": null,
+      "answered": true,
+      "updated_at": "2026-10-19T10:18:52.163814+00:00"
+    },
+    "PYF_INTRO_002": {
+      "question_id": "PYF_INTRO_002",
+      "answer": "അടുത്തിടെ ഞാൻ Python Core, Django, ReactJS, SQL എന്നിവ പഠിക്കുകയും പരിശീലിക്കുകയും ചെയ്തു. Django ഉപയോഗിച്ച് വെബ് ആപ്ലിക്കേഷനുകളും FastAPI ഉപയോഗിച്ച് REST API-കളും നിർമ്മിക്കാൻ പരിശീലിച്ചു. കൂടാതെ SQL ക്വറികൾ എഴുതാനും Git ഉപയോഗിച്ച് കോഡ് മാനേജ് ചെയ്യാനും പരിശീലനം നേടി.",
+      "selected_options": null,
+      "details": null,
+      "currency": null,
+      "minimum_amount": null,
+      "maximum_amount": null,
+      "joining_date": null,
+      "duration": null,
+      "answered": true,
+      "updated_at": "2026-10-19T10:18:52.163814+00:00"
+    }
+  },
+  "created_at": "2026-10-19T10:15:52.240840+00:00",
+  "updated_at": "2026-10-19T10:18:52.163814+00:00",
+  "candidate_id": "CAN_B3B39704E1FF"
+}

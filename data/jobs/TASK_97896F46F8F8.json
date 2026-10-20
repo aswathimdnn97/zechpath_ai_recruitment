@@ -1,0 +1,14 @@
+{
+  "task_id": "TASK_97896F46F8F8",
+  "task_type": "CANDIDATE_SCORING",
+  "candidate_id": "CAN_CB63A04EDA0B",
+  "jd_id": "SeniorPythonDeveloper",
+  "recruitment_job_id": "JOB_57C5EC85A717",
+  "status": "COMPLETED",
+  "progress": 100,
+  "created_at": "2026-09-24T17:38:18.890843+00:00",
+  "started_at": "2026-09-24T17:38:18.894846+00:00",
+  "completed_at": "2026-09-24T17:38:20.862983+00:00",
+  "result_reference": "data/candidates/scoring_results/JOB_57C5EC85A717/CAN_CB63A04EDA0B.json",
+  "error": null
+}

@@ -1,0 +1,13 @@
+{
+  "job_id": "JOB_77CC174065AA",
+  "job_type": "CANDIDATE_SCORING",
+  "candidate_id": "CAN_C5D1338F49C1",
+  "jd_id": "SeniorPythonDeveloper",
+  "status": "COMPLETED",
+  "progress": 100,
+  "created_at": "2026-09-24T06:39:51.862612+00:00",
+  "started_at": "2026-09-24T06:39:51.895145+00:00",
+  "completed_at": "2026-09-24T06:39:57.294533+00:00",
+  "result_reference": "data/candidates/scoring_results/CAN_C5D1338F49C1/SeniorPythonDeveloper.json",
+  "error": null
+}

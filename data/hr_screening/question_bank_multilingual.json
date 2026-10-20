@@ -1,0 +1,1612 @@
+{
+  "schema_version": "1.0",
+  "default_language": "en",
+  "supported_languages": [
+    "en",
+    "ml",
+    "hi"
+  ],
+  "roles": [
+    "PYTHON_DEV_FRESHER",
+    "SENIOR_PYTHON_DEVELOPER",
+    "HR_EXECUTIVE_FRESHER",
+    "SENIOR_HR_EXECUTIVE"
+  ],
+  "categories": [
+    "INTRODUCTION",
+    "EDUCATION",
+    "EXPERIENCE",
+    "SKILLS",
+    "LOCATION",
+    "SALARY",
+    "NOTICE_PERIOD"
+  ],
+  "answer_types": [
+    "TEXT",
+    "YES_NO_WITH_DETAILS",
+    "MULTI_SELECT_WITH_DETAILS",
+    "CURRENCY_RANGE",
+    "DATE_OR_DURATION"
+  ],
+  "scoring_importance_scale": {
+    "min": 1,
+    "max": 10
+  },
+  "questions": [
+    {
+      "question_id": "PYF_INTRO_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "INTRODUCTION",
+      "template_id": "INTRO_OPEN_01",
+      "question_text": {
+        "en": "Tell me about yourself and why you want to become a Python developer.",
+        "ml": "നിങ്ങളെക്കുറിച്ചും ഒരു Python ഡെവലപ്പറാകാൻ ആഗ്രഹിക്കുന്നതെന്തുകൊണ്ടാണെന്നും പറയൂ.",
+        "hi": "अपने बारे में बताइए और आप Python डेवलपर क्यों बनना चाहते हैं, यह समझाइए।"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 3,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_INTRO_002",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "INTRODUCTION",
+      "template_id": "INTRO_PREP_01",
+      "question_text": {
+        "en": "What have you done recently to prepare for a Python developer role?",
+        "ml": "Python ഡെവലപ്പർ സ്ഥാനത്തിനായി തയ്യാറെടുക്കാൻ അടുത്തിടെ നിങ്ങൾ എന്തെല്ലാം ചെയ്തു?",
+        "hi": "Python डेवलपर की भूमिका के लिए तैयारी करने हेतु आपने हाल ही में क्या किया है?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 4,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "max_score": 5,
+      "evaluation_criteria": [
+        {
+          "criterion": "Python learning",
+          "keywords": [
+            "python",
+            "course",
+            "training",
+            "tutorial"
+          ],
+          "weight": 2,
+          "required": false
+        },
+        {
+          "criterion": "Practical coding",
+          "keywords": [
+            "practice",
+            "coding",
+            "program",
+            "exercise"
+          ],
+          "weight": 1,
+          "required": false
+        },
+        {
+          "criterion": "Project experience",
+          "keywords": [
+            "project",
+            "application",
+            "django",
+            "api"
+          ],
+          "weight": 1,
+          "required": false
+        },
+        {
+          "criterion": "Preparation plan",
+          "keywords": [
+            "learning",
+            "improve",
+            "prepare",
+            "develop"
+          ],
+          "weight": 1,
+          "required": false
+        }
+      ],
+      "active": true,
+      "version": "1.1"
+    },
+    {
+      "question_id": "PYF_EDU_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "EDUCATION",
+      "template_id": "EDU_QUAL_01",
+      "question_text": {
+        "en": "What is your highest qualification, and which subjects are relevant to software development?",
+        "ml": "നിങ്ങളുടെ ഏറ്റവും ഉയർന്ന വിദ്യാഭ്യാസ യോഗ്യത എന്താണ്? സോഫ്റ്റ്‌വെയർ വികസനവുമായി ബന്ധപ്പെട്ട വിഷയങ്ങൾ ഏതൊക്കെയാണ്?",
+        "hi": "आपकी सबसे उच्च शैक्षणिक योग्यता क्या है, और सॉफ़्टवेयर विकास से संबंधित विषय कौन-से हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 3,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_EDU_002",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "EDUCATION",
+      "template_id": "EDU_TRAINING_01",
+      "question_text": {
+        "en": "Have you completed any training, coursework, or certifications related to Python or web development?",
+        "ml": "Python അല്ലെങ്കിൽ വെബ് വികസനവുമായി ബന്ധപ്പെട്ട പരിശീലനം, കോഴ്‌സ് വർക്ക്, സർട്ടിഫിക്കേഷൻ എന്നിവ പൂർത്തിയാക്കിയിട്ടുണ്ടോ?",
+        "hi": "क्या आपने Python या वेब डेवलपमेंट से संबंधित कोई प्रशिक्षण, कोर्सवर्क या प्रमाणपत्र पूरा किया है?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 3,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_EXP_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "EXPERIENCE",
+      "template_id": "EXP_PROJECT_01",
+      "question_text": {
+        "en": "Describe a project, internship, or practical exercise in which you used Python and explain your contribution.",
+        "ml": "Python ഉപയോഗിച്ച ഒരു പ്രോജക്റ്റ്, ഇന്റേൺഷിപ്പ്, അല്ലെങ്കിൽ പ്രായോഗിക അഭ്യാസം വിവരിക്കുകയും അതിൽ നിങ്ങളുടെ സംഭാവന വിശദീകരിക്കുകയും ചെയ്യൂ.",
+        "hi": "ऐसी किसी परियोजना, इंटर्नशिप या व्यावहारिक अभ्यास का वर्णन करें जिसमें आपने Python का उपयोग किया हो, और उसमें अपने योगदान को समझाएँ।"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 7,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_EXP_002",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "EXPERIENCE",
+      "template_id": "EXP_TEAM_01",
+      "question_text": {
+        "en": "Describe a time you collaborated with others on a project, or explain how you would approach teamwork as a developer.",
+        "ml": "ഒരു പ്രോജക്റ്റിൽ മറ്റുള്ളവരുമായി സഹകരിച്ച അനുഭവം വിവരിക്കുക; അല്ലെങ്കിൽ ഒരു ഡെവലപ്പറായി ടീം പ്രവർത്തനത്തെ എങ്ങനെ സമീപിക്കുമെന്ന് വിശദീകരിക്കുക.",
+        "hi": "किसी परियोजना में दूसरों के साथ सहयोग करने का अनुभव बताएँ, या समझाएँ कि डेवलपर के रूप में आप टीमवर्क कैसे करेंगे।"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 3,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_SKILL_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "SKILLS",
+      "template_id": "SKILL_EVIDENCE_01",
+      "question_text": {
+        "en": "Which Python concepts and frameworks have you used, and how have you applied them in practice?",
+        "ml": "നിങ്ങൾ ഉപയോഗിച്ച Python ആശയങ്ങളും ഫ്രെയിംവർക്കുകളും ഏതൊക്കെയാണ്? അവ പ്രായോഗികമായി എങ്ങനെ ഉപയോഗിച്ചു?",
+        "hi": "आपने Python की किन अवधारणाओं और फ्रेमवर्क का उपयोग किया है? उन्हें व्यवहार में कैसे लागू किया?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 9,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_SKILL_002",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "SKILLS",
+      "template_id": "SKILL_TOOLS_01",
+      "question_text": {
+        "en": "Which of these have you used: databases, REST APIs, Git, Django, FastAPI, or automated testing? Describe your experience.",
+        "ml": "ഡാറ്റാബേസുകൾ, REST API-കൾ, Git, Django, FastAPI, അല്ലെങ്കിൽ ഓട്ടോമേറ്റഡ് ടെസ്റ്റിംഗ് എന്നിവയിൽ ഏതൊക്കെയാണ് ഉപയോഗിച്ചിട്ടുള്ളത്? നിങ്ങളുടെ അനുഭവം വിവരിക്കുക.",
+        "hi": "आपने इनमें से किनका उपयोग किया है: डेटाबेस, REST API, Git, Django, FastAPI या स्वचालित परीक्षण? अपना अनुभव बताएँ।"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "MULTI_SELECT_WITH_DETAILS",
+      "options": [
+        {
+          "option_id": "DATABASES",
+          "label": "Databases (SQL, PostgreSQL, MySQL)",
+          "label_translations": {
+            "en": "Databases (SQL, PostgreSQL, MySQL)",
+            "ml": "ഡാറ്റാബേസുകൾ (SQL, PostgreSQL, MySQL)",
+            "hi": "डेटाबेस (SQL, PostgreSQL, MySQL)"
+          }
+        },
+        {
+          "option_id": "REST_APIS",
+          "label": "REST APIs",
+          "label_translations": {
+            "en": "REST APIs",
+            "ml": "REST API-കൾ",
+            "hi": "REST API"
+          }
+        },
+        {
+          "option_id": "GIT",
+          "label": "Git",
+          "label_translations": {
+            "en": "Git",
+            "ml": "Git",
+            "hi": "Git"
+          }
+        },
+        {
+          "option_id": "DJANGO",
+          "label": "Django",
+          "label_translations": {
+            "en": "Django",
+            "ml": "Django",
+            "hi": "Django"
+          }
+        },
+        {
+          "option_id": "FASTAPI",
+          "label": "FastAPI",
+          "label_translations": {
+            "en": "FastAPI",
+            "ml": "FastAPI",
+            "hi": "FastAPI"
+          }
+        },
+        {
+          "option_id": "AUTOMATED_TESTING",
+          "label": "Automated testing",
+          "label_translations": {
+            "en": "Automated testing",
+            "ml": "ഓട്ടോമേറ്റഡ് ടെസ്റ്റിംഗ്",
+            "hi": "स्वचालित परीक्षण"
+          }
+        },
+        {
+          "option_id": "OTHER",
+          "label": "Other",
+          "label_translations": {
+            "en": "Other",
+            "ml": "മറ്റുള്ളവ",
+            "hi": "अन्य"
+          }
+        },
+        {
+          "option_id": "NONE",
+          "label": "None of these",
+          "label_translations": {
+            "en": "None of these",
+            "ml": "ഇവയൊന്നുമില്ല",
+            "hi": "इनमें से कोई नहीं"
+          }
+        }
+      ],
+      "mandatory": false,
+      "scoring_importance": 7,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.1"
+    },
+    {
+      "question_id": "PYF_LOC_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "LOCATION",
+      "template_id": "LOCATION_WORKMODE_01",
+      "question_text": {
+        "en": "This role is based in {job_location} with a {work_mode} arrangement. Can you meet this work-location requirement?",
+        "ml": "ഈ ജോലി {job_location} ആസ്ഥാനമായുള്ളതാണ്; ജോലി രീതി {work_mode} ആണ്. ഈ സ്ഥലവും ജോലിരീതിയും സംബന്ധിച്ച ആവശ്യകത പാലിക്കാനാകുമോ?",
+        "hi": "यह भूमिका {job_location} में है और कार्य व्यवस्था {work_mode} है। क्या आप इस स्थान और कार्य व्यवस्था की आवश्यकता पूरी कर सकते हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": true,
+      "scoring_importance": 3,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_LOC_002",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "LOCATION",
+      "template_id": "LOCATION_RELOCATION_01",
+      "question_text": {
+        "en": "Would you need relocation assistance or a different work-location arrangement to accept this role?",
+        "ml": "ഈ ജോലി സ്വീകരിക്കാൻ സ്ഥലംമാറ്റ സഹായമോ മറ്റൊരു ജോലി-സ്ഥല ക്രമീകരണമോ ആവശ്യമുണ്ടോ?",
+        "hi": "क्या इस भूमिका को स्वीकार करने के लिए आपको स्थानांतरण सहायता या किसी अलग कार्य-स्थान व्यवस्था की आवश्यकता होगी?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_SAL_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "SALARY",
+      "template_id": "SALARY_RANGE_01",
+      "question_text": {
+        "en": "What is your expected annual salary range in {currency}?",
+        "ml": "{currency} പ്രകാരം നിങ്ങളുടെ പ്രതീക്ഷിക്കുന്ന വാർഷിക ശമ്പള പരിധി എത്രയാണ്?",
+        "hi": "{currency} में आपकी अपेक्षित वार्षिक वेतन सीमा क्या है?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "CURRENCY_RANGE",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_SAL_002",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "SALARY",
+      "template_id": "SALARY_BUDGET_01",
+      "question_text": {
+        "en": "Are you comfortable discussing compensation within the budget range shared for this position?",
+        "ml": "ഈ സ്ഥാനത്തിനായി അറിയിച്ചിരിക്കുന്ന ബജറ്റ് പരിധിക്കുള്ളിൽ ശമ്പളത്തെക്കുറിച്ച് ചർച്ച ചെയ്യാൻ നിങ്ങൾക്ക് സൗകര്യമുണ്ടോ?",
+        "hi": "क्या आप इस पद के लिए बताई गई बजट सीमा के भीतर वेतन पर चर्चा करने के लिए तैयार हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_NOTICE_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "NOTICE_PERIOD",
+      "template_id": "JOINING_DATE_01",
+      "question_text": {
+        "en": "If selected, when would you be available to join?",
+        "ml": "തിരഞ്ഞെടുക്കപ്പെട്ടാൽ നിങ്ങൾക്ക് എപ്പോൾ ജോലിയിൽ പ്രവേശിക്കാനാകും?",
+        "hi": "यदि आपका चयन होता है, तो आप कब काम शुरू कर सकते हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "DATE_OR_DURATION",
+      "mandatory": true,
+      "scoring_importance": 4,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_NOTICE_002",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "NOTICE_PERIOD",
+      "template_id": "JOINING_COMMITMENTS_01",
+      "question_text": {
+        "en": "Do you have any commitments that could affect your expected joining date?",
+        "ml": "നിങ്ങളുടെ പ്രതീക്ഷിക്കുന്ന ജോലിയിൽ പ്രവേശന തീയതിയെ ബാധിക്കാവുന്ന ബാധ്യതകളോ മുൻകൂട്ടിയുള്ള ക്രമീകരണങ്ങളോ ഉണ്ടോ?",
+        "hi": "क्या आपकी कोई प्रतिबद्धताएँ हैं जो आपकी अपेक्षित जॉइनिंग तिथि को प्रभावित कर सकती हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_INTRO_001",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "INTRODUCTION",
+      "template_id": "INTRO_OPEN_01",
+      "question_text": {
+        "en": "Summarize your Python development experience and the types of systems you have worked on.",
+        "ml": "Python വികസനത്തിലെ നിങ്ങളുടെ അനുഭവവും നിങ്ങൾ പ്രവർത്തിച്ച സിസ്റ്റങ്ങളുടെ തരങ്ങളും സംക്ഷിപ്തമായി വിവരിക്കുക.",
+        "hi": "Python डेवलपमेंट में अपने अनुभव और जिन प्रकार के सिस्टम पर आपने काम किया है, उनका सार बताएँ।"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 4,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_INTRO_002",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "INTRODUCTION",
+      "template_id": "INTRO_ACHIEVEMENT_01",
+      "question_text": {
+        "en": "What technical contribution or engineering improvement are you most proud of, and why?",
+        "ml": "നിങ്ങൾക്ക് ഏറ്റവും അഭിമാനമുള്ള സാങ്കേതിക സംഭാവനയോ എഞ്ചിനീയറിംഗ് മെച്ചപ്പെടുത്തലോ എന്താണ്? എന്തുകൊണ്ട്?",
+        "hi": "आपका सबसे गर्वपूर्ण तकनीकी योगदान या इंजीनियरिंग सुधार कौन-सा है, और क्यों?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 4,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_EDU_001",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "EDUCATION",
+      "template_id": "EDU_QUAL_01",
+      "question_text": {
+        "en": "What is your highest qualification, and which parts of your education are relevant to this role?",
+        "ml": "നിങ്ങളുടെ ഏറ്റവും ഉയർന്ന വിദ്യാഭ്യാസ യോഗ്യത എന്താണ്? ഈ ജോലിക്ക് പ്രസക്തമായ പഠനഭാഗങ്ങൾ ഏതൊക്കെയാണ്?",
+        "hi": "आपकी सबसे उच्च शैक्षणिक योग्यता क्या है, और आपकी शिक्षा के कौन-से हिस्से इस भूमिका से संबंधित हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_EDU_002",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "EDUCATION",
+      "template_id": "EDU_TRAINING_01",
+      "question_text": {
+        "en": "Have you completed recent training or certifications relevant to Python, cloud platforms, architecture, or security?",
+        "ml": "Python, ക്ലൗഡ് പ്ലാറ്റ്‌ഫോമുകൾ, ആർക്കിടെക്ചർ, അല്ലെങ്കിൽ സുരക്ഷ എന്നിവയുമായി ബന്ധപ്പെട്ട സമീപകാല പരിശീലനമോ സർട്ടിഫിക്കേഷനുകളോ പൂർത്തിയാക്കിയിട്ടുണ്ടോ?",
+        "hi": "क्या आपने Python, क्लाउड प्लेटफ़ॉर्म, आर्किटेक्चर या सुरक्षा से संबंधित हाल का प्रशिक्षण या प्रमाणपत्र पूरा किया है?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_EXP_001",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "EXPERIENCE",
+      "template_id": "EXP_PROJECT_01",
+      "question_text": {
+        "en": "Describe a production Python system you helped design or maintain, including your responsibilities and its technical constraints.",
+        "ml": "നിങ്ങൾ രൂപകൽപ്പന ചെയ്യാനോ പരിപാലിക്കാനോ സഹായിച്ച ഒരു പ്രൊഡക്ഷൻ Python സിസ്റ്റം വിവരിക്കുക. നിങ്ങളുടെ ഉത്തരവാദിത്തങ്ങളും സാങ്കേതിക നിയന്ത്രണങ്ങളും ഉൾപ്പെടുത്തുക.",
+        "hi": "ऐसे प्रोडक्शन Python सिस्टम का वर्णन करें जिसे डिज़ाइन या बनाए रखने में आपने मदद की। अपनी ज़िम्मेदारियाँ और तकनीकी सीमाएँ भी बताएँ।"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 10,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_EXP_002",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "EXPERIENCE",
+      "template_id": "EXP_STAR_01",
+      "question_text": {
+        "en": "Describe a time you improved software reliability, performance, or maintainability. What changed and what was the result?",
+        "ml": "സോഫ്റ്റ്‌വെയറിന്റെ വിശ്വാസ്യത, പ്രകടനം, അല്ലെങ്കിൽ പരിപാലനക്ഷമത മെച്ചപ്പെടുത്തിയ അനുഭവം വിവരിക്കുക. എന്താണ് മാറിയത്, ഫലം എന്തായിരുന്നു?",
+        "hi": "सॉफ़्टवेयर की विश्वसनीयता, प्रदर्शन या रखरखाव क्षमता सुधारने का अनुभव बताएँ। क्या बदला और परिणाम क्या रहा?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 9,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_SKILL_001",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "SKILLS",
+      "template_id": "SKILL_EVIDENCE_01",
+      "question_text": {
+        "en": "Describe your experience with Python architecture, testing, API design, database performance, and deployment practices relevant to this role.",
+        "ml": "ഈ ജോലിക്ക് പ്രസക്തമായ Python ആർക്കിടെക്ചർ, ടെസ്റ്റിംഗ്, API ഡിസൈൻ, ഡാറ്റാബേസ് പ്രകടനം, ഡിപ്ലോയ്‌മെന്റ് രീതികൾ എന്നിവയിലെ നിങ്ങളുടെ അനുഭവം വിവരിക്കുക.",
+        "hi": "इस भूमिका से संबंधित Python आर्किटेक्चर, टेस्टिंग, API डिज़ाइन, डेटाबेस प्रदर्शन और डिप्लॉयमेंट प्रक्रियाओं का अपना अनुभव बताएँ।"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 10,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_SKILL_002",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "SKILLS",
+      "template_id": "SKILL_TOOLS_01",
+      "question_text": {
+        "en": "Which production tools have you used, such as Django, FastAPI, SQL databases, containers, CI/CD, cloud services, monitoring, or message queues? Describe your experience.",
+        "ml": "Django, FastAPI, SQL ഡാറ്റാബേസുകൾ, കണ്ടെയ്‌നറുകൾ, CI/CD, ക്ലൗഡ് സേവനങ്ങൾ, മോണിറ്ററിംഗ്, അല്ലെങ്കിൽ മെസേജ് ക്യൂകൾ പോലുള്ള പ്രൊഡക്ഷൻ ടൂളുകളിൽ ഏതൊക്കെയാണ് ഉപയോഗിച്ചിട്ടുള്ളത്? വിശദീകരിക്കുക.",
+        "hi": "Django, FastAPI, SQL डेटाबेस, कंटेनर, CI/CD, क्लाउड सेवाएँ, मॉनिटरिंग या मैसेज क्यू जैसे किन प्रोडक्शन टूल का उपयोग किया है? अपना अनुभव बताएँ।"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "MULTI_SELECT_WITH_DETAILS",
+      "options": [
+        {
+          "option_id": "DJANGO",
+          "label": "Django",
+          "label_translations": {
+            "en": "Django",
+            "ml": "Django",
+            "hi": "Django"
+          }
+        },
+        {
+          "option_id": "FASTAPI",
+          "label": "FastAPI",
+          "label_translations": {
+            "en": "FastAPI",
+            "ml": "FastAPI",
+            "hi": "FastAPI"
+          }
+        },
+        {
+          "option_id": "SQL_DATABASES",
+          "label": "SQL databases",
+          "label_translations": {
+            "en": "SQL databases",
+            "ml": "SQL ഡാറ്റാബേസുകൾ",
+            "hi": "SQL डेटाबेस"
+          }
+        },
+        {
+          "option_id": "CONTAINERS",
+          "label": "Docker or containers",
+          "label_translations": {
+            "en": "Docker or containers",
+            "ml": "Docker അല്ലെങ്കിൽ കണ്ടെയ്‌നറുകൾ",
+            "hi": "Docker या कंटेनर"
+          }
+        },
+        {
+          "option_id": "CI_CD",
+          "label": "CI/CD pipelines",
+          "label_translations": {
+            "en": "CI/CD pipelines",
+            "ml": "CI/CD പൈപ്പ്‌ലൈനുകൾ",
+            "hi": "CI/CD पाइपलाइन"
+          }
+        },
+        {
+          "option_id": "CLOUD",
+          "label": "Cloud services",
+          "label_translations": {
+            "en": "Cloud services",
+            "ml": "ക്ലൗഡ് സേവനങ്ങൾ",
+            "hi": "क्लाउड सेवाएँ"
+          }
+        },
+        {
+          "option_id": "MONITORING",
+          "label": "Monitoring and logging",
+          "label_translations": {
+            "en": "Monitoring and logging",
+            "ml": "മോണിറ്ററിംഗും ലോഗിംഗും",
+            "hi": "मॉनिटरिंग और लॉगिंग"
+          }
+        },
+        {
+          "option_id": "MESSAGE_QUEUES",
+          "label": "Message queues",
+          "label_translations": {
+            "en": "Message queues",
+            "ml": "മെസേജ് ക്യൂകൾ",
+            "hi": "मैसेज क्यू"
+          }
+        },
+        {
+          "option_id": "OTHER",
+          "label": "Other",
+          "label_translations": {
+            "en": "Other",
+            "ml": "മറ്റുള്ളവ",
+            "hi": "अन्य"
+          }
+        }
+      ],
+      "mandatory": false,
+      "scoring_importance": 8,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.1"
+    },
+    {
+      "question_id": "SPD_LOC_001",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "LOCATION",
+      "template_id": "LOCATION_WORKMODE_01",
+      "question_text": {
+        "en": "This role is based in {job_location} with a {work_mode} arrangement. Can you meet this work-location requirement?",
+        "ml": "ഈ ജോലി {job_location} ആസ്ഥാനമായുള്ളതാണ്; ജോലി രീതി {work_mode} ആണ്. ഈ സ്ഥലവും ജോലിരീതിയും സംബന്ധിച്ച ആവശ്യകത പാലിക്കാനാകുമോ?",
+        "hi": "यह भूमिका {job_location} में है और कार्य व्यवस्था {work_mode} है। क्या आप इस स्थान और कार्य व्यवस्था की आवश्यकता पूरी कर सकते हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": true,
+      "scoring_importance": 3,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_LOC_002",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "LOCATION",
+      "template_id": "LOCATION_RELOCATION_01",
+      "question_text": {
+        "en": "Would you require relocation assistance or a specific work-location arrangement for this role?",
+        "ml": "ഈ ജോലിക്കായി സ്ഥലംമാറ്റ സഹായമോ പ്രത്യേക ജോലി-സ്ഥല ക്രമീകരണമോ ആവശ്യമുണ്ടോ?",
+        "hi": "क्या इस भूमिका के लिए आपको स्थानांतरण सहायता या किसी विशेष कार्य-स्थान व्यवस्था की आवश्यकता होगी?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_SAL_001",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "SALARY",
+      "template_id": "SALARY_RANGE_01",
+      "question_text": {
+        "en": "What is your expected annual salary range in {currency}?",
+        "ml": "{currency} പ്രകാരം നിങ്ങളുടെ പ്രതീക്ഷിക്കുന്ന വാർഷിക ശമ്പള പരിധി എത്രയാണ്?",
+        "hi": "{currency} में आपकी अपेक्षित वार्षिक वेतन सीमा क्या है?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "CURRENCY_RANGE",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_SAL_002",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "SALARY",
+      "template_id": "SALARY_BUDGET_01",
+      "question_text": {
+        "en": "Are you comfortable discussing compensation in relation to the role's responsibilities and approved budget?",
+        "ml": "ഈ ജോലിയുടെ ഉത്തരവാദിത്തങ്ങളും അംഗീകരിച്ച ബജറ്റും പരിഗണിച്ച് പ്രതിഫലത്തെക്കുറിച്ച് ചർച്ച ചെയ്യാൻ നിങ്ങൾക്ക് സൗകര്യമുണ്ടോ?",
+        "hi": "क्या आप इस भूमिका की ज़िम्मेदारियों और स्वीकृत बजट के अनुसार पारिश्रमिक पर चर्चा करने के लिए तैयार हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_NOTICE_001",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "NOTICE_PERIOD",
+      "template_id": "JOINING_DATE_01",
+      "question_text": {
+        "en": "What is your current notice period, and what is your earliest realistic joining date?",
+        "ml": "നിങ്ങളുടെ നിലവിലെ നോട്ടീസ് കാലാവധി എത്രയാണ്? യാഥാർത്ഥ്യമായി നിങ്ങൾക്ക് ഏറ്റവും നേരത്തെ ജോലിയിൽ പ്രവേശിക്കാവുന്ന തീയതി ഏതാണ്?",
+        "hi": "आपकी वर्तमान नोटिस अवधि कितनी है, और आप यथार्थ रूप से सबसे पहले किस तारीख को जॉइन कर सकते हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "DATE_OR_DURATION",
+      "mandatory": true,
+      "scoring_importance": 4,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_NOTICE_002",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "NOTICE_PERIOD",
+      "template_id": "JOINING_COMMITMENTS_01",
+      "question_text": {
+        "en": "Is your notice period negotiable, or are there commitments that may affect your joining date?",
+        "ml": "നിങ്ങളുടെ നോട്ടീസ് കാലാവധി ചർച്ച ചെയ്ത് മാറ്റാനാകുമോ, അല്ലെങ്കിൽ ജോലിയിൽ പ്രവേശന തീയതിയെ ബാധിക്കാവുന്ന ബാധ്യതകളുണ്ടോ?",
+        "hi": "क्या आपकी नोटिस अवधि पर बातचीत संभव है, या ऐसी कोई प्रतिबद्धताएँ हैं जो आपकी जॉइनिंग तिथि को प्रभावित कर सकती हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_INTRO_001",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "INTRODUCTION",
+      "template_id": "INTRO_OPEN_01",
+      "question_text": {
+        "en": "Tell me about yourself and why you want to begin your career in Human Resources.",
+        "ml": "നിങ്ങളെക്കുറിച്ചും ഹ്യൂമൻ റിസോഴ്‌സസ് മേഖലയിലെ കരിയർ ആരംഭിക്കാൻ ആഗ്രഹിക്കുന്നതെന്തുകൊണ്ടാണെന്നും പറയൂ.",
+        "hi": "अपने बारे में बताइए और आप मानव संसाधन (HR) में अपना करियर क्यों शुरू करना चाहते हैं।"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 3,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_INTRO_002",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "INTRODUCTION",
+      "template_id": "INTRO_INTEREST_01",
+      "question_text": {
+        "en": "Which areas of HR interest you most, such as recruitment, onboarding, employee engagement, or HR operations?",
+        "ml": "റിക്രൂട്ട്മെന്റ്, ഓൺബോർഡിംഗ്, ജീവനക്കാരുടെ പങ്കാളിത്തം, അല്ലെങ്കിൽ HR പ്രവർത്തനങ്ങൾ എന്നിവയിൽ ഏത് മേഖലകളിലാണ് നിങ്ങൾക്ക് കൂടുതൽ താൽപര്യം?",
+        "hi": "HR के किन क्षेत्रों में आपकी सबसे अधिक रुचि है, जैसे भर्ती, ऑनबोर्डिंग, कर्मचारी सहभागिता या HR संचालन?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 3,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_EDU_001",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "EDUCATION",
+      "template_id": "EDU_QUAL_01",
+      "question_text": {
+        "en": "What is your highest qualification, and how does it relate to HR or people-focused work?",
+        "ml": "നിങ്ങളുടെ ഏറ്റവും ഉയർന്ന വിദ്യാഭ്യാസ യോഗ്യത എന്താണ്? HR അല്ലെങ്കിൽ ആളുകളുമായി ബന്ധപ്പെട്ട ജോലികളുമായി അത് എങ്ങനെ ബന്ധപ്പെട്ടിരിക്കുന്നു?",
+        "hi": "आपकी सबसे उच्च शैक्षणिक योग्यता क्या है, और यह HR या लोगों से जुड़े काम से कैसे संबंधित है?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 3,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_EDU_002",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "EDUCATION",
+      "template_id": "EDU_TRAINING_01",
+      "question_text": {
+        "en": "Have you completed any HR-related coursework, training, projects, or certifications?",
+        "ml": "HR-മായി ബന്ധപ്പെട്ട കോഴ്‌സ് വർക്ക്, പരിശീലനം, പ്രോജക്റ്റുകൾ, അല്ലെങ്കിൽ സർട്ടിഫിക്കേഷനുകൾ പൂർത്തിയാക്കിയിട്ടുണ്ടോ?",
+        "hi": "क्या आपने HR से संबंधित कोई कोर्सवर्क, प्रशिक्षण, परियोजना या प्रमाणपत्र पूरा किया है?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 3,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_EXP_001",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "EXPERIENCE",
+      "template_id": "EXP_PROJECT_01",
+      "question_text": {
+        "en": "Describe an internship, academic project, volunteering activity, or other experience that demonstrates organization and communication skills.",
+        "ml": "സംഘടനാ കഴിവുകളും ആശയവിനിമയ കഴിവുകളും തെളിയിക്കുന്ന ഒരു ഇന്റേൺഷിപ്പ്, അക്കാദമിക് പ്രോജക്റ്റ്, സന്നദ്ധ പ്രവർത്തനം, അല്ലെങ്കിൽ മറ്റൊരു അനുഭവം വിവരിക്കുക.",
+        "hi": "ऐसी इंटर्नशिप, शैक्षणिक परियोजना, स्वयंसेवी गतिविधि या अन्य अनुभव बताएँ जो आपके संगठन और संचार कौशल को दर्शाता हो।"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 5,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_EXP_002",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "EXPERIENCE",
+      "template_id": "EXP_TEAM_01",
+      "question_text": {
+        "en": "Have you coordinated an event, maintained records, or communicated with different people? Give an example.",
+        "ml": "ഒരു പരിപാടി ഏകോപിപ്പിക്കുകയോ രേഖകൾ സൂക്ഷിക്കുകയോ വ്യത്യസ്ത ആളുകളുമായി ആശയവിനിമയം നടത്തുകയോ ചെയ്തിട്ടുണ്ടോ? ഒരു ഉദാഹരണം നൽകുക.",
+        "hi": "क्या आपने किसी कार्यक्रम का समन्वय किया है, रिकॉर्ड रखे हैं या अलग-अलग लोगों से संवाद किया है? एक उदाहरण दें।"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 4,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_SKILL_001",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "SKILLS",
+      "template_id": "SKILL_EVIDENCE_01",
+      "question_text": {
+        "en": "What do you understand about the recruitment process, from receiving a job requirement to coordinating an interview?",
+        "ml": "ഒരു ജോലി ആവശ്യകത ലഭിക്കുന്നതുമുതൽ അഭിമുഖം ഏകോപിപ്പിക്കുന്നതുവരെ റിക്രൂട്ട്മെന്റ് പ്രക്രിയയെക്കുറിച്ച് നിങ്ങൾക്ക് എന്താണ് അറിയാവുന്നത്?",
+        "hi": "नौकरी की आवश्यकता मिलने से लेकर इंटरव्यू समन्वय करने तक भर्ती प्रक्रिया के बारे में आप क्या समझते हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 8,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_SKILL_002",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "SKILLS",
+      "template_id": "SKILL_TOOLS_01",
+      "question_text": {
+        "en": "Which tools have you used for spreadsheets, documentation, scheduling, or applicant tracking, and what can you do with them?",
+        "ml": "സ്പ്രെഡ്‌ഷീറ്റുകൾ, രേഖകൾ, ഷെഡ്യൂളിംഗ്, അല്ലെങ്കിൽ അപേക്ഷക ട്രാക്കിംഗ് എന്നിവയ്ക്കായി ഏത് ടൂളുകളാണ് ഉപയോഗിച്ചിട്ടുള്ളത്? അവ ഉപയോഗിച്ച് എന്തെല്ലാം ചെയ്യാനാകും?",
+        "hi": "स्प्रेडशीट, दस्तावेज़ीकरण, शेड्यूलिंग या आवेदक ट्रैकिंग के लिए आपने कौन-से टूल इस्तेमाल किए हैं, और उनसे क्या कर सकते हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "MULTI_SELECT_WITH_DETAILS",
+      "options": [
+        {
+          "option_id": "EXCEL",
+          "label": "Microsoft Excel",
+          "label_translations": {
+            "en": "Microsoft Excel",
+            "ml": "Microsoft Excel",
+            "hi": "Microsoft Excel"
+          }
+        },
+        {
+          "option_id": "GOOGLE_SHEETS",
+          "label": "Google Sheets",
+          "label_translations": {
+            "en": "Google Sheets",
+            "ml": "Google Sheets",
+            "hi": "Google Sheets"
+          }
+        },
+        {
+          "option_id": "WORD",
+          "label": "Microsoft Word or document tools",
+          "label_translations": {
+            "en": "Microsoft Word or document tools",
+            "ml": "Microsoft Word അല്ലെങ്കിൽ ഡോക്യുമെന്റ് ടൂളുകൾ",
+            "hi": "Microsoft Word या दस्तावेज़ टूल"
+          }
+        },
+        {
+          "option_id": "SCHEDULING",
+          "label": "Interview scheduling tools",
+          "label_translations": {
+            "en": "Interview scheduling tools",
+            "ml": "അഭിമുഖ ഷെഡ്യൂളിംഗ് ടൂളുകൾ",
+            "hi": "इंटरव्यू शेड्यूलिंग टूल"
+          }
+        },
+        {
+          "option_id": "ATS",
+          "label": "Applicant tracking systems (ATS)",
+          "label_translations": {
+            "en": "Applicant tracking systems (ATS)",
+            "ml": "അപേക്ഷക ട്രാക്കിംഗ് സിസ്റ്റങ്ങൾ (ATS)",
+            "hi": "आवेदक ट्रैकिंग सिस्टम (ATS)"
+          }
+        },
+        {
+          "option_id": "HRIS",
+          "label": "Human resource information systems (HRIS)",
+          "label_translations": {
+            "en": "Human resource information systems (HRIS)",
+            "ml": "ഹ്യൂമൻ റിസോഴ്‌സ് ഇൻഫർമേഷൻ സിസ്റ്റങ്ങൾ (HRIS)",
+            "hi": "मानव संसाधन सूचना प्रणाली (HRIS)"
+          }
+        },
+        {
+          "option_id": "OTHER",
+          "label": "Other",
+          "label_translations": {
+            "en": "Other",
+            "ml": "മറ്റുള്ളവ",
+            "hi": "अन्य"
+          }
+        },
+        {
+          "option_id": "NONE",
+          "label": "None of these",
+          "label_translations": {
+            "en": "None of these",
+            "ml": "ഇവയൊന്നുമില്ല",
+            "hi": "इनमें से कोई नहीं"
+          }
+        }
+      ],
+      "mandatory": false,
+      "scoring_importance": 5,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.1"
+    },
+    {
+      "question_id": "HEF_LOC_001",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "LOCATION",
+      "template_id": "LOCATION_WORKMODE_01",
+      "question_text": {
+        "en": "This role is based in {job_location} with a {work_mode} arrangement. Can you meet this work-location requirement?",
+        "ml": "ഈ ജോലി {job_location} ആസ്ഥാനമായുള്ളതാണ്; ജോലി രീതി {work_mode} ആണ്. ഈ സ്ഥലവും ജോലിരീതിയും സംബന്ധിച്ച ആവശ്യകത പാലിക്കാനാകുമോ?",
+        "hi": "यह भूमिका {job_location} में है और कार्य व्यवस्था {work_mode} है। क्या आप इस स्थान और कार्य व्यवस्था की आवश्यकता पूरी कर सकते हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": true,
+      "scoring_importance": 3,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_LOC_002",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "LOCATION",
+      "template_id": "LOCATION_RELOCATION_01",
+      "question_text": {
+        "en": "Would you need relocation assistance or a different work-location arrangement to accept this role?",
+        "ml": "ഈ ജോലി സ്വീകരിക്കാൻ സ്ഥലംമാറ്റ സഹായമോ മറ്റൊരു ജോലി-സ്ഥല ക്രമീകരണമോ ആവശ്യമുണ്ടോ?",
+        "hi": "क्या इस भूमिका को स्वीकार करने के लिए आपको स्थानांतरण सहायता या किसी अलग कार्य-स्थान व्यवस्था की आवश्यकता होगी?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_SAL_001",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "SALARY",
+      "template_id": "SALARY_RANGE_01",
+      "question_text": {
+        "en": "What is your expected annual salary range in {currency}?",
+        "ml": "{currency} പ്രകാരം നിങ്ങളുടെ പ്രതീക്ഷിക്കുന്ന വാർഷിക ശമ്പള പരിധി എത്രയാണ്?",
+        "hi": "{currency} में आपकी अपेक्षित वार्षिक वेतन सीमा क्या है?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "CURRENCY_RANGE",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_SAL_002",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "SALARY",
+      "template_id": "SALARY_BUDGET_01",
+      "question_text": {
+        "en": "Are you comfortable discussing compensation within the budget range shared for this position?",
+        "ml": "ഈ സ്ഥാനത്തിനായി അറിയിച്ചിരിക്കുന്ന ബജറ്റ് പരിധിക്കുള്ളിൽ ശമ്പളത്തെക്കുറിച്ച് ചർച്ച ചെയ്യാൻ നിങ്ങൾക്ക് സൗകര്യമുണ്ടോ?",
+        "hi": "क्या आप इस पद के लिए बताई गई बजट सीमा के भीतर वेतन पर चर्चा करने के लिए तैयार हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_NOTICE_001",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "NOTICE_PERIOD",
+      "template_id": "JOINING_DATE_01",
+      "question_text": {
+        "en": "If selected, when would you be available to join?",
+        "ml": "തിരഞ്ഞെടുക്കപ്പെട്ടാൽ നിങ്ങൾക്ക് എപ്പോൾ ജോലിയിൽ പ്രവേശിക്കാനാകും?",
+        "hi": "यदि आपका चयन होता है, तो आप कब काम शुरू कर सकते हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "DATE_OR_DURATION",
+      "mandatory": true,
+      "scoring_importance": 4,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_NOTICE_002",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "NOTICE_PERIOD",
+      "template_id": "JOINING_COMMITMENTS_01",
+      "question_text": {
+        "en": "Do you have any commitments that could affect your expected joining date?",
+        "ml": "നിങ്ങളുടെ പ്രതീക്ഷിക്കുന്ന ജോലിയിൽ പ്രവേശന തീയതിയെ ബാധിക്കാവുന്ന ബാധ്യതകളോ മുൻകൂട്ടിയുള്ള ക്രമീകരണങ്ങളോ ഉണ്ടോ?",
+        "hi": "क्या आपकी कोई प्रतिबद्धताएँ हैं जो आपकी अपेक्षित जॉइनिंग तिथि को प्रभावित कर सकती हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_INTRO_001",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "INTRODUCTION",
+      "template_id": "INTRO_OPEN_01",
+      "question_text": {
+        "en": "Summarize your HR experience, the functions you have managed, and the teams or organizations you have supported.",
+        "ml": "നിങ്ങളുടെ HR അനുഭവവും നിങ്ങൾ കൈകാര്യം ചെയ്ത പ്രവർത്തനമേഖലകളും പിന്തുണച്ച ടീമുകളോ സ്ഥാപനങ്ങളോ സംക്ഷിപ്തമായി വിവരിക്കുക.",
+        "hi": "अपने HR अनुभव, आपके द्वारा संभाले गए कार्यों और जिन टीमों या संगठनों को आपने सहायता दी, उनका सार बताएँ।"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 4,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_INTRO_002",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "INTRODUCTION",
+      "template_id": "INTRO_ACHIEVEMENT_01",
+      "question_text": {
+        "en": "Which HR achievement best demonstrates your impact, and how did you measure the outcome?",
+        "ml": "നിങ്ങളുടെ സ്വാധീനം ഏറ്റവും നന്നായി തെളിയിക്കുന്ന HR നേട്ടം ഏതാണ്? അതിന്റെ ഫലം നിങ്ങൾ എങ്ങനെ അളന്നു?",
+        "hi": "आपकी कौन-सी HR उपलब्धि आपके प्रभाव को सबसे अच्छी तरह दर्शाती है, और आपने उसके परिणाम को कैसे मापा?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 5,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_EDU_001",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "EDUCATION",
+      "template_id": "EDU_QUAL_01",
+      "question_text": {
+        "en": "What is your highest qualification, and which parts of your education are relevant to this HR role?",
+        "ml": "നിങ്ങളുടെ ഏറ്റവും ഉയർന്ന വിദ്യാഭ്യാസ യോഗ്യത എന്താണ്? ഈ HR ജോലിക്ക് പ്രസക്തമായ പഠനഭാഗങ്ങൾ ഏതൊക്കെയാണ്?",
+        "hi": "आपकी सबसे उच्च शैक्षणिक योग्यता क्या है, और आपकी शिक्षा के कौन-से हिस्से इस HR भूमिका से संबंधित हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_EDU_002",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "EDUCATION",
+      "template_id": "EDU_TRAINING_01",
+      "question_text": {
+        "en": "Do you hold any HR, employment-law, people-management, or related certifications, or have you completed recent training?",
+        "ml": "HR, തൊഴിൽ നിയമം, ആളുകളുടെ മാനേജ്മെന്റ്, അല്ലെങ്കിൽ ബന്ധപ്പെട്ട മേഖലകളിൽ സർട്ടിഫിക്കേഷനുകളുണ്ടോ? സമീപകാല പരിശീലനം പൂർത്തിയാക്കിയിട്ടുണ്ടോ?",
+        "hi": "क्या आपके पास HR, रोजगार कानून, people management या संबंधित क्षेत्रों के प्रमाणपत्र हैं, या आपने हाल में कोई प्रशिक्षण पूरा किया है?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 3,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_EXP_001",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "EXPERIENCE",
+      "template_id": "EXP_STAR_01",
+      "question_text": {
+        "en": "Describe an HR process you owned or improved, your responsibilities, the stakeholders involved, and the measurable outcome.",
+        "ml": "നിങ്ങൾ ഉത്തരവാദിത്തത്തോടെ കൈകാര്യം ചെയ്തതോ മെച്ചപ്പെടുത്തിയതോ ആയ ഒരു HR പ്രക്രിയ വിവരിക്കുക. നിങ്ങളുടെ ഉത്തരവാദിത്തങ്ങൾ, ബന്ധപ്പെട്ടവർ, അളക്കാവുന്ന ഫലം എന്നിവ ഉൾപ്പെടുത്തുക.",
+        "hi": "ऐसी HR प्रक्रिया का वर्णन करें जिसकी ज़िम्मेदारी आपने संभाली या जिसे सुधारा। अपनी ज़िम्मेदारियाँ, संबंधित हितधारक और मापने योग्य परिणाम बताएँ।"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 10,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_EXP_002",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "EXPERIENCE",
+      "template_id": "EXP_COMPLEX_01",
+      "question_text": {
+        "en": "Describe a complex hiring, employee-relations, or policy issue you handled. How did you assess options and ensure appropriate documentation or escalation?",
+        "ml": "നിങ്ങൾ കൈകാര്യം ചെയ്ത സങ്കീർണ്ണമായ നിയമന, ജീവനക്കാരുമായുള്ള ബന്ധം, അല്ലെങ്കിൽ നയപ്രശ്നം വിവരിക്കുക. വഴികൾ എങ്ങനെ വിലയിരുത്തി, ആവശ്യമായ രേഖപ്പെടുത്തലോ മേലധികാരികളിലേക്കുള്ള കൈമാറ്റമോ എങ്ങനെ ഉറപ്പാക്കി?",
+        "hi": "आपके द्वारा संभाली गई किसी जटिल भर्ती, कर्मचारी-संबंध या नीति संबंधी समस्या का वर्णन करें। आपने विकल्पों का मूल्यांकन कैसे किया और उचित दस्तावेज़ीकरण या एस्केलेशन कैसे सुनिश्चित किया?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 9,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_SKILL_001",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "SKILLS",
+      "template_id": "SKILL_EVIDENCE_01",
+      "question_text": {
+        "en": "How do you manage hiring priorities, stakeholder expectations, candidate experience, and recruitment metrics at the same time?",
+        "ml": "നിയമന മുൻഗണനകൾ, ബന്ധപ്പെട്ടവരുടെ പ്രതീക്ഷകൾ, സ്ഥാനാർഥിയുടെ അനുഭവം, റിക്രൂട്ട്മെന്റ് മെട്രിക്കുകൾ എന്നിവ ഒരേസമയം നിങ്ങൾ എങ്ങനെ കൈകാര്യം ചെയ്യുന്നു?",
+        "hi": "आप भर्ती की प्राथमिकताओं, हितधारकों की अपेक्षाओं, उम्मीदवार के अनुभव और भर्ती मेट्रिक्स को एक साथ कैसे संभालते हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 10,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_SKILL_002",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "SKILLS",
+      "template_id": "SKILL_TOOLS_01",
+      "question_text": {
+        "en": "Which HRIS, ATS, reporting, workforce-planning, or employee-engagement tools have you used, and for what purposes?",
+        "ml": "നിങ്ങൾ ഉപയോഗിച്ച HRIS, ATS, റിപ്പോർട്ടിംഗ്, തൊഴിലാളി ആസൂത്രണം, അല്ലെങ്കിൽ ജീവനക്കാരുടെ പങ്കാളിത്ത ടൂളുകൾ ഏതൊക്കെയാണ്? അവ എന്തിനാണ് ഉപയോഗിച്ചത്?",
+        "hi": "आपने कौन-से HRIS, ATS, रिपोर्टिंग, कार्यबल-योजना या कर्मचारी-सहभागिता टूल इस्तेमाल किए हैं, और उनका उपयोग किस लिए किया?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "MULTI_SELECT_WITH_DETAILS",
+      "options": [
+        {
+          "option_id": "HRIS",
+          "label": "HRIS platforms",
+          "label_translations": {
+            "en": "HRIS platforms",
+            "ml": "ഹ്യൂമൻ റിസോഴ്‌സ് ഇൻഫർമേഷൻ സിസ്റ്റങ്ങൾ (HRIS)",
+            "hi": "मानव संसाधन सूचना प्रणाली (HRIS)"
+          }
+        },
+        {
+          "option_id": "ATS",
+          "label": "Applicant tracking systems (ATS)",
+          "label_translations": {
+            "en": "Applicant tracking systems (ATS)",
+            "ml": "അപേക്ഷക ട്രാക്കിംഗ് സിസ്റ്റങ്ങൾ (ATS)",
+            "hi": "आवेदक ट्रैकिंग सिस्टम (ATS)"
+          }
+        },
+        {
+          "option_id": "REPORTING",
+          "label": "HR reporting and analytics",
+          "label_translations": {
+            "en": "HR reporting and analytics",
+            "ml": "HR റിപ്പോർട്ടിംഗും അനലിറ്റിക്സും",
+            "hi": "HR रिपोर्टिंग और एनालिटिक्स"
+          }
+        },
+        {
+          "option_id": "WORKFORCE_PLANNING",
+          "label": "Workforce planning tools",
+          "label_translations": {
+            "en": "Workforce planning tools",
+            "ml": "തൊഴിലാളി ആസൂത്രണ ടൂളുകൾ",
+            "hi": "कार्यबल योजना टूल"
+          }
+        },
+        {
+          "option_id": "EMPLOYEE_ENGAGEMENT",
+          "label": "Employee engagement platforms",
+          "label_translations": {
+            "en": "Employee engagement platforms",
+            "ml": "ജീവനക്കാരുടെ പങ്കാളിത്ത പ്ലാറ്റ്‌ഫോമുകൾ",
+            "hi": "कर्मचारी सहभागिता प्लेटफ़ॉर्म"
+          }
+        },
+        {
+          "option_id": "PAYROLL",
+          "label": "Payroll and HR operations tools",
+          "label_translations": {
+            "en": "Payroll and HR operations tools",
+            "ml": "പേറോൾ, HR പ്രവർത്തന ടൂളുകൾ",
+            "hi": "पेरोल और HR संचालन टूल"
+          }
+        },
+        {
+          "option_id": "OTHER",
+          "label": "Other",
+          "label_translations": {
+            "en": "Other",
+            "ml": "മറ്റുള്ളവ",
+            "hi": "अन्य"
+          }
+        }
+      ],
+      "mandatory": false,
+      "scoring_importance": 7,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.1"
+    },
+    {
+      "question_id": "SHE_LOC_001",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "LOCATION",
+      "template_id": "LOCATION_WORKMODE_01",
+      "question_text": {
+        "en": "This role is based in {job_location} with a {work_mode} arrangement. Can you meet this work-location requirement?",
+        "ml": "ഈ ജോലി {job_location} ആസ്ഥാനമായുള്ളതാണ്; ജോലി രീതി {work_mode} ആണ്. ഈ സ്ഥലവും ജോലിരീതിയും സംബന്ധിച്ച ആവശ്യകത പാലിക്കാനാകുമോ?",
+        "hi": "यह भूमिका {job_location} में है और कार्य व्यवस्था {work_mode} है। क्या आप इस स्थान और कार्य व्यवस्था की आवश्यकता पूरी कर सकते हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": true,
+      "scoring_importance": 3,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_LOC_002",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "LOCATION",
+      "template_id": "LOCATION_RELOCATION_01",
+      "question_text": {
+        "en": "Would you require relocation assistance or a specific work-location arrangement for this role?",
+        "ml": "ഈ ജോലിക്കായി സ്ഥലംമാറ്റ സഹായമോ പ്രത്യേക ജോലി-സ്ഥല ക്രമീകരണമോ ആവശ്യമുണ്ടോ?",
+        "hi": "क्या इस भूमिका के लिए आपको स्थानांतरण सहायता या किसी विशेष कार्य-स्थान व्यवस्था की आवश्यकता होगी?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_SAL_001",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "SALARY",
+      "template_id": "SALARY_RANGE_01",
+      "question_text": {
+        "en": "What is your expected annual salary range in {currency}?",
+        "ml": "{currency} പ്രകാരം നിങ്ങളുടെ പ്രതീക്ഷിക്കുന്ന വാർഷിക ശമ്പള പരിധി എത്രയാണ്?",
+        "hi": "{currency} में आपकी अपेक्षित वार्षिक वेतन सीमा क्या है?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "CURRENCY_RANGE",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_SAL_002",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "SALARY",
+      "template_id": "SALARY_BUDGET_01",
+      "question_text": {
+        "en": "Are you comfortable discussing compensation in relation to the role's responsibilities and approved budget?",
+        "ml": "ഈ ജോലിയുടെ ഉത്തരവാദിത്തങ്ങളും അംഗീകരിച്ച ബജറ്റും പരിഗണിച്ച് പ്രതിഫലത്തെക്കുറിച്ച് ചർച്ച ചെയ്യാൻ നിങ്ങൾക്ക് സൗകര്യമുണ്ടോ?",
+        "hi": "क्या आप इस भूमिका की ज़िम्मेदारियों और स्वीकृत बजट के अनुसार पारिश्रमिक पर चर्चा करने के लिए तैयार हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_NOTICE_001",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "NOTICE_PERIOD",
+      "template_id": "JOINING_DATE_01",
+      "question_text": {
+        "en": "What is your current notice period, and what is your earliest realistic joining date?",
+        "ml": "നിങ്ങളുടെ നിലവിലെ നോട്ടീസ് കാലാവധി എത്രയാണ്? യാഥാർത്ഥ്യമായി നിങ്ങൾക്ക് ഏറ്റവും നേരത്തെ ജോലിയിൽ പ്രവേശിക്കാവുന്ന തീയതി ഏതാണ്?",
+        "hi": "आपकी वर्तमान नोटिस अवधि कितनी है, और आप यथार्थ रूप से सबसे पहले किस तारीख को जॉइन कर सकते हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "DATE_OR_DURATION",
+      "mandatory": true,
+      "scoring_importance": 4,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_NOTICE_002",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "NOTICE_PERIOD",
+      "template_id": "JOINING_COMMITMENTS_01",
+      "question_text": {
+        "en": "Is your notice period negotiable, or are there commitments that may affect your joining date?",
+        "ml": "നിങ്ങളുടെ നോട്ടീസ് കാലാവധി ചർച്ച ചെയ്ത് മാറ്റാനാകുമോ, അല്ലെങ്കിൽ ജോലിയിൽ പ്രവേശന തീയതിയെ ബാധിക്കാവുന്ന ബാധ്യതകളുണ്ടോ?",
+        "hi": "क्या आपकी नोटिस अवधि पर बातचीत संभव है, या ऐसी कोई प्रतिबद्धताएँ हैं जो आपकी जॉइनिंग तिथि को प्रभावित कर सकती हैं?"
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NEEDS_REVIEW",
+        "hi": "NEEDS_REVIEW"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    }
+  ]
+}

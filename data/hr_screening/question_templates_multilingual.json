@@ -1,0 +1,542 @@
+{
+  "schema_version": "1.0",
+  "default_language": "en",
+  "supported_languages": [
+    "en",
+    "ml",
+    "hi"
+  ],
+  "templates": [
+    {
+      "template_id": "INTRO_OPEN_01",
+      "template_name": "General Introduction",
+      "category": "INTRODUCTION",
+      "description": "Introduces the candidate and explores their motivation for the role.",
+      "question_pattern": {
+        "en": "Tell me about yourself and why you are interested in {role_name}.",
+        "ml": "നിങ്ങളെക്കുറിച്ചും {role_name} സ്ഥാനത്തിൽ താൽപര്യമുള്ളതെന്തുകൊണ്ടാണെന്നും പറയൂ.",
+        "hi": "{role_name} की भूमिका में अपनी रुचि और अपने बारे में बताएँ।"
+      },
+      "placeholders": [
+        "role_name"
+      ],
+      "answer_type": "TEXT",
+      "default_mandatory": true,
+      "default_scoring_importance": 3,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0",
+      "template_name_translations": {
+        "en": "General Introduction",
+        "ml": "പൊതുവായ പരിചയം",
+        "hi": "सामान्य परिचय"
+      },
+      "description_translations": {
+        "en": "Introduces the candidate and explores their motivation for the role.",
+        "ml": "സ്ഥാനാർഥിയെ പരിചയപ്പെടുത്തുകയും ജോലിയോടുള്ള താൽപര്യം മനസ്സിലാക്കുകയും ചെയ്യുന്നു.",
+        "hi": "उम्मीदवार का परिचय और भूमिका में उसकी रुचि समझता है।"
+      }
+    },
+    {
+      "template_id": "INTRO_PREP_01",
+      "template_name": "Role Preparation",
+      "category": "INTRODUCTION",
+      "description": "Assesses how the candidate has prepared for the target role.",
+      "question_pattern": {
+        "en": "What have you done to prepare for a career as a {role_name}?",
+        "ml": "{role_name} ആയി കരിയർ ആരംഭിക്കാൻ നിങ്ങൾ എന്തെല്ലാം തയ്യാറെടുപ്പുകൾ നടത്തി?",
+        "hi": "{role_name} के रूप में करियर के लिए आपने क्या तैयारी की है?"
+      },
+      "placeholders": [
+        "role_name"
+      ],
+      "answer_type": "TEXT",
+      "default_mandatory": false,
+      "default_scoring_importance": 4,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0",
+      "template_name_translations": {
+        "en": "Role Preparation",
+        "ml": "ജോലിക്കുള്ള തയ്യാറെടുപ്പ്",
+        "hi": "भूमिका की तैयारी"
+      },
+      "description_translations": {
+        "en": "Assesses how the candidate has prepared for the target role.",
+        "ml": "ലക്ഷ്യമിടുന്ന ജോലിക്കായി സ്ഥാനാർഥി നടത്തിയ തയ്യാറെടുപ്പുകൾ വിലയിരുത്തുന്നു.",
+        "hi": "लक्षित भूमिका के लिए उम्मीदवार की तैयारी का आकलन करता है।"
+      }
+    },
+    {
+      "template_id": "INTRO_ACHIEVEMENT_01",
+      "template_name": "Key Achievement",
+      "category": "INTRODUCTION",
+      "description": "Explores a candidate's relevant achievement and its impact.",
+      "question_pattern": {
+        "en": "What achievement related to {role_name} are you most proud of, and what was its impact?",
+        "ml": "{role_name} സ്ഥാനവുമായി ബന്ധപ്പെട്ട് നിങ്ങൾക്ക് ഏറ്റവും അഭിമാനമുള്ള നേട്ടം ഏതാണ്, അതിന്റെ സ്വാധീനം എന്തായിരുന്നു?",
+        "hi": "{role_name} से संबंधित आपकी सबसे गर्वपूर्ण उपलब्धि कौन-सी है और उसका क्या प्रभाव पड़ा?"
+      },
+      "placeholders": [
+        "role_name"
+      ],
+      "answer_type": "TEXT",
+      "default_mandatory": false,
+      "default_scoring_importance": 5,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0",
+      "template_name_translations": {
+        "en": "Key Achievement",
+        "ml": "പ്രധാന നേട്ടം",
+        "hi": "प्रमुख उपलब्धि"
+      },
+      "description_translations": {
+        "en": "Explores a candidate's relevant achievement and its impact.",
+        "ml": "സ്ഥാനാർഥിയുടെ പ്രസക്തമായ നേട്ടവും അതിന്റെ സ്വാധീനവും പരിശോധിക്കുന്നു.",
+        "hi": "उम्मीदवार की संबंधित उपलब्धि और उसके प्रभाव को समझता है।"
+      }
+    },
+    {
+      "template_id": "INTRO_INTEREST_01",
+      "template_name": "Career Interest",
+      "category": "INTRODUCTION",
+      "description": "Identifies the candidate's preferred area of work.",
+      "question_pattern": {
+        "en": "Which areas of {field_name} interest you most, and why?",
+        "ml": "{field_name} മേഖലയിലെ ഏത് പ്രവർത്തനങ്ങളിലാണ് നിങ്ങൾക്ക് കൂടുതൽ താൽപര്യം? എന്തുകൊണ്ട്?",
+        "hi": "{field_name} के किन क्षेत्रों में आपकी सबसे अधिक रुचि है और क्यों?"
+      },
+      "placeholders": [
+        "field_name"
+      ],
+      "answer_type": "TEXT",
+      "default_mandatory": false,
+      "default_scoring_importance": 3,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0",
+      "template_name_translations": {
+        "en": "Career Interest",
+        "ml": "കരിയർ താൽപര്യം",
+        "hi": "करियर में रुचि"
+      },
+      "description_translations": {
+        "en": "Identifies the candidate's preferred area of work.",
+        "ml": "സ്ഥാനാർഥിക്ക് താൽപര്യമുള്ള ജോലി മേഖല കണ്ടെത്തുന്നു.",
+        "hi": "उम्मीदवार की पसंदीदा कार्य-क्षेत्र पहचानता है।"
+      }
+    },
+    {
+      "template_id": "EDU_QUAL_01",
+      "template_name": "Educational Qualification",
+      "category": "EDUCATION",
+      "description": "Collects the candidate's educational background and its relevance to the role.",
+      "question_pattern": {
+        "en": "What is your highest qualification, and how is it relevant to {role_name}?",
+        "ml": "നിങ്ങളുടെ ഏറ്റവും ഉയർന്ന വിദ്യാഭ്യാസ യോഗ്യത എന്താണ്? അത് {role_name} സ്ഥാനത്തിന് എങ്ങനെ പ്രസക്തമാണ്?",
+        "hi": "आपकी सबसे उच्च शैक्षणिक योग्यता क्या है, और वह {role_name} की भूमिका के लिए कैसे प्रासंगिक है?"
+      },
+      "placeholders": [
+        "role_name"
+      ],
+      "answer_type": "TEXT",
+      "default_mandatory": true,
+      "default_scoring_importance": 3,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0",
+      "template_name_translations": {
+        "en": "Educational Qualification",
+        "ml": "വിദ്യാഭ്യാസ യോഗ്യത",
+        "hi": "शैक्षणिक योग्यता"
+      },
+      "description_translations": {
+        "en": "Collects the candidate's educational background and its relevance to the role.",
+        "ml": "വിദ്യാഭ്യാസ പശ്ചാത്തലവും ജോലിക്കുള്ള പ്രസക്തിയും ശേഖരിക്കുന്നു.",
+        "hi": "शैक्षणिक पृष्ठभूमि और भूमिका से उसकी प्रासंगिकता जानता है।"
+      }
+    },
+    {
+      "template_id": "EDU_TRAINING_01",
+      "template_name": "Training and Certifications",
+      "category": "EDUCATION",
+      "description": "Collects relevant training, coursework and certifications.",
+      "question_pattern": {
+        "en": "Have you completed any training or certifications related to {subject_area}? Please describe them.",
+        "ml": "{subject_area} സംബന്ധിച്ച പരിശീലനമോ സർട്ടിഫിക്കേഷനുകളോ പൂർത്തിയാക്കിയിട്ടുണ്ടോ? ദയവായി വിശദീകരിക്കുക.",
+        "hi": "क्या आपने {subject_area} से संबंधित कोई प्रशिक्षण या प्रमाणपत्र पूरा किया है? कृपया बताएँ।"
+      },
+      "placeholders": [
+        "subject_area"
+      ],
+      "answer_type": "TEXT",
+      "default_mandatory": false,
+      "default_scoring_importance": 3,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0",
+      "template_name_translations": {
+        "en": "Training and Certifications",
+        "ml": "പരിശീലനവും സർട്ടിഫിക്കേഷനും",
+        "hi": "प्रशिक्षण और प्रमाणपत्र"
+      },
+      "description_translations": {
+        "en": "Collects relevant training, coursework and certifications.",
+        "ml": "പ്രസക്തമായ പരിശീലനം, കോഴ്‌സ് വർക്ക്, സർട്ടിഫിക്കേഷനുകൾ എന്നിവ ശേഖരിക്കുന്നു.",
+        "hi": "संबंधित प्रशिक्षण, कोर्सवर्क और प्रमाणपत्रों की जानकारी लेता है।"
+      }
+    },
+    {
+      "template_id": "EXP_PROJECT_01",
+      "template_name": "Project or Practical Experience",
+      "category": "EXPERIENCE",
+      "description": "Assesses practical experience, responsibilities and individual contributions.",
+      "question_pattern": {
+        "en": "Describe a project or practical experience related to {skill_or_role}, and explain your contribution.",
+        "ml": "{skill_or_role} സംബന്ധിച്ച ഒരു പ്രോജക്റ്റോ പ്രായോഗിക അനുഭവമോ വിവരിച്ച് നിങ്ങളുടെ സംഭാവന വിശദീകരിക്കുക.",
+        "hi": "{skill_or_role} से संबंधित किसी परियोजना या व्यावहारिक अनुभव का वर्णन करें और अपना योगदान बताएँ।"
+      },
+      "placeholders": [
+        "skill_or_role"
+      ],
+      "answer_type": "TEXT",
+      "default_mandatory": true,
+      "default_scoring_importance": 7,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0",
+      "template_name_translations": {
+        "en": "Project or Practical Experience",
+        "ml": "പ്രോജക്റ്റ് അല്ലെങ്കിൽ പ്രായോഗിക അനുഭവം",
+        "hi": "परियोजना या व्यावहारिक अनुभव"
+      },
+      "description_translations": {
+        "en": "Assesses practical experience, responsibilities and individual contributions.",
+        "ml": "പ്രായോഗിക അനുഭവം, ഉത്തരവാദിത്തങ്ങൾ, വ്യക്തിഗത സംഭാവന എന്നിവ വിലയിരുത്തുന്നു.",
+        "hi": "व्यावहारिक अनुभव, ज़िम्मेदारियों और व्यक्तिगत योगदान का आकलन करता है।"
+      }
+    },
+    {
+      "template_id": "EXP_TEAM_01",
+      "template_name": "Teamwork Experience",
+      "category": "EXPERIENCE",
+      "description": "Assesses collaboration, communication and coordination.",
+      "question_pattern": {
+        "en": "Describe a situation in which you worked with others to complete a task or project.",
+        "ml": "ഒരു ജോലി അല്ലെങ്കിൽ പ്രോജക്റ്റ് പൂർത്തിയാക്കാൻ മറ്റുള്ളവരുമായി ചേർന്ന് പ്രവർത്തിച്ച സാഹചര്യം വിവരിക്കുക.",
+        "hi": "ऐसी स्थिति का वर्णन करें जिसमें आपने किसी कार्य या परियोजना को पूरा करने के लिए दूसरों के साथ काम किया।"
+      },
+      "placeholders": [],
+      "answer_type": "TEXT",
+      "default_mandatory": false,
+      "default_scoring_importance": 4,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0",
+      "template_name_translations": {
+        "en": "Teamwork Experience",
+        "ml": "ടീം പ്രവർത്തന അനുഭവം",
+        "hi": "टीमवर्क का अनुभव"
+      },
+      "description_translations": {
+        "en": "Assesses collaboration, communication and coordination.",
+        "ml": "സഹകരണം, ആശയവിനിമയം, ഏകോപനം എന്നിവ വിലയിരുത്തുന്നു.",
+        "hi": "सहयोग, संचार और समन्वय का आकलन करता है।"
+      }
+    },
+    {
+      "template_id": "EXP_STAR_01",
+      "template_name": "Situation Task Action Result",
+      "category": "EXPERIENCE",
+      "description": "Uses the STAR approach to explore a work challenge, actions and outcomes.",
+      "question_pattern": {
+        "en": "Describe a situation involving {challenge_area}, the task you handled, the actions you took and the result.",
+        "ml": "{challenge_area} ഉൾപ്പെട്ട ഒരു സാഹചര്യം വിവരിക്കുക. നിങ്ങൾ കൈകാര്യം ചെയ്ത ചുമതല, സ്വീകരിച്ച നടപടികൾ, ഫലം എന്നിവ വിശദീകരിക്കുക.",
+        "hi": "{challenge_area} से जुड़ी स्थिति बताएँ, आपने कौन-सा कार्य संभाला, क्या कदम उठाए और परिणाम क्या रहा।"
+      },
+      "placeholders": [
+        "challenge_area"
+      ],
+      "answer_type": "TEXT",
+      "default_mandatory": false,
+      "default_scoring_importance": 9,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0",
+      "template_name_translations": {
+        "en": "Situation Task Action Result",
+        "ml": "സാഹചര്യം-ചുമതല-നടപടി-ഫലം",
+        "hi": "स्थिति-कार्य-कार्रवाई-परिणाम"
+      },
+      "description_translations": {
+        "en": "Uses the STAR approach to explore a work challenge, actions and outcomes.",
+        "ml": "ജോലിയിലെ വെല്ലുവിളി, നടപടികൾ, ഫലങ്ങൾ എന്നിവ STAR രീതിയിൽ പരിശോധിക്കുന്നു.",
+        "hi": "STAR पद्धति से कार्यस्थल की चुनौती, कार्रवाई और परिणाम का आकलन करता है।"
+      }
+    },
+    {
+      "template_id": "EXP_COMPLEX_01",
+      "template_name": "Complex Problem Handling",
+      "category": "EXPERIENCE",
+      "description": "Assesses judgement, problem-solving, documentation and escalation.",
+      "question_pattern": {
+        "en": "Describe a complex {problem_area} you handled and explain how you assessed options and reached a resolution.",
+        "ml": "നിങ്ങൾ കൈകാര്യം ചെയ്ത സങ്കീർണ്ണമായ {problem_area} വിവരിക്കുകയും വഴികൾ എങ്ങനെ വിലയിരുത്തി പരിഹാരത്തിലെത്തിയെന്ന് വിശദീകരിക്കുകയും ചെയ്യുക.",
+        "hi": "आपने जिस जटिल {problem_area} को संभाला उसका वर्णन करें और बताएँ कि विकल्पों का मूल्यांकन करके समाधान तक कैसे पहुँचे।"
+      },
+      "placeholders": [
+        "problem_area"
+      ],
+      "answer_type": "TEXT",
+      "default_mandatory": false,
+      "default_scoring_importance": 9,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0",
+      "template_name_translations": {
+        "en": "Complex Problem Handling",
+        "ml": "സങ്കീർണ്ണ പ്രശ്നം കൈകാര്യം ചെയ്യൽ",
+        "hi": "जटिल समस्या का समाधान"
+      },
+      "description_translations": {
+        "en": "Assesses judgement, problem-solving, documentation and escalation.",
+        "ml": "വിധിനിർണ്ണയം, പ്രശ്നപരിഹാരം, രേഖപ്പെടുത്തൽ, എസ്കലേഷൻ എന്നിവ വിലയിരുത്തുന്നു.",
+        "hi": "निर्णय क्षमता, समस्या-समाधान, दस्तावेज़ीकरण और एस्केलेशन का आकलन करता है।"
+      }
+    },
+    {
+      "template_id": "SKILL_EVIDENCE_01",
+      "template_name": "Skill Evidence",
+      "category": "SKILLS",
+      "description": "Evaluates job-related knowledge through practical examples and explanations.",
+      "question_pattern": {
+        "en": "Describe your experience with {skill_name} and explain how you have applied it.",
+        "ml": "{skill_name} സംബന്ധിച്ച നിങ്ങളുടെ അനുഭവം വിവരിക്കുകയും അത് എങ്ങനെ പ്രയോഗിച്ചുവെന്ന് വിശദീകരിക്കുകയും ചെയ്യുക.",
+        "hi": "{skill_name} में अपना अनुभव बताएँ और समझाएँ कि आपने इसे कैसे लागू किया है।"
+      },
+      "placeholders": [
+        "skill_name"
+      ],
+      "answer_type": "TEXT",
+      "default_mandatory": true,
+      "default_scoring_importance": 9,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0",
+      "template_name_translations": {
+        "en": "Skill Evidence",
+        "ml": "കഴിവിന്റെ തെളിവ്",
+        "hi": "कौशल का प्रमाण"
+      },
+      "description_translations": {
+        "en": "Evaluates job-related knowledge through practical examples and explanations.",
+        "ml": "പ്രായോഗിക ഉദാഹരണങ്ങളിലൂടെയും വിശദീകരണങ്ങളിലൂടെയും ജോലിയുമായി ബന്ധപ്പെട്ട അറിവ് വിലയിരുത്തുന്നു.",
+        "hi": "व्यावहारिक उदाहरणों और स्पष्टीकरण से नौकरी-संबंधी ज्ञान का मूल्यांकन करता है।"
+      }
+    },
+    {
+      "template_id": "SKILL_TOOLS_01",
+      "template_name": "Tools and Technologies",
+      "category": "SKILLS",
+      "description": "Collects tools or technologies used and supporting details about proficiency.",
+      "question_pattern": {
+        "en": "Which of these tools or technologies have you used: {options}? Describe your experience with the ones you select.",
+        "ml": "ഇവയിൽ ഏത് ടൂളുകളോ സാങ്കേതികവിദ്യകളോ ഉപയോഗിച്ചിട്ടുണ്ട്: {options}? തിരഞ്ഞെടുത്തവയിലെ നിങ്ങളുടെ അനുഭവം വിശദീകരിക്കുക.",
+        "hi": "इनमें से आपने कौन-से टूल या तकनीक इस्तेमाल किए हैं: {options}? चुने गए विकल्पों का अनुभव बताएँ।"
+      },
+      "placeholders": [
+        "options"
+      ],
+      "answer_type": "MULTI_SELECT_WITH_DETAILS",
+      "default_mandatory": false,
+      "default_scoring_importance": 7,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0",
+      "template_name_translations": {
+        "en": "Tools and Technologies",
+        "ml": "ടൂളുകളും സാങ്കേതികവിദ്യകളും",
+        "hi": "टूल और तकनीक"
+      },
+      "description_translations": {
+        "en": "Collects tools or technologies used and supporting details about proficiency.",
+        "ml": "ഉപയോഗിച്ച ടൂളുകളും സാങ്കേതികവിദ്യകളും അവയിലെ പ്രാവീണ്യവും ശേഖരിക്കുന്നു.",
+        "hi": "इस्तेमाल किए गए टूल और तकनीकों तथा उनमें दक्षता की जानकारी लेता है।"
+      }
+    },
+    {
+      "template_id": "LOCATION_WORKMODE_01",
+      "template_name": "Work Location and Mode",
+      "category": "LOCATION",
+      "description": "Checks whether the candidate can meet the stated location and work-mode requirements.",
+      "question_pattern": {
+        "en": "This role is based in {job_location} with a {work_mode} arrangement. Can you meet this requirement?",
+        "ml": "ഈ ജോലി {job_location} ആസ്ഥാനമായുള്ളതാണ്; ജോലി രീതി {work_mode} ആണ്. ഈ ആവശ്യകത പാലിക്കാനാകുമോ?",
+        "hi": "यह भूमिका {job_location} में है और कार्य व्यवस्था {work_mode} है। क्या आप यह आवश्यकता पूरी कर सकते हैं?"
+      },
+      "placeholders": [
+        "job_location",
+        "work_mode"
+      ],
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "default_mandatory": true,
+      "default_scoring_importance": 3,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0",
+      "template_name_translations": {
+        "en": "Work Location and Mode",
+        "ml": "ജോലി സ്ഥലം, ജോലിരീതി",
+        "hi": "कार्य स्थान और कार्य व्यवस्था"
+      },
+      "description_translations": {
+        "en": "Checks whether the candidate can meet the stated location and work-mode requirements.",
+        "ml": "നിശ്ചിത സ്ഥലവും ജോലിരീതിയും പാലിക്കാനാകുമോ എന്ന് പരിശോധിക്കുന്നു.",
+        "hi": "निर्धारित स्थान और कार्य व्यवस्था की आवश्यकता पूरी कर सकने की जाँच करता है।"
+      }
+    },
+    {
+      "template_id": "LOCATION_RELOCATION_01",
+      "template_name": "Relocation Requirements",
+      "category": "LOCATION",
+      "description": "Identifies relocation or other work-location arrangements requested by the candidate.",
+      "question_pattern": {
+        "en": "Would you need relocation assistance or a different work-location arrangement for this role?",
+        "ml": "ഈ ജോലിക്കായി സ്ഥലംമാറ്റ സഹായമോ മറ്റൊരു ജോലി-സ്ഥല ക്രമീകരണമോ ആവശ്യമുണ്ടോ?",
+        "hi": "क्या इस भूमिका के लिए आपको स्थानांतरण सहायता या किसी अलग कार्य-स्थान व्यवस्था की आवश्यकता होगी?"
+      },
+      "placeholders": [],
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "default_mandatory": false,
+      "default_scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0",
+      "template_name_translations": {
+        "en": "Relocation Requirements",
+        "ml": "സ്ഥലംമാറ്റ ആവശ്യങ്ങൾ",
+        "hi": "स्थानांतरण की आवश्यकताएँ"
+      },
+      "description_translations": {
+        "en": "Identifies relocation or other work-location arrangements requested by the candidate.",
+        "ml": "സ്ഥാനാർഥിക്ക് ആവശ്യമായ സ്ഥലംമാറ്റമോ ജോലി-സ്ഥല ക്രമീകരണമോ കണ്ടെത്തുന്നു.",
+        "hi": "उम्मीदवार की स्थानांतरण या कार्य-स्थान संबंधी आवश्यकताओं की जानकारी लेता है।"
+      }
+    },
+    {
+      "template_id": "SALARY_RANGE_01",
+      "template_name": "Expected Salary Range",
+      "category": "SALARY",
+      "description": "Collects a candidate's expected compensation range.",
+      "question_pattern": {
+        "en": "What is your expected annual salary range in {currency}?",
+        "ml": "{currency} പ്രകാരം നിങ്ങളുടെ പ്രതീക്ഷിക്കുന്ന വാർഷിക ശമ്പള പരിധി എത്രയാണ്?",
+        "hi": "{currency} में आपकी अपेक्षित वार्षिक वेतन सीमा क्या है?"
+      },
+      "placeholders": [
+        "currency"
+      ],
+      "answer_type": "CURRENCY_RANGE",
+      "default_mandatory": false,
+      "default_scoring_importance": 2,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0",
+      "template_name_translations": {
+        "en": "Expected Salary Range",
+        "ml": "പ്രതീക്ഷിക്കുന്ന ശമ്പള പരിധി",
+        "hi": "अपेक्षित वेतन सीमा"
+      },
+      "description_translations": {
+        "en": "Collects a candidate's expected compensation range.",
+        "ml": "സ്ഥാനാർഥിയുടെ പ്രതീക്ഷിക്കുന്ന പ്രതിഫല പരിധി ശേഖരിക്കുന്നു.",
+        "hi": "उम्मीदवार की अपेक्षित वेतन सीमा की जानकारी लेता है।"
+      }
+    },
+    {
+      "template_id": "SALARY_BUDGET_01",
+      "template_name": "Compensation Alignment",
+      "category": "SALARY",
+      "description": "Checks whether the candidate is open to discussing the stated compensation budget.",
+      "question_pattern": {
+        "en": "Are you comfortable discussing compensation within the approved budget for this position?",
+        "ml": "ഈ സ്ഥാനത്തിനായി അംഗീകരിച്ച ബജറ്റിനുള്ളിൽ പ്രതിഫലത്തെക്കുറിച്ച് ചർച്ച ചെയ്യാൻ നിങ്ങൾക്ക് സൗകര്യമുണ്ടോ?",
+        "hi": "क्या आप इस पद के लिए स्वीकृत बजट के भीतर पारिश्रमिक पर चर्चा करने के लिए तैयार हैं?"
+      },
+      "placeholders": [],
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "default_mandatory": false,
+      "default_scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0",
+      "template_name_translations": {
+        "en": "Compensation Alignment",
+        "ml": "പ്രതിഫല പൊരുത്തം",
+        "hi": "पारिश्रमिक का तालमेल"
+      },
+      "description_translations": {
+        "en": "Checks whether the candidate is open to discussing the stated compensation budget.",
+        "ml": "നിശ്ചയിച്ച പ്രതിഫല ബജറ്റിനെക്കുറിച്ച് ചർച്ച ചെയ്യാൻ സ്ഥാനാർഥി തയ്യാറാണോ എന്ന് പരിശോധിക്കുന്നു.",
+        "hi": "स्वीकृत वेतन बजट पर चर्चा करने की उम्मीदवार की तैयारी जाँचता है।"
+      }
+    },
+    {
+      "template_id": "JOINING_DATE_01",
+      "template_name": "Joining Availability",
+      "category": "NOTICE_PERIOD",
+      "description": "Collects the candidate's notice period or earliest available joining date.",
+      "question_pattern": {
+        "en": "What is your current notice period, and when would you be available to join?",
+        "ml": "നിങ്ങളുടെ നിലവിലെ നോട്ടീസ് കാലാവധി എത്രയാണ്? എപ്പോൾ ജോലിയിൽ പ്രവേശിക്കാനാകും?",
+        "hi": "आपकी वर्तमान नोटिस अवधि कितनी है और आप कब जॉइन कर सकते हैं?"
+      },
+      "placeholders": [],
+      "answer_type": "DATE_OR_DURATION",
+      "default_mandatory": true,
+      "default_scoring_importance": 4,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0",
+      "template_name_translations": {
+        "en": "Joining Availability",
+        "ml": "ജോലിയിൽ പ്രവേശിക്കാനുള്ള ലഭ്യത",
+        "hi": "जॉइन करने की उपलब्धता"
+      },
+      "description_translations": {
+        "en": "Collects the candidate's notice period or earliest available joining date.",
+        "ml": "നോട്ടീസ് കാലാവധിയോ ഏറ്റവും നേരത്തെ ജോലിയിൽ പ്രവേശിക്കാവുന്ന തീയതിയോ ശേഖരിക്കുന്നു.",
+        "hi": "नोटिस अवधि या सबसे जल्दी जॉइन करने की तारीख की जानकारी लेता है।"
+      }
+    },
+    {
+      "template_id": "JOINING_COMMITMENTS_01",
+      "template_name": "Joining Date Constraints",
+      "category": "NOTICE_PERIOD",
+      "description": "Identifies practical commitments that may affect the joining date.",
+      "question_pattern": {
+        "en": "Do you have any commitments that could affect your expected joining date?",
+        "ml": "നിങ്ങളുടെ പ്രതീക്ഷിക്കുന്ന ജോലിയിൽ പ്രവേശന തീയതിയെ ബാധിക്കാവുന്ന ബാധ്യതകളുണ്ടോ?",
+        "hi": "क्या आपकी कोई प्रतिबद्धताएँ हैं जो आपकी अपेक्षित जॉइनिंग तिथि को प्रभावित कर सकती हैं?"
+      },
+      "placeholders": [],
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "default_mandatory": false,
+      "default_scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0",
+      "template_name_translations": {
+        "en": "Joining Date Constraints",
+        "ml": "ജോലിയിൽ പ്രവേശന തീയതിയിലെ നിയന്ത്രണങ്ങൾ",
+        "hi": "जॉइनिंग तिथि की बाधाएँ"
+      },
+      "description_translations": {
+        "en": "Identifies practical commitments that may affect the joining date.",
+        "ml": "ജോലിയിൽ പ്രവേശന തീയതിയെ ബാധിക്കാവുന്ന പ്രായോഗിക ബാധ്യതകൾ കണ്ടെത്തുന്നു.",
+        "hi": "जॉइनिंग तिथि को प्रभावित करने वाली व्यावहारिक प्रतिबद्धताओं की जानकारी लेता है।"
+      }
+    }
+  ]
+}

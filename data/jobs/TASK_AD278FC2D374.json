@@ -1,0 +1,14 @@
+{
+  "task_id": "TASK_AD278FC2D374",
+  "task_type": "CANDIDATE_SCORING",
+  "candidate_id": "CAN_1CA3DA4F0062",
+  "jd_id": "HRExecutiveFresher",
+  "recruitment_job_id": "JOB_6EC0B8C25121",
+  "status": "COMPLETED",
+  "progress": 100,
+  "created_at": "2026-09-24T18:54:49.320653+00:00",
+  "started_at": "2026-09-24T18:54:49.325651+00:00",
+  "completed_at": "2026-09-24T18:54:53.659627+00:00",
+  "result_reference": "data/candidates/scoring_results/JOB_6EC0B8C25121/CAN_1CA3DA4F0062.json",
+  "error": null
+}

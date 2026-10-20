@@ -1,0 +1,68 @@
+{
+  "session_id": "SCREEN_3F897D8A2CDE",
+  "candidate_id": "CAN_123456789ABC",
+  "job_id": "JOB_BF2FEFE4A4A3",
+  "role_id": "PYTHON_DEV_FRESHER",
+  "language": "en",
+  "status": "CREATED",
+  "questions": [
+    {
+      "question_id": "PYF_INTRO_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "INTRODUCTION",
+      "question_text": "Tell me about yourself and why you want to become a Python developer.",
+      "language": "en",
+      "answer_type": "TEXT",
+      "mandatory": true
+    },
+    {
+      "question_id": "PYF_EDU_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "EDUCATION",
+      "question_text": "What is your highest qualification, and which subjects are relevant to software development?",
+      "language": "en",
+      "answer_type": "TEXT",
+      "mandatory": true
+    },
+    {
+      "question_id": "PYF_EXP_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "EXPERIENCE",
+      "question_text": "Describe a project, internship, or practical exercise in which you used Python and explain your contribution.",
+      "language": "en",
+      "answer_type": "TEXT",
+      "mandatory": true
+    },
+    {
+      "question_id": "PYF_SKILL_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "SKILLS",
+      "question_text": "Which Python concepts and frameworks have you used, and how have you applied them in practice?",
+      "language": "en",
+      "answer_type": "TEXT",
+      "mandatory": true
+    },
+    {
+      "question_id": "PYF_LOC_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "LOCATION",
+      "question_text": "This role is based in {job_location} with a {work_mode} arrangement. Can you meet this work-location requirement?",
+      "language": "en",
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": true
+    },
+    {
+      "question_id": "PYF_NOTICE_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "NOTICE_PERIOD",
+      "question_text": "If selected, when would you be available to join?",
+      "language": "en",
+      "answer_type": "DATE_OR_DURATION",
+      "mandatory": true
+    }
+  ],
+  "total_questions": 6,
+  "mandatory_questions": 6,
+  "created_at": "2026-10-16T07:24:34.217548+00:00",
+  "updated_at": "2026-10-16T07:24:34.217548+00:00"
+}

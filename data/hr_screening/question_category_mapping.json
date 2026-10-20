@@ -1,0 +1,104 @@
+
+{
+  "version": "1.0",
+  "categories": [
+    {
+      "category_id": "INTRODUCTION",
+      "display_name": {
+        "en": "Introduction",
+        "ml": "ആമുഖം",
+        "hi": "परिचय"
+      },
+      "description": "Candidate background, career goals, and motivation.",
+      "supported_answer_types": ["TEXT"],
+      "default_mandatory": true,
+      "default_scoring_method": "HUMAN_REVIEW"
+    },
+    {
+      "category_id": "EDUCATION",
+      "display_name": {
+        "en": "Education",
+        "ml": "വിദ്യാഭ്യാസം",
+        "hi": "शिक्षा"
+      },
+      "description": "Qualifications, degrees, certifications, and training.",
+      "supported_answer_types": ["TEXT"],
+      "default_mandatory": true,
+      "default_scoring_method": "HUMAN_REVIEW"
+    },
+    {
+      "category_id": "EXPERIENCE",
+      "display_name": {
+        "en": "Experience",
+        "ml": "പ്രവൃത്തിപരിചയം",
+        "hi": "कार्य अनुभव"
+      },
+      "description": "Previous employment, responsibilities, projects, and experience duration.",
+      "supported_answer_types": ["TEXT", "DATE_OR_DURATION"],
+      "default_mandatory": true,
+      "default_scoring_method": "HUMAN_REVIEW"
+    },
+    {
+      "category_id": "SKILLS",
+      "display_name": {
+        "en": "Skills",
+        "ml": "കഴിവുകൾ",
+        "hi": "कौशल"
+      },
+      "description": "Technical skills, tools, role-specific competencies, and practical knowledge.",
+      "supported_answer_types": [
+        "TEXT",
+        "SINGLE_CHOICE",
+        "MULTIPLE_CHOICE",
+        "BOOLEAN",
+        "YES_NO_WITH_DETAILS",
+        "MULTI_SELECT_WITH_DETAILS"
+      ],
+      "default_mandatory": true,
+      "default_scoring_method": "HUMAN_REVIEW"
+    },
+    {
+      "category_id": "LOCATION",
+      "display_name": {
+        "en": "Location",
+        "ml": "സ്ഥലം",
+        "hi": "स्थान"
+      },
+      "description": "Current location, preferred work location, relocation, and work arrangement.",
+      "supported_answer_types": [
+        "TEXT",
+        "BOOLEAN",
+        "YES_NO_WITH_DETAILS"
+      ],
+      "default_mandatory": false,
+      "default_scoring_method": "RULE_BASED"
+    },
+    {
+      "category_id": "SALARY",
+      "display_name": {
+        "en": "Salary Expectations",
+        "ml": "ശമ്പള പ്രതീക്ഷകൾ",
+        "hi": "वेतन अपेक्षाएँ"
+      },
+      "description": "Expected salary, current compensation where relevant, and acceptable salary range.",
+      "supported_answer_types": ["CURRENCY_RANGE", "TEXT"],
+      "default_mandatory": false,
+      "default_scoring_method": "RULE_BASED"
+    },
+    {
+      "category_id": "NOTICE_PERIOD",
+      "display_name": {
+        "en": "Notice Period",
+        "ml": "നോട്ടീസ് കാലയളവ്",
+        "hi": "नोटिस अवधि"
+      },
+      "description": "Current notice period, availability, and expected joining date or duration.",
+      "supported_answer_types": ["DATE_OR_DURATION", "TEXT"],
+      "default_mandatory": true,
+      "default_scoring_method": "RULE_BASED"
+    }
+  ],
+  "supported_languages": ["en", "ml", "hi"],
+  "default_language": "en",
+  "fallback_policy": "NO_SILENT_LANGUAGE_SUBSTITUTION"
+}

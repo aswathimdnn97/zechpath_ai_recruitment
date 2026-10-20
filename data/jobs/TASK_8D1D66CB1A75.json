@@ -1,0 +1,14 @@
+{
+  "task_id": "TASK_8D1D66CB1A75",
+  "task_type": "CANDIDATE_SCORING",
+  "candidate_id": "CAN_18CF07232472",
+  "jd_id": "PythonDeveloperFresher",
+  "recruitment_job_id": "JOB_6433C8296264",
+  "status": "COMPLETED",
+  "progress": 100,
+  "created_at": "2026-10-05T18:42:17.361676+00:00",
+  "started_at": "2026-10-05T18:42:17.400083+00:00",
+  "completed_at": "2026-10-05T18:43:09.468528+00:00",
+  "result_reference": "data/candidates/scoring_results/JOB_6433C8296264/CAN_18CF07232472.json",
+  "error": null
+}

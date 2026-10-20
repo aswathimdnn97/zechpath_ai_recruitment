@@ -1,0 +1,14 @@
+{
+  "task_id": "TASK_C1F9155457B5",
+  "task_type": "CANDIDATE_SCORING",
+  "candidate_id": "CAN_2325AD0B18CE",
+  "jd_id": "SeniorHRExecutive",
+  "recruitment_job_id": "JOB_0E2E9FA9C79D",
+  "status": "COMPLETED",
+  "progress": 100,
+  "created_at": "2026-09-24T19:29:14.321782+00:00",
+  "started_at": "2026-09-24T19:29:14.321782+00:00",
+  "completed_at": "2026-09-24T19:29:17.239984+00:00",
+  "result_reference": "data/candidates/scoring_results/JOB_0E2E9FA9C79D/CAN_2325AD0B18CE.json",
+  "error": null
+}

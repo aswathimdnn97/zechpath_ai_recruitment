@@ -1,0 +1,115 @@
+{
+  "evaluation_id": "EVAL_SCREEN_0B4F4DA9183D",
+  "session_id": "SCREEN_0B4F4DA9183D",
+  "candidate_id": "CAN_B3B39704E1FF",
+  "job_id": "JOB_BF2FEFE4A4A3",
+  "role_id": "PYTHON_DEV_FRESHER",
+  "language": "ml",
+  "evaluation_version": "1.1",
+  "input_fingerprint": "7e0ea888dcc089fb9ed49c6b46450db2acf63e6b03e1f579fef34a0939df51ed",
+  "summary": {
+    "total_questions": 2,
+    "mandatory_questions": 1,
+    "optional_questions": 1,
+    "answered_questions": 2,
+    "answered_mandatory_questions": 1,
+    "evaluated_questions": 2,
+    "unanswered_questions": 0,
+    "unanswered_mandatory_questions": [],
+    "mandatory_unanswered_questions": 0,
+    "questions_needing_review": 0,
+    "total_score": 7.0,
+    "max_score": 10.0,
+    "score_percentage": 70.0
+  },
+  "evaluated_questions": 2,
+  "total_score": 7.0,
+  "max_score": 10.0,
+  "score_percentage": 70.0,
+  "question_results": [
+    {
+      "question_id": "PYF_INTRO_001",
+      "mandatory": true,
+      "answered": true,
+      "evaluation_method": "HUMAN_REVIEW",
+      "evaluation_status": "EVALUATED",
+      "score": 4.0,
+      "max_score": 5.0,
+      "feedback": "The candidate introduces their background and explains their interest in Python development. The answer is relevant, but more detail about practical Python projects would strengthen it.",
+      "review_history": [
+        {
+          "reviewer_id": "HR_001",
+          "score": 4.0,
+          "max_score": 5.0,
+          "feedback": "The candidate introduces their background and explains their interest in Python development. The answer is relevant, but more detail about practical Python projects would strengthen it.",
+          "reviewed_at": "2026-10-19T13:02:52.135764+00:00"
+        }
+      ],
+      "reviewer_id": "HR_001",
+      "reviewed_at": "2026-10-19T13:02:52.135764+00:00"
+    },
+    {
+      "question_id": "PYF_INTRO_002",
+      "mandatory": false,
+      "answered": true,
+      "evaluation_method": "KEYWORD_RUBRIC",
+      "evaluation_status": "EVALUATED",
+      "score": 3.0,
+      "max_score": 5.0,
+      "feedback": "Score is based on configured keyword coverage, not semantic understanding. Matched criteria: Python learning, Project experience."
+    }
+  ],
+  "evaluation_results": [
+    {
+      "question_id": "PYF_INTRO_001",
+      "mandatory": true,
+      "answered": true,
+      "evaluation_method": "HUMAN_REVIEW",
+      "evaluation_status": "EVALUATED",
+      "score": 4.0,
+      "max_score": 5.0,
+      "feedback": "The candidate introduces their background and explains their interest in Python development. The answer is relevant, but more detail about practical Python projects would strengthen it.",
+      "review_history": [
+        {
+          "reviewer_id": "HR_001",
+          "score": 4.0,
+          "max_score": 5.0,
+          "feedback": "The candidate introduces their background and explains their interest in Python development. The answer is relevant, but more detail about practical Python projects would strengthen it.",
+          "reviewed_at": "2026-10-19T13:02:52.135764+00:00"
+        }
+      ],
+      "reviewer_id": "HR_001",
+      "reviewed_at": "2026-10-19T13:02:52.135764+00:00"
+    },
+    {
+      "question_id": "PYF_INTRO_002",
+      "mandatory": false,
+      "answered": true,
+      "evaluation_method": "KEYWORD_RUBRIC",
+      "evaluation_status": "EVALUATED",
+      "score": 3.0,
+      "max_score": 5.0,
+      "feedback": "Score is based on configured keyword coverage, not semantic understanding. Matched criteria: Python learning, Project experience."
+    }
+  ],
+  "status": "COMPLETED",
+  "overall_status": "COMPLETED",
+  "decision": {
+    "recommendation": "EVALUATION_COMPLETED",
+    "automatic_rejection": false
+  },
+  "recommendation": "EVALUATION_COMPLETED",
+  "automatic_rejection": false,
+  "evaluated_at": "2026-10-19T10:19:09.248591+00:00",
+  "review_history": [
+    {
+      "question_id": "PYF_INTRO_001",
+      "reviewer_id": "HR_001",
+      "score": 4.0,
+      "max_score": 5.0,
+      "feedback": "The candidate introduces their background and explains their interest in Python development. The answer is relevant, but more detail about practical Python projects would strengthen it.",
+      "reviewed_at": "2026-10-19T13:02:52.135764+00:00"
+    }
+  ],
+  "review_updated_at": "2026-10-19T13:02:52.151382+00:00"
+}

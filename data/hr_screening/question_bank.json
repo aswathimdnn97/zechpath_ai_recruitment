@@ -1,0 +1,1452 @@
+{
+  "schema_version": "1.0",
+  "default_language": "en",
+  "supported_languages": [
+    "en",
+    "ml",
+    "hi"
+  ],
+  "roles": [
+    "PYTHON_DEV_FRESHER",
+    "SENIOR_PYTHON_DEVELOPER",
+    "HR_EXECUTIVE_FRESHER",
+    "SENIOR_HR_EXECUTIVE"
+  ],
+  "categories": [
+    "INTRODUCTION",
+    "EDUCATION",
+    "EXPERIENCE",
+    "SKILLS",
+    "LOCATION",
+    "SALARY",
+    "NOTICE_PERIOD"
+  ],
+  "answer_types": [
+    "TEXT",
+    "YES_NO_WITH_DETAILS",
+    "MULTI_SELECT_WITH_DETAILS",
+    "CURRENCY_RANGE",
+    "DATE_OR_DURATION"
+  ],
+  "scoring_importance_scale": {
+    "min": 1,
+    "max": 10
+  },
+  "questions": [
+    {
+      "question_id": "PYF_INTRO_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "INTRODUCTION",
+      "template_id": "INTRO_OPEN_01",
+      "question_text": {
+        "en": "Tell me about yourself and why you want to become a Python developer.",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 3,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_INTRO_002",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "INTRODUCTION",
+      "template_id": "INTRO_PREP_01",
+      "question_text": {
+        "en": "What have you done recently to prepare for a Python developer role?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 4,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "max_score": 5,
+      "evaluation_criteria": [
+        {
+          "criterion": "Python learning",
+          "keywords": [
+            "python",
+            "course",
+            "training",
+            "tutorial"
+          ],
+          "weight": 2,
+          "required": false
+        },
+        {
+          "criterion": "Practical coding",
+          "keywords": [
+            "practice",
+            "coding",
+            "program",
+            "exercise"
+          ],
+          "weight": 1,
+          "required": false
+        },
+        {
+          "criterion": "Project experience",
+          "keywords": [
+            "project",
+            "application",
+            "django",
+            "api"
+          ],
+          "weight": 1,
+          "required": false
+        },
+        {
+          "criterion": "Preparation plan",
+          "keywords": [
+            "learning",
+            "improve",
+            "prepare",
+            "develop"
+          ],
+          "weight": 1,
+          "required": false
+        }
+      ],
+      "active": true,
+      "version": "1.1"
+    },
+    {
+      "question_id": "PYF_EDU_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "EDUCATION",
+      "template_id": "EDU_QUAL_01",
+      "question_text": {
+        "en": "What is your highest qualification, and which subjects are relevant to software development?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 3,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_EDU_002",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "EDUCATION",
+      "template_id": "EDU_TRAINING_01",
+      "question_text": {
+        "en": "Have you completed any training, coursework, or certifications related to Python or web development?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 3,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_EXP_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "EXPERIENCE",
+      "template_id": "EXP_PROJECT_01",
+      "question_text": {
+        "en": "Describe a project, internship, or practical exercise in which you used Python and explain your contribution.",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 7,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_EXP_002",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "EXPERIENCE",
+      "template_id": "EXP_TEAM_01",
+      "question_text": {
+        "en": "Describe a time you collaborated with others on a project, or explain how you would approach teamwork as a developer.",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 3,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_SKILL_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "SKILLS",
+      "template_id": "SKILL_EVIDENCE_01",
+      "question_text": {
+        "en": "Which Python concepts and frameworks have you used, and how have you applied them in practice?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 9,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_SKILL_002",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "SKILLS",
+      "template_id": "SKILL_TOOLS_01",
+      "question_text": {
+        "en": "Which of these have you used: databases, REST APIs, Git, Django, FastAPI, or automated testing? Describe your experience.",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "MULTI_SELECT_WITH_DETAILS",
+      "options": [
+        {
+          "option_id": "DATABASES",
+          "label": "Databases (SQL, PostgreSQL, MySQL)"
+        },
+        {
+          "option_id": "REST_APIS",
+          "label": "REST APIs"
+        },
+        {
+          "option_id": "GIT",
+          "label": "Git"
+        },
+        {
+          "option_id": "DJANGO",
+          "label": "Django"
+        },
+        {
+          "option_id": "FASTAPI",
+          "label": "FastAPI"
+        },
+        {
+          "option_id": "AUTOMATED_TESTING",
+          "label": "Automated testing"
+        },
+        {
+          "option_id": "OTHER",
+          "label": "Other"
+        },
+        {
+          "option_id": "NONE",
+          "label": "None of these"
+        }
+      ],
+      "mandatory": false,
+      "scoring_importance": 7,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.1"
+    },
+    {
+      "question_id": "PYF_LOC_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "LOCATION",
+      "template_id": "LOCATION_WORKMODE_01",
+      "question_text": {
+        "en": "This role is based in {job_location} with a {work_mode} arrangement. Can you meet this work-location requirement?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": true,
+      "scoring_importance": 3,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_LOC_002",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "LOCATION",
+      "template_id": "LOCATION_RELOCATION_01",
+      "question_text": {
+        "en": "Would you need relocation assistance or a different work-location arrangement to accept this role?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_SAL_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "SALARY",
+      "template_id": "SALARY_RANGE_01",
+      "question_text": {
+        "en": "What is your expected annual salary range in {currency}?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "CURRENCY_RANGE",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_SAL_002",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "SALARY",
+      "template_id": "SALARY_BUDGET_01",
+      "question_text": {
+        "en": "Are you comfortable discussing compensation within the budget range shared for this position?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_NOTICE_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "NOTICE_PERIOD",
+      "template_id": "JOINING_DATE_01",
+      "question_text": {
+        "en": "If selected, when would you be available to join?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "DATE_OR_DURATION",
+      "mandatory": true,
+      "scoring_importance": 4,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "PYF_NOTICE_002",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "NOTICE_PERIOD",
+      "template_id": "JOINING_COMMITMENTS_01",
+      "question_text": {
+        "en": "Do you have any commitments that could affect your expected joining date?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_INTRO_001",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "INTRODUCTION",
+      "template_id": "INTRO_OPEN_01",
+      "question_text": {
+        "en": "Summarize your Python development experience and the types of systems you have worked on.",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 4,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_INTRO_002",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "INTRODUCTION",
+      "template_id": "INTRO_ACHIEVEMENT_01",
+      "question_text": {
+        "en": "What technical contribution or engineering improvement are you most proud of, and why?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 4,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_EDU_001",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "EDUCATION",
+      "template_id": "EDU_QUAL_01",
+      "question_text": {
+        "en": "What is your highest qualification, and which parts of your education are relevant to this role?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_EDU_002",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "EDUCATION",
+      "template_id": "EDU_TRAINING_01",
+      "question_text": {
+        "en": "Have you completed recent training or certifications relevant to Python, cloud platforms, architecture, or security?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_EXP_001",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "EXPERIENCE",
+      "template_id": "EXP_PROJECT_01",
+      "question_text": {
+        "en": "Describe a production Python system you helped design or maintain, including your responsibilities and its technical constraints.",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 10,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_EXP_002",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "EXPERIENCE",
+      "template_id": "EXP_STAR_01",
+      "question_text": {
+        "en": "Describe a time you improved software reliability, performance, or maintainability. What changed and what was the result?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 9,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_SKILL_001",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "SKILLS",
+      "template_id": "SKILL_EVIDENCE_01",
+      "question_text": {
+        "en": "Describe your experience with Python architecture, testing, API design, database performance, and deployment practices relevant to this role.",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 10,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_SKILL_002",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "SKILLS",
+      "template_id": "SKILL_TOOLS_01",
+      "question_text": {
+        "en": "Which production tools have you used, such as Django, FastAPI, SQL databases, containers, CI/CD, cloud services, monitoring, or message queues? Describe your experience.",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "MULTI_SELECT_WITH_DETAILS",
+      "options": [
+        {
+          "option_id": "DJANGO",
+          "label": "Django"
+        },
+        {
+          "option_id": "FASTAPI",
+          "label": "FastAPI"
+        },
+        {
+          "option_id": "SQL_DATABASES",
+          "label": "SQL databases"
+        },
+        {
+          "option_id": "CONTAINERS",
+          "label": "Docker or containers"
+        },
+        {
+          "option_id": "CI_CD",
+          "label": "CI/CD pipelines"
+        },
+        {
+          "option_id": "CLOUD",
+          "label": "Cloud services"
+        },
+        {
+          "option_id": "MONITORING",
+          "label": "Monitoring and logging"
+        },
+        {
+          "option_id": "MESSAGE_QUEUES",
+          "label": "Message queues"
+        },
+        {
+          "option_id": "OTHER",
+          "label": "Other"
+        }
+      ],
+      "mandatory": false,
+      "scoring_importance": 8,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.1"
+    },
+    {
+      "question_id": "SPD_LOC_001",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "LOCATION",
+      "template_id": "LOCATION_WORKMODE_01",
+      "question_text": {
+        "en": "This role is based in {job_location} with a {work_mode} arrangement. Can you meet this work-location requirement?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": true,
+      "scoring_importance": 3,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_LOC_002",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "LOCATION",
+      "template_id": "LOCATION_RELOCATION_01",
+      "question_text": {
+        "en": "Would you require relocation assistance or a specific work-location arrangement for this role?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_SAL_001",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "SALARY",
+      "template_id": "SALARY_RANGE_01",
+      "question_text": {
+        "en": "What is your expected annual salary range in {currency}?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "CURRENCY_RANGE",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_SAL_002",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "SALARY",
+      "template_id": "SALARY_BUDGET_01",
+      "question_text": {
+        "en": "Are you comfortable discussing compensation in relation to the role's responsibilities and approved budget?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_NOTICE_001",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "NOTICE_PERIOD",
+      "template_id": "JOINING_DATE_01",
+      "question_text": {
+        "en": "What is your current notice period, and what is your earliest realistic joining date?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "DATE_OR_DURATION",
+      "mandatory": true,
+      "scoring_importance": 4,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SPD_NOTICE_002",
+      "role_id": "SENIOR_PYTHON_DEVELOPER",
+      "category": "NOTICE_PERIOD",
+      "template_id": "JOINING_COMMITMENTS_01",
+      "question_text": {
+        "en": "Is your notice period negotiable, or are there commitments that may affect your joining date?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_INTRO_001",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "INTRODUCTION",
+      "template_id": "INTRO_OPEN_01",
+      "question_text": {
+        "en": "Tell me about yourself and why you want to begin your career in Human Resources.",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 3,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_INTRO_002",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "INTRODUCTION",
+      "template_id": "INTRO_INTEREST_01",
+      "question_text": {
+        "en": "Which areas of HR interest you most, such as recruitment, onboarding, employee engagement, or HR operations?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 3,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_EDU_001",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "EDUCATION",
+      "template_id": "EDU_QUAL_01",
+      "question_text": {
+        "en": "What is your highest qualification, and how does it relate to HR or people-focused work?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 3,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_EDU_002",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "EDUCATION",
+      "template_id": "EDU_TRAINING_01",
+      "question_text": {
+        "en": "Have you completed any HR-related coursework, training, projects, or certifications?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 3,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_EXP_001",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "EXPERIENCE",
+      "template_id": "EXP_PROJECT_01",
+      "question_text": {
+        "en": "Describe an internship, academic project, volunteering activity, or other experience that demonstrates organization and communication skills.",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 5,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_EXP_002",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "EXPERIENCE",
+      "template_id": "EXP_TEAM_01",
+      "question_text": {
+        "en": "Have you coordinated an event, maintained records, or communicated with different people? Give an example.",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 4,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_SKILL_001",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "SKILLS",
+      "template_id": "SKILL_EVIDENCE_01",
+      "question_text": {
+        "en": "What do you understand about the recruitment process, from receiving a job requirement to coordinating an interview?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 8,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_SKILL_002",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "SKILLS",
+      "template_id": "SKILL_TOOLS_01",
+      "question_text": {
+        "en": "Which tools have you used for spreadsheets, documentation, scheduling, or applicant tracking, and what can you do with them?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "MULTI_SELECT_WITH_DETAILS",
+      "options": [
+        {
+          "option_id": "EXCEL",
+          "label": "Microsoft Excel"
+        },
+        {
+          "option_id": "GOOGLE_SHEETS",
+          "label": "Google Sheets"
+        },
+        {
+          "option_id": "WORD",
+          "label": "Microsoft Word or document tools"
+        },
+        {
+          "option_id": "SCHEDULING",
+          "label": "Interview scheduling tools"
+        },
+        {
+          "option_id": "ATS",
+          "label": "Applicant tracking systems (ATS)"
+        },
+        {
+          "option_id": "HRIS",
+          "label": "Human resource information systems (HRIS)"
+        },
+        {
+          "option_id": "OTHER",
+          "label": "Other"
+        },
+        {
+          "option_id": "NONE",
+          "label": "None of these"
+        }
+      ],
+      "mandatory": false,
+      "scoring_importance": 5,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.1"
+    },
+    {
+      "question_id": "HEF_LOC_001",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "LOCATION",
+      "template_id": "LOCATION_WORKMODE_01",
+      "question_text": {
+        "en": "This role is based in {job_location} with a {work_mode} arrangement. Can you meet this work-location requirement?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": true,
+      "scoring_importance": 3,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_LOC_002",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "LOCATION",
+      "template_id": "LOCATION_RELOCATION_01",
+      "question_text": {
+        "en": "Would you need relocation assistance or a different work-location arrangement to accept this role?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_SAL_001",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "SALARY",
+      "template_id": "SALARY_RANGE_01",
+      "question_text": {
+        "en": "What is your expected annual salary range in {currency}?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "CURRENCY_RANGE",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_SAL_002",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "SALARY",
+      "template_id": "SALARY_BUDGET_01",
+      "question_text": {
+        "en": "Are you comfortable discussing compensation within the budget range shared for this position?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_NOTICE_001",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "NOTICE_PERIOD",
+      "template_id": "JOINING_DATE_01",
+      "question_text": {
+        "en": "If selected, when would you be available to join?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "DATE_OR_DURATION",
+      "mandatory": true,
+      "scoring_importance": 4,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "HEF_NOTICE_002",
+      "role_id": "HR_EXECUTIVE_FRESHER",
+      "category": "NOTICE_PERIOD",
+      "template_id": "JOINING_COMMITMENTS_01",
+      "question_text": {
+        "en": "Do you have any commitments that could affect your expected joining date?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_INTRO_001",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "INTRODUCTION",
+      "template_id": "INTRO_OPEN_01",
+      "question_text": {
+        "en": "Summarize your HR experience, the functions you have managed, and the teams or organizations you have supported.",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 4,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_INTRO_002",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "INTRODUCTION",
+      "template_id": "INTRO_ACHIEVEMENT_01",
+      "question_text": {
+        "en": "Which HR achievement best demonstrates your impact, and how did you measure the outcome?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 5,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_EDU_001",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "EDUCATION",
+      "template_id": "EDU_QUAL_01",
+      "question_text": {
+        "en": "What is your highest qualification, and which parts of your education are relevant to this HR role?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_EDU_002",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "EDUCATION",
+      "template_id": "EDU_TRAINING_01",
+      "question_text": {
+        "en": "Do you hold any HR, employment-law, people-management, or related certifications, or have you completed recent training?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 3,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_EXP_001",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "EXPERIENCE",
+      "template_id": "EXP_STAR_01",
+      "question_text": {
+        "en": "Describe an HR process you owned or improved, your responsibilities, the stakeholders involved, and the measurable outcome.",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 10,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_EXP_002",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "EXPERIENCE",
+      "template_id": "EXP_COMPLEX_01",
+      "question_text": {
+        "en": "Describe a complex hiring, employee-relations, or policy issue you handled. How did you assess options and ensure appropriate documentation or escalation?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "scoring_importance": 9,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_SKILL_001",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "SKILLS",
+      "template_id": "SKILL_EVIDENCE_01",
+      "question_text": {
+        "en": "How do you manage hiring priorities, stakeholder expectations, candidate experience, and recruitment metrics at the same time?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "scoring_importance": 10,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_SKILL_002",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "SKILLS",
+      "template_id": "SKILL_TOOLS_01",
+      "question_text": {
+        "en": "Which HRIS, ATS, reporting, workforce-planning, or employee-engagement tools have you used, and for what purposes?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "MULTI_SELECT_WITH_DETAILS",
+      "options": [
+        {
+          "option_id": "HRIS",
+          "label": "HRIS platforms"
+        },
+        {
+          "option_id": "ATS",
+          "label": "Applicant tracking systems (ATS)"
+        },
+        {
+          "option_id": "REPORTING",
+          "label": "HR reporting and analytics"
+        },
+        {
+          "option_id": "WORKFORCE_PLANNING",
+          "label": "Workforce planning tools"
+        },
+        {
+          "option_id": "EMPLOYEE_ENGAGEMENT",
+          "label": "Employee engagement platforms"
+        },
+        {
+          "option_id": "PAYROLL",
+          "label": "Payroll and HR operations tools"
+        },
+        {
+          "option_id": "OTHER",
+          "label": "Other"
+        }
+      ],
+      "mandatory": false,
+      "scoring_importance": 7,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.1"
+    },
+    {
+      "question_id": "SHE_LOC_001",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "LOCATION",
+      "template_id": "LOCATION_WORKMODE_01",
+      "question_text": {
+        "en": "This role is based in {job_location} with a {work_mode} arrangement. Can you meet this work-location requirement?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": true,
+      "scoring_importance": 3,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_LOC_002",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "LOCATION",
+      "template_id": "LOCATION_RELOCATION_01",
+      "question_text": {
+        "en": "Would you require relocation assistance or a specific work-location arrangement for this role?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_SAL_001",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "SALARY",
+      "template_id": "SALARY_RANGE_01",
+      "question_text": {
+        "en": "What is your expected annual salary range in {currency}?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "CURRENCY_RANGE",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_SAL_002",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "SALARY",
+      "template_id": "SALARY_BUDGET_01",
+      "question_text": {
+        "en": "Are you comfortable discussing compensation in relation to the role's responsibilities and approved budget?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_NOTICE_001",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "NOTICE_PERIOD",
+      "template_id": "JOINING_DATE_01",
+      "question_text": {
+        "en": "What is your current notice period, and what is your earliest realistic joining date?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "DATE_OR_DURATION",
+      "mandatory": true,
+      "scoring_importance": 4,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "question_id": "SHE_NOTICE_002",
+      "role_id": "SENIOR_HR_EXECUTIVE",
+      "category": "NOTICE_PERIOD",
+      "template_id": "JOINING_COMMITMENTS_01",
+      "question_text": {
+        "en": "Is your notice period negotiable, or are there commitments that may affect your joining date?",
+        "ml": null,
+        "hi": null
+      },
+      "translation_status": {
+        "en": "REVIEWED",
+        "ml": "NOT_TRANSLATED",
+        "hi": "NOT_TRANSLATED"
+      },
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "mandatory": false,
+      "scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    }
+  ]
+}

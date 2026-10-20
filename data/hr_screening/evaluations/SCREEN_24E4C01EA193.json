@@ -1,0 +1,50 @@
+{
+  "evaluation_id": "EVAL_24E4C01EA193",
+  "evaluation_version": "1.0",
+  "session_id": "SCREEN_24E4C01EA193",
+  "candidate_id": "CAN_C0CC88823474",
+  "job_id": "JOB_BF2FEFE4A4A3",
+  "role_id": "PYTHON_DEV_FRESHER",
+  "status": "NEEDS_REVIEW",
+  "summary": {
+    "total_questions": 2,
+    "answered_questions": 2,
+    "mandatory_questions": 1,
+    "answered_mandatory_questions": 1,
+    "unanswered_mandatory_questions": [],
+    "evaluated_questions": 1,
+    "questions_needing_review": 1,
+    "total_score": 3.0,
+    "max_score": 5.0,
+    "score_percentage": 60.0
+  },
+  "question_results": [
+    {
+      "question_id": "PYF_INTRO_001",
+      "mandatory": true,
+      "answered": true,
+      "evaluation_method": "HUMAN_REVIEW",
+      "evaluation_status": "NEEDS_REVIEW",
+      "score": null,
+      "max_score": null,
+      "feedback": "Recruiter review is required for this open-ended answer."
+    },
+    {
+      "question_id": "PYF_INTRO_002",
+      "mandatory": false,
+      "answered": true,
+      "evaluation_method": "RUBRIC",
+      "evaluation_status": "EVALUATED",
+      "score": 3.0,
+      "max_score": 5.0,
+      "feedback": "Matched criteria: Python learning, Project experience. Criteria not detected: Practical coding, Preparation plan. This score reflects configured keyword coverage, not a full semantic assessment."
+    }
+  ],
+  "decision": {
+    "recommendation": "MANUAL_REVIEW",
+    "automatic_rejection": false,
+    "reason": "Evaluation results are informational. Recruiter review is required before a hiring decision."
+  },
+  "created_at": "2026-10-17T14:06:43.283520+00:00",
+  "updated_at": "2026-10-17T14:06:43.283520+00:00"
+}

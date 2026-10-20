@@ -1,0 +1,39 @@
+{
+  "session_id": "SCREEN_0B4F4DA9183D",
+  "candidate_id": "CAN_B3B39704E1FF",
+  "job_id": "JOB_BF2FEFE4A4A3",
+  "role_id": "PYTHON_DEV_FRESHER",
+  "language": "ml",
+  "status": "SUBMITTED",
+  "questions": [
+    {
+      "question_id": "PYF_INTRO_001",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "INTRODUCTION",
+      "question_text": "നിങ്ങളെക്കുറിച്ചും ഒരു Python ഡെവലപ്പറാകാൻ ആഗ്രഹിക്കുന്നതെന്തുകൊണ്ടാണെന്നും പറയൂ.",
+      "language": "ml",
+      "requested_language": "ml",
+      "translation_fallback": false,
+      "answer_type": "TEXT",
+      "mandatory": true,
+      "question": "നിങ്ങളെക്കുറിച്ചും ഒരു Python ഡെവലപ്പറാകാൻ ആഗ്രഹിക്കുന്നതെന്തുകൊണ്ടാണെന്നും പറയൂ."
+    },
+    {
+      "question_id": "PYF_INTRO_002",
+      "role_id": "PYTHON_DEV_FRESHER",
+      "category": "INTRODUCTION",
+      "question_text": "Python ഡെവലപ്പർ സ്ഥാനത്തിനായി തയ്യാറെടുക്കാൻ അടുത്തിടെ നിങ്ങൾ എന്തെല്ലാം ചെയ്തു?",
+      "language": "ml",
+      "requested_language": "ml",
+      "translation_fallback": false,
+      "answer_type": "TEXT",
+      "mandatory": false,
+      "question": "Python ഡെവലപ്പർ സ്ഥാനത്തിനായി തയ്യാറെടുക്കാൻ അടുത്തിടെ നിങ്ങൾ എന്തെല്ലാം ചെയ്തു?"
+    }
+  ],
+  "total_questions": 2,
+  "mandatory_questions": 1,
+  "created_at": "2026-10-19T10:05:20.058997+00:00",
+  "updated_at": "2026-10-19T10:18:52.163814+00:00",
+  "submitted_at": "2026-10-19T10:18:52.163814+00:00"
+}

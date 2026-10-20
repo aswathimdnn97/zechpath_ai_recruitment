@@ -1,0 +1,332 @@
+
+{
+  "schema_version": "1.0",
+  "default_language": "en",
+  "supported_languages": ["en", "ml", "hi"],
+  "templates": [
+    {
+      "template_id": "INTRO_OPEN_01",
+      "template_name": "General Introduction",
+      "category": "INTRODUCTION",
+      "description": "Introduces the candidate and explores their motivation for the role.",
+      "question_pattern": {
+        "en": "Tell me about yourself and why you are interested in {role_name}.",
+        "ml": null,
+        "hi": null
+      },
+      "placeholders": ["role_name"],
+      "answer_type": "TEXT",
+      "default_mandatory": true,
+      "default_scoring_importance": 3,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "template_id": "INTRO_PREP_01",
+      "template_name": "Role Preparation",
+      "category": "INTRODUCTION",
+      "description": "Assesses how the candidate has prepared for the target role.",
+      "question_pattern": {
+        "en": "What have you done to prepare for a career as a {role_name}?",
+        "ml": null,
+        "hi": null
+      },
+      "placeholders": ["role_name"],
+      "answer_type": "TEXT",
+      "default_mandatory": false,
+      "default_scoring_importance": 4,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "template_id": "INTRO_ACHIEVEMENT_01",
+      "template_name": "Key Achievement",
+      "category": "INTRODUCTION",
+      "description": "Explores a candidate's relevant achievement and its impact.",
+      "question_pattern": {
+        "en": "What achievement related to {role_name} are you most proud of, and what was its impact?",
+        "ml": null,
+        "hi": null
+      },
+      "placeholders": ["role_name"],
+      "answer_type": "TEXT",
+      "default_mandatory": false,
+      "default_scoring_importance": 5,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "template_id": "INTRO_INTEREST_01",
+      "template_name": "Career Interest",
+      "category": "INTRODUCTION",
+      "description": "Identifies the candidate's preferred area of work.",
+      "question_pattern": {
+        "en": "Which areas of {field_name} interest you most, and why?",
+        "ml": null,
+        "hi": null
+      },
+      "placeholders": ["field_name"],
+      "answer_type": "TEXT",
+      "default_mandatory": false,
+      "default_scoring_importance": 3,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "template_id": "EDU_QUAL_01",
+      "template_name": "Educational Qualification",
+      "category": "EDUCATION",
+      "description": "Collects the candidate's educational background and its relevance to the role.",
+      "question_pattern": {
+        "en": "What is your highest qualification, and how is it relevant to {role_name}?",
+        "ml": null,
+        "hi": null
+      },
+      "placeholders": ["role_name"],
+      "answer_type": "TEXT",
+      "default_mandatory": true,
+      "default_scoring_importance": 3,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "template_id": "EDU_TRAINING_01",
+      "template_name": "Training and Certifications",
+      "category": "EDUCATION",
+      "description": "Collects relevant training, coursework and certifications.",
+      "question_pattern": {
+        "en": "Have you completed any training or certifications related to {subject_area}? Please describe them.",
+        "ml": null,
+        "hi": null
+      },
+      "placeholders": ["subject_area"],
+      "answer_type": "TEXT",
+      "default_mandatory": false,
+      "default_scoring_importance": 3,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "template_id": "EXP_PROJECT_01",
+      "template_name": "Project or Practical Experience",
+      "category": "EXPERIENCE",
+      "description": "Assesses practical experience, responsibilities and individual contributions.",
+      "question_pattern": {
+        "en": "Describe a project or practical experience related to {skill_or_role}, and explain your contribution.",
+        "ml": null,
+        "hi": null
+      },
+      "placeholders": ["skill_or_role"],
+      "answer_type": "TEXT",
+      "default_mandatory": true,
+      "default_scoring_importance": 7,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "template_id": "EXP_TEAM_01",
+      "template_name": "Teamwork Experience",
+      "category": "EXPERIENCE",
+      "description": "Assesses collaboration, communication and coordination.",
+      "question_pattern": {
+        "en": "Describe a situation in which you worked with others to complete a task or project.",
+        "ml": null,
+        "hi": null
+      },
+      "placeholders": [],
+      "answer_type": "TEXT",
+      "default_mandatory": false,
+      "default_scoring_importance": 4,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "template_id": "EXP_STAR_01",
+      "template_name": "Situation Task Action Result",
+      "category": "EXPERIENCE",
+      "description": "Uses the STAR approach to explore a work challenge, actions and outcomes.",
+      "question_pattern": {
+        "en": "Describe a situation involving {challenge_area}, the task you handled, the actions you took and the result.",
+        "ml": null,
+        "hi": null
+      },
+      "placeholders": ["challenge_area"],
+      "answer_type": "TEXT",
+      "default_mandatory": false,
+      "default_scoring_importance": 9,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "template_id": "EXP_COMPLEX_01",
+      "template_name": "Complex Problem Handling",
+      "category": "EXPERIENCE",
+      "description": "Assesses judgement, problem-solving, documentation and escalation.",
+      "question_pattern": {
+        "en": "Describe a complex {problem_area} you handled and explain how you assessed options and reached a resolution.",
+        "ml": null,
+        "hi": null
+      },
+      "placeholders": ["problem_area"],
+      "answer_type": "TEXT",
+      "default_mandatory": false,
+      "default_scoring_importance": 9,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "template_id": "SKILL_EVIDENCE_01",
+      "template_name": "Skill Evidence",
+      "category": "SKILLS",
+      "description": "Evaluates job-related knowledge through practical examples and explanations.",
+      "question_pattern": {
+        "en": "Describe your experience with {skill_name} and explain how you have applied it.",
+        "ml": null,
+        "hi": null
+      },
+      "placeholders": ["skill_name"],
+      "answer_type": "TEXT",
+      "default_mandatory": true,
+      "default_scoring_importance": 9,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "template_id": "SKILL_TOOLS_01",
+      "template_name": "Tools and Technologies",
+      "category": "SKILLS",
+      "description": "Collects tools or technologies used and supporting details about proficiency.",
+      "question_pattern": {
+        "en": "Which of these tools or technologies have you used: {options}? Describe your experience with the ones you select.",
+        "ml": null,
+        "hi": null
+      },
+      "placeholders": ["options"],
+      "answer_type": "MULTI_SELECT_WITH_DETAILS",
+      "default_mandatory": false,
+      "default_scoring_importance": 7,
+      "evaluation_type": "RUBRIC_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "template_id": "LOCATION_WORKMODE_01",
+      "template_name": "Work Location and Mode",
+      "category": "LOCATION",
+      "description": "Checks whether the candidate can meet the stated location and work-mode requirements.",
+      "question_pattern": {
+        "en": "This role is based in {job_location} with a {work_mode} arrangement. Can you meet this requirement?",
+        "ml": null,
+        "hi": null
+      },
+      "placeholders": ["job_location", "work_mode"],
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "default_mandatory": true,
+      "default_scoring_importance": 3,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "template_id": "LOCATION_RELOCATION_01",
+      "template_name": "Relocation Requirements",
+      "category": "LOCATION",
+      "description": "Identifies relocation or other work-location arrangements requested by the candidate.",
+      "question_pattern": {
+        "en": "Would you need relocation assistance or a different work-location arrangement for this role?",
+        "ml": null,
+        "hi": null
+      },
+      "placeholders": [],
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "default_mandatory": false,
+      "default_scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "template_id": "SALARY_RANGE_01",
+      "template_name": "Expected Salary Range",
+      "category": "SALARY",
+      "description": "Collects a candidate's expected compensation range.",
+      "question_pattern": {
+        "en": "What is your expected annual salary range in {currency}?",
+        "ml": null,
+        "hi": null
+      },
+      "placeholders": ["currency"],
+      "answer_type": "CURRENCY_RANGE",
+      "default_mandatory": false,
+      "default_scoring_importance": 2,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "template_id": "SALARY_BUDGET_01",
+      "template_name": "Compensation Alignment",
+      "category": "SALARY",
+      "description": "Checks whether the candidate is open to discussing the stated compensation budget.",
+      "question_pattern": {
+        "en": "Are you comfortable discussing compensation within the approved budget for this position?",
+        "ml": null,
+        "hi": null
+      },
+      "placeholders": [],
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "default_mandatory": false,
+      "default_scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "template_id": "JOINING_DATE_01",
+      "template_name": "Joining Availability",
+      "category": "NOTICE_PERIOD",
+      "description": "Collects the candidate's notice period or earliest available joining date.",
+      "question_pattern": {
+        "en": "What is your current notice period, and when would you be available to join?",
+        "ml": null,
+        "hi": null
+      },
+      "placeholders": [],
+      "answer_type": "DATE_OR_DURATION",
+      "default_mandatory": true,
+      "default_scoring_importance": 4,
+      "evaluation_type": "RULE_BASED",
+      "active": true,
+      "version": "1.0"
+    },
+    {
+      "template_id": "JOINING_COMMITMENTS_01",
+      "template_name": "Joining Date Constraints",
+      "category": "NOTICE_PERIOD",
+      "description": "Identifies practical commitments that may affect the joining date.",
+      "question_pattern": {
+        "en": "Do you have any commitments that could affect your expected joining date?",
+        "ml": null,
+        "hi": null
+      },
+      "placeholders": [],
+      "answer_type": "YES_NO_WITH_DETAILS",
+      "default_mandatory": false,
+      "default_scoring_importance": 2,
+      "evaluation_type": "HUMAN_REVIEW",
+      "active": true,
+      "version": "1.0"
+    }
+  ]
+}
