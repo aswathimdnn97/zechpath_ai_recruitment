@@ -1,6 +1,7 @@
 {
     "job_id": "JOB_BF2FEFE4A4A3",
     "jd_id": "PythonDeveloperFresher",
+    "role_category": null,
     "rule_version": "1.0",
     "required_skills": [
         "Python",
@@ -21,6 +22,10 @@
         "Git",
         "API Testing"
     ],
+    "cutoffs": {
+        "minimum_ats_score": 70.0,
+        "review_score_threshold": 60.0
+    },
     "experience": {
         "minimum_years": 0.0,
         "maximum_years": 1.0,
@@ -32,6 +37,18 @@
             "enforcement": "preferred"
         }
     ],
+    "location": {
+        "allowed_locations": [],
+        "remote_allowed": null,
+        "enforcement": "unspecified",
+        "job_location": "Kochi, Kerala"
+    },
+    "availability": {
+        "maximum_notice_period_days": null,
+        "available_from": null,
+        "enforcement": "unspecified"
+    },
     "requirements": [],
-    "generation_status": "generated"
+    "generation_status": "generated",
+    "role_policy_key": "default"
 }
