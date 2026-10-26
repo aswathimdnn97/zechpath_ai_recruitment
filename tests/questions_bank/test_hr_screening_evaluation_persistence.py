@@ -10,6 +10,8 @@ import api.service.hr_screening_evaluation_service as service
 @pytest.fixture
 def screening_storage(tmp_path, monkeypatch):
     """Create isolated storage for each persistence test."""
+    
+    monkeypatch.setattr(service, "STORAGE_BACKEND", "json")
 
     sessions_dir = tmp_path / "sessions"
     responses_dir = tmp_path / "responses"

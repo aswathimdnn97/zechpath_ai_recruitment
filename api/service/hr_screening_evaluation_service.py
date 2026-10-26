@@ -21,7 +21,9 @@ Storage
 -------
 data/hr_screening/sessions/{session_id}.json
 data/hr_screening/responses/{session_id}.json
-data/hr_screening/evaluations/{session_id}.json
+data/hr_screening/evaluations/{session_id}.json (legacy JSON mode)
+PostgreSQL tables: screening_sessions, session_questions, questions,
+screening_responses, evaluations, evaluation_details
 """
 
 from __future__ import annotations
@@ -31,9 +33,13 @@ import json
 import logging
 import math
 import re
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Optional
+import logging
+
+logger = logging.getLogger(__name__)
 
 from api.service.answer_evaluator import (
     AnswerEvaluationError,
@@ -48,7 +54,9 @@ HR_SCREENING_DIR = PROJECT_ROOT / "data" / "hr_screening"
 SESSIONS_DIR = HR_SCREENING_DIR / "sessions"
 RESPONSES_DIR = HR_SCREENING_DIR / "responses"
 EVALUATIONS_DIR = HR_SCREENING_DIR / "evaluations"
-QUESTION_BANK_PATH = HR_SCREENING_DIR / "question_bank.json"
+QUESTION_BANK_PATH = HR_SCREENING_DIR / "question_bank_multilingual.json"
+STORAGE_BACKEND = os.getenv("ZECHPATH_STORAGE_BACKEND", "json").strip().lower()
+DATABASE_URL_ENV = "ZECHPATH_DATABASE_URL"
 
 EVALUATION_VERSION = "1.1"
 SESSION_ID_PATTERN = re.compile(r"^SCREEN_[A-Za-z0-9_-]{1,100}$")
@@ -82,6 +90,10 @@ class ScreeningEvaluationError(Exception):
     """Base exception for screening evaluation errors."""
 
 
+class RecruiterDecisionPrerequisiteError(ScreeningEvaluationError):
+    """Raised when a prerequisite for recording a decision is missing."""
+
+
 class ScreeningSessionNotFoundError(ScreeningEvaluationError):
     """Raised when a screening session does not exist."""
 
@@ -97,6 +109,8 @@ class InvalidScreeningStateError(ScreeningEvaluationError):
 class ScreeningDataError(ScreeningEvaluationError):
     """Raised when stored screening data is invalid."""
 
+class TranscriptReviewPrerequisiteError(ScreeningEvaluationError):
+    """Raised when linked transcripts require recruiter review."""
 
 def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
@@ -140,6 +154,247 @@ def _write_json_atomic(path: Path, data: dict[str, Any]) -> None:
         raise ScreeningEvaluationError(
             f"Unable to save evaluation report: {path.name}."
         ) from exc
+
+
+
+def _postgres_enabled() -> bool:
+    """Use PostgreSQL only when explicitly selected in the environment."""
+    return STORAGE_BACKEND in {"postgres", "postgresql", "pg"}
+
+
+def _postgres_connection():
+    """Create a PostgreSQL connection; import the driver lazily for JSON tests."""
+    database_url = os.getenv(DATABASE_URL_ENV)
+    if not database_url:
+        raise ScreeningEvaluationError(
+            f"{DATABASE_URL_ENV} must be set when PostgreSQL storage is enabled."
+        )
+    try:
+        import psycopg2
+        from psycopg2.extras import RealDictCursor
+    except ImportError as exc:
+        raise ScreeningEvaluationError(
+            "PostgreSQL storage requires psycopg2-binary. Install it with: "
+            "pip install psycopg2-binary"
+        ) from exc
+    return psycopg2.connect(database_url), RealDictCursor
+
+
+def _load_postgres_inputs(session_id: str) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Load a session, assigned questions, and answers from the database."""
+    connection, dict_cursor = _postgres_connection()
+    try:
+        with connection.cursor(cursor_factory=dict_cursor) as cursor:
+            cursor.execute(
+                """SELECT session_id, candidate_id, job_id, role_id, language,
+                          status, started_at, submitted_at, created_at, updated_at
+                   FROM public.screening_sessions WHERE session_id = %s""",
+                (session_id,),
+            )
+            row = cursor.fetchone()
+            if row is None:
+                raise ScreeningSessionNotFoundError(
+                    f"Screening session '{session_id}' was not found."
+                )
+            session = dict(row)
+            session["status"] = str(session.get("status") or "")
+            session["language"] = session.get("language") or "en"
+            session["assigned_questions"] = []
+            question_pk_by_id: dict[str, int] = {}
+
+            cursor.execute(
+                """SELECT q.question_pk, q.question_id, q.role_id, q.category,
+                          q.language, q.question_text, q.question_type,
+                          q.is_mandatory, q.is_active, q.metadata,
+                          sq.is_mandatory AS assigned_mandatory, sq.question_order
+                   FROM public.session_questions AS sq
+                   JOIN public.questions AS q ON q.question_pk = sq.question_pk
+                   WHERE sq.session_id = %s
+                   ORDER BY sq.question_order""",
+                (session_id,),
+            )
+            question_rows = cursor.fetchall()
+            for raw in question_rows:
+                qr = dict(raw)
+                qid = str(qr["question_id"])
+                metadata = qr.get("metadata") or {}
+                if not isinstance(metadata, dict):
+                    metadata = {}
+                question = dict(metadata)
+                question.update({
+                    "question_id": qid,
+                    "role_id": qr.get("role_id"),
+                    "category": qr.get("category"),
+                    "language": qr.get("language"),
+                    "question_text": qr.get("question_text"),
+                    "answer_type": metadata.get("answer_type", qr.get("question_type")),
+                    "question_type": metadata.get("question_type", qr.get("question_type")),
+                    "mandatory": bool(qr.get("assigned_mandatory")),
+                    "is_active": bool(qr.get("is_active")),
+                })
+                session["assigned_questions"].append(question)
+                question_pk_by_id[qid] = int(qr["question_pk"])
+
+            if not session["assigned_questions"]:
+                raise ScreeningDataError(
+                    f"Session '{session_id}' has no assigned questions in PostgreSQL."
+                )
+
+            cursor.execute(
+                """SELECT sr.response_id, sr.answer_text, sr.selected_option,
+                          sr.answer_data, sr.answer_status, sr.submitted_at,
+                          sr.updated_at, sq.question_id
+                   FROM public.screening_responses AS sr
+                   JOIN public.session_questions AS sq
+                     ON sq.session_question_id = sr.session_question_id
+                    AND sq.session_id = sr.session_id
+                   WHERE sr.session_id = %s
+                   ORDER BY sq.question_order""",
+                (session_id,),
+            )
+            answers = []
+            for raw in cursor.fetchall():
+                rr = dict(raw)
+                data = rr.get("answer_data") or {}
+                if not isinstance(data, dict):
+                    data = {}
+                answer = dict(data)
+                answer["question_id"] = str(rr["question_id"])
+                # Prefer meaningful structured answers, but fall back to the
+                # dedicated columns when JSONB contains empty placeholder fields.
+                text_keys = ("answer", "text_answer", "response")
+                meaningful_text = next(
+                    (
+                        answer[key].strip()
+                        for key in text_keys
+                        if isinstance(answer.get(key), str) and answer[key].strip()
+                    ),
+                    None,
+                )
+                if meaningful_text is None:
+                    meaningful_text = rr.get("answer_text") or ""
+                if meaningful_text:
+                    # Set the canonical field so an empty `answer` key cannot
+                    # hide useful text in another field or the dedicated column.
+                    answer["answer"] = meaningful_text
+
+                option_keys = (
+                    "selected_options",
+                    "selected_option_ids",
+                    "selected_option",
+                )
+                meaningful_options = next(
+                    (
+                        answer[key]
+                        for key in option_keys
+                        if answer.get(key) not in (None, "", [])
+                    ),
+                    None,
+                )
+                if meaningful_options is None:
+                    meaningful_options = rr.get("selected_option")
+                if meaningful_options is not None:
+                    # Canonicalize to a populated key for _answer_options().
+                    answer["selected_option"] = meaningful_options
+                answers.append(answer)
+
+            session["_question_pk_by_id"] = question_pk_by_id
+            return session, {
+                "session_id": session_id,
+                "candidate_id": session.get("candidate_id"),
+                "answers": answers,
+            }
+    except Exception:
+        connection.rollback()
+        raise
+    finally:
+        connection.close()
+
+
+def _get_postgres_cached_report(session_id: str) -> Optional[dict[str, Any]]:
+    connection, dict_cursor = _postgres_connection()
+    try:
+        with connection.cursor(cursor_factory=dict_cursor) as cursor:
+            cursor.execute(
+                """SELECT report FROM public.evaluations
+                   WHERE session_id = %s AND evaluation_version = %s
+                   ORDER BY updated_at DESC LIMIT 1""",
+                (session_id, EVALUATION_VERSION),
+            )
+            row = cursor.fetchone()
+            report = row.get("report") if row else None
+            return report if isinstance(report, dict) else None
+    finally:
+        connection.close()
+
+
+def _save_postgres_report(report: dict[str, Any], session: dict[str, Any]) -> None:
+    """Persist report and per-question rows atomically in one transaction."""
+    connection, dict_cursor = _postgres_connection()
+    session_id = report["session_id"]
+    evaluation_id = report["evaluation_id"]
+    question_pk_by_id = session.get("_question_pk_by_id") or {}
+    db_status = "NEEDS_REVIEW" if report.get("status") == "NEEDS_REVIEW" else "COMPLETED"
+    try:
+        with connection:
+            with connection.cursor(cursor_factory=dict_cursor) as cursor:
+                cursor.execute(
+                    """INSERT INTO public.evaluations
+                       (evaluation_id, session_id, evaluation_version, overall_score,
+                        result_status, report, evaluated_at, created_at, updated_at)
+                       VALUES (%s, %s, %s, %s, %s, %s::jsonb,
+                               CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+                       ON CONFLICT (session_id, evaluation_version) DO UPDATE SET
+                         evaluation_id = EXCLUDED.evaluation_id,
+                         overall_score = EXCLUDED.overall_score,
+                         result_status = EXCLUDED.result_status,
+                         report = EXCLUDED.report,
+                         evaluated_at = CURRENT_TIMESTAMP,
+                         updated_at = CURRENT_TIMESTAMP""",
+                    (evaluation_id, session_id, report["evaluation_version"],
+                     report.get("score_percentage"), db_status,
+                     json.dumps(report, ensure_ascii=False)),
+                )
+                cursor.execute(
+                    "DELETE FROM public.evaluation_details WHERE session_id = %s AND evaluation_id = %s",
+                    (session_id, evaluation_id),
+                )
+                for result in report.get("question_results", []):
+                    qid = result["question_id"]
+                    question_pk = question_pk_by_id.get(qid)
+                    if question_pk is None:
+                        cursor.execute(
+                            """SELECT question_pk FROM public.questions
+                               WHERE question_id = %s AND language = %s""",
+                            (qid, report.get("language", "en")),
+                        )
+                        qrow = cursor.fetchone()
+                        if qrow is None:
+                            raise ScreeningDataError(
+                                f"Question '{qid}' has no matching database row for language {report.get('language', 'en')}."
+                            )
+                        question_pk = qrow["question_pk"]
+                    detail_status = result.get("evaluation_status", "NEEDS_REVIEW")
+                    cursor.execute(
+                        """INSERT INTO public.evaluation_details
+                           (evaluation_id, session_id, question_id, question_pk,
+                            score, max_score, evaluation_status, feedback,
+                            evaluated_at, created_at)
+                           VALUES (%s, %s, %s, %s, %s, %s, %s, %s,
+                                   CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)""",
+                        (evaluation_id, session_id, qid, question_pk,
+                         result.get("score"), result.get("max_score"),
+                         detail_status, result.get("feedback", "")),
+                    )
+    except ScreeningEvaluationError:
+        raise
+    except Exception as exc:
+        logger.exception("Failed to save evaluation in PostgreSQL: session_id=%s", session_id)
+        raise ScreeningEvaluationError(
+            "Unable to save the evaluation to PostgreSQL; the transaction was rolled back."
+        ) from exc
+    finally:
+        connection.close()
 
 
 def _normalize_text(value: Any) -> str:
@@ -203,10 +458,33 @@ def _answer_options(answer: dict[str, Any]) -> list[str]:
 
 
 def _is_answered(answer: Optional[dict[str, Any]]) -> bool:
+    """Return True when an answer has meaningful, complete content."""
     if not isinstance(answer, dict):
         return False
 
-    return bool(_answer_text(answer) or _answer_options(answer))
+    if _answer_text(answer):
+        return True
+
+    if _answer_options(answer):
+        return True
+
+    currency = answer.get("currency")
+    minimum_amount = answer.get("minimum_amount")
+    maximum_amount = answer.get("maximum_amount")
+
+    if (
+        isinstance(currency, str)
+        and currency.strip()
+        and minimum_amount is not None
+        and maximum_amount is not None
+    ):
+        return True
+
+    if answer.get("joining_date"):
+        return True
+
+    duration = answer.get("duration")
+    return isinstance(duration, str) and bool(duration.strip())
 
 
 def _extract_answers(
@@ -822,6 +1100,54 @@ def _validate_session_id(session_id: str) -> None:
 
 
 
+def _synchronize_transcripts_before_evaluation(
+    session_id: str,
+    responses: dict[str, Any],
+) -> dict[str, Any]:
+    """
+    Synchronize linked transcript answers before evaluation.
+
+    Pending transcripts block evaluation. Approved or corrected
+    transcript text is synchronized and persisted by the integration
+    service before the evaluation fingerprint is calculated.
+    """
+
+    # Import locally to avoid unnecessary module-level coupling.
+    from api.service.transcript_response_integration_service import (
+        TranscriptIntegrationDataError,
+        TranscriptReviewRequiredError,
+        synchronize_linked_transcripts_for_evaluation,
+    )
+
+    try:
+        return synchronize_linked_transcripts_for_evaluation(
+            session_id=session_id,
+            responses=responses,
+        )
+
+    except TranscriptReviewRequiredError as exc:
+        logger.warning(
+            "Transcript review blocks evaluation for session %s: %s",
+            session_id,
+            exc,
+        )
+        raise TranscriptReviewPrerequisiteError(
+            "Evaluation cannot proceed until all linked transcripts "
+            "have been approved or corrected by a recruiter."
+        ) from exc
+
+    except TranscriptIntegrationDataError as exc:
+        logger.exception(
+            "Transcript synchronization failed for session %s: %s",
+            session_id,
+            exc,
+        )
+        raise ScreeningDataError(
+            "A linked transcript is missing or inconsistent. "
+            "Verify transcript records before evaluating this session."
+        ) from exc
+
+
 def evaluate_screening_session(
     session_id: str,
     evaluator: Optional[Callable[..., dict[str, Any]]] = None,
@@ -831,10 +1157,11 @@ def evaluate_screening_session(
     Evaluate a submitted screening session and persist its report.
 
     Cache policy:
-    - Return an existing report when force=False.
-    - A custom evaluator does not bypass the cache.
-    - Set force=True to explicitly run evaluation again.
-    - Validate the session and response records before using the cache.
+    - Reuse a report when its input fingerprint matches and force=False.
+    - A supplied evaluator does not bypass a valid cached report.
+    - Set force=True to explicitly run evaluation again, including with a
+      custom evaluator.
+    - Validate the session, questions, and response records before using cache.
     """
     _validate_session_id(session_id)
 
@@ -845,12 +1172,15 @@ def evaluate_screening_session(
     # ---------------------------------------------------------
     # 1. Load and validate the session
     # ---------------------------------------------------------
-    try:
-        session = _read_json(session_path)
-    except FileNotFoundError as exc:
-        raise ScreeningSessionNotFoundError(
-            f"Screening session '{session_id}' was not found."
-        ) from exc
+    if _postgres_enabled():
+        session, responses = _load_postgres_inputs(session_id)
+    else:
+        try:
+            session = _read_json(session_path)
+        except FileNotFoundError as exc:
+            raise ScreeningSessionNotFoundError(
+                f"Screening session '{session_id}' was not found."
+            ) from exc
 
     if session.get("session_id") != session_id:
         raise ScreeningDataError(
@@ -865,12 +1195,17 @@ def evaluate_screening_session(
     # ---------------------------------------------------------
     # 2. Validate the response record
     # ---------------------------------------------------------
-    try:
-        responses = _read_json(response_path)
-    except FileNotFoundError as exc:
+    if not _postgres_enabled():
+        try:
+            responses = _read_json(response_path)
+        except FileNotFoundError as exc:
+            raise ScreeningResponseNotFoundError(
+                f"Responses for session '{session_id}' were not found."
+            ) from exc
+    elif not responses.get("answers"):
         raise ScreeningResponseNotFoundError(
-            f"Responses for session '{session_id}' were not found."
-        ) from exc
+            f"Responses for session '{session_id}' were not found in PostgreSQL."
+        )
 
     if responses.get("session_id") != session_id:
         raise ScreeningDataError(
@@ -881,30 +1216,32 @@ def evaluate_screening_session(
     response_candidate_id = responses.get("candidate_id")
 
     if (
-        response_candidate_id is not None
-        and response_candidate_id != session_candidate_id
-    ):
+    response_candidate_id is not None
+    and response_candidate_id != session_candidate_id
+):
         raise ScreeningDataError(
             "Session and response candidate IDs do not match."
         )
 
     # ---------------------------------------------------------
-    # 3. Return the existing report unless forced to reevaluate
+    # 3. Synchronize linked transcripts before evaluation
     # ---------------------------------------------------------
-    if report_path.is_file() and not force:
-        cached_report = _read_json(report_path)
-
-        if cached_report.get("session_id") != session_id:
-            raise ScreeningDataError(
-                "Saved evaluation report session ID does not match "
-                "the requested session."
-            )
-
-        logger.info(
-            "HR screening evaluation cache hit: session_id=%s",
-            session_id,
+    # The current transcript-response integration service uses
+    # JSON-backed screening response storage.
+    #
+    # PostgreSQL transcript synchronization requires a separate
+    # database-aware implementation; do not silently assume that
+    # JSON synchronization updates PostgreSQL response records.
+    # temporary diagonostic
+    
+    if not _postgres_enabled():
+        responses = _synchronize_transcripts_before_evaluation(
+            session_id=session_id,
+            responses=responses,
         )
-        return cached_report
+
+    # Cache validation must happen after transcript synchronization.
+    # Corrected transcript text must be reflected in the fingerprint.
 
     # ---------------------------------------------------------
     # 4. Resolve and validate assigned questions
@@ -919,7 +1256,7 @@ def evaluate_screening_session(
             if isinstance(raw_question, dict):
                 _validate_configured_score_fields(raw_question)
 
-    question_bank = _load_question_bank()
+    question_bank = {} if _postgres_enabled() else _load_question_bank()
     questions = _resolve_questions(session, question_bank)
 
     if not questions:
@@ -975,6 +1312,26 @@ def evaluate_screening_session(
         answers=answers_by_id,
     )
 
+    # Reuse cached results when inputs are unchanged. A custom evaluator
+    # is only used when evaluation actually runs; force=True explicitly
+    # bypasses the cache when a fresh evaluation is required.
+    cached_report = None
+    if not force:
+        if _postgres_enabled():
+            cached_report = _get_postgres_cached_report(session_id)
+        elif report_path.is_file():
+            cached_report = _read_json(report_path)
+
+    if cached_report is not None:
+        if cached_report.get("session_id") != session_id:
+            raise ScreeningDataError(
+                "Saved evaluation report session ID does not match the requested session."
+            )
+        if cached_report.get("input_fingerprint") == input_fingerprint:
+            logger.info("HR screening evaluation cache hit: session_id=%s", session_id)
+            return cached_report
+        logger.info("HR screening evaluation cache miss: inputs changed | session_id=%s", session_id)
+    
     # ---------------------------------------------------------
     # 6. Evaluate each assigned question
     # ---------------------------------------------------------
@@ -1160,7 +1517,10 @@ def evaluate_screening_session(
     # ---------------------------------------------------------
     # 10. Persist atomically and return the report
     # ---------------------------------------------------------
-    _write_json_atomic(report_path, report)
+    if _postgres_enabled():
+        _save_postgres_report(report, session)
+    else:
+        _write_json_atomic(report_path, report)
 
     logger.info(
         "HR screening evaluation saved: session_id=%s status=%s "
@@ -1178,12 +1538,19 @@ def get_screening_evaluation(session_id: str) -> dict[str, Any]:
     _validate_session_id(session_id)
     report_path = EVALUATIONS_DIR / f"{session_id}.json"
 
-    try:
-        report = _read_json(report_path)
-    except FileNotFoundError as exc:
-        raise ScreeningEvaluationError(
-            f"No evaluation report exists for session: {session_id}."
-        ) from exc
+    if _postgres_enabled():
+        report = _get_postgres_cached_report(session_id)
+        if report is None:
+            raise ScreeningEvaluationError(
+                f"No evaluation report exists for session: {session_id}."
+            )
+    else:
+        try:
+            report = _read_json(report_path)
+        except FileNotFoundError as exc:
+            raise ScreeningEvaluationError(
+                f"No evaluation report exists for session: {session_id}."
+            ) from exc
 
     if report.get("session_id") != session_id:
         raise ScreeningDataError(
@@ -1322,6 +1689,15 @@ def review_screening_question(
     if not reviewer_id.strip():
         raise ValueError("reviewer_id is required.")
 
+    if isinstance(score, bool) or isinstance(max_score, bool):
+        raise ValueError("Scores must be finite numbers.")
+
+    try:
+        score = float(score)
+        max_score = float(max_score)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("Scores must be numeric values.") from exc
+
     if not math.isfinite(score) or not math.isfinite(max_score):
         raise ValueError("Scores must be finite numbers.")
 
@@ -1338,12 +1714,19 @@ def review_screening_question(
 
     report_path = EVALUATIONS_DIR / f"{session_id}.json"
 
-    try:
-        report = _read_json(report_path)
-    except FileNotFoundError as exc:
-        raise ScreeningEvaluationError(
-            "No evaluation report exists for this session."
-        ) from exc
+    if _postgres_enabled():
+        report = _get_postgres_cached_report(session_id)
+        if report is None:
+            raise ScreeningEvaluationError(
+                "No evaluation report exists for this session."
+            )
+    else:
+        try:
+            report = _read_json(report_path)
+        except FileNotFoundError as exc:
+            raise ScreeningEvaluationError(
+                "No evaluation report exists for this session."
+            ) from exc
 
     if report.get("session_id") != session_id:
         raise ScreeningDataError(
@@ -1415,7 +1798,13 @@ def review_screening_question(
     })
 
     _recalculate_reviewed_report(report)
-    _write_json_atomic(report_path, report)
+    if _postgres_enabled():
+        # Re-load question primary keys so the same transaction can update
+        # evaluations and evaluation_details after the recruiter review.
+        session, _ = _load_postgres_inputs(session_id)
+        _save_postgres_report(report, session)
+    else:
+        _write_json_atomic(report_path, report)
 
     logger.info(
         "Recruiter review saved: session_id=%s question_id=%s",
@@ -1424,3 +1813,142 @@ def review_screening_question(
     )
 
     return report
+
+
+# ============================================================
+# RECRUITER CANDIDATE DECISION
+# ============================================================
+
+ALLOWED_RECRUITER_DECISIONS = {
+    "SHORTLIST",
+    "REJECT",
+    "HOLD",
+    "NEEDS_FURTHER_REVIEW",
+}
+
+
+def save_recruiter_decision(
+    session_id: str,
+    *,
+    reviewer_id: str,
+    decision: str,
+    comments: str | None = None,
+) -> dict[str, Any]:
+    """
+    Persist a recruiter's overall candidate decision in PostgreSQL.
+
+    This is separate from question-level scoring and never modifies
+    the AI evaluation report.
+    """
+    _validate_session_id(session_id)
+
+    reviewer_id = reviewer_id.strip() if isinstance(reviewer_id, str) else ""
+    decision = decision.strip().upper() if isinstance(decision, str) else ""
+
+    if not reviewer_id or len(reviewer_id) > 200:
+        raise ValueError("A valid reviewer_id is required.")
+
+    if decision not in ALLOWED_RECRUITER_DECISIONS:
+        raise ValueError("Unsupported recruiter decision.")
+
+    if comments is not None:
+        if not isinstance(comments, str):
+            raise ValueError("comments must be a string or null.")
+        comments = comments.strip()
+        if len(comments) > 5000:
+            raise ValueError("Recruiter comments cannot exceed 5000 characters.")
+        comments = comments or None
+
+    if not _postgres_enabled():
+        raise ScreeningEvaluationError(
+            "Recruiter decisions require PostgreSQL storage. "
+            "Set ZECHPATH_STORAGE_BACKEND=postgres and configure "
+            "ZECHPATH_DATABASE_URL."
+        )
+
+    connection, dict_cursor = _postgres_connection()
+
+    try:
+        with connection:
+            with connection.cursor(cursor_factory=dict_cursor) as cursor:
+                # Confirm the session exists.
+                cursor.execute(
+                    """
+                    SELECT session_id
+                    FROM public.screening_sessions
+                    WHERE session_id = %s
+                    """,
+                    (session_id,),
+                )
+                if cursor.fetchone() is None:
+                    raise ScreeningSessionNotFoundError(
+                        f"Screening session '{session_id}' was not found."
+                    )
+
+                # Select the latest saved evaluation for this session.
+                cursor.execute(
+                    """
+                    SELECT evaluation_id
+                    FROM public.evaluations
+                    WHERE session_id = %s
+                    ORDER BY updated_at DESC, created_at DESC
+                    LIMIT 1
+                    """,
+                    (session_id,),
+                )
+                evaluation_row = cursor.fetchone()
+
+                
+                if evaluation_row is None:
+                    raise RecruiterDecisionPrerequisiteError(
+                        "A saved evaluation is required before recording "
+                        "the recruiter's candidate decision."
+                    )
+
+
+                evaluation_id = evaluation_row["evaluation_id"]
+
+                # Insert a new decision record; retain previous decisions
+                # as history rather than silently overwriting them.
+                cursor.execute(
+                    """
+                    INSERT INTO public.recruiter_reviews
+                        (session_id, evaluation_id, reviewer_id,
+                         decision, comments)
+                    VALUES (%s, %s, %s, %s, %s)
+                    RETURNING review_id, session_id, evaluation_id,
+                              reviewer_id, decision, comments,
+                              reviewed_at, created_at
+                    """,
+                    (
+                        session_id,
+                        evaluation_id,
+                        reviewer_id,
+                        decision,
+                        comments,
+                    ),
+                )
+
+                saved_row = cursor.fetchone()
+
+                if saved_row is None:
+                    raise ScreeningEvaluationError(
+                        "The recruiter decision could not be retrieved "
+                        "after saving."
+                    )
+
+                return dict(saved_row)
+
+    except ScreeningEvaluationError:
+        raise
+    except Exception as exc:
+        logger.exception(
+            "Failed to save recruiter decision: session_id=%s",
+            session_id,
+        )
+        raise ScreeningEvaluationError(
+            "Unable to save the recruiter decision. "
+            "The database transaction was rolled back."
+        ) from exc
+    finally:
+        connection.close()

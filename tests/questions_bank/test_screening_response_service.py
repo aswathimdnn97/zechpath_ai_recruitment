@@ -8,15 +8,17 @@ from api.schemas.hr_screening_schema import (
 
 
 def test_submit_screening_draft(tmp_path, monkeypatch):
+    monkeypatch.setenv("ZECHPATH_STORAGE_BACKEND", "json")
+
     sessions_dir = tmp_path / "sessions"
     responses_dir = tmp_path / "responses"
 
     sessions_dir.mkdir()
     responses_dir.mkdir()
 
-    # Match the actual constant names in the service.
     monkeypatch.setattr(service, "SESSION_DIR", sessions_dir)
     monkeypatch.setattr(service, "RESPONSE_DIR", responses_dir)
+
 
     session = {
         "session_id": "SCREEN_001",

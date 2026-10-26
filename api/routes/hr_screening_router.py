@@ -35,13 +35,17 @@ from api.service.hr_screening_evaluation_service import (
     ScreeningEvaluationError,
     ScreeningResponseNotFoundError,
     ScreeningSessionNotFoundError,
+    RecruiterDecisionPrerequisiteError,
     evaluate_screening_session,
     get_screening_evaluation,
     review_screening_question,
+    save_recruiter_decision,  
+
 )
 
 from api.schemas.hr_screening_schema import (
     RecruiterQuestionReviewRequest,
+    RecruiterDecisionRequest,
 )
 
 logger = logging.getLogger(__name__)
@@ -477,4 +481,94 @@ def retrieve_screening_evaluation(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Unable to retrieve screening evaluation.",
+        ) from exc
+
+
+# ============================================================
+# RECRUITER CANDIDATE-LEVEL DECISION
+# ============================================================
+
+@router.post(
+    "/sessions/{session_id}/decision",
+    summary="Record an overall recruiter decision",
+    status_code=status.HTTP_201_CREATED,
+)
+def save_recruiter_decision_endpoint(
+    session_id: str,
+    request: RecruiterDecisionRequest,
+) -> dict[str, Any]:
+    """
+    Save the recruiter's overall decision for a screening session.
+
+    Decisions are stored separately from question-level reviews.
+    A saved evaluation report must exist before a decision is recorded.
+    """
+
+    try:
+        review = save_recruiter_decision(
+            session_id,
+            reviewer_id=request.reviewer_id,
+            decision=request.decision.value,
+            comments=request.comments,
+        )
+
+        return {
+            "success": True,
+            "message": "Recruiter decision saved successfully.",
+            "review": review,
+        }
+
+    except ScreeningSessionNotFoundError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Screening session not found.",
+        ) from exc
+        
+    
+    except RecruiterDecisionPrerequisiteError as exc:
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                "Evaluate the screening session before "
+                "recording a recruiter decision."
+            ),
+        ) from exc
+
+
+    except ScreeningEvaluationError as exc:
+        message = str(exc)
+
+        if "no evaluation report exists" in message.lower():
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Evaluate the screening session before recording a decision.",
+            ) from exc
+
+        logger.error(
+            "Recruiter decision save failed: %s",
+            type(exc).__name__,
+            exc_info=(type(exc), exc, exc.__traceback__),
+        )
+
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Unable to save the recruiter decision.",
+        ) from exc
+
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid recruiter decision request.",
+        ) from exc
+
+    except Exception as exc:
+        logger.error(
+            "Unexpected recruiter decision failure: %s",
+            type(exc).__name__,
+            exc_info=(type(exc), exc, exc.__traceback__),
+        )
+
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="An unexpected error occurred while saving the decision.",
         ) from exc

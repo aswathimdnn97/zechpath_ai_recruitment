@@ -52,6 +52,9 @@ from api.routes.hr_screening_session_router import (
     router as hr_screening_session_router,
 )
 from api.routes.transcript_router import router as transcript_router
+from api.routes.transcript_response_router import (
+    router as transcript_response_router,
+)
 
 
 # ---------------------------------------------------------
@@ -113,5 +116,8 @@ app.include_router(hr_screening_router)
 app.include_router(hr_screening_response_router)
 app.include_router(hr_screening_session_router)
 
-#transcript
+# Transcript management
 app.include_router(transcript_router)
+
+# Transcript-to-screening-response integration
+app.include_router(transcript_response_router)

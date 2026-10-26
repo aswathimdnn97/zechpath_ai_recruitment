@@ -74,7 +74,9 @@ def mock_question_bank(monkeypatch):
 
 @pytest.fixture
 def session_storage(tmp_path, monkeypatch):
-    """Redirect session files to a temporary directory."""
+    """Redirect session files to temporary JSON storage."""
+
+    monkeypatch.setenv("ZECHPATH_STORAGE_BACKEND", "json")
 
     session_dir = tmp_path / "sessions"
     session_dir.mkdir()

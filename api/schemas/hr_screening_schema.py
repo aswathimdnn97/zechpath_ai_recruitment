@@ -404,3 +404,41 @@ class RecruiterQuestionReviewRequest(ScreeningSchema):
                 "score cannot exceed max_score."
             )
         return self
+
+
+# ============================================================
+# RECRUITER CANDIDATE DECISION
+# ============================================================
+
+class RecruiterDecision(str, Enum):
+    """Allowed recruiter decisions for a screening candidate."""
+
+    SHORTLIST = "SHORTLIST"
+    REJECT = "REJECT"
+    HOLD = "HOLD"
+    NEEDS_FURTHER_REVIEW = "NEEDS_FURTHER_REVIEW"
+
+
+class RecruiterDecisionRequest(ScreeningSchema):
+    """Recruiter's overall decision for a screening session."""
+
+    reviewer_id: NonEmptyString
+    decision: RecruiterDecision
+
+    comments: Annotated[
+        str,
+        StringConstraints(strip_whitespace=True, max_length=5000),
+    ] | None = None
+
+
+class RecruiterDecisionResponse(ScreeningSchema):
+    """Saved recruiter decision returned by the API."""
+
+    review_id: int = Field(gt=0)
+    session_id: NonEmptyString
+    evaluation_id: NonEmptyString | None = None
+    reviewer_id: NonEmptyString
+    decision: RecruiterDecision
+    comments: str | None = None
+    reviewed_at: datetime
+    created_at: datetime

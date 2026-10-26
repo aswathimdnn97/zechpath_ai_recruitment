@@ -1,0 +1,49 @@
+{
+  "session_id": "SCREEN_3F897D8A2CDE",
+  "candidate_id": "CAN_123456789ABC",
+  "job_id": "JOB_BF2FEFE4A4A3",
+  "question_id": "PYF_EDU_001",
+  "source": "VOICE",
+  "language": "en",
+  "original_text": "My highest qualification is a    Bachelor of Technology (B.Tech) in Electronics and Communication Engineering.   I have also learned Python, SQL, HTML, and JavaScript, and I am currently improving my Python full-stack development skills",
+  "normalized_text": "My highest qualification is a Bachelor of Technology (B.Tech) in Electronics and Communication Engineering. I have also learned Python, SQL, HTML, and JavaScript, and I am currently improving my Python full-stack development skills",
+  "segments": [
+    {
+      "start_ms": 0,
+      "end_ms": 3000,
+      "text": "My highest qualification is a    Bachelor of Technology (B.Tech) in Electronics and Communication Engineering",
+      "confidence": 0.95
+    },
+    {
+      "start_ms": 3000,
+      "end_ms": 6000,
+      "text": "  I have also learned Python,   SQL,  HTML, and JavaScript, and I am currently improving my Python full-stack development skills",
+      "confidence": 0.92
+    }
+  ],
+  "transcription": {
+    "provider": "test-provider",
+    "model_version": "test-model-v1",
+    "confidence": 0.93
+  },
+  "timing": {
+    "recorded_at": "2026-10-21T04:30:00Z",
+    "transcribed_at": "2026-10-21T04:30:06Z",
+    "duration_ms": 6000
+  },
+  "normalization": {
+    "version": "1.0",
+    "language_preserved": true,
+    "pii_redacted": false
+  },
+  "transcript_id": "TRN_428A03F8246C",
+  "status": "PROCESSED",
+  "review": {
+    "status": "PENDING",
+    "corrected_text": null,
+    "reviewer_id": null,
+    "reviewed_at": null
+  },
+  "created_at": "2026-10-21T16:32:22.388630Z",
+  "updated_at": "2026-10-21T16:32:22.388630Z"
+}

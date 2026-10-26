@@ -10,9 +10,9 @@ import api.service.screening_response_service as service
 
 @pytest.fixture
 def client(tmp_path, monkeypatch):
-    """
-    Create an isolated FastAPI application and temporary screening storage.
-    """
+    """Create an isolated FastAPI application and temporary storage."""
+
+    monkeypatch.setenv("ZECHPATH_STORAGE_BACKEND", "json")
 
     sessions_dir = tmp_path / "sessions"
     responses_dir = tmp_path / "responses"
@@ -27,7 +27,6 @@ def client(tmp_path, monkeypatch):
     app.include_router(router)
 
     return TestClient(app)
-
 
 @pytest.fixture
 def screening_session(tmp_path):

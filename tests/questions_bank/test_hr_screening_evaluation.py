@@ -16,6 +16,10 @@ from api.service.hr_screening_evaluation_service import (
 @pytest.fixture
 def screening_storage(tmp_path, monkeypatch):
     """Isolate all evaluation files inside a temporary directory."""
+
+    # This fixture uses temporary JSON files, not PostgreSQL.
+    monkeypatch.setattr(service, "STORAGE_BACKEND", "json")
+
     root = tmp_path / "hr_screening"
 
     sessions = root / "sessions"
