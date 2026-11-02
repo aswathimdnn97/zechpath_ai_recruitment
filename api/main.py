@@ -56,6 +56,10 @@ from api.routes.transcript_response_router import (
     router as transcript_response_router,
 )
 
+from api.routes.speech_to_text_router import (
+    router as speech_to_text_router,
+)
+
 
 # ---------------------------------------------------------
 # Application initialization
@@ -118,6 +122,7 @@ app.include_router(hr_screening_session_router)
 
 # Transcript management
 app.include_router(transcript_router)
+app.include_router(speech_to_text_router)
 
 # Transcript-to-screening-response integration
 app.include_router(transcript_response_router)

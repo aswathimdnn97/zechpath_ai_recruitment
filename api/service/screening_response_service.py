@@ -1153,6 +1153,54 @@ def _validate_answer_against_question(
     }
 
 
+def _attach_semantic_classification(
+    normalized_answer: dict[str, Any],
+    question: dict[str, Any],
+    session: dict[str, Any],
+) -> dict[str, Any]:
+    """
+    Attach semantic classification to eligible text answers.
+    Structured choice and numeric answers are not classified here.
+    """
+    from api.service.intent_classification_service import (
+        classify_candidate_answer,
+    )
+
+    answer_type = str(
+        question.get(
+            "answer_type",
+            question.get("question_type", "TEXT"),
+        )
+    ).strip().upper()
+
+    if answer_type not in {"TEXT", "YES_NO_WITH_DETAILS"}:
+        return normalized_answer
+
+    answer_text = normalized_answer.get("answer")
+
+    if not isinstance(answer_text, str) or not answer_text.strip():
+        return normalized_answer
+
+    question_text = (
+        question.get("question_text")
+        or question.get("question")
+        or ""
+    )
+
+    if not isinstance(question_text, str) or not question_text.strip():
+        return normalized_answer
+
+    language = session.get("language", "en")
+
+    classification = classify_candidate_answer(
+        question_text=question_text,
+        answer_text=answer_text,
+        language=language,
+    )
+
+    normalized_answer["semantic_classification"] = classification
+
+    return normalized_answer
 # ============================================================
 # POSTGRESQL RESPONSE PERSISTENCE
 # ============================================================
@@ -1410,7 +1458,7 @@ def submit_screening_responses(
             responses["answers"],
             question_map,
         )
-
+        
         # Validate every submitted answer before persistence.
         for submitted_answer in request.answers:
             question_key = _normalize_question_id(
@@ -1427,6 +1475,12 @@ def submit_screening_responses(
             normalized_answer = _validate_answer_against_question(
                 submitted_answer,
                 question,
+            )
+            
+            normalized_answer = _attach_semantic_classification(
+                normalized_answer=normalized_answer,
+                question=question,
+                session=session,
             )
 
             canonical_id = _canonical_question_id(question)
@@ -1454,7 +1508,10 @@ def submit_screening_responses(
             raise ScreeningMandatoryQuestionsError(
                 missing_mandatory
             )
-
+        logger.info(
+            "ACTIVE STORAGE BACKEND: %s",
+            "postgres" if _postgres_enabled() else "json",
+        )
         # ----------------------------------------------------
         # POSTGRESQL PERSISTENCE
         # ----------------------------------------------------

@@ -1,0 +1,18 @@
+{
+  "default": {
+    "minimum_ats_score": 70,
+    "review_score_threshold": 60
+  },
+  "backend": {
+    "minimum_ats_score": 70,
+    "review_score_threshold": 60
+  },
+  "senior_backend": {
+    "minimum_ats_score": 80,
+    "review_score_threshold": 65
+  },
+  "frontend": {
+    "minimum_ats_score": 70,
+    "review_score_threshold": 60
+  }
+}

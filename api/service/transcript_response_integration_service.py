@@ -149,13 +149,17 @@ def link_transcript_to_screening_response(
             )
 
         now = _utc_now()
-        normalized_text = transcript.normalized_text or transcript.original_text
-        if not normalized_text.strip():
+        answer_text = (
+            transcript.cleaned_text
+            or transcript.normalized_text
+            or transcript.original_text
+        )
+        if not answer_text.strip():
             raise TranscriptIntegrationDataError("Transcript contains no usable answer text.")
 
         answers[canonical_question_id] = {
             "question_id": canonical_question_id,
-            "answer": normalized_text,
+            "answer": answer_text,
             "selected_options": None,
             "answered": True,
             "updated_at": now,
@@ -248,222 +252,264 @@ def update_transcript_review(
             reviewer_id=request.reviewer_id.strip(),
             reviewed_at=now,
         )
-        updated_record = record.model_copy(update={"review": review, "updated_at": now})
+
+        # Preserve every completed review event. The immutable source fields
+        # (especially original_text) are copied through unchanged.
+        history = list(record.review_history)
+        # Backfill a prior completed review if this record predates the
+        # review_history field or has an incomplete audit trail.
+        if (
+            _enum_value(record.review.status) != "PENDING"
+            and (not history or history[-1] != record.review)
+        ):
+            history.append(record.review)
+        history.append(review)
+        updated_data = record.model_dump(mode="python")
+        updated_data.update({
+            "review": review,
+            "review_history": history,
+            "updated_at": now,
+        })
+        updated_record = TranscriptRecord.model_validate(updated_data)
+
         target = _transcript_path(session_id, transcript_id)
         _replace_json_atomically(target, updated_record.model_dump(mode="json"))
         return updated_record
 
 
+
 def synchronize_linked_transcripts_for_evaluation(
+    *,
     session_id: str,
-    responses: dict,
-) -> dict:
+    responses: dict[str, Any],
+) -> dict[str, Any]:
     """
-    Synchronize linked transcripts before screening evaluation.
+    Refresh linked screening answers using the latest reviewed transcripts.
+
+    Supports both existing answer formats:
+        1. List:
+           [{"question_id": "Q001", "answer": "..."}]
+
+        2. Dictionary:
+           {"Q001": {"answer": "..."}}
 
     Rules:
-    1. Answers without transcript metadata remain unchanged.
-    2. Linked transcripts must exist and match the screening session,
-       candidate, and question.
-    3. Pending transcripts block evaluation.
-    4. Only APPROVED and CORRECTED transcripts can be evaluated.
-    5. APPROVED transcripts use normalized_text, falling back to
-       original_text.
-    6. CORRECTED transcripts use corrected_text.
-    7. Updated responses are persisted atomically.
+        - Pending transcripts block evaluation.
+        - Approved transcripts use cleaned/normalized/original text.
+        - Corrected transcripts use recruiter-corrected text.
+        - Unlinked answers remain unchanged.
+        - Updated responses are persisted atomically.
     """
+
     if not isinstance(responses, dict):
         raise TranscriptIntegrationDataError(
-            "Screening responses must be a dictionary."
+            "Stored screening responses are invalid."
         )
 
     answers = responses.get("answers")
 
-    if not isinstance(answers, (dict, list)):
-        raise TranscriptIntegrationDataError(
-            "Screening response answers must be a dictionary or list."
-        )
+    # ---------------------------------------------------------
+    # 1. Support both list-based and dictionary-based answers
+    # ---------------------------------------------------------
+    if isinstance(answers, list):
+        answer_items = []
 
-    # Normalize the answer collection for iteration while preserving
-    # the original response structure for persistence.
-    if isinstance(answers, dict):
-        answer_items = list(answers.items())
-        answers_are_dict = True
+        for answer in answers:
+            if not isinstance(answer, dict):
+                raise TranscriptIntegrationDataError(
+                    "Stored screening answers contain an invalid entry."
+                )
+
+            question_id = answer.get("question_id")
+
+            if not isinstance(question_id, str) or not question_id.strip():
+                raise TranscriptIntegrationDataError(
+                    "A stored answer is missing its question ID."
+                )
+
+            answer_items.append((question_id, answer))
+
+    elif isinstance(answers, dict):
+        answer_items = []
+
+        for question_id, answer in answers.items():
+            if not isinstance(answer, dict):
+                raise TranscriptIntegrationDataError(
+                    "Stored screening answers contain an invalid entry."
+                )
+
+            answer_items.append((str(question_id), answer))
+
     else:
-        answer_items = [
-            (
-                answer.get("question_id"),
-                answer,
-            )
-            for answer in answers
-            if isinstance(answer, dict)
-        ]
-        answers_are_dict = False
-
-    if not answers_are_dict and len(answer_items) != len(answers):
         raise TranscriptIntegrationDataError(
-            "Screening answer record is invalid."
+            "Stored screening answers are invalid."
         )
-
-    
-    response_candidate_id = responses.get("candidate_id")
 
     changed = False
+    now = _utc_now()
 
+    # ---------------------------------------------------------
+    # 2. Synchronize linked transcripts
+    # ---------------------------------------------------------
+    with response_store._STORAGE_LOCK:
 
-    for question_id, answer_record in answer_items:
-        if not isinstance(answer_record, dict):
-            raise TranscriptIntegrationDataError(
-                "Screening answer record is invalid."
-            )
+        for question_id, answer in answer_items:
 
-        # Normal typed answers do not need transcript synchronization.
-        
-        transcript_metadata = answer_record.get("transcript")
-        if transcript_metadata is None:
-            continue
+            link = answer.get("transcript")
 
-        # A candidate ID is required only when validating a linked transcript.
-        if (
-            not isinstance(response_candidate_id, str)
-            or not response_candidate_id.strip()
-        ):
-            raise TranscriptIntegrationDataError(
-                "Screening response candidate ID is missing or invalid "
-                "for a linked transcript."
-            )
+            # Ordinary screening answers do not need synchronization.
+            if not isinstance(link, dict):
+                continue
 
+            transcript_id = link.get("transcript_id")
 
-        if not isinstance(transcript_metadata, dict):
-            raise TranscriptIntegrationDataError(
-                "Linked transcript metadata is invalid."
-            )
+            if not transcript_id:
+                continue
 
-        transcript_id = transcript_metadata.get("transcript_id")
+            # -------------------------------------------------
+            # 3. Retrieve linked transcript
+            # -------------------------------------------------
+            try:
+                transcript = get_transcript(
+                    session_id=session_id,
+                    transcript_id=str(transcript_id),
+                )
 
-        if not isinstance(transcript_id, str) or not transcript_id.strip():
-            raise TranscriptIntegrationDataError(
-                "Linked transcript ID is missing or invalid."
-            )
+            except (
+                TranscriptInputError,
+                TranscriptNotFoundError,
+                TranscriptPersistenceError,
+            ) as exc:
+                raise TranscriptIntegrationDataError(
+                    "A linked transcript record is missing or invalid."
+                ) from exc
 
-        # Load the linked transcript.
-        try:
-            transcript = get_transcript(
-                session_id=session_id,
-                transcript_id=transcript_id,
-            )
-        except Exception as exc:
-            raise TranscriptIntegrationDataError(
-                "Unable to load a linked transcript. "
-                "Verify the transcript record and storage."
-            ) from exc
+            # -------------------------------------------------
+            # 4. Validate transcript ownership and question
+            # -------------------------------------------------
+            if str(transcript.question_id) != str(question_id):
+                raise TranscriptIntegrationDataError(
+                    "Linked transcript question does not match "
+                    "its screening answer."
+                )
 
-        if transcript is None:
-            raise TranscriptIntegrationDataError(
-                "A linked transcript could not be found."
-            )
+            if str(transcript.candidate_id) != str(
+                responses.get("candidate_id")
+            ):
+                raise TranscriptIntegrationDataError(
+                    "Linked transcript candidate does not match "
+                    "its screening response."
+                )
 
-        # Validate that the transcript belongs to this screening session.
-        if transcript.session_id != session_id:
-            raise TranscriptIntegrationDataError(
-                "Linked transcript session does not match."
-            )
+            if str(transcript.session_id) != str(session_id):
+                raise TranscriptIntegrationDataError(
+                    "Linked transcript belongs to another session."
+                )
 
-        if transcript.candidate_id != response_candidate_id:
-            raise TranscriptIntegrationDataError(
-                "Linked transcript candidate does not match."
-            )
+            # -------------------------------------------------
+            # 5. Validate recruiter review status
+            # -------------------------------------------------
+            review_status = _enum_value(transcript.review.status)
 
-        # Compare question IDs case-insensitively.
-        transcript_question_id = response_store._normalize_question_id(
-            transcript.question_id
-        )
-        response_question_id = response_store._normalize_question_id(
-            question_id
-        )
+            if review_status == "PENDING":
+                raise TranscriptReviewRequiredError(
+                    "Transcript review is required before evaluation "
+                    f"(question_id={question_id})."
+                )
 
-        if transcript_question_id != response_question_id:
-            raise TranscriptIntegrationDataError(
-                "Linked transcript question does not match its screening answer."
-            )
+            if review_status not in {"APPROVED", "CORRECTED"}:
+                raise TranscriptIntegrationDataError(
+                    "Transcript has an unsupported review status."
+                )
 
-        if transcript.status != "PROCESSED":
-            raise TranscriptIntegrationDataError(
-                "Linked transcript has not been processed."
-            )
-
-        # Resolve the authoritative review status from the transcript.
-        review = transcript.review
-
-        if review is None:
-            review_status = "PENDING"
-        else:
-            review_status = (
-                review.status.value
-                if hasattr(review.status, "value")
-                else str(review.status)
-            )
-            review_status = review_status.strip().upper()
-
-        if review_status == "PENDING":
-            raise TranscriptReviewRequiredError(
-                "Evaluation cannot proceed until all linked transcripts "
-                "have been reviewed."
-            )
-
-        if review_status not in {"APPROVED", "CORRECTED"}:
-            raise TranscriptIntegrationDataError(
-                "Linked transcript has an unsupported review status."
-            )
-
-        # Select the text that is allowed to reach evaluation.
-        if review_status == "CORRECTED":
-            final_text = review.corrected_text
+            # -------------------------------------------------
+            # 6. Select final reviewed transcript text
+            # -------------------------------------------------
+            
+            if review_status == "CORRECTED":
+                final_text = getattr(
+                    transcript.review,
+                    "corrected_text",
+                    None,
+                )
+            else:
+                final_text = (
+                    getattr(transcript, "cleaned_text", None)
+                    or getattr(transcript, "normalized_text", None)
+                    or getattr(transcript, "original_text", None)
+                )
 
             if not isinstance(final_text, str) or not final_text.strip():
                 raise TranscriptIntegrationDataError(
-                    "Corrected transcript text is missing."
-                )
-        else:
-            final_text = (
-                transcript.normalized_text
-                or transcript.original_text
-            )
-
-            if not isinstance(final_text, str) or not final_text.strip():
-                raise TranscriptIntegrationDataError(
-                    "Approved transcript text is missing."
+                    "Reviewed transcript has no usable answer text."
                 )
 
-        # Update the screening answer.
-        if answer_record.get("answer") != final_text:
-            answer_record["answer"] = final_text
-            changed = True
+            final_text = final_text.strip()
 
-        # Keep transcript metadata synchronized with the review record.
-        updated_metadata = dict(transcript_metadata)
-        updated_metadata["review_status"] = review_status
+            # -------------------------------------------------
+            # 7. Prepare synchronized transcript metadata
+            # -------------------------------------------------
+            transcript_status = _enum_value(transcript.status)
 
-        if review is not None:
-            updated_metadata["reviewer_id"] = review.reviewer_id
-            updated_metadata["reviewed_at"] = (
-                review.reviewed_at.isoformat()
-                if hasattr(review.reviewed_at, "isoformat")
-                else review.reviewed_at
+            reviewed_at_value = getattr(
+                transcript.review,
+                "reviewed_at",
+                None,
             )
 
-        updated_metadata["status"] = transcript.status
+            reviewed_at = (
+                reviewed_at_value.isoformat()
+                if reviewed_at_value
+                else None
+            )
 
-        if updated_metadata != transcript_metadata:
-            answer_record["transcript"] = updated_metadata
-            changed = True
+            reviewer_id = getattr(
+                transcript.review,
+                "reviewer_id",
+                None,
+            )
 
-    # Persist only when synchronization changed the response.
+            updated_link = {
+                **link,
+                "status": transcript_status,
+                "review_status": review_status,
+                "reviewer_id": reviewer_id,
+                "reviewed_at": reviewed_at,
+            }
+
+            # -------------------------------------------------
+            # 8. Update answer and transcript metadata
+            # -------------------------------------------------
+            answer_changed = (
+                answer.get("answer") != final_text
+                or answer.get("answered") is not True
+                or link != updated_link
+            )
+
+            if answer_changed:
+                answer["answer"] = final_text
+                answer["answered"] = True
+                answer["updated_at"] = now
+                answer["transcript"] = updated_link
+
+                changed = True
+
+    # ---------------------------------------------------------
+    # 9. Persist only when changes were made
+    # ---------------------------------------------------------
     if changed:
-        with response_store._STORAGE_LOCK:
-            response_store._write_json_atomic(
-                response_store._response_path(session_id),
-                responses,
-            )
+        responses["updated_at"] = now
+
+        try:
+            with response_store._STORAGE_LOCK:
+                response_store._write_json_atomic(
+                    response_store._response_path(session_id),
+                    responses,
+                )
+
+        except (OSError, TypeError, ValueError) as exc:
+            raise TranscriptIntegrationDataError(
+                "Failed to persist synchronized screening responses."
+            ) from exc
 
     return responses

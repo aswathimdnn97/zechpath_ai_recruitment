@@ -1,0 +1,67 @@
+{
+    "job_id": "JOB_BF2FEFE4A4A3",
+    "jd_id": "PythonDeveloperFresher",
+    "candidate_id": "CAN_4CFB167D7487",
+    "eligibility_status": "REVIEW_REQUIRED",
+    "ats_score": 87.04,
+    "rule_version": "1.0",
+    "checks": {
+        "ats_score": {
+            "status": "PASS",
+            "ats_score": 87.04,
+            "minimum_ats_score": 70.0,
+            "review_score_threshold": 60.0,
+            "reason": "ATS score meets the minimum eligibility cutoff."
+        },
+        "skills": {
+            "status": "REVIEW_REQUIRED",
+            "missing_skills": [
+                "API Testing"
+            ],
+            "reason": "Mandatory skills were not found in the extracted profile. Verify the resume before making a decision."
+        },
+        "experience": {
+            "status": "PASS",
+            "candidate_years": 0.92
+        },
+        "education": {
+            "status": "PASS",
+            "candidate_education": [
+                "Bachelor of Technology",
+                "Computer Science and Engineering"
+            ],
+            "rules": [
+                {
+                    "description": "B.Tech / B.E. / equivalent technical degree preferred.",
+                    "enforcement": "preferred",
+                    "status": "PASS",
+                    "reason": "Candidate education matches the configured qualification."
+                }
+            ],
+            "reason": "Candidate education matches the configured qualification."
+        },
+        "location": {
+            "job_location": "Kochi, Kerala",
+            "candidate_location": "Kochi, Kerala",
+            "allowed_locations": [],
+            "remote_allowed": null,
+            "status": "NOT_SPECIFIED",
+            "reason": "No enforced geographic restriction is configured."
+        },
+        "availability": {
+            "notice_period_days": null,
+            "maximum_notice_period_days": null,
+            "available_from": null,
+            "status": "NOT_SPECIFIED",
+            "reason": "No availability requirement is configured."
+        }
+    },
+    "reasons": [
+        "ATS score meets the minimum eligibility cutoff.",
+        "Mandatory skills were not found in the extracted profile. Verify the resume before making a decision.",
+        "Candidate education matches the configured qualification.",
+        "No enforced geographic restriction is configured.",
+        "No availability requirement is configured."
+    ],
+    "evaluated_at": "2026-10-15T14:08:21.102939+00:00"
+}

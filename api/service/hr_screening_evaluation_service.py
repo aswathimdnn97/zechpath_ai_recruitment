@@ -58,7 +58,7 @@ QUESTION_BANK_PATH = HR_SCREENING_DIR / "question_bank_multilingual.json"
 STORAGE_BACKEND = os.getenv("ZECHPATH_STORAGE_BACKEND", "json").strip().lower()
 DATABASE_URL_ENV = "ZECHPATH_DATABASE_URL"
 
-EVALUATION_VERSION = "1.1"
+EVALUATION_VERSION = "1.2"
 SESSION_ID_PATTERN = re.compile(r"^SCREEN_[A-Za-z0-9_-]{1,100}$")
 MAX_FEEDBACK_LENGTH = 2000
 
@@ -430,6 +430,42 @@ def _answer_text(answer: dict[str, Any]) -> str:
 
     return value.strip() if isinstance(value, str) else ""
 
+
+def _semantic_review_payload(
+    answer: Optional[dict[str, Any]],
+) -> Optional[dict[str, Any]]:
+    """
+    Extract recruiter-facing semantic classification data.
+
+    Avoid copying the complete original answer into the evaluation
+    report. Preserve the structured classification and review details.
+    """
+    if not isinstance(answer, dict):
+        return None
+
+    classification = answer.get("semantic_classification")
+
+    if not isinstance(classification, dict):
+        return None
+
+    allowed_fields = (
+        "intent",
+        "language",
+        "extracted_data",
+        "answer_quality",
+        "off_topic_detection",
+        "extraction_performed",
+        "requires_review",
+        "evidence",
+    )
+
+    payload = {
+        key: classification[key]
+        for key in allowed_fields
+        if key in classification
+    }
+
+    return payload or None
 
 def _answer_options(answer: dict[str, Any]) -> list[str]:
     value = answer.get(
@@ -1363,6 +1399,18 @@ def evaluate_screening_session(
             result["score"] = None
             result["max_score"] = None
 
+        # Attach semantic classification for recruiter review.
+        semantic_data = _semantic_review_payload(answer)
+
+        if semantic_data is not None:
+            result["semantic_classification"] = semantic_data
+
+            result["semantic_review_required"] = (
+                semantic_data.get("requires_review") is True
+            )
+        else:
+            result["semantic_review_required"] = False
+
         question_results.append(result)
 
     # ---------------------------------------------------------
@@ -1448,6 +1496,11 @@ def evaluate_screening_session(
         result["evaluation_status"] == "NEEDS_REVIEW"
         for result in question_results
     )
+    
+    semantic_questions_needing_review = sum(
+    result.get("semantic_review_required") is True
+    for result in question_results
+)
 
     summary = {
         "total_questions": len(questions),
@@ -1462,6 +1515,9 @@ def evaluate_screening_session(
             unanswered_mandatory_ids
         ),
         "questions_needing_review": questions_needing_review,
+        "semantic_questions_needing_review": (
+            semantic_questions_needing_review
+        ),
         "total_score": total_score,
         "max_score": max_score,
         "score_percentage": score_percentage,

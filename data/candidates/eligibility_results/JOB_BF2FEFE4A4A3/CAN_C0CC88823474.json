@@ -1,0 +1,63 @@
+{
+    "job_id": "JOB_BF2FEFE4A4A3",
+    "jd_id": "PythonDeveloperFresher",
+    "candidate_id": "CAN_C0CC88823474",
+    "eligibility_status": "ELIGIBLE",
+    "ats_score": 94.84,
+    "rule_version": "1.0",
+    "checks": {
+        "ats_score": {
+            "status": "PASS",
+            "ats_score": 94.84,
+            "minimum_ats_score": 70.0,
+            "review_score_threshold": 60.0,
+            "reason": "ATS score meets the minimum eligibility cutoff."
+        },
+        "skills": {
+            "status": "PASS",
+            "missing_skills": []
+        },
+        "experience": {
+            "status": "PASS",
+            "candidate_years": 0.83
+        },
+        "education": {
+            "status": "PASS",
+            "candidate_education": [
+                "Bachelor of Technology",
+                "Information Technology"
+            ],
+            "rules": [
+                {
+                    "description": "B.Tech / B.E. / equivalent technical degree preferred.",
+                    "enforcement": "preferred",
+                    "status": "PASS",
+                    "reason": "Candidate education matches the configured qualification."
+                }
+            ],
+            "reason": "Candidate education matches the configured qualification."
+        },
+        "location": {
+            "job_location": "Kochi, Kerala",
+            "candidate_location": "Thrissur, Kerala",
+            "allowed_locations": [],
+            "remote_allowed": null,
+            "status": "NOT_SPECIFIED",
+            "reason": "No enforced geographic restriction is configured."
+        },
+        "availability": {
+            "notice_period_days": null,
+            "maximum_notice_period_days": null,
+            "available_from": null,
+            "status": "NOT_SPECIFIED",
+            "reason": "No availability requirement is configured."
+        }
+    },
+    "reasons": [
+        "ATS score meets the minimum eligibility cutoff.",
+        "Candidate education matches the configured qualification.",
+        "No enforced geographic restriction is configured.",
+        "No availability requirement is configured."
+    ],
+    "evaluated_at": "2026-10-22T05:09:27.528858+00:00"
+}

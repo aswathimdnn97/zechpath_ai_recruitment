@@ -1,0 +1,50 @@
+{
+  "result_id": "TSR_ED4DC49EAE34",
+  "transcript_id": "TRN_249EA7F941C5",
+  "session_id": "SCREEN_3F897D8A2CDE",
+  "candidate_id": "CAN_123456789ABC",
+  "job_id": "JOB_BF2FEFE4A4A3",
+  "question_id": "PYF_INTRO_001",
+  "source": "VOICE",
+  "language": "en",
+  "recognized_skills": [
+    {
+      "skill": "Python",
+      "skill_id": "TECH001",
+      "source_text": "My name is Anu. I know Python and FastAPI.",
+      "sources": [
+        {
+          "source_section": "transcript",
+          "source_text": "My name is Anu. I know Python and FastAPI.",
+          "source_skill": "Python"
+        }
+      ],
+      "original_skill": null,
+      "original_skills": [],
+      "resolution_method": null,
+      "matched_by": "exact"
+    },
+    {
+      "skill": "FastAPI",
+      "skill_id": "TECH014",
+      "source_text": "My name is Anu. I know Python and FastAPI.",
+      "sources": [
+        {
+          "source_section": "transcript",
+          "source_text": "My name is Anu. I know Python and FastAPI.",
+          "source_skill": "FastAPI"
+        }
+      ],
+      "original_skill": null,
+      "original_skills": [],
+      "resolution_method": null,
+      "matched_by": "exact"
+    }
+  ],
+  "skill_count": 2,
+  "extraction_version": "1.1",
+  "input_text_sha256": "ebd36bcc6efc2d9a94506c02df8c32fcee95a05c4c5fd5ebda0841d5bafbf43a",
+  "status": "COMPLETED",
+  "created_at": "2026-10-28T12:30:38.726259Z",
+  "updated_at": "2026-10-28T14:35:52.499248Z"
+}

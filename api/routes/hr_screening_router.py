@@ -48,6 +48,16 @@ from api.schemas.hr_screening_schema import (
     RecruiterDecisionRequest,
 )
 
+from api.service.transcript_skill_workflow_service import (
+    process_saved_transcript_skills,
+    TranscriptSkillWorkflowError,
+)
+from api.service.hr_screening_evaluation_service import (
+    TranscriptReviewPrerequisiteError,
+    # Keep your existing imports
+)
+from api.service.transcript_service import TranscriptNotFoundError
+
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
@@ -104,6 +114,15 @@ def _handle_evaluation_error(
         return HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail="Only submitted screening sessions can be evaluated.",
+        )
+    
+    if isinstance(exc, TranscriptReviewPrerequisiteError):
+        return HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=(
+                "All linked transcripts must be approved or corrected "
+                "by a recruiter before evaluation."
+            ),
         )
 
     if isinstance(exc, ScreeningDataError):
@@ -571,4 +590,68 @@ def save_recruiter_decision_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="An unexpected error occurred while saving the decision.",
+        ) from exc
+
+
+
+# ============================================================
+# TRANSCRIPT SKILL EXTRACTION
+# ============================================================
+
+@router.post(
+    "/sessions/{session_id}/transcripts/{transcript_id}/skills",
+    summary="Extract and save skills from a transcript",
+)
+def extract_transcript_skills_endpoint(
+    session_id: str,
+    transcript_id: str,
+) -> dict[str, Any]:
+    """
+    Extract skills from a saved transcript and persist the result.
+
+    Transcript retrieval, skill extraction, and result persistence
+    remain the responsibility of the service layer.
+    """
+
+    try:
+        result = process_saved_transcript_skills(
+            session_id=session_id,
+            transcript_id=transcript_id,
+        )
+
+        return {
+            "success": True,
+            "message": "Transcript skills processed successfully.",
+            "skill_extraction": result,
+        }
+
+    except TranscriptSkillWorkflowError as exc:
+        # The workflow wraps errors from the transcript service.
+        if isinstance(exc.__cause__, TranscriptNotFoundError):
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Transcript not found.",
+            ) from exc
+
+        logger.error(
+            "Transcript skill extraction failed: %s",
+            type(exc).__name__,
+            exc_info=(type(exc), exc, exc.__traceback__),
+        )
+
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Unable to process transcript skills.",
+        ) from exc
+
+    except Exception as exc:
+        logger.error(
+            "Unexpected transcript skill extraction failure: %s",
+            type(exc).__name__,
+            exc_info=(type(exc), exc, exc.__traceback__),
+        )
+
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="An unexpected error occurred during skill extraction.",
         ) from exc

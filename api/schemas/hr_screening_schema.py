@@ -226,8 +226,8 @@ class ScreeningResponseSubmissionRequest(ScreeningSchema):
 
     answers: Annotated[
         list[ScreeningAnswerSubmission],
-        Field(min_length=1, max_length=200),
-    ]
+        Field(max_length=200),
+    ] = Field(default_factory=list)
 
     final_submission: bool = False
 
@@ -241,6 +241,11 @@ class ScreeningResponseSubmissionRequest(ScreeningSchema):
         if len(question_ids) != len(set(question_ids)):
             raise ValueError(
                 "Each question can appear only once per submission."
+            )
+
+        if not self.final_submission and not self.answers:
+            raise ValueError(
+                "At least one answer is required for draft submission."
             )
 
         return self

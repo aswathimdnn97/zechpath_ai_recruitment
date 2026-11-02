@@ -79,3 +79,45 @@ def test_approved_transcript_refreshes_answer(monkeypatch):
     assert answer["transcript"]["review_status"] == "APPROVED"
     assert answer["transcript"]["reviewer_id"] == "REC_1"
 
+
+def test_corrected_transcript_refreshes_answer_with_corrected_text_and_audit(monkeypatch):
+    transcript = SimpleNamespace(
+        session_id="SCREEN_123456789ABC",
+        transcript_id="TRN_123456789ABC",
+        question_id="PYF_INTRO_001",
+        candidate_id="CAN_123456789ABC",
+        status="PROCESSED",
+        review=SimpleNamespace(
+            status="CORRECTED",
+            corrected_text="Corrected recruiter text.",
+            reviewer_id="REC_2",
+            reviewed_at=datetime(2026, 10, 21, tzinfo=timezone.utc),
+        ),
+        normalized_text="Uncorrected model text.",
+        original_text="Original audio transcription.",
+    )
+    monkeypatch.setattr(integration, "get_transcript", lambda **kwargs: transcript)
+    monkeypatch.setattr(integration.response_store, "_write_json_atomic", lambda *args: None)
+    monkeypatch.setattr(integration.response_store, "_response_path", lambda session_id: session_id)
+    responses = {
+        "session_id": "SCREEN_123456789ABC",
+        "candidate_id": "CAN_123456789ABC",
+        "answers": {
+            "PYF_INTRO_001": {
+                "question_id": "PYF_INTRO_001",
+                "answer": "Uncorrected model text.",
+                "answered": True,
+                "transcript": {"transcript_id": "TRN_123456789ABC", "review_status": "PENDING"},
+            }
+        },
+    }
+
+    result = integration.synchronize_linked_transcripts_for_evaluation(
+        session_id="SCREEN_123456789ABC", responses=responses
+    )
+    answer = result["answers"]["PYF_INTRO_001"]
+    assert answer["answer"] == "Corrected recruiter text."
+    assert answer["transcript"]["review_status"] == "CORRECTED"
+    assert answer["transcript"]["reviewer_id"] == "REC_2"
+    assert answer["transcript"]["reviewed_at"] == "2026-10-21T00:00:00+00:00"
+    assert transcript.original_text == "Original audio transcription."

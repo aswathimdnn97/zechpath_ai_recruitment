@@ -107,6 +107,19 @@ class TranscriptNormalization(BaseModel):
     pii_redacted: bool = False
 
 
+
+class TranscriptTextCleanupMetadata(BaseModel):
+    """Auditable metadata for conservative transcript text cleanup."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    version: str = Field(default="1.0", max_length=20)
+    removed_fillers: list[str] = Field(default_factory=list)
+    punctuation_changed: bool = False
+    case_changed: bool = False
+    changed: bool = False
+
+
 class TranscriptReview(BaseModel):
     """Recruiter review metadata."""
 
@@ -125,16 +138,31 @@ class TranscriptReview(BaseModel):
 
     @model_validator(mode="after")
     def validate_review(self):
-        if self.status == TranscriptReviewStatus.CORRECTED:
-            if not self.corrected_text or not self.reviewer_id:
+        if self.status in {
+            TranscriptReviewStatus.APPROVED,
+            TranscriptReviewStatus.CORRECTED,
+        }:
+            if not self.reviewer_id or not self.reviewer_id.strip():
                 raise ValueError(
-                    "Corrected text and reviewer_id are required "
-                    "for CORRECTED status"
+                    "reviewer_id is required for a completed review"
                 )
             if self.reviewed_at is None:
                 raise ValueError(
-                    "reviewed_at is required for CORRECTED status"
+                    "reviewed_at is required for a completed review"
                 )
+
+        if self.status == TranscriptReviewStatus.CORRECTED:
+            if not self.corrected_text or not self.corrected_text.strip():
+                raise ValueError(
+                    "corrected_text is required for CORRECTED status"
+                )
+        elif self.corrected_text is not None:
+            raise ValueError(
+                "corrected_text is only allowed for CORRECTED status"
+            )
+
+        if self.reviewer_id is not None and not self.reviewer_id.strip():
+            raise ValueError("reviewer_id cannot be blank")
 
         if self.reviewed_at is not None:
             if (
@@ -216,19 +244,41 @@ class TranscriptCreate(BaseModel):
 
 
 class TranscriptRecord(TranscriptCreate):
-    """Complete stored transcript record."""
+    """Complete stored transcript record with an auditable review trail."""
 
     transcript_id: str = Field(
         min_length=1, max_length=40
     )
+    
+    
+    cleaned_text: str | None = Field(
+        default=None, max_length=50000
+    )
+    cleanup_version: str | None = Field(
+        default=None, max_length=20
+    )
+    cleanup_metadata: TranscriptTextCleanupMetadata | None = None
+
     status: TranscriptStatus = TranscriptStatus.PENDING
     review: TranscriptReview = Field(
         default_factory=TranscriptReview
     )
+    # Stores every completed review event, including the current review.
+    # Default keeps older persisted transcript JSON backward compatible.
+    review_history: list[TranscriptReview] = Field(default_factory=list)
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc)
     )
     updated_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc)
     )
+
+    @model_validator(mode="after")
+    def validate_review_history(self):
+        for event in self.review_history:
+            if event.status == TranscriptReviewStatus.PENDING:
+                raise ValueError(
+                    "review_history may contain only completed review events"
+                )
+        return self
 

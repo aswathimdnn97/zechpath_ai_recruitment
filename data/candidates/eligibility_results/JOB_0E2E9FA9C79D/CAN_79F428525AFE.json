@@ -1,0 +1,54 @@
+{
+    "job_id": "JOB_0E2E9FA9C79D",
+    "jd_id": "SeniorHRExecutive",
+    "candidate_id": "CAN_79F428525AFE",
+    "eligibility_status": "REVIEW_REQUIRED",
+    "ats_score": 64.81,
+    "rule_version": "1.0",
+    "checks": {
+        "ats_score": {
+            "status": "REVIEW_REQUIRED",
+            "ats_score": 64.81,
+            "minimum_ats_score": 70.0,
+            "review_score_threshold": 60.0,
+            "reason": "ATS score is below the minimum eligibility cutoff."
+        },
+        "skills": {
+            "status": "REVIEW_REQUIRED",
+            "missing_skills": [
+                "Employee Relations",
+                "Payroll",
+                "MS",
+                "Excel",
+                "HRMS"
+            ],
+            "reason": "Mandatory skills were not found in the extracted profile; verify the resume before making a decision."
+        },
+        "experience": {
+            "status": "PASS",
+            "candidate_years": 6.92
+        },
+        "education": {
+            "status": "PREFERRED",
+            "rules": [
+                {
+                    "description": "Degree or MBA in HR, Business Administration, Commerce or equivalent preferred.",
+                    "enforcement": "preferred"
+                }
+            ]
+        },
+        "location": {
+            "status": "NOT_SPECIFIED",
+            "candidate_location": null
+        },
+        "availability": {
+            "status": "NOT_SPECIFIED",
+            "notice_period_days": null
+        }
+    },
+    "reasons": [
+        "ATS score is below the minimum eligibility cutoff.",
+        "Mandatory skills were not found in the extracted profile; verify the resume before making a decision."
+    ],
+    "evaluated_at": "2026-10-13T11:16:53.598770+00:00"
+}

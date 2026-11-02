@@ -47,6 +47,20 @@ from api.service.screening_session_service import (
     get_screening_session,
 )
 
+
+from api.schemas.transcript_schema import (
+    TranscriptCreate,
+    TranscriptRecord,
+    TranscriptStatus,
+    TranscriptTextCleanupMetadata,
+)
+
+from api.service.transcript_text_cleanup_service import (
+    TranscriptTextCleanupError,
+    cleanup_transcript_text,
+)
+
+
 logger = logging.getLogger(__name__)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -318,47 +332,57 @@ def _validate_transcript_session(
 # RECORD CONSTRUCTION
 # ============================================================
 
+
 def _build_transcript_record(
     payload: TranscriptCreate,
     transcript_id: str,
 ) -> TranscriptRecord:
-    """
-    Normalize transcript text and construct a validated record.
-
-    original_text remains unchanged.
-    normalized_text is produced by the normalization service.
-    """
+    """Normalize, clean, and construct an auditable transcript record."""
 
     try:
+        # Stage 1: Normalize the original transcription.
         normalized = normalize_transcript(
             text=payload.original_text,
             language=payload.language,
+        )
+
+        # Stage 2: Clean the normalized text without changing the source.
+        cleaned = cleanup_transcript_text(
+            normalized.normalized_text,
+            payload.language,
         )
 
         data = payload.model_dump(mode="python")
 
         data["transcript_id"] = transcript_id
         data["status"] = TranscriptStatus.PROCESSED
-        data["normalized_text"] = normalized.normalized_text
 
-        normalization_metadata = (
-            data.get("normalization") or {}
+        # Preserve each representation separately.
+        data["normalized_text"] = normalized.normalized_text
+        data["cleaned_text"] = cleaned.cleaned_text
+        data["cleanup_version"] = cleaned.cleanup_version
+        data["cleanup_metadata"] = (
+            TranscriptTextCleanupMetadata(
+                version=cleaned.cleanup_version,
+                removed_fillers=list(cleaned.removed_fillers),
+                punctuation_changed=cleaned.punctuation_changed,
+                case_changed=cleaned.case_changed,
+                changed=cleaned.changed,
+            )
         )
-        normalization_metadata.update(
-            {
-                "version": normalized.normalization_version,
-                "language_preserved": normalized.language_preserved,
-            }
-        )
+
+        # Preserve existing normalization metadata.
+        normalization_metadata = data.get("normalization") or {}
+        normalization_metadata.update({
+            "version": normalized.normalization_version,
+            "language_preserved": normalized.language_preserved,
+        })
         data["normalization"] = normalization_metadata
 
+        # Preserve existing timing behavior.
         timing = data.get("timing") or {}
-
         if timing.get("transcribed_at") is None:
-            timing["transcribed_at"] = datetime.now(
-                timezone.utc
-            )
-
+            timing["transcribed_at"] = datetime.now(timezone.utc)
         data["timing"] = timing
 
         now = datetime.now(timezone.utc)
@@ -370,6 +394,11 @@ def _build_transcript_record(
     except TranscriptNormalizationError as exc:
         raise TranscriptInputError(
             "Transcript text or language failed normalization validation."
+        ) from exc
+
+    except TranscriptTextCleanupError as exc:
+        raise TranscriptInputError(
+            "Transcript text or language failed cleanup validation."
         ) from exc
 
     except ValidationError as exc:

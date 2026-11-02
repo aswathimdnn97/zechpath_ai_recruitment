@@ -647,3 +647,91 @@ def test_extract_answers_rejects_invalid_answers_format():
         assert False, "Expected ScreeningDataError"
     except ScreeningDataError:
         pass
+
+def test_evaluation_includes_semantic_classification(
+    screening_storage,
+    valid_session,
+    valid_responses,
+):
+    valid_responses["answers"][1]["semantic_classification"] = {
+        "intent": "SKILLS",
+        "language": "en",
+        "extracted_data": {
+            "skills": ["Python", "Django"],
+        },
+        "answer_quality": {
+            "status": "CLEAR",
+        },
+        "off_topic_detection": {
+            "status": "ON_TOPIC",
+        },
+        "extraction_performed": True,
+        "requires_review": False,
+        "evidence": [],
+    }
+
+    seed_files(screening_storage, valid_session, valid_responses)
+
+    report = service.evaluate_screening_session("SCREEN_TEST001")
+
+    result = next(
+        item for item in report["question_results"]
+        if item["question_id"] == "Q002"
+    )
+
+    assert result["semantic_classification"]["intent"] == "SKILLS"
+    assert result["semantic_classification"]["language"] == "en"
+    assert result["semantic_review_required"] is False
+
+
+def test_evaluation_counts_semantic_questions_needing_review(
+    screening_storage,
+    valid_session,
+    valid_responses,
+):
+    valid_responses["answers"][1]["semantic_classification"] = {
+        "intent": "SKILLS",
+        "language": "en",
+        "extracted_data": {},
+        "answer_quality": {
+            "status": "VAGUE",
+        },
+        "off_topic_detection": {
+            "status": "UNCLEAR",
+        },
+        "extraction_performed": False,
+        "requires_review": True,
+        "evidence": [],
+    }
+
+    seed_files(screening_storage, valid_session, valid_responses)
+
+    report = service.evaluate_screening_session("SCREEN_TEST001")
+
+    result = next(
+        item for item in report["question_results"]
+        if item["question_id"] == "Q002"
+    )
+
+    assert result["semantic_review_required"] is True
+    assert report["summary"]["semantic_questions_needing_review"] == 1
+
+
+def test_evaluation_without_semantic_data_still_works(
+    screening_storage,
+    valid_session,
+    valid_responses,
+):
+    seed_files(screening_storage, valid_session, valid_responses)
+
+    report = service.evaluate_screening_session("SCREEN_TEST001")
+
+    result = next(
+        item for item in report["question_results"]
+        if item["question_id"] == "Q002"
+    )
+
+    assert report["session_id"] == "SCREEN_TEST001"
+    assert result["semantic_review_required"] is False
+    assert report["summary"]["semantic_questions_needing_review"] == 0
+    assert result["evaluation_status"] == "NEEDS_REVIEW"
